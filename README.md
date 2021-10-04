@@ -1,6 +1,4 @@
-# Team `sout("This_is_out_teamname")`
-(**To my team. I apologize. I did not see the typo in the team name till now.
-I will be more careful next time!** - Matthew Du)
+# Team `sout("This_is_our_teamname")`
 
 ## Replace this README.md!
 
