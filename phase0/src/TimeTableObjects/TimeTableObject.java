@@ -1,21 +1,22 @@
-import java.util.HashMap;
-import java.util.Map;
-
 package TimeTableObjects;
 
 public abstract class TimeTableObject {
-    private String time;
-    private String location;
+    private final String time;
+    private final String location;
+    private final String date;
+    private final String description;
 
-    public TimeTableObject(Hashmap timeLocation) {
-        this.time = time;
-        this.location = location;
+    public TimeTableObject(String theTime, String theLocation, String theDate) {
+        this.date = theDate;
+        this.description = "";
+        this.time = theTime;
+        this.location = theLocation;
     }
 
-    abstract void getTime();
+    public abstract String getTime();
 
-    abstract void getLocation();
+    public abstract String getLocation();
 
-    abstract void toString();
+    public abstract String toString();
 
 }
