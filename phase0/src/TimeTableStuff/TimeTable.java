@@ -5,20 +5,24 @@ import TimeTableObjects.TimeTableObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * TimeTable class stores all the activities from Monday to Sunday. If there is a conflict when storing a new activity,
+ * it will still be stored, and a conflict warning will be sent back prmopting user to take action or ignore it.
+ */
 public class TimeTable {
 
     private HashMap<String, ArrayList<TimeTableObject>> calender;
 
     public TimeTable() {
         this.calender = new HashMap<>() {{
-                put("Monday", new ArrayList<>());
-                put("Tuesday", new ArrayList<>());
-                put("Wednesday", new ArrayList<>());
-                put("Thursday", new ArrayList<>());
-                put("Friday", new ArrayList<>());
-                put("Saturday", new ArrayList<>());
-                put("Sunday", new ArrayList<>());
-            }};
+            put("Monday", new ArrayList<>());
+            put("Tuesday", new ArrayList<>());
+            put("Wednesday", new ArrayList<>());
+            put("Thursday", new ArrayList<>());
+            put("Friday", new ArrayList<>());
+            put("Saturday", new ArrayList<>());
+            put("Sunday", new ArrayList<>());
+        }};
     }
 
     /**
