@@ -26,7 +26,9 @@ public class TimeTable {
      * @param time the given activity
      * @return true if scheduling is successful, false if there is a conflict
      */
-    public boolean schedule(TimeTableObject time) {
+
+
+    public boolean schedule(TimeTableObject activity) {
 
     }
 
@@ -35,9 +37,19 @@ public class TimeTable {
      * @param time the given activity
      * @return true if there is no conflict, false otherwise
      */
-    public boolean checkConflicts(TimeTableObject time) {
-
+    public boolean checkConflicts(TimeTableObject activity) {
+        if calender.(activity.date).isEmpty(){
+            return true
+        }
+        // Double check on comparable interface to make sure it returns true iff there is a conflict.
+        for (int i = 0; i <= calender.(activity.date).size); i++){
+            if calender.(activity.date).get(i).comparable(activity){
+                return true
+            }
+        }
+        return true
     }
+
 
     /**
      * Generate the String representation of the calender.
