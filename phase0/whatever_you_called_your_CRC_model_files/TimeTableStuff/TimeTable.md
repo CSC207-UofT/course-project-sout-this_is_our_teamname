@@ -1,7 +1,7 @@
 # Timetable
 
 ## Collaborators
-* This is an Entity
+* This is an use case
 
 ## Functions
 * Holds the TimeTableObject (if they exist). 
