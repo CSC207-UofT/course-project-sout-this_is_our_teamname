@@ -6,9 +6,11 @@ import java.util.HashMap;
 
 public abstract class DataGetter {
     public HashMap<String, Course> data;
+    public String course_name;
 
-    public DataGetter(){
+    public DataGetter(String coursename){
         this.data = new HashMap<>();
+        this.course_name = coursename;
     }
 
     public HashMap<String, Course> getData(){
