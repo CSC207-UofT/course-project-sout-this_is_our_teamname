@@ -18,12 +18,16 @@ public abstract class TimeTableObject {
         this.location = theLocation;
     }
 
-    public abstract String getTime();
+    public abstract String getStartTime();
+
+    public abstract String getEndTime();
+
+    public abstract String getDate();
 
     public abstract String getLocation();
 
-    abstract void getDescription();
+    public abstract String getDescription();
 
-    abstract void toString();
+    public abstract String toString();
 
 }
