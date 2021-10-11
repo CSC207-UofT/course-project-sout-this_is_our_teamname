@@ -1,7 +1,8 @@
-import java.util.HashMap;
-import java.util.Map;
 
 package TimeTableObjects;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class TimeTableObject {
     private String startTime;

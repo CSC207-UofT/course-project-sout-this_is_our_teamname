@@ -44,6 +44,14 @@ public class TimeTable {
      * @return the string of calender
      */
     public String toString() {
-
+        HashMap<String, ArrayList<String>> times = new HashMap<>();
+        for (String day : this.calender.keySet()) {
+            ArrayList<String> sections = new ArrayList<>();
+            for (TimeTableObject time : this.calender.get(day)) {
+                sections.add(time.toString());
+            }
+            times.put(day, sections);
+        }
+        return times.toString();
     }
 }
