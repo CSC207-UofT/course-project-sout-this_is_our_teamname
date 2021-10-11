@@ -1,7 +1,8 @@
-import java.util.HashMap;
-import java.util.Map;
 
 package TimeTableObjects;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class TimeTableObject {
     private String time;
@@ -16,6 +17,6 @@ public abstract class TimeTableObject {
 
     abstract void getLocation();
 
-    abstract void toString();
+    public abstract String toString();
 
 }
