@@ -1,19 +1,16 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.*;
-
 package TimeTableObjects.CourseStuff;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import TimeTableObjects.TimeTableObject;
 
 public abstract class Course {
 
-    private String code;
-    private String professor;
-    private String faculty;
-    private String deliveryMethod;
-    private Hashmap timeLocation;
+    private final String code;
+    private final String professor;
+    private final String faculty;
+    private final String deliveryMethod;
+    private final HashMap<String, String> timeLocation;
 
     /**
      * Construct a course with the given section, professor, faculty, delivery method,
@@ -26,9 +23,10 @@ public abstract class Course {
      * @param timeLocation The time and corresponding location for this course
      *                     section
      */
-    public Course(String code, String professor, String faculty,
-                  String deliveryMethod, Hashmap timeLocation) {
-        this.code = code;
+    public Course(String section, String professor, String faculty,
+                  String deliveryMethod,
+                  HashMap<String, String> timeLocation) {
+        this.code = section;
         this.professor = professor;
         this.faculty = faculty;
         this.deliveryMethod = deliveryMethod;
@@ -40,21 +38,21 @@ public abstract class Course {
      * @return a Hashmap with the keys as the times and the values as the cprresponding
      * location for this course section
      */
-    public Hashmap getTimeLocation() {
+    public HashMap<String, String> getTimeLocation() {
         return this.timeLocation;
     }
 
     public String toString() {
-        Stringbuilder details = new Stringbuilder(this.code + " with " + this.professor. +
+        StringBuilder details =
+                new StringBuilder(this.code + " with " + this.professor +
                 " in the Faculty of " + this.faculty + "\n");
-        details.append("The delivery method is " + this.deliveryMethod + "\n"
-        + "This course meets at ");
-        for (ArrayList time : this.timeLocation.keyset()) {
-            details.append(time + " at " + this.timeLocation.get(time) + ",");
+        details.append("The delivery method is ").append(this.deliveryMethod).append("\n").append("This course meets at ");
+        for (String time : this.timeLocation.keySet()) {
+            details.append(time).append(" at ").append(this.timeLocation.get(time)).append(",");
         }
 
         details.deleteCharAt(details.length() - 1);
-        return details
+        return details.toString();
     }
 
 }
