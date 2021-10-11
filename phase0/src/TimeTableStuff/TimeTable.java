@@ -11,43 +11,46 @@ public class TimeTable {
 
     public TimeTable() {
         this.calender = new HashMap<>() {{
-                put("Monday", new ArrayList<>());
-                put("Tuesday", new ArrayList<>());
-                put("Wednesday", new ArrayList<>());
-                put("Thursday", new ArrayList<>());
-                put("Friday", new ArrayList<>());
-                put("Saturday", new ArrayList<>());
-                put("Sunday", new ArrayList<>());
-            }};
+            put("Monday", new ArrayList<>());
+            put("Tuesday", new ArrayList<>());
+            put("Wednesday", new ArrayList<>());
+            put("Thursday", new ArrayList<>());
+            put("Friday", new ArrayList<>());
+            put("Saturday", new ArrayList<>());
+            put("Sunday", new ArrayList<>());
+        }};
     }
 
     /**
      * Schedules the given activity into the appropriate weekday.
-     * @param time the given activity
+     * @param activity the given activity
      * @return true if scheduling is successful, false if there is a conflict
      */
-
-
     public boolean schedule(TimeTableObject activity) {
-
+        if (checkConflicts(activity)) {
+            (this.calender.get(activity.getDate())).add(activity);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
      * Check if there is a conflict in the timetable with given activity.
-     * @param time the given activity
+     * @param activity the given activity
      * @return true if there is no conflict, false otherwise
      */
     public boolean checkConflicts(TimeTableObject activity) {
-        if calender.(activity.date).isEmpty(){
-            return true
+        if ((this.calender.get(activity.getDate()).isEmpty())) {
+            return true;
         }
-        // Double check on comparable interface to make sure it returns true iff there is a conflict.
-        for (int i = 0; i <= calender.(activity.date).size); i++){
-            if calender.(activity.date).get(i).comparable(activity){
-                return true
+        for (TimeTableObject time : this.calender.get(activity.getDate())) {
+            //TODO: compare time and activity after Comparable interface is implemented
+            if (activity.compare(time)) {
+                return true;
             }
         }
-        return true
+        return false;
     }
 
 
