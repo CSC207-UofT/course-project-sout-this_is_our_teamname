@@ -1,5 +1,15 @@
+import java.util.HashMap;
+import java.util.Map;
+
 package TimeTableObjects;
 
 public abstract class TimeTableObject {
-    // Add code here!
+    private Hashmap timeLocation;
+
+    public TimeTableObject(Hashmap timeLocation) {
+        this.timeLocation = timeLocation
+    }
+
+    abstract void getTimeLocation()
+
 }
