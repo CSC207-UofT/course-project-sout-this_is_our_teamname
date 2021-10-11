@@ -10,6 +10,8 @@ public abstract class TimeTableObject {
         this.timeLocation = timeLocation
     }
 
-    abstract void getTimeLocation()
+    abstract void getTimeLocation();
+
+    abstract void toString();
 
 }
