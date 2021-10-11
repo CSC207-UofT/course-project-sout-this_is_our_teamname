@@ -1,8 +1,5 @@
 package TimeTableObjects;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public abstract class TimeTableObject {
     private final String startTime;
     private final String endTime;
@@ -18,15 +15,25 @@ public abstract class TimeTableObject {
         this.location = theLocation;
     }
 
-    public abstract String getStartTime();
+    public String getStartTime(){
+        return this.startTime;
+    }
 
-    public abstract String getEndTime();
+    public String getEndTime() {
+        return endTime;
+    }
 
-    public abstract String getDate();
+    public String getDate() {
+        return date;
+    }
 
-    public abstract String getLocation();
+    public String getDescription() {
+        return description;
+    }
 
-    public abstract String getDescription();
+    public String getLocation() {
+        return location;
+    }
 
     public abstract String toString();
 

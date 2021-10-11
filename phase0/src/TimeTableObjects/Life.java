@@ -1,23 +1,14 @@
 package TimeTableObjects;
 
 public class Life extends TimeTableObject{
-    public Life(String theTime, String theLocation, String theDate) {
-        super(theTime, theLocation, theDate);
-    }
-
-    @Override
-    public String getTime() {
-        return null;
-    }
-
-    @Override
-    public String getLocation() {
-        return null;
+    public Life(String theStartTime, String theEndTime, String theLocation,
+                String theDate) {
+        super(theStartTime, theEndTime, theLocation, theDate);
     }
 
     @Override
     public String toString() {
-        return null;
+        return "";
     }
     // Add code here!
 }

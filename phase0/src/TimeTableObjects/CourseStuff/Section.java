@@ -3,8 +3,6 @@ package TimeTableObjects.CourseStuff;
 import TimeTableObjects.TimeTableObject;
 
 public class Section extends TimeTableObject implements Comparable<Section>{
-    private String time;
-    private String location;
     private final String code;
     private final String professor;
     private final String faculty;
@@ -14,44 +12,44 @@ public class Section extends TimeTableObject implements Comparable<Section>{
      * Construct a TimeTable section for the given time, location, section, professor,
      * faculty and delivery method
      *
-     * @param time The time of this section.
+     * @param startTime The start time of this section.
+     * @param endTime The end time of the section
+     * @param thedate The date of the section
      * @param location The location of this section
      * @param code The code for this course
      * @param professor The professor teaching this course section
      * @param faculty The faculty this course belongs to
      * @param deliveryMethod The delivery method for this course section
      */
-    public Section(String time, String location, String code, String professor,
+    public Section(String startTime, String endTime, String thedate,
+                   String location, String code, String professor,
                    String faculty, String deliveryMethod) {
-        super(time, location);
+        super(startTime, endTime, location, thedate);
         this.code = code;
         this.professor = professor;
         this.faculty = faculty;
         this.deliveryMethod = deliveryMethod;
     }
 
-    /**
-     * Get the time for this course section.
-     *
-     * @return the time this section is at
-     */
-    public String getTime() {
-        return this.time;
-    }
-
-    /**
-     * Get the location for this course section.
-     *
-     * @return the location this section is at
-     */
-    @Override
-    public String getLocation() {
-        return this.location;
-    }
-
     @Override
     public String toString() {
-        return null;
+        return "";
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getProfessor() {
+        return professor;
+    }
+
+    public String getDeliveryMethod() {
+        return deliveryMethod;
+    }
+
+    public String getFaculty() {
+        return faculty;
     }
 
     @Override

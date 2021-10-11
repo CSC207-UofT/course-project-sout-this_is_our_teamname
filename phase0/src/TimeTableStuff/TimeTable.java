@@ -34,7 +34,6 @@ public class TimeTable {
         else {
             return false;
         }
-    }
 
     /**
      * Check if there is a conflict in the timetable with given activity.
@@ -51,8 +50,7 @@ public class TimeTable {
                 return true;
             }
         }
-        return false;
-    }
+
 
     /**
      * Generate the String representation of the calender.
