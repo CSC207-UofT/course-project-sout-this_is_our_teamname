@@ -4,29 +4,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class TimeTableObject {
-    private String startTime;
-    private String endTime;
-    private String date;
-    private String location;
-    private String description;
+    private final String time;
+    private final String location;
+    private final String date;
+    private final String description;
 
-    public TimeTableObject(HashMap timeLocation) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.date = date;
-        this.location = location;
+    public TimeTableObject(String theTime, String theLocation, String theDate) {
+        this.date = theDate;
         this.description = "";
+        this.time = theTime;
+        this.location = theLocation;
     }
 
-    abstract void getStartTime();
+    public abstract String getTime();
 
-    abstract void getEndTime();
-
-    abstract void getDate();
-
-    abstract void getLocation();
-
-    abstract void getDescription();
+    public abstract String getLocation();
 
     public abstract String toString();
 
