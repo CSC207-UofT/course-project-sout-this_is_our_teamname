@@ -23,23 +23,34 @@ public class TimeTable {
 
     /**
      * Schedules the given activity into the appropriate weekday.
-     * @param time the given activity
+     * @param activity the given activity
      * @return true if scheduling is successful, false if there is a conflict
      */
-    public boolean schedule(TimeTableObject time) {
-        // TODO Temporary placement
-        return false;
-    }
+    public boolean schedule(TimeTableObject activity) {
+        if (checkConflicts(activity)) {
+            (this.calender.get(activity.getDate())).add(activity);
+            return true;
+        }
+        else {
+            return false;
+        }
 
     /**
      * Check if there is a conflict in the timetable with given activity.
-     * @param time the given activity
+     * @param activity the given activity
      * @return true if there is no conflict, false otherwise
      */
-    public boolean checkConflicts(TimeTableObject time) {
-        // TODO Temporary Placement
-        return false;
-    }
+    public boolean checkConflicts(TimeTableObject activity) {
+        if ((this.calender.get(activity.getDate()).isEmpty())) {
+            return true;
+        }
+        for (TimeTableObject time : this.calender.get(activity.getDate())) {
+            //TODO: compare time and activity after Comparable interface is implemented
+            if (activity.compare(time)) {
+                return true;
+            }
+        }
+
 
     /**
      * Generate the String representation of the calender.
