@@ -1,5 +1,11 @@
 # Team `sout("This_is_our_teamname")`
 
+## Table of Contents
+* [CRC Cards](phase0/whatever_you_called_your_CRC_model_files/CRC_Cards_README.md)
+* [walkthrough](phase0/walkthrough.md)
+* [specification](phase0/specification.md)
+* [progress_report](phase0/progress_report.md)
+
 ## Replace this README.md!
 
 This is a standard README.md file for you to replace. You'll want to include your own content here!

@@ -25,7 +25,7 @@ the following courses:
    (S/F/both). 
    1. The timetable will schedule a course into the correct slot, which will be 
       either a Course or Life object. In this case, it will be a course object, since it 
-      is MAT133Y1. 
+      is MAT257Y1. 
    2. The timetable will be modified accordingly.
 6. BillyBobJoe will then receive a confirmation on UserInterface that the 
    course has been scheduled. He then can add the next course or life 

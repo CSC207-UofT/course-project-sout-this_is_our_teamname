@@ -2,9 +2,22 @@
 
 In this file, please find our CRC cards. It is categorized into 4 folders:
 * DataCollection
+  * [_CSVScraper](DataCollection/_CSVScraper.md)
+  * [DataGetter](DataCollection/DataGetter.md)
+  * [WebScrapper](DataCollection/WebScraper.md)
 * TimeTableObject
+  * CourseStuff
+    * [Course](TimeTableObjects/CourseStuff/Course.md)
+    * [HCourse](TimeTableObjects/CourseStuff/HCourse.md)
+    * [YCourse](TimeTableObjects/CourseStuff/YCourse.md)
+  * [Life](TimeTableObjects/Life.md)
+  * [TimeTableObject](TimeTableObjects/TimeTableObject.md)
 * TimeTableStuff
+  * [TimeTable](TimeTableStuff/TimeTable.md)
+  * [TimeTableManager](TimeTableStuff/TimeTableManager.md)
 * UserInterface
+  * [UserInterface](UserInterface/UserInterface.md)
+  * [_OperatorInterface](UserInterface/_OperatorInterface.md)
 
 ## UserInterface
 The classes listed under here are the classes that the user and the operators
