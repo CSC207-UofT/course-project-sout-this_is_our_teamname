@@ -30,10 +30,10 @@ public class TimeTable {
         if (checkConflicts(activity)) {
             (this.calender.get(activity.getDate())).add(activity);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
+    }
 
     /**
      * Check if there is a conflict in the timetable with given activity.
@@ -50,6 +50,8 @@ public class TimeTable {
                 return true;
             }
         }
+        return false;
+    }
 
 
     /**
