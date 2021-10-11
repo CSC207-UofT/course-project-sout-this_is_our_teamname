@@ -4,13 +4,17 @@ import java.util.Map;
 package TimeTableObjects;
 
 public abstract class TimeTableObject {
-    private Hashmap timeLocation;
+    private String time;
+    private String location;
 
     public TimeTableObject(Hashmap timeLocation) {
-        this.timeLocation = timeLocation
+        this.time = time;
+        this.location = location;
     }
 
-    abstract void getTimeLocation();
+    abstract void getTime();
+
+    abstract void getLocation();
 
     abstract void toString();
 
