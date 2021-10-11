@@ -1,31 +1,26 @@
-
 package TimeTableObjects;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class TimeTableObject {
-    private String startTime;
-    private String endTime;
-    private String date;
-    private String location;
-    private String description;
+    private final String startTime;
+    private final String endTime;
+    private final String location;
+    private final String date;
+    private final String description;
 
-    public TimeTableObject(Hashmap timeLocation) {
+    public TimeTableObject(String startTime, String endTime, String theLocation, String theDate) {
+        this.date = theDate;
+        this.description = "";
         this.startTime = startTime;
         this.endTime = endTime;
-        this.date = date;
-        this.location = location;
-        this.description = '';
+        this.location = theLocation;
     }
 
-    abstract void getStartTime();
+    public abstract String getTime();
 
-    abstract void getEndTime();
-
-    abstract void getDate();
-
-    abstract void getLocation();
+    public abstract String getLocation();
 
     abstract void getDescription();
 

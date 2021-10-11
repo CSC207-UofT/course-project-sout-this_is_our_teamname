@@ -1,12 +1,14 @@
 package TimeTableObjects.CourseStuff;
 
+import TimeTableObjects.TimeTableObject;
+
 public class Section extends TimeTableObject implements Comparable<Section>{
     private String time;
     private String location;
-    private String code;
-    private String professor;
-    private String faculty;
-    private String deliveryMethod;
+    private final String code;
+    private final String professor;
+    private final String faculty;
+    private final String deliveryMethod;
 
     /**
      * Construct a TimeTable section for the given time, location, section, professor,
@@ -42,10 +44,19 @@ public class Section extends TimeTableObject implements Comparable<Section>{
      *
      * @return the location this section is at
      */
+    @Override
     public String getLocation() {
         return this.location;
     }
 
     @Override
-    public int compareTo(Section anotherSection)
+    public String toString() {
+        return null;
+    }
+
+    @Override
+    public int compareTo(Section anotherSection) {
+        // TODO Implement this!
+        return 0;
+    }
 }
