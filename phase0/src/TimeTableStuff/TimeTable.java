@@ -27,7 +27,7 @@ public class TimeTable {
      * @return true if scheduling is successful, false if there is a conflict
      */
     public boolean schedule(TimeTableObject time) {
-
+        return false;
     }
 
     /**
@@ -36,7 +36,7 @@ public class TimeTable {
      * @return true if there is no conflict, false otherwise
      */
     public boolean checkConflicts(TimeTableObject time) {
-
+        return false;
     }
 
     /**
