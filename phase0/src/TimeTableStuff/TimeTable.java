@@ -27,7 +27,8 @@ public class TimeTable {
      * @return true if scheduling is successful, false if there is a conflict
      */
     public boolean schedule(TimeTableObject time) {
-
+        // TODO Temporary placement
+        return false;
     }
 
     /**
@@ -36,7 +37,8 @@ public class TimeTable {
      * @return true if there is no conflict, false otherwise
      */
     public boolean checkConflicts(TimeTableObject time) {
-
+        // TODO Temporary Placement
+        return false;
     }
 
     /**
