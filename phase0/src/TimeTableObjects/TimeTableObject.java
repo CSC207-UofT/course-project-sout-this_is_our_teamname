@@ -12,11 +12,11 @@ public abstract class TimeTableObject {
 
     /**
      * Construct an activity with time, location and a description.
-     * @param date is the date of the activity.
+     * @param date is the weekday of the activity.
      * @param startTime is the start time of the activity.
-     * @param startTime is the end time of the activity.
-     * @param date is the location of the activity.
-     * @param description is the description of the activity, empty by default.
+     * @param endTime is the end time of the activity.
+     * @param location is the location of the activity.
+     * @param description is the additional information of the activity, empty by default.
      */
     //TODO: How do we add description? Here in the constructor or a seperate method? or are we overriding in subclass?
     public TimeTableObject(String startTime, String endTime, String theLocation, String theDate) {
