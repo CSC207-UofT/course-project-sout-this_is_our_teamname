@@ -13,8 +13,8 @@ public class CSVScraperTest {
 
     @Before
     public void setUp(){
-        CSVScraper a = new CSVScraper("CSC207H1");
-        receivedData = a.getData();
+        CSVScraper a = new CSVScraper();
+        receivedData = a.getData("CSC207H1");
     }
 
     @Test(timeout = 10)

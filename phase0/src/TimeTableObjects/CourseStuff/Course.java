@@ -5,12 +5,12 @@ import java.util.HashMap;
 
 
 public abstract class Course {
-
     private final String code;
     private final String professor;
     private final String faculty;
     private final String deliveryMethod;
-    private final HashMap<String, String> timeLocation;
+    private final String term;
+    private final HashMap<String[], String> timeLocation;
 
     /**
      * Construct a course with the given section, professor, faculty, delivery method,
@@ -21,16 +21,23 @@ public abstract class Course {
      * @param faculty The faculty this course belongs to
      * @param deliveryMethod The delivery method for this course section
      * @param timeLocation The time and corresponding location for this course
-     *                     section
+     *                     section **NEW** The hashmap will be in the form of
+     *                     String[], String, where the string array will hold
+     *                     the date and time information like the following:
+     *                     {date, startTime, endTime}
      */
-    public Course(String section, String professor, String faculty,
+    public Course(String term,
+                  String section,
+                  String professor,
+                  String faculty,
                   String deliveryMethod,
-                  HashMap<String, String> timeLocation) {
+                  HashMap<String[], String> timeLocation) {
         this.code = section;
         this.professor = professor;
         this.faculty = faculty;
         this.deliveryMethod = deliveryMethod;
         this.timeLocation = timeLocation;
+        this.term = term;
     }
 
     /**
@@ -68,14 +75,13 @@ public abstract class Course {
     public String getDeliveryMethod() {
         return deliveryMethod;
     }
-   
+
     /**
      * Get the times and corresponding locations for this Course
      *
      * @return the times and corresponding locations
      */
-    public HashMap<String, String> getTimeLocation() {
-
+    public HashMap<String[], String> getTimeLocation() {
         return this.timeLocation;
     }
 
@@ -89,12 +95,21 @@ public abstract class Course {
                 new StringBuilder(this.code + " with " + this.professor +
                 " in the Faculty of " + this.faculty + "\n");
         details.append("The delivery method is ").append(this.deliveryMethod).append("\n").append("This course meets at ");
-        for (String time : this.timeLocation.keySet()) {
-            details.append(time).append(" at ").append(this.timeLocation.get(time)).append(",");
+        for (String[] time : this.timeLocation.keySet()) {
+            String timeString = time[0] + ", " + time[1] + " - " + time[2];
+            details.append(timeString).append(" at ").append(this.timeLocation.get(time)).append(",");
         }
 
         details.deleteCharAt(details.length() - 1);
         return details.toString();
     }
 
+    /** Split the course into section objects
+     *
+     * @return A list of section objects
+     */
+    public Section[] split(){
+        // TODO Implement me!
+        return new Section[]{};
+    }
 }

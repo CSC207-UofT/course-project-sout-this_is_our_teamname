@@ -1,14 +1,16 @@
 package TimeTableObjects.CourseStuff;
 
 import java.util.HashMap;
+import ConstantsAndExceptions.Constants;
 
 public class YCourse extends Course{
-    private String term;
-
-    public YCourse(String code, String professor, String faculty,
+    public YCourse(String theCourseCode,
+                   String theProfessor,
+                   String faculty,
                    String deliveryMethod,
-                   HashMap<String, String> timeLocation) {
-        super(code, professor, faculty, deliveryMethod, timeLocation);
-        this.term = "Y";
+                   HashMap<String[], String> timeLocation) {
+        super(Constants.YEAR, theCourseCode, theProfessor, faculty,
+                deliveryMethod,
+                timeLocation);
     }
 }
