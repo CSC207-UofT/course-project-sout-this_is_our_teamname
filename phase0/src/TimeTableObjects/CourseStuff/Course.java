@@ -40,10 +40,57 @@ public abstract class Course {
      * @return a Hashmap with the keys as the times and the values as the cprresponding
      * location for this course section
      */
+
+    /**
+     * Get the Course code for this Course
+     *
+     * @return the course code
+     */
+    public String getCode() {
+        return this.code;
+    }
+
+    /**
+     * Get the Professor teaching this Course
+     *
+     * @return the name of the Professor
+     */
+    public String getProfessor() {
+        return professor;
+    }
+
+    /**
+     * Get the Faculty this course belongs to
+     *
+     * @return the Faculty this course belongs to
+     */
+    public String getFaculty() {
+        return faculty;
+    }
+
+    /**
+     * Get the delivery method this course is delivered in
+     *
+     * @return the delivery method for this course
+     */
+    public String getDeliveryMethod() {
+        return deliveryMethod;
+    }
+
+    /**
+     * Get the times and corresponding locations for this Course
+     *
+     * @return the times and corresponding locations
+     */
     public Hashmap getTimeLocation() {
         return this.timeLocation;
     }
 
+    /**
+     * Return the details of this Course
+     *
+     * @return the details of this course
+     */
     public String toString() {
         Stringbuilder details = new Stringbuilder(this.code + " with " + this.professor. +
                 " in the Faculty of " + this.faculty + "\n");
