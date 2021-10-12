@@ -2,6 +2,8 @@ package TimeTableStuff;
 
 import TimeTableObjects.CourseStuff.Course;
 import TimeTableObjects.CourseStuff.Section;
+
+import TimeTableObjects.TimeTableObject;
 import ConstantsAndExceptions.Constants;
 import TimeTableObjects.Life;
 

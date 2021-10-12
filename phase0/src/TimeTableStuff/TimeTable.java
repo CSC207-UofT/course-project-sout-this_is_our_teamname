@@ -50,9 +50,10 @@ public class TimeTable {
         }
         for (TimeTableObject time : this.calender.get(activity.getDate())) {
             //TODO: compare time and activity after Comparable interface is implemented
-            if (activity.compare(time)) {
-                return true;
-            }
+//            if (activity.compare(time)) {
+//                return true;
+//            }
+            return true;
         }
         return false;
     }

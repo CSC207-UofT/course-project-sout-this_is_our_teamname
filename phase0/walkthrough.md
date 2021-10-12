@@ -10,7 +10,7 @@ Let's say that `MAT257Y1` has sections:
 * TUT0101 T 3-5
 * TUT0102 R 3-5
 
-(If you don't know, M = Monday, T = Tuesday, W = Wednesday, R = Thursday, 
+(Where, M = Monday, T = Tuesday, W = Wednesday, R = Thursday, 
 F = Friday and assume all times are PM for simplicity)
 
 ## The Walk through
@@ -23,42 +23,43 @@ F = Friday and assume all times are PM for simplicity)
    will not be implemented, and the reader automatically set to CSVReader, but 
    for the rest of the project, we hope to use WebScraper.**
 
-2. BillyBobJoe searches for the first course, which happens to be `MAT257Y1` in 
+2. BillyBobJoe searches for the first course, which is `MAT257Y1` in 
    UserInterface class. He will first select in the UserInterface that he is 
    scheduling a Course Object and not a life object. (See the Walk Through 2 
    below for scheduling a Life object.) He then will type the course code in 
    full in the search menu.
 
 3. The `UserInterface` class then will request the data from the DataGathering 
-   class set by the instance `dataSource`. The query is then sent to the 
+   class by using the instance `dataSource`. The query is then sent to the 
    DataGathering class which was set by the `OperatorInterface`. The user 
    **cannot** change this setting.
 
 4. The DataGathering class (whatever it is) then collects and sorts all the
-   course information as a HashMap of course objects **where each `Course` 
-   object only holds one section (LEC/TUT/PRA) and all the times and 
-   information relating to that one section. The course objects (HCourse or 
-   YCourse) will be created based off of the terms for the course read from 
-   the source. All the courses are then stored in a `HashMap<String, 
-   Course>`**, where each key is the **section name** and the value is the 
-   **course object**. For instance, for our `MAT257Y1` course then the 
-   HashMap would look like the following:
+   course information as a `HashMap<String, Course>` **where 
+   each `Course` object only holds one section (LEC/TUT/PRA) and all the 
+   times and information relating to that one section. The course objects 
+   (`HCourse` or `YCourse`) will be created based off of the terms for the 
+   course read from the source. All the courses are then stored in a 
+   `HashMap<String, Course>`**, where each key is the **section name** and 
+   the value is the **course object**. For instance, for our `MAT257Y1` 
+   course then the HashMap would look like the following:
 ```
 {LEC0101: <the YCourse object for LEC0101>, LEC0102: <the YCourse object for 
 LEC0102>, TUT0101: <the YCourse object for TUT0101>, TUT0102: <the YCourse 
 object for TUT0102>}
 ```
-   The course object will hold **all** the times of the lectures of the 
+   The `Course` object will hold **all** the times of the lectures of the 
    courses, as well as **the locations of the classes at that time**. For 
    `MAT257Y1`, each course block will hold the Times and Locations as an 
-   `HashMap<String, String>`. For our example above, say all three times of 
+   `HashMap<String[], String>`. For our example above, say all three times of 
    LEC0101 occur at room MY150 (why not?). Then, the YCourse object will 
    hold the following in terms of timeLocation (Note, we are just being 
    hand-wavy here. The formatting of the strings may not be as follows, but 
    the idea should be the same):
 ```
-HashMap<String, String> timeLocation = {Monday_2 - 3: MY150, Wednesday_2 - 3: 
-MY150, Friday_2 - 3: MY150}
+HashMap<String[], String> timeLocation = {{"Monday", "2:00PM", "3:00PM"}: 
+MY150, "Wednesday", "2:00PM", "3:00PM": MY150, {"Friday", "2:OOPM", "3:00PM"}
+: MY150}
 ```
    This is because for some courses, they occur at different locations at 
    different times.  
@@ -81,10 +82,10 @@ MY150, Friday_2 - 3: MY150}
    the user then would be prompted to choose another from the HashMap.
 
 7. The `TimeTableManager` will look for the term of the course **which has 
-   been stored in the course object**. It will then use a **`split` method 
-   in the course object to get an array of `section` objects that only 
-   stores one time and one location of a course**. In the example of 
-   `MAT257Y1`, we would have a **section array of 6 elements**:
+   been stored in the course object**. The TimeTableManager will then use a 
+   **`split` method OF the `Course` object to get an array of `Section` 
+   objects that only stores one time and one location of a course**. In the 
+   example of `MAT257Y1`, we would have a **`Section` array of 6 elements**:
    1. Section with time and date stored as MONDAY 2 - 3 for FALL 
    2. Section with time and date stored as WEDNESDAY 2 - 3 for FALL
    3. Section with time and date stored as FRIDAY 2 - 3 for FALL

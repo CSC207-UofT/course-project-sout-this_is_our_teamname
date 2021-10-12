@@ -5,6 +5,7 @@
 * [walkthrough](phase0/walkthrough.md)
 * [specification](phase0/specification.md)
 * [progress_report](phase0/progress_report.md)
+* [skeleton_program](phase0/src)
 
 ## Replace this README.md!
 
