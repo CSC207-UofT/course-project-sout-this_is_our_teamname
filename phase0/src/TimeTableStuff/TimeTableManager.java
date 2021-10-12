@@ -1,6 +1,7 @@
 package TimeTableStuff;
 
-import UserInterface.UserInterface;
+import TimeTableObjects.CourseStuff.Course;
+import TimeTableObjects.CourseStuff.Section;
 
 // Importing HashMap class
 import java.util.HashMap;
@@ -50,4 +51,21 @@ public class TimeTableManager {
         // TODO What if the timetable is not found.
     }
 
+    /**
+     * Get the course from interface and schedule it to the corresponding timetable(s).
+     *
+     * @param Course object passed from user interface
+     */
+    public void schedule(Course c) {
+        Section section = new Section(c.getstarttime(), c.getendtime(), c.getthedate, c.getlocation,
+                c.getcode, c.getprofessor(), c.getfaculty(), c.getdeliverymethod);
+        if (c.getterm().isequal("Fall")) {
+            timetables.get("Fall").schedule(section);
+        } if (c.getterm().isequal("Winter")) {
+            timetables.get("Winter").schedule(section);
+        } else {
+            timetables.get("Fall").schedule(section);
+            timetables.get("Winter").schedule(section);
+        }
+    }
 }
