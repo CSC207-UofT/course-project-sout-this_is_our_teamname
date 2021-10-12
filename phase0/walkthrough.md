@@ -22,15 +22,18 @@ F = Friday and assume all times are PM for simplicity)
    of the DataGetter class. **For the purpose of the Phase 0, this is 
    will not be implemented, and the reader automatically set to CSVReader, but 
    for the rest of the project, we hope to use WebScraper.**
+
 2. BillyBobJoe searches for the first course, which happens to be `MAT257Y1` in 
    UserInterface class. He will first select in the UserInterface that he is 
    scheduling a Course Object and not a life object. (See the Walk Through 2 
    below for scheduling a Life object.) He then will type the course code in 
    full in the search menu.
+
 3. The `UserInterface` class then will request the data from the DataGathering 
-   class by creating a DataGathering object. The query is then sent to the 
+   class set by the instance `dataSource`. The query is then sent to the 
    DataGathering class which was set by the `OperatorInterface`. The user 
    **cannot** change this setting.
+
 4. The DataGathering class (whatever it is) then collects and sorts all the
    course information as a HashMap of course objects **where each `Course` 
    object only holds one section (LEC/TUT/PRA) and all the times and 
@@ -58,8 +61,9 @@ HashMap<String, String> timeLocation = {Monday_2 - 3: MY150, Wednesday_2 - 3:
 MY150, Friday_2 - 3: MY150}
 ```
    This is because for some courses, they occur at different locations at 
-   different times.
-5. The `UserInterface` retrieves the HashMap from the DataGathering class and 
+   different times.  
+
+6. The `UserInterface` retrieves the HashMap from the DataGathering class and 
    prompts the user to select a course object by printing each key and 
    perhaps details of the section obtained from the values. The user then 
    **types** the course into the command line (at least for Phase 0) to 
@@ -75,6 +79,7 @@ MY150, Friday_2 - 3: MY150}
    **NOTE THE HASHMAP OF COURSES SHOULD NOT DELETED AFTER 
    THIS STEP**. This is so if the timetable is unable to schedule the course,
    the user then would be prompted to choose another from the HashMap.
+
 7. The `TimeTableManager` will look for the term of the course **which has 
    been stored in the course object**. It will then use a **`split` method 
    in the course object to get an array of `section` objects that only 
@@ -92,6 +97,7 @@ MY150, Friday_2 - 3: MY150}
    The `TimeTableManager` then **sends this information to the correct 
 timetable based on the term stored from above** by sending it through the 
    **`Schedule` Method of Class TimeTable**.
+
 8. The **TimeTable Object** will then find the correct location to put the 
    course in its storage space, which will be a `HashMap<String, String>`, 
    where the keys are the time and **the values are the `TimeTableObject`s**.
@@ -103,6 +109,7 @@ timetable based on the term stored from above** by sending it through the
    been successful and that they should try again. **For simplicity in Phase 
    0, we will assume all courses are scheduled correctly and there are no 
    conflicts**
+
 9. Let's say the course was added successfully. BillyBobJoe will then receive a 
    confirmation on UserInterface that the course has been scheduled. He then 
    can add the next course or life object into his timetable.
@@ -124,6 +131,7 @@ Please write a brief description of your life object: Theremin Orchestra
    information and send it to the TimeTableManager through the `Schedule` 
    method. **ONCE AGAIN, PLEASE NOTE THAT THE `schedule` METHOD IN 
    `TimeTableManager` IS OVERLOADED**.
+
 3. The `TimeTableManager` then **sends this information to the correct 
    timetable based on the term stored from above** by sending it through the 
    **`Schedule` Method of Class TimeTable**. 
@@ -138,6 +146,7 @@ Please write a brief description of your life object: Theremin Orchestra
    that it has not been successful and that they should try again. **For 
    simplicity in Phase 0, we will assume all objects are scheduled correctly 
    and there are no conflicts**
+
 5. Let's say the life object was added successfully. BillyBobJoe will then 
    receive a confirmation on UserInterface that the life has been scheduled. He 
    then can add the next course or life object into his timetable.
