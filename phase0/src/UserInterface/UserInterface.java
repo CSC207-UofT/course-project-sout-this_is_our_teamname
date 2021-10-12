@@ -34,7 +34,9 @@ public class UserInterface {
     }
 
     /**
+     * Runs the UserInterface.
      *
+     * @return An array of timetables.
      */
     public TimeTable[] run(){
         TimeTableManager manager = new TimeTableManager();
@@ -86,8 +88,8 @@ public class UserInterface {
                         "life object: ");
                 String lifeDescription = lifeDescriptionScanner.nextLine();
 
-                Life selectedObject = new Life(lifeSpliced[0], lifeSpliced[1]
-                        , lifeLocation, lifeDescription);
+                TimeTableObject selectedObject = new Life(lifeSpliced[0],
+                        lifeSpliced[1], lifeLocation, lifeDescription);
                 // You can totally change the name of this method if you
                 // want!. Make sure, however, it is overloaded.
                 manager.schedule(selectedObject);

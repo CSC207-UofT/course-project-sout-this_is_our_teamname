@@ -74,7 +74,7 @@ public class TimeTableManager {
 //        }
     }
 
-    public void schedule(Life obj){
+    public void schedule(TimeTableObject obj){
         // TODO -Matthew I just added this so UserInterface would work.
         //  Please Implement
     }
