@@ -2,8 +2,11 @@ package TimeTableStuff;
 
 import TimeTableObjects.CourseStuff.Course;
 import TimeTableObjects.CourseStuff.Section;
+import ConstantsAndExceptions.Constants;
+import TimeTableObjects.Life;
 
 // Importing HashMap class
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TimeTableManager {
@@ -54,18 +57,34 @@ public class TimeTableManager {
     /**
      * Get the course from interface and schedule it to the corresponding timetable(s).
      *
-     * @param Course object passed from user interface
+     * @param c a Course object passed from user interface
      */
     public void schedule(Course c) {
-        Section section = new Section(c.getstarttime(), c.getendtime(), c.getthedate, c.getlocation,
-                c.getcode, c.getprofessor(), c.getfaculty(), c.getdeliverymethod);
-        if (c.getterm().isequal("Fall")) {
-            timetables.get("Fall").schedule(section);
-        } if (c.getterm().isequal("Winter")) {
-            timetables.get("Winter").schedule(section);
+        ArrayList<Section> list = c.split();
+        if (c.getTerm().isequal(Contants.FALL)) {
+            for (Section x : list) {
+                timetables.get("Fall").schedule(x);
+            }
+        } if (c.getTerm().isequal(Contants.WINTER)) {
+            for (Section x : list) {
+                timetables.get("Winter").schedule(x);
+            }
         } else {
-            timetables.get("Fall").schedule(section);
-            timetables.get("Winter").schedule(section);
+            for (Section x : list) {
+                timetables.get("Fall").schedule(x);
+                timetables.get("Winter").schedule(x);
+            }
         }
     }
+
+    /**
+     * Get the life from interface and schedule it to the corresponding timetable(s).
+     *
+     * @param l a Life object passed from user interface
+     */
+    public void schedule(Life l) {
+        timetables.get("Fall").schedule(l);
+        timetables.get("Winter").schedule(l);
+    }
+
 }
