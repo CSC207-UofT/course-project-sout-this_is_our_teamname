@@ -1,6 +1,7 @@
 package TimeTableStuff;
 
 import TimeTableObjects.TimeTableObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,7 +10,7 @@ import java.util.HashMap;
  * it will still be stored, and a conflict warning will be sent back prmopting user to take action or ignore it.
  */
 public class TimeTable {
-    //TODO decide what should be public and private, too many things shown to the user!
+
     private HashMap<String, ArrayList<TimeTableObject>> calender;
 
     public TimeTable() {
@@ -48,21 +49,15 @@ public class TimeTable {
             return true;
         }
         for (TimeTableObject time : this.calender.get(activity.getDate())) {
-            //TODO: uncomment, compare time and activity after Comparable interface is implemented
-            if (activity.compare(time)) {
-                return true;
-            }
+            //TODO: compare time and activity after Comparable interface is implemented
+//            if (activity.compare(time)) {
+//                return true;
+//            }
+            return true;
         }
         return false;
     }
 
-    /**
-     * Grabs the calendar.
-     * @return the calendar.
-     */
-    public HashMap<String, ArrayList<TimeTableObject>> getCalender() {
-        return calender;
-    }
 
     /**
      * Generate the String representation of the calender.

@@ -36,22 +36,6 @@ public class Section extends TimeTableObject implements Comparable<Section>{
         return "";
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public String getProfessor() {
-        return professor;
-    }
-
-    public String getDeliveryMethod() {
-        return deliveryMethod;
-    }
-
-    public String getFaculty() {
-        return faculty;
-    }
-
     /**
      * Get the Course code for this Course
      *

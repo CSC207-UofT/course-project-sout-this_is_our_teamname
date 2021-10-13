@@ -1,5 +1,6 @@
 package DataCollection;
 
+import ConstantsAndExceptions.Constants;
 import TimeTableObjects.CourseStuff.Course;
 import TimeTableObjects.CourseStuff.HCourse;
 import TimeTableObjects.CourseStuff.YCourse;
@@ -19,11 +20,11 @@ import java.util.Scanner;
  */
 public class CSVScraper extends DataGetter {
     // Some constants to sort the file
-    final static int SECTION = 0;
-    final static int TIME = 1;
-    final static int LOCATION = 2;
-    final static int INSTRUCTOR = 3;
-    final static int DELIVERY = 4;
+    private final static int SECTION = 0;
+    private final static int TIME = 1;
+    private final static int LOCATION = 2;
+    private final static int INSTRUCTOR = 3;
+    private final static int DELIVERY = 4;
 
     /**
      * Constructor of the CSVScraper. Reads and filters the data correctly
@@ -31,12 +32,11 @@ public class CSVScraper extends DataGetter {
      *
      * @param course_name the name of the course
      */
-    public CSVScraper(String course_name){
-        super(course_name);
-
+    @Override
+    public void CalibrateData(String course_name){
         // Gets an arraylist of all the lines of the file.
         String fileName = "phase0\\src\\DataCollection\\SampleDirectory\\"
-                + this.course_name + ".csv";
+                + course_name + ".csv";
         ArrayList<String> fileData = readFile(fileName);
 
         // Gets the admin things from the Header. The header is formatted in
@@ -103,22 +103,53 @@ public class CSVScraper extends DataGetter {
      * @param currInstructor the instructor of the course section
      * @param currDelivery the delivery method of the course.
      */
-    private void addToData(String term, String currname, String faculty,
-                           HashMap<String, String> currTimeLocation,
-                           String currInstructor, String currDelivery){
-        if (term.contains("Year")){
-            this.data.put(currname, new YCourse(currname, currInstructor,
-                    faculty, currDelivery, currTimeLocation));
-        } else{
-            this.data.put(currname, new HCourse(currname, currInstructor,
-                    faculty, currDelivery, currTimeLocation, term));
+    private void addToData(String term,
+                           String currname,
+                           String faculty,
+                           HashMap<String[], String> currTimeLocation,
+                           String currInstructor,
+                           String currDelivery){
+        Course theCourse;
+        if (term.contains(Constants.YEAR)){
+            theCourse = new YCourse(currname, currInstructor, faculty,
+                    currDelivery, currTimeLocation);
+        } else {
+            theCourse = new HCourse(currname, currInstructor, faculty,
+                    currDelivery, currTimeLocation, term);
+        }
+        placeToData(currname, theCourse);
+    }
+
+    /**
+     * Splits the line into the date, start time, end time in that order
+     * @param line the line of the date, start, and end times
+     * @return the string array of length 3 of the date, start time, and end
+     * time
+     */
+    private String[] splitDateTime(String line){
+        String[] splicedInfo = line.split(" ");
+
+        if (splicedInfo.length == 4 && splicedInfo[2].equals("-")) {
+            return new String[]{splicedInfo[0], splicedInfo[1], splicedInfo[3]};
+        } else {
+            return new String[]{Constants.TBA, Constants.TBA, Constants.TBA};
         }
     }
 
+    /**
+     * Filters the data and searches for the required informaton. Then, adds
+     * the data into the data structure.
+     *
+     * Precondition: The file is structured correctly.
+     *
+     * @param theTerm The Term of the course
+     * @param theFaculty The Faculty offering the course
+     * @param theFileData the Arraylist of all the lines of the file.
+     */
     private void filterData(String theTerm, String theFaculty,
                                    ArrayList<String[]> theFileData){
         String currName = "";
-        HashMap<String, String> currTimeLocation = new HashMap<>();
+        HashMap<String[], String> currTimeLocation = new HashMap<>();
         String currInstructor = "";
         String currDelivery = "";
         for (String[] splittedLine : theFileData){
@@ -132,15 +163,15 @@ public class CSVScraper extends DataGetter {
                     currDelivery = splittedLine[DELIVERY];
                     currTimeLocation = new HashMap<>();
                 }
-                currTimeLocation.put(splittedLine[TIME],
+                currTimeLocation.put(splitDateTime(splittedLine[TIME]),
                         splittedLine[LOCATION]);
             }
         }
     }
 
     public static void main(String[] args) {
-        CSVScraper a = new CSVScraper("APS113Y1");
-        HashMap<String, Course> got = a.getData();
+        CSVScraper a = new CSVScraper();
+        HashMap<String, Course> got = a.getData("CSC207H1");
         System.out.println(got);
     }
 }
