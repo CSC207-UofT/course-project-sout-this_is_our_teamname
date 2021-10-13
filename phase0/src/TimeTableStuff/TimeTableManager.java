@@ -84,7 +84,7 @@ public class TimeTableManager {
      *
      * @param l a Life object passed from user interface
      */
-    public void schedule(TimeTableObject l) {
+    public void schedule(Life l) {
         timetables.get(Constants.FALL).schedule(l);
         timetables.get(Constants.WINTER).schedule(l);
     }
