@@ -8,10 +8,8 @@ import TimeTableObjects.TimeTableObject;
 import TimeTableStuff.TimeTable;
 import TimeTableStuff.TimeTableManager;
 
-import javax.lang.model.type.UnionType;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.concurrent.Callable;
 
 public class UserInterface {
     private static DataGetter dataSource;
@@ -43,8 +41,8 @@ public class UserInterface {
 
         // As long as the program is running
         boolean running = true;
-        while(running) {
 
+        while(running) {
             Scanner objectScanner = new Scanner(System.in);
             System.out.println("Please enter what type of object " +
                     "(course/life): ");
@@ -53,7 +51,7 @@ public class UserInterface {
             if (schedulingObject.equals("course")){
                 // User enters the course they want to search
                 Scanner scanner = new Scanner(System.in);
-                System.out.println("Enter Course: ");
+                System.out.println("Enter Course Name: ");
                 String course = scanner.nextLine();
 
                 // Gets the data from the datasource
@@ -62,7 +60,7 @@ public class UserInterface {
 
                 // The user enters the section they want to search
                 Scanner userChoice = new Scanner(System.in);
-                System.out.println("Please choose one of the sections: ");
+                System.out.println();
                 String selected = userChoice.nextLine();
 
                 Course selectedCourse = course_data.get(selected);
@@ -70,34 +68,30 @@ public class UserInterface {
             } else {
                 // User enters the time they want to search
                 Scanner lifeTimeScanner = new Scanner(System.in);
-                System.out.println("Please select the time of your life " +
-                        "object (start-end; no spaces!): ");
+                System.out.println();
                 String lifeTime = lifeTimeScanner.nextLine();
 
                 String[] lifeSpliced = lifeTime.split("-");
 
                 // User enters the location
                 Scanner lifeLocationScanner = new Scanner(System.in);
-                System.out.println("Please enter the location of the life " +
-                        "object");
+                System.out.println();
                 String lifeLocation = lifeLocationScanner.nextLine();
 
                 // User enters the time they want
                 Scanner lifeDescriptionScanner = new Scanner(System.in);
-                System.out.println("Please write a brief description of your " +
-                        "life object: ");
+                System.out.println();
                 String lifeDescription = lifeDescriptionScanner.nextLine();
 
                 TimeTableObject selectedObject = new Life(lifeSpliced[0],
                         lifeSpliced[1], lifeLocation, lifeDescription);
-                // You can totally change the name of this method if you
-                // want!. Make sure, however, it is overloaded.
+
                 manager.schedule(selectedObject);
             }
 
             // User types in the section they want to search
             Scanner continueQuestion = new Scanner(System.in);
-            System.out.println("Do you want to add another course? " +
+            System.out.println("Do you want to add another object? " +
                     "(true/false):");
             String continueResponse = continueQuestion.nextLine();
 

@@ -62,14 +62,14 @@ public class TimeTableManager {
      * @param c a Course object passed from user interface
      */
     public void schedule(Course c) {
-        ArrayList<Section> list = c.split();
-        if (c.getTerm().isequal(Contants.FALL)) {
+        Section[] list = c.split();
+        if (c.getTerm().equals(Constants.FALL)) {
             for (Section x : list) {
-                timetables.get("Fall").schedule(x);
+                timetables.get(Constants.FALL).schedule(x);
             }
-        } if (c.getTerm().isequal(Contants.WINTER)) {
+        } if (c.getTerm().equals(Constants.WINTER)) {
             for (Section x : list) {
-                timetables.get("Winter").schedule(x);
+                timetables.get(Constants.FALL).schedule(x);
             }
         } else {
             for (Section x : list) {
@@ -84,9 +84,22 @@ public class TimeTableManager {
      *
      * @param l a Life object passed from user interface
      */
-    public void schedule(Life l) {
-        timetables.get("Fall").schedule(l);
-        timetables.get("Winter").schedule(l);
+    public void schedule(TimeTableObject l) {
+        timetables.get(Constants.FALL).schedule(l);
+        timetables.get(Constants.WINTER).schedule(l);
     }
 
+    /**
+     * Returns an array of timetables with all the timetables.
+     *
+     * @return an array of timetables with all the timetables
+     */
+    public TimeTable[] getAllTimeTables(){
+        TimeTable[] theTimes = new TimeTable[this.timetables.keySet().size()];
+        int i = 0;
+        for (String term : this.timetables.keySet()){
+            theTimes[i] = this.timetables.get(term);
+        }
+        return theTimes;
+    }
 }
