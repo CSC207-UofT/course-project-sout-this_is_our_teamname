@@ -49,7 +49,7 @@ public class TimeTable {
             return true;
         }
         for (TimeTableObject time : this.calender.get(activity.getDate())) {
-            //TODO: compare time and activity after Comparable interface is implemented
+            //TODO: uncomment, compare time and activity after Comparable interface is implemented
 //            if (activity.compare(time)) {
 //                return true;
 //            }
@@ -58,6 +58,13 @@ public class TimeTable {
         return false;
     }
 
+    /**
+     * Grabs the calendar
+     * @return calendar
+     */
+    public HashMap<String, ArrayList<TimeTableObject>> getCalender() {
+        return calender;
+    }
 
     /**
      * Generate the String representation of the calender.
