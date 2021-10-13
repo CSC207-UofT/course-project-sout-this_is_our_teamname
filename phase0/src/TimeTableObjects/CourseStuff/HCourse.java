@@ -12,4 +12,12 @@ public class HCourse extends Course {
         super(code, professor, faculty, deliveryMethod, timeLocation);
         this.term = term;
     }
+
+    /**
+     * Get the term for this Course
+     *
+     * @return the term for this course
+     */
+    public String getTerm() {
+        return this.term;
 }

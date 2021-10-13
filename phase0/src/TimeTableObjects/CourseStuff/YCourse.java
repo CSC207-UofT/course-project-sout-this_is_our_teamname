@@ -11,4 +11,12 @@ public class YCourse extends Course{
         super(code, professor, faculty, deliveryMethod, timeLocation);
         this.term = "Y";
     }
+
+    /**
+     * Get the term for this Course
+     *
+     * @return the term for this course
+     */
+    public String getTerm() {
+        return this.term;
 }
