@@ -13,4 +13,12 @@ public class YCourse extends Course{
                 deliveryMethod,
                 timeLocation);
     }
+
+    /**
+     * Get the term for this Course
+     *
+     * @return the term for this course
+     */
+    public String getTerm() {
+        return this.term;
 }
