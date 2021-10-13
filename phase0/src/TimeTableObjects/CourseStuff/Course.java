@@ -2,6 +2,7 @@ package TimeTableObjects.CourseStuff;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 
 public abstract class Course {
@@ -102,6 +103,10 @@ public abstract class Course {
 
         details.deleteCharAt(details.length() - 1);
         return details.toString();
+    }
+
+    public String getTerm() {
+        return term;
     }
 
     /** Split the course into section objects
