@@ -19,4 +19,5 @@ public class HCourse extends Course {
      */
     public String getTerm() {
         return this.term;
+    }
 }
