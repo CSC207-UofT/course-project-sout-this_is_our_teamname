@@ -5,16 +5,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.sql.Time;
-import java.util.Date;
 
 
-public class Course implements Sliceable<Section> {
+public class Course implements Sliceable<Section>{
     private final String code;
     private final String professor;
     private final String faculty;
     private final String deliveryMethod;
-    private final HashMap<ArrayList<Object>, String> timeLocation;
     private final String term;
+    private final HashMap<ArrayList<Object>, String> timeLocation;
 
     /**
      * Construct a course with the given section, professor, faculty, delivery method,
@@ -26,7 +25,7 @@ public class Course implements Sliceable<Section> {
      * @param deliveryMethod The delivery method for this course section
      * @param timeLocation The time and corresponding location for this course
      *                     section **NEW** The hashmap will be in the form of
-     *                     ArrayList<Object>, String, where the array will hold
+     *                     String[], String, where the string array will hold
      *                     the date and time information like the following:
      *                     {date, startTime, endTime}
      */
@@ -99,27 +98,22 @@ public class Course implements Sliceable<Section> {
 //                new StringBuilder(this.code + " with " + this.professor +
 //                " in the Faculty of " + this.faculty + "\n");
 //        details.append("The delivery method is ").append(this.deliveryMethod).append("\n").append("This course meets at ");
-//        for (ArrayList<Time time : this.timeLocation.keySet()) {
+//        for (String[] time : this.timeLocation.keySet()) {
 //            String timeString = time[0] + ", " + time[1] + " - " + time[2];
 //            details.append(timeString).append(" at ").append(this.timeLocation.get(time)).append(",");
 //        }
 //
 //        details.deleteCharAt(details.length() - 1);
 //        return details.toString();
-          //TODO: Fix this.
+        // TODO : fix this
         return "";
     }
 
-    /**
-     * Get the term for this Course
-     *
-     * @return the term for this course
-     */
     public String getTerm() {
         return term;
     }
 
-    /** Split the course into section objects
+     /** Split the course into section objects
      *
      * @return A list of section objects
      */

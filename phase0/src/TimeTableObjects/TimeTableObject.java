@@ -1,6 +1,4 @@
 package TimeTableObjects;
-
-import java.util.TreeMap;
 import java.sql.Time;
 
 /**
@@ -64,7 +62,14 @@ public abstract class TimeTableObject {
      * Get the description for the activity
      * @return  description
      */
+    public String getDescription() {
+        return description;
+    }
 
+    /**
+     * Get the location for the activity
+     * @return  location
+     */
     public String getLocation() {
         return location;
     }
