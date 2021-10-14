@@ -3,22 +3,20 @@ package TimeTableStuff;
 import TimeTableObjects.CourseStuff.Course;
 import TimeTableObjects.CourseStuff.Section;
 
-import TimeTableObjects.TimeTableObject;
 import ConstantsAndExceptions.Constants;
 import TimeTableObjects.Life;
 
 // Importing HashMap class
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TimeTableManager {
-    private HashMap<String, TimeTable> timetables;
+    private final HashMap<String, TimeTable> timetables;
 
     /**
      * Creates a new TimeTableManager with two default TimeTables for Fall and Winter.
      */
     public TimeTableManager() {
-        this.timetables = new HashMap<String, TimeTable>(){{
+        this.timetables = new HashMap<>(){{
             put("Fall", new TimeTable());
             put("Winter", new TimeTable());
         }};
