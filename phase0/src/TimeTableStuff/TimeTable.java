@@ -1,6 +1,6 @@
 package TimeTableStuff;
 
-import TimeTableObjects.TimeTableObject;
+import TimeTableObjects.Parents.InputData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 public class TimeTable {
 
-    private HashMap<String, ArrayList<TimeTableObject>> calender;
+    private final HashMap<String, ArrayList<InputData>> calender;
 
     public TimeTable() {
         this.calender = new HashMap<>() {{
@@ -30,7 +30,7 @@ public class TimeTable {
      * @param activity the given activity
      * @return true if scheduling is successful, false if there is a conflict
      */
-    public boolean schedule(TimeTableObject activity) {
+    public boolean schedule(InputData activity) {
         if (checkConflicts(activity)) {
             (this.calender.get(activity.getDate())).add(activity);
             return true;
@@ -44,11 +44,11 @@ public class TimeTable {
      * @param activity the given activity
      * @return true if there is no conflict, false otherwise
      */
-    public boolean checkConflicts(TimeTableObject activity) {
+    public boolean checkConflicts(InputData activity) {
         if ((this.calender.get(activity.getDate()).isEmpty())) {
             return true;
         }
-        for (TimeTableObject time : this.calender.get(activity.getDate())) {
+        for (InputData time : this.calender.get(activity.getDate())) {
             //TODO: uncomment, compare time and activity after Comparable interface is implemented
 //            if (activity.compare(time)) {
 //                return true;
@@ -62,7 +62,7 @@ public class TimeTable {
      * Grabs the calendar
      * @return calendar
      */
-    public HashMap<String, ArrayList<TimeTableObject>> getCalender() {
+    public HashMap<String, ArrayList<InputData>> getCalender() {
         return calender;
     }
 
@@ -74,7 +74,7 @@ public class TimeTable {
         HashMap<String, ArrayList<String>> times = new HashMap<>();
         for (String day : this.calender.keySet()) {
             ArrayList<String> sections = new ArrayList<>();
-            for (TimeTableObject time : this.calender.get(day)) {
+            for (InputData time : this.calender.get(day)) {
                 sections.add(time.toString());
             }
             times.put(day, sections);

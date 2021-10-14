@@ -1,8 +1,6 @@
-package TimeTableObjects.CourseStuff;
+package TimeTableObjects;
 
-import TimeTableObjects.TimeTableObject;
-
-public class Section extends TimeTableObject implements Comparable<Section>{
+public class Section extends TimeTableObject implements java.lang.Comparable<Section> {
     private final String code;
     private final String professor;
     private final String faculty;

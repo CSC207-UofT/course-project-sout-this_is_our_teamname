@@ -1,11 +1,13 @@
-package TimeTableObjects.CourseStuff;
+package TimeTableObjects;
+
+import TimeTableObjects.Parents.SearchingData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 
 
-public abstract class Course {
+public class Course extends SearchingData {
     private final String code;
     private final String professor;
     private final String faculty;

@@ -1,14 +1,13 @@
 package TimeTableStuff;
 
-import TimeTableObjects.CourseStuff.Course;
-import TimeTableObjects.CourseStuff.Section;
+import TimeTableObjects.Course;
+import TimeTableObjects.Section;
 
-import TimeTableObjects.TimeTableObject;
+import TimeTableObjects.Parents.InputData;
+import TimeTableObjects.Parents.SearchingData;
 import ConstantsAndExceptions.Constants;
-import TimeTableObjects.Life;
 
 // Importing HashMap class
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TimeTableManager {
@@ -61,20 +60,24 @@ public class TimeTableManager {
      *
      * @param c a Course object passed from user interface
      */
-    public void schedule(Course c) {
+    public void schedule(SearchingData c) {
         Section[] list = c.split();
-        if (c.getTerm().equals(Constants.FALL)) {
-            for (Section x : list) {
-                timetables.get(Constants.FALL).schedule(x);
+        if (c instanceof Course) {
+            if (c.getTerm().equals(Constants.FALL)) {
+                for (Section x : list) {
+                    timetables.get(Constants.FALL).schedule(x);
+                }
+
             }
-        } if (c.getTerm().equals(Constants.WINTER)) {
-            for (Section x : list) {
-                timetables.get(Constants.FALL).schedule(x);
-            }
-        } else {
-            for (Section x : list) {
-                timetables.get("Fall").schedule(x);
-                timetables.get("Winter").schedule(x);
+            if (c.getTerm().equals(Constants.WINTER)) {
+                for (Section x : list) {
+                    timetables.get(Constants.FALL).schedule(x);
+                }
+            } else {
+                for (Section x : list) {
+                    timetables.get(Constants.FALL).schedule(x);
+                    timetables.get(Constants.WINTER).schedule(x);
+                }
             }
         }
     }
@@ -84,7 +87,7 @@ public class TimeTableManager {
      *
      * @param l a Life object passed from user interface
      */
-    public void schedule(TimeTableObject l) {
+    public void schedule(InputData l) {
         timetables.get(Constants.FALL).schedule(l);
         timetables.get(Constants.WINTER).schedule(l);
     }

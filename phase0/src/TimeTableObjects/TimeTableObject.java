@@ -1,11 +1,11 @@
 package TimeTableObjects;
 
-import java.util.TreeMap;
+import TimeTableObjects.Parents.InputData;
 
 /**
  * TimeTableObject class is an abstract class that can be stored in a TimeTable class.
  */
-public abstract class TimeTableObject {
+public class TimeTableObject extends InputData {
     private final String startTime;
     private final String endTime;
     private final String location;

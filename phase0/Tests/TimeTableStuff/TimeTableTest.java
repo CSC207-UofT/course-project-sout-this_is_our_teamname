@@ -1,11 +1,9 @@
 package TimeTableStuff;
 
-import TimeTableObjects.CourseStuff.Section;
+import TimeTableObjects.Section;
 import TimeTableObjects.TimeTableObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.sql.Time;
 
 import static org.junit.jupiter.api.Assertions.*;
 
