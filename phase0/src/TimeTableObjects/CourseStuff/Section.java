@@ -2,11 +2,16 @@ package TimeTableObjects.CourseStuff;
 
 import TimeTableObjects.TimeTableObject;
 
+import java.util.ArrayList;
+import java.sql.Time;
+
 public class Section extends TimeTableObject implements Comparable<Section>{
     private final String code;
     private final String professor;
     private final String faculty;
     private final String deliveryMethod;
+
+
 
     /**
      * Construct a TimeTable section for the given time, location, section, professor,
@@ -14,17 +19,18 @@ public class Section extends TimeTableObject implements Comparable<Section>{
      *
      * @param startTime The start time of this section.
      * @param endTime The end time of the section
-     * @param thedate The date of the section
      * @param location The location of this section
+     * @param thedate The date of the section
+     * @param term The term for this course
      * @param code The code for this course
      * @param professor The professor teaching this course section
      * @param faculty The faculty this course belongs to
      * @param deliveryMethod The delivery method for this course section
      */
-    public Section(String startTime, String endTime, String thedate,
-                   String location, String code, String professor,
+    public Section(Time startTime, Time endTime, String location,
+                   String thedate, String term, String code, String professor,
                    String faculty, String deliveryMethod) {
-        super(startTime, endTime, location, thedate);
+        super(startTime, endTime, location, thedate, term);
         this.code = code;
         this.professor = professor;
         this.faculty = faculty;
@@ -74,7 +80,14 @@ public class Section extends TimeTableObject implements Comparable<Section>{
 
     @Override
     public int compareTo(Section anotherSection) {
-        // TODO Implement this!
-        return 0;
+        int compare1 = anotherSection.getStartTime().compareTo(this.getEndTime());
+        int compare2 = this.getStartTime().compareTo(anotherSection.getEndTime());
+        if (compare1 > 0 || compare2 > 0) {
+            return -1;
+        }
+        else {
+            return 1;
+        }
     }
+
 }
