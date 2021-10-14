@@ -2,8 +2,6 @@ package DataCollection;
 
 import ConstantsAndExceptions.Constants;
 import TimeTableObjects.CourseStuff.Course;
-import TimeTableObjects.CourseStuff.HCourse;
-import TimeTableObjects.CourseStuff.YCourse;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -111,11 +109,11 @@ public class CSVScraper extends DataGetter {
                            String currDelivery){
         Course theCourse;
         if (term.contains(Constants.YEAR)){
-            theCourse = new YCourse(currname, currInstructor, faculty,
+            theCourse = new Course(term ,currname, currInstructor, faculty,
                     currDelivery, currTimeLocation);
         } else {
-            theCourse = new HCourse(currname, currInstructor, faculty,
-                    currDelivery, currTimeLocation, term);
+            theCourse = new Course(Constants.YEAR, currname, currInstructor,
+                    faculty, currDelivery, currTimeLocation);
         }
         placeToData(currname, theCourse);
     }
