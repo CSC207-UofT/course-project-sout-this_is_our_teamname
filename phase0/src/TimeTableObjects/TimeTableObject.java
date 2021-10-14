@@ -9,7 +9,6 @@ public abstract class TimeTableObject {
     private final Time endTime;
     private final String location;
     private final String date;
-    private String description;
     private final String term;
 
     /**
@@ -20,7 +19,7 @@ public abstract class TimeTableObject {
      * @param theDate is the weekday of the activity.
      * @param term is the term of the activity
      */
-    //TODO: How do we add description? Here in the constructor or a seperate method? or are we overriding in subclass?
+    //TODO: How do we add description? Here in the constructor or a separate method? or are we overriding in subclass?
     public TimeTableObject(Time startTime,
                            Time endTime,
                            String theLocation,
@@ -30,7 +29,6 @@ public abstract class TimeTableObject {
         this.endTime = endTime;
         this.location = theLocation;
         this.date = theDate;
-        this.description = "";
         this.term = term;
     }
 
@@ -59,14 +57,6 @@ public abstract class TimeTableObject {
     }
 
     /**
-     * Get the description for the activity
-     * @return  description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
      * Get the location for the activity
      * @return  location
      */
@@ -81,15 +71,6 @@ public abstract class TimeTableObject {
      */
     public String getTerm() {
         return term;
-    }
-
-    /**
-     * Set the description of the activity
-     *
-     * @param description The description of the activity
-     */
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     /**
