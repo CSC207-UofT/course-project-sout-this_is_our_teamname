@@ -20,6 +20,12 @@ public class AClass{
     }
 }  
 ```
+
+## Pull Requests
+_Note: team member approving something refers to them commenting something 
+like "Approved" on your pull request_
+1. If it is something new and unrelated to other files, you can merge it 
+   yourself. Such as a typo, brand new test class, etc
 2. If you need something from a class that someone else is assigned to work 
   on, you may modify it at will. However, only the person who wrote that 
   module may merge it to the main branch. The other person may only make a 
@@ -31,3 +37,5 @@ public class AClass{
      respond to communications after 24h
    * **Exception 2**: The due date is in <= 24h. Then, anyone can merge any 
      changes, given there are no conflicts.
+3. If you need to make a change to the design of anything (class, method, 
+   CRC Cards even), at least half the group must approve.

@@ -10,6 +10,7 @@ public class Life extends TimeTableObject{
 
     @Override
     public String toString() {
+        //TODO Fix this!
         return "";
     }
     // Add code here!

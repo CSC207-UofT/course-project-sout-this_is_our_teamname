@@ -1,13 +1,8 @@
 package TimeTableObjects.CourseStuff;
 
-import TimeTableObjects.SplitSession;
-import TimeTableObjects.SplitToSections;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
-
-public abstract class Course implements SplitToSections {
+public class Course {
     private final String code;
     private final String professor;
     private final String faculty;
@@ -105,6 +100,10 @@ public abstract class Course implements SplitToSections {
 
         details.deleteCharAt(details.length() - 1);
         return details.toString();
+    }
+
+    public String getTerm() {
+        return term;
     }
 
     /** Split the course into section objects

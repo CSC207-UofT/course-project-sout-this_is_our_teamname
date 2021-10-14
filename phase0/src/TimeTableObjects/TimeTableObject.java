@@ -22,7 +22,10 @@ public class TimeTableObject implements SplitToSections<TimeTableObject> {
      * @param theLocation is the location of the activity.
      */
     //TODO: How do we add description? Here in the constructor or a seperate method? or are we overriding in subclass?
-    public TimeTableObject(String startTime, String endTime, String theLocation, String theDate) {
+    public TimeTableObject(String startTime,
+                           String endTime,
+                           String theLocation,
+                           String theDate) {
         this.date = theDate;
         this.description = "";
         this.startTime = startTime;
