@@ -1,7 +1,5 @@
 package TimeTableObjects;
 
-import java.util.TreeMap;
-
 /**
  * TimeTableObject class is an abstract class that can be stored in a TimeTable class.
  */

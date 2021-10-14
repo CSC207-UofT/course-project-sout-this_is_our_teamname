@@ -1,11 +1,8 @@
 package TimeTableObjects.CourseStuff;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeMap;
 
-
-public abstract class Course {
+public class Course {
     private final String code;
     private final String professor;
     private final String faculty;
