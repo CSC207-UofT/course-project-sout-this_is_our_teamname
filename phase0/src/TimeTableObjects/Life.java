@@ -1,4 +1,4 @@
-// package TimeTableObjects;
+ package TimeTableObjects;
 
 import TimeTableObjects.TimeTableObject;
 
