@@ -1,9 +1,13 @@
 package TimeTableObjects;
 
+import TimeTableObjects.CourseStuff.Section;
+
+import java.sql.Time;
+
 /**
  * TimeTableObject class is an abstract class that can be stored in a TimeTable class.
  */
-public abstract class TimeTableObject {
+public class TimeTableObject implements SplitToSections<TimeTableObject> {
     private final String startTime;
     private final String endTime;
     private final String location;
@@ -73,5 +77,10 @@ public abstract class TimeTableObject {
     public String toString(){
     //TODO: this is just a place holder!!!
         return "placeHolder";
+    }
+
+
+    public Section[] splitToSections(TimeTableObject tto){
+        return Section[];
     }
 }

@@ -1,10 +1,13 @@
 package TimeTableObjects.CourseStuff;
 
+import TimeTableObjects.SplitSession;
+import TimeTableObjects.SplitToSections;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public abstract class Course {
+public abstract class Course implements SplitToSections {
     private final String code;
     private final String professor;
     private final String faculty;

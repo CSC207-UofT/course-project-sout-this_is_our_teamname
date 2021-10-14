@@ -10,7 +10,7 @@ import java.util.HashMap;
  * it will still be stored, and a conflict warning will be sent back prmopting user to take action or ignore it.
  */
 public class TimeTable {
-
+    //TODO maybe use linkedmap or treemap?
     private HashMap<String, ArrayList<TimeTableObject>> calender;
 
     public TimeTable() {

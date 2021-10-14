@@ -1,5 +1,7 @@
 package TimeTableStuff;
 
+import ConstantsAndExceptions.Constants;
+
 import TimeTableObjects.CourseStuff.Section;
 import TimeTableObjects.TimeTableObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,11 +20,11 @@ class TimeTableTest {
     // TODO double check on the format on Sections before running!
     @BeforeEach
     public void setUp() {
-        TimeTableObject lecture1 = new Section("1","2","MONDAY","MY150","MAT257",
+        TimeTableObject lecture1 = new Section("1","2",Constants.MONDAY,"MY150","MAT257",
                 "Gauss","Arts and Science","Online");
-        TimeTableObject lecture2 = new Section("1","3","MONDAY","MY151","MAT157",
+        TimeTableObject lecture2 = new Section("1","3",Constants.MONDAY,"MY151","MAT157",
                 "Descartes","Arts and Science","Online");
-        TimeTableObject lecture3 = new Section("1","3","FRIDAY","MY151","MAT137",
+        TimeTableObject lecture3 = new Section("1","3",Constants.FRIDAY,"MY151","MAT137",
                 "Alphonso","Arts and Science","Online");
         TimeTable table = new TimeTable();
     }
@@ -43,10 +45,10 @@ class TimeTableTest {
 
     @Test
     public void testToString() {
-        //toString's hashmap prints the key in different order, so I am not sure how to test it.
+        //toString's hashmap prints the key in different order each time, so I am not sure how to test it.
         //Thought about testing for empty string, but that won't work since the keys are already there to be printed.
         //assertEquals(table.toString(), "");
 
-        //maybe check for specific strings?
+        //maybe check for specific strings after slicing?
     }
 }
