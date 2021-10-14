@@ -39,6 +39,7 @@ public class Section extends TimeTableObject implements Comparable<Section>{
 
     @Override
     public String toString() {
+        //TODO why the string representation returns "" -Sonny
         return "";
     }
 
@@ -79,6 +80,7 @@ public class Section extends TimeTableObject implements Comparable<Section>{
     }
 
     @Override
+    // TODO Missing documentation.
     public int compareTo(Section anotherSection) {
         int compare1 = anotherSection.getStartTime().compareTo(this.getEndTime());
         int compare2 = this.getStartTime().compareTo(anotherSection.getEndTime());

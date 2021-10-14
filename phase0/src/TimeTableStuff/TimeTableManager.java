@@ -7,6 +7,7 @@ import ConstantsAndExceptions.Constants;
 import TimeTableObjects.Life;
 
 // Importing HashMap class
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TimeTableManager {
@@ -14,6 +15,7 @@ public class TimeTableManager {
 
     /**
      * Creates a new TimeTableManager with two default TimeTables for Fall and Winter.
+     *
      */
     public TimeTableManager() {
         this.timetables = new HashMap<>(){{
@@ -60,7 +62,7 @@ public class TimeTableManager {
      * @param c a Course object passed from user interface
      */
     public void schedule(Course c) {
-        Section[] list = c.split();
+        ArrayList<Section> list = c.split();
         if (c.getTerm().equals(Constants.FALL)) {
             for (Section x : list) {
                 timetables.get(Constants.FALL).schedule(x);
