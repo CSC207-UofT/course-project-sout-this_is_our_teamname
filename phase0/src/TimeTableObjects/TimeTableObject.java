@@ -1,43 +1,44 @@
 package TimeTableObjects;
-
-import TimeTableObjects.CourseStuff.Section;
-
 import java.sql.Time;
 
 /**
  * TimeTableObject class is an abstract class that can be stored in a TimeTable class.
  */
-public class TimeTableObject implements SplitToSections<TimeTableObject> {
-    private final String startTime;
-    private final String endTime;
+public abstract class TimeTableObject {
+    private final Time startTime;
+    private final Time endTime;
     private final String location;
     private final String date;
-    private final String description;
+    private String description;
+    private final String term;
 
     /**
      * Construct an activity with time, location and a description.
-     * @param theDate is the weekday of the activity.
      * @param startTime is the start time of the activity.
      * @param endTime is the end time of the activity.
      * @param theLocation is the location of the activity.
+     * @param theDate is the weekday of the activity.
+     * @param term is the term of the activity
      */
     //TODO: How do we add description? Here in the constructor or a seperate method? or are we overriding in subclass?
-    public TimeTableObject(String startTime,
-                           String endTime,
+    public TimeTableObject(Time startTime,
+                           Time endTime,
                            String theLocation,
-                           String theDate) {
-        this.date = theDate;
-        this.description = "";
+                           String theDate,
+                           String term) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = theLocation;
+        this.date = theDate;
+        this.description = "";
+        this.term = term;
     }
 
     /**
      * Get the start time for the activity
      * @return  startTime
      */
-    public String getStartTime(){
+    public Time getStartTime(){
         return this.startTime;
     }
 
@@ -45,7 +46,7 @@ public class TimeTableObject implements SplitToSections<TimeTableObject> {
      * Get the end time for the activity
      * @return  endTime
      */
-    public String getEndTime() {
+    public Time getEndTime() {
         return endTime;
     }
 
@@ -74,16 +75,29 @@ public class TimeTableObject implements SplitToSections<TimeTableObject> {
     }
 
     /**
+     * Get the term for this activity
+     *
+     * @return the term for this activity
+     */
+    public String getTerm() {
+        return term;
+    }
+
+    /**
+     * Set the description of the activity
+     *
+     * @param description The description of the activity
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
      * Generate the String representation of the activity.
      * @return the string representation of the activity.
      */
     public String toString(){
     //TODO: this is just a place holder!!!
         return "placeHolder";
-    }
-
-
-    public Section[] splitToSections(TimeTableObject tto){
-        return Section[];
     }
 }
