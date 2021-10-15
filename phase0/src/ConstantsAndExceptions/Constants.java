@@ -8,6 +8,7 @@ public class Constants {
     public static final String FRIDAY = "Friday";
     public static final String FALL = "Fall";
     public static final String WINTER = "Winter";
+    public static final String SUMMER = "Summer";
     public static final String YEAR = "Year";
     public static final String TBA = "TBA";
     public static final String LIFE = "Life";

@@ -1,3 +1,5 @@
+package TimeTableObjects;
+
 import TimeTableObjects.TimeTableObject;
 
 import java.sql.Time;
