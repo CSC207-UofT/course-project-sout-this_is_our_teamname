@@ -10,4 +10,6 @@ public class Constants {
     public static final String WINTER = "Winter";
     public static final String YEAR = "Year";
     public static final String TBA = "TBA";
+    public static final String LIFE = "Life";
+    public static final String DESCRIPTIONLESS_LIFE = "Descriptionless Life";
 }
