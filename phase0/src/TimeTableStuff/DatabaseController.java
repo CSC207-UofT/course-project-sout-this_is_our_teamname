@@ -54,7 +54,7 @@ public class DatabaseController {
 
         // The user enters the section they want to search
         Scanner userChoice = new Scanner(System.in);
-        System.out.println();
+        System.out.println("Please Choose a section: ");
         String selected = userChoice.nextLine();
 
         // Pass this to the TimeTableManager

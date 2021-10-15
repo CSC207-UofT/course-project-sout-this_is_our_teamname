@@ -12,4 +12,6 @@ public class Constants {
     public static final String TBA = "TBA";
     public static final String LIFE = "Life";
     public static final String DESCRIPTIONLESS_LIFE = "Descriptionless Life";
+    public static final String TIMETABLEOBJECT = "TimeTableObject";
+    public static final String COURSE = "Course";
 }
