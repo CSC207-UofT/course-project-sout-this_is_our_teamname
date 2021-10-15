@@ -1,10 +1,12 @@
 package DataCollection;
 
 import ConstantsAndExceptions.Constants;
+import GlobalHelperMethods.StringToTime;
 import TimeTableObjects.CourseStuff.Course;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -94,7 +96,7 @@ public class CSVScraper extends DataGetter {
     /**
      * Add the given data to self.data
      * @param term the term of course
-     * @param currname the name of the section
+     * @param currName the name of the section
      * @param faculty the associated faculty
      * @param currTimeLocation the current time and location. Given as a
      *                         HashMap of the Time -> Location
@@ -102,20 +104,30 @@ public class CSVScraper extends DataGetter {
      * @param currDelivery the delivery method of the course.
      */
     private void addToData(String term,
-                           String currname,
+                           String currName,
                            String faculty,
-                           HashMap<String[], String> currTimeLocation,
+                           HashMap<ArrayList<Object>, String> currTimeLocation,
                            String currInstructor,
                            String currDelivery){
         Course theCourse;
         if (term.contains(Constants.YEAR)){
-            theCourse = new Course(term ,currname, currInstructor, faculty,
-                    currDelivery, currTimeLocation);
+            theCourse = new Course(
+                    currName,
+                    currInstructor,
+                    faculty,
+                    currDelivery,
+                    currTimeLocation,
+                    term);
         } else {
-            theCourse = new Course(Constants.YEAR, currname, currInstructor,
-                    faculty, currDelivery, currTimeLocation);
+            theCourse = new Course(
+                    currName,
+                    currInstructor,
+                    faculty,
+                    currDelivery,
+                    currTimeLocation,
+                    Constants.YEAR);
         }
-        placeToData(currname, theCourse);
+        placeToData(currName, theCourse);
     }
 
     /**
@@ -124,14 +136,20 @@ public class CSVScraper extends DataGetter {
      * @return the string array of length 3 of the date, start time, and end
      * time
      */
-    private String[] splitDateTime(String line){
+    private ArrayList<Object> splitDateTime(String line){
         String[] splicedInfo = line.split(" ");
 
+        ArrayList<Object> retList = new ArrayList<>();
         if (splicedInfo.length == 4 && splicedInfo[2].equals("-")) {
-            return new String[]{splicedInfo[0], splicedInfo[1], splicedInfo[3]};
+            retList.add(splicedInfo[0]);
+            retList.add(StringToTime.makeTime(splicedInfo[1]));
+            retList.add(StringToTime.makeTime(splicedInfo[3]));
         } else {
-            return new String[]{Constants.TBA, Constants.TBA, Constants.TBA};
+            retList.add(Constants.TBA);
+            retList.add(new Time(0, 0, 0));
+            retList.add(new Time(0, 0, 0));
         }
+        return retList;
     }
 
     /**
@@ -147,7 +165,7 @@ public class CSVScraper extends DataGetter {
     private void filterData(String theTerm, String theFaculty,
                                    ArrayList<String[]> theFileData){
         String currName = "";
-        HashMap<String[], String> currTimeLocation = new HashMap<>();
+        HashMap<ArrayList<Object>, String> currTimeLocation = new HashMap<>();
         String currInstructor = "";
         String currDelivery = "";
         for (String[] splittedLine : theFileData){

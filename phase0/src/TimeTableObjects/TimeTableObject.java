@@ -4,7 +4,7 @@ import java.sql.Time;
 /**
  * TimeTableObject class is an abstract class that can be stored in a TimeTable class.
  */
-public abstract class TimeTableObject {
+public class TimeTableObject {
     private final Time startTime;
     private final Time endTime;
     private final String location;
