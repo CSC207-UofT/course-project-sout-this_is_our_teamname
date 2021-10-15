@@ -1,7 +1,5 @@
  package TimeTableObjects;
 
-import TimeTableObjects.TimeTableObject;
-
 import java.sql.Time;
 
 public class Life extends TimeTableObject{
@@ -28,8 +26,8 @@ public class Life extends TimeTableObject{
 
     @Override
     public String toString() {
-        //TODO Fix this!
-        return "";
+        return this.getStartTime() + " - " + this.getEndTime() + ": " +
+                this.description + " at " + this.getLocation();
     }
     // Add code here!
 }

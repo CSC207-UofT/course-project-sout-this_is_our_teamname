@@ -2,7 +2,6 @@ package TimeTableObjects.CourseStuff;
 
 import TimeTableObjects.TimeTableObject;
 
-import java.util.ArrayList;
 import java.sql.Time;
 
 public class Section extends TimeTableObject implements Comparable<Section>{
@@ -39,8 +38,8 @@ public class Section extends TimeTableObject implements Comparable<Section>{
 
     @Override
     public String toString() {
-        //TODO why the string representation returns "" -Sonny
-        return "";
+        return this.getStartTime() + " - " + this.getEndTime() + ": " +
+                this.code + " at " + this.getLocation();
     }
 
     /**
