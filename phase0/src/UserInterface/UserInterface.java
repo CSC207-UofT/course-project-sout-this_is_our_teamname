@@ -1,11 +1,42 @@
 package UserInterface;
 
+import ConstantsAndExceptions.Constants;
 import TimeTableStuff.DatabaseController;
 import TimeTableStuff.TimeTable;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class UserInterface {
+    private HashMap<String, String[]> usableClasses;
+
+    public UserInterface(){
+        // Will be replaced with something by OperatorInterface in later Phases.
+        usableClasses = new HashMap<>();
+        usableClasses.put(Constants.COURSE, new String[]{Constants.COURSE});
+        usableClasses.put(Constants.TIMETABLEOBJECT,
+                new String[]{Constants.LIFE,
+                        Constants.DESCRIPTIONLESS_LIFE});
+    }
+
+    private boolean BinarySearch(String query, String[] array){
+        for (String item : array){
+            if (query.equals(item)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String checkInputValue(String input){
+        for (String key : usableClasses.keySet()){
+            if (BinarySearch(input, usableClasses.get(key))){
+                return key;
+            }
+        }
+        return "";
+    }
+
     /**
      * Runs the UserInterface.
      *
@@ -19,14 +50,19 @@ public class UserInterface {
 
         while(running) {
             Scanner objectScanner = new Scanner(System.in);
-            System.out.println("Please enter what type of object " +
-                    "(course/life): ");
+            System.out.println("Please enter what type of object: ");
             String schedulingObject = objectScanner.nextLine();
 
-            if (schedulingObject.equals("course")) {
+            // For Phase 0, assume valid inputs
+            String dataCategory = checkInputValue(schedulingObject);
+
+            if (dataCategory.equals(Constants.COURSE)) {
                 control.makeCourse();
-            } else {
+            } else if (dataCategory.equals(Constants.TIMETABLEOBJECT)){
                 control.makeTimeTableObject();
+            } else {
+                throw new UnsupportedOperationException(
+                        "This is not Implemented in Phase 0.");
             }
 
             // User types in the section they want to search
