@@ -18,7 +18,7 @@ public class Course implements Sliceable<Section>{
     /**
      * Construct a course with the given section, professor, faculty, delivery method,
      * time and location.
-     *
+     * //TODO missing documentation for term
      * @param section The section code for this course
      * @param professor The professor teaching this course section
      * @param faculty The faculty this course belongs to
