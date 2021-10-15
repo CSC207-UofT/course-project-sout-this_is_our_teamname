@@ -1,5 +1,6 @@
 package TimeTableStuff;
 
+import TimeTableObjects.CourseStuff.Course;
 import TimeTableObjects.CourseStuff.Section;
 import TimeTableObjects.TimeTableObject;
 
@@ -25,14 +26,12 @@ public class TimeTable {
             put("Sunday", new ArrayList<>());
         }};
     }
-
     /**
      * Schedules the given activity into the appropriate weekday.
      * @param activity the given activity
      * @return true if scheduling is successful, false if there is a conflict
      */
     public boolean schedule(TimeTableObject activity) {
-        //must be a Section before checking for conflicts.
         if (activity instanceof Section && checkConflicts((Section) activity)) {
             (this.calender.get(activity.getDate())).add(activity);
             return true;
@@ -40,7 +39,6 @@ public class TimeTable {
             return false;
         }
     }
-    //TODO Overload the schedule method so that it can take in (TimeTableObject, Type)
 
     /**
      * Check if there is a conflict in the timetable with given activity.
