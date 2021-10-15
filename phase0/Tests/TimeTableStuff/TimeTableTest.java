@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,15 +21,23 @@ class TimeTableTest {
 
     // TODO double check on the format on Sections before running!
     @BeforeEach
-    public void setUp() {
-        TimeTableObject lecture1 = new Section("1","2",Constants.MONDAY,"MY150","MAT257",
-                "Gauss","Arts and Science","Online");
-        TimeTableObject lecture2 = new Section("1","3",Constants.MONDAY,"MY151","MAT157",
-                "Descartes","Arts and Science","Online");
-        TimeTableObject lecture3 = new Section("1","3",Constants.FRIDAY,"MY151","MAT137",
-                "Alphonso","Arts and Science","Online");
-        TimeTable table = new TimeTable();
-    }
+    //public void setUp() {
+    //    LocalTime startTime1 = LocalTime.of(9,0,0);
+    //    LocalTime startTime2 = LocalTime.of(10, 0,0);
+    //    LocalTime endTime1 = LocalTime.of(10,0,0);
+    //    LocalTime endTime2 = LocalTime.of(11,0,0);
+//
+    //    TimeTableObject lecture1 = new Section(startTime1,"2","SS100",Constants.MONDAY,Constants.YEAR,
+    //            "MAT257","Gauss","Arts and Science","In Person");
+//
+    //    TimeTableObject lecture1 = new Section("1","2",Constants.MONDAY,"MY150","MAT257",
+    //            "Gauss","Arts and Science","Online");
+    //    TimeTableObject lecture2 = new Section("1","3",Constants.MONDAY,"MY151","MAT157",
+    //            "Descartes","Arts and Science","Online");
+    //    TimeTableObject lecture3 = new Section("1","3",Constants.FRIDAY,"MY151","MAT137",
+    //            "Alphonso","Arts and Science","Online");
+    //    TimeTable table = new TimeTable();
+    //}
 
     //TODO do we really need to test both schedule and checkConflicts? or am I not doing the test right?
     @Test
@@ -37,11 +47,11 @@ class TimeTableTest {
         assertTrue(table.schedule(lecture3));
     }
 
-    @Test
-    public void checkConflicts() {
-        assertTrue(table.checkConflicts(lecture1));
-        assertFalse(table.checkConflicts(lecture2));
-    }
+    //@Test
+    //public void checkConflicts() {
+    //    assertTrue(table.checkConflicts(lecture1));
+    //    assertFalse(table.checkConflicts(lecture2));
+    //}
 
     @Test
     public void testToString() {
