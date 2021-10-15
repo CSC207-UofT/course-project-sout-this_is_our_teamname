@@ -2,32 +2,30 @@
 
 In this file, please find our CRC cards. It is categorized into 4 folders:
 * DataCollection
-  * [_CSVScraper](DataCollection/_CSVScraper.md)
+  * [CSVScraper](DataCollection/CSVScraper.md)
   * [DataGetter](DataCollection/DataGetter.md)
   * [WebScrapper](DataCollection/WebScraper.md)
 * TimeTableObject
-  * CourseStuff
-    * [Course](TimeTableObjects/CourseStuff/Course.md)
-    * [HCourse](TimeTableObjects/CourseStuff/HCourse.md)
-    * [YCourse](TimeTableObjects/CourseStuff/YCourse.md)
+  * [Course](TimeTableObjects/Course.md)
   * [Life](TimeTableObjects/Life.md)
   * [TimeTableObject](TimeTableObjects/TimeTableObject.md)
 * TimeTableStuff
+  * [DatabaseController](TimeTableStuff/DatabaseController.md)
   * [TimeTable](TimeTableStuff/TimeTable.md)
   * [TimeTableManager](TimeTableStuff/TimeTableManager.md)
 * UserInterface
   * [UserInterface](UserInterface/UserInterface.md)
-  * [_OperatorInterface](UserInterface/_OperatorInterface.md)
+  * [OperatorInterface](UserInterface/OperatorInterface.md)
 
 ## UserInterface
 The classes listed under here are the classes that the user and the operators
-interact with. Under the dependency rule, this would fall under the
-**Frameworks and Drivers** ring.
+interact with. Under the dependency rule, most of the classes here would fall 
+under the **Frameworks and Drivers** ring.
 
 ## DataCollection
 The classes listed under here are the classes that gathers the 
-data/information from data sources. Under the dependency rule, this would 
-fall under the **Frameworks and Drivers** ring.
+data/information from data sources. Under the dependency rule, most of these 
+classes would fall under the **Frameworks and Drivers** ring.
 
 ## TimeTableStuff
 The classes listed under here are the main classes that controls and 

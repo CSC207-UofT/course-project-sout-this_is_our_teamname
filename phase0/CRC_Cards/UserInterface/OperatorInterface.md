@@ -1,5 +1,5 @@
 # OperatorInterface
-### Proposed by Matthew Du
+# NOT IMPLEMENTED IN PHASE 0
 
 ## Collaborators
 * `TimeTableManager`
