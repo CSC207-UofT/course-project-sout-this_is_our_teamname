@@ -41,11 +41,11 @@ class TimeTableTest {
 
     //TODO do we really need to test both schedule and checkConflicts? or am I not doing the test right?
     @Test
-    public void schedule() {
-        assertTrue(table.schedule(lecture1));
-        assertFalse(table.schedule(lecture2));
-        assertTrue(table.schedule(lecture3));
-    }
+//    public void schedule() {
+//        assertTrue(table.schedule(lecture1));
+//        assertFalse(table.schedule(lecture2));
+//        assertTrue(table.schedule(lecture3));
+//    }
 
     //@Test
     //public void checkConflicts() {
