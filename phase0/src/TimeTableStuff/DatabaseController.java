@@ -76,7 +76,7 @@ public class DatabaseController {
 
         for (String prompt : prompts.keySet()) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println(prompt + ": ");
+            System.out.println(prompts.get(prompt) + ": ");
             responses.put(prompt, scanner.nextLine());
         }
 

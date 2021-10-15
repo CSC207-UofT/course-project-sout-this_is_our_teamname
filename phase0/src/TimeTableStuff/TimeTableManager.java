@@ -104,6 +104,14 @@ public class TimeTableManager {
         }
     }
 
+    /**
+     * A helper method for schedule (TimeTableObject). Returns event to the
+     * correct type.
+     *
+     * @param event The TimetableObject that needs to be scheduled
+     * @param type The type of the object
+     * @return event "cast" to the correct type.
+     */
     private TimeTableObject getCorrectTimeTableObject(TimeTableObject event, String type) {
         if (type.equals(Constants.LIFE)){
             Scanner descriptionScanner = new Scanner(System.in);
@@ -131,10 +139,11 @@ public class TimeTableManager {
     public TimeTable[] getAllTimeTables(){
         //TODO No terms/names returned with the timetables
         TimeTable[] theTimes =
-                new TimeTable[this.timetables.keySet().size() - 1];
+                new TimeTable[this.timetables.keySet().size()];
         int i = 0;
         for (String term : this.timetables.keySet()){
             theTimes[i] = this.timetables.get(term);
+            i++;
         }
         return theTimes;
     }
