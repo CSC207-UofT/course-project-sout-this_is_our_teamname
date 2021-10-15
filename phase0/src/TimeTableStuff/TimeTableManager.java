@@ -4,7 +4,6 @@ import TimeTableObjects.CourseStuff.Course;
 import TimeTableObjects.CourseStuff.Section;
 
 import ConstantsAndExceptions.Constants;
-import TimeTableObjects.Life;
 import TimeTableObjects.TimeTableObject;
 
 // Importing HashMap class
@@ -19,7 +18,7 @@ public class TimeTableManager {
      *
      */
     public TimeTableManager() {
-        this.timetables = new HashMap<>(){{
+        this.timetables = new HashMap<String, TimeTable>(){{
             put("Fall", new TimeTable());
             put("Winter", new TimeTable());
         }};
@@ -105,6 +104,7 @@ public class TimeTableManager {
      * @return an array of timetables with all the timetables
      */
     public TimeTable[] getAllTimeTables(){
+        //TODO No terms/names returned with the timetables
         TimeTable[] theTimes = new TimeTable[this.timetables.keySet().size()];
         int i = 0;
         for (String term : this.timetables.keySet()){
