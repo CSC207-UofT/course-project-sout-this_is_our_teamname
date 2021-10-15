@@ -38,6 +38,7 @@ public class TimeTable {
             return false;
         }
     }
+    //TODO Overload the schedule method so that it can take in (TimeTableObject, Type)
 
     /**
      * Check if there is a conflict in the timetable with given activity.

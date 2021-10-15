@@ -5,6 +5,7 @@ import TimeTableObjects.CourseStuff.Section;
 
 import ConstantsAndExceptions.Constants;
 import TimeTableObjects.Life;
+import TimeTableObjects.TimeTableObject;
 
 // Importing HashMap class
 import java.util.ArrayList;
@@ -73,20 +74,29 @@ public class TimeTableManager {
             }
         } else {
             for (Section x : list) {
-                timetables.get("Fall").schedule(x);
-                timetables.get("Winter").schedule(x);
+                timetables.get(Constants.FALL).schedule(x);
+                timetables.get(Constants.WINTER).schedule(x);
             }
         }
     }
 
     /**
-     * Get the life from interface and schedule it to the corresponding timetable(s).
+     * Get the an event from the user interface and schedule it to the corresponding timetable(s).
      *
-     * @param l a Life object passed from user interface
+     * @param event a TimeTableObject passed from user interface
+     * @param type a String passed from user interface representing the type of the TimeTableObject
      */
-    public void schedule(Life l) {
-        timetables.get(Constants.FALL).schedule(l);
-        timetables.get(Constants.WINTER).schedule(l);
+    public void schedule(TimeTableObject event, String type) {
+        if (event.getTerm().equals(Constants.FALL)){
+            timetables.get(Constants.FALL).schedule(event, type);
+        }
+        else if (event.getTerm().equals(Constants.WINTER)){
+            timetables.get(Constants.WINTER).schedule(event, type);
+        }
+        else{
+            timetables.get(Constants.FALL).schedule(event, type);
+            timetables.get(Constants.WINTER).schedule(event, type);
+        }
     }
 
     /**
