@@ -1,10 +1,9 @@
 package TimeTableObjects.CourseStuff;
 import CourseStuff.Sliceable;
-import TimeTableObjects.CourseStuff.Section;
+
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeMap;
-import java.sql.Time;
 
 
 public class Course implements Sliceable<Section>{
@@ -119,7 +118,7 @@ public class Course implements Sliceable<Section>{
      */
     @Override
     public ArrayList<Section> split(){
-        ArrayList<Section> sectionList = new ArrayList<Section>();
+        ArrayList<Section> sectionList = new ArrayList<>();
         for (ArrayList<Object> time : this.timeLocation.keySet()) {
             Time start = ((Time) time.get(1));
             Time end = ((Time) time.get(2));

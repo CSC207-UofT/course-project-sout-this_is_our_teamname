@@ -69,7 +69,7 @@ public class TimeTableManager {
             for (Section x : list) {
                 timetables.get(Constants.FALL).schedule(x);
             }
-        } if (c.getTerm().equals(Constants.WINTER)) {
+        } else if (c.getTerm().equals(Constants.WINTER)) {
             for (Section x : list) {
                 timetables.get(Constants.FALL).schedule(x);
             }
@@ -116,7 +116,8 @@ public class TimeTableManager {
      */
     public TimeTable[] getAllTimeTables(){
         //TODO No terms/names returned with the timetables
-        TimeTable[] theTimes = new TimeTable[this.timetables.keySet().size()];
+        TimeTable[] theTimes =
+                new TimeTable[this.timetables.keySet().size() - 1];
         int i = 0;
         for (String term : this.timetables.keySet()){
             theTimes[i] = this.timetables.get(term);
