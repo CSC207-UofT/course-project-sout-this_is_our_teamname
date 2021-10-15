@@ -1,4 +1,4 @@
-package TimeTableObjects;// package TimeTableObjects;
+ package TimeTableObjects;
 
 import TimeTableObjects.TimeTableObject;
 
@@ -6,7 +6,7 @@ import java.sql.Time;
 
 public class Life extends TimeTableObject{
     private final String description;
-    //TODO Missing docstrings
+
     public Life(Time theStartTime,
                 Time theEndTime,
                 String theLocation,
