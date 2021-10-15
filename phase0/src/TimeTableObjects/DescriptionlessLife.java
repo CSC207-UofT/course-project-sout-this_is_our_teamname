@@ -3,7 +3,7 @@ import TimeTableObjects.TimeTableObject;
 import java.sql.Time;
 
 public class DescriptionlessLife extends TimeTableObject{
-
+    //TODO Missing docstrings
     public DescriptionlessLife(Time theStartTime,
                 Time theEndTime,
                 String theLocation,
