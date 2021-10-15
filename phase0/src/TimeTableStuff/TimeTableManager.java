@@ -5,6 +5,8 @@ import TimeTableObjects.CourseStuff.Section;
 
 import ConstantsAndExceptions.Constants;
 import TimeTableObjects.TimeTableObject;
+import TimeTableObjects.Life;
+import TimeTableObjects.DescriptionlessLife;
 
 // Importing HashMap class
 import java.util.ArrayList;
@@ -86,15 +88,24 @@ public class TimeTableManager {
      * @param type a String passed from user interface representing the type of the TimeTableObject
      */
     public void schedule(TimeTableObject event, String type) {
+        if (type.equals("Life")){
+            Life life = (Life) event;
+        }
+        else if (type.equals("Descriptionless Life")){
+            DescriptionlessLife life = (DescriptionlessLife) event;
+        }
+        //TODO More types of events.
+
+        // Add to corresponding timetable(s).
         if (event.getTerm().equals(Constants.FALL)){
-            timetables.get(Constants.FALL).schedule(event, type);
+            timetables.get(Constants.FALL).schedule(event);
         }
         else if (event.getTerm().equals(Constants.WINTER)){
-            timetables.get(Constants.WINTER).schedule(event, type);
+            timetables.get(Constants.WINTER).schedule(event);
         }
         else{
-            timetables.get(Constants.FALL).schedule(event, type);
-            timetables.get(Constants.WINTER).schedule(event, type);
+            timetables.get(Constants.FALL).schedule(event);
+            timetables.get(Constants.WINTER).schedule(event);
         }
     }
 
