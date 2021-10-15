@@ -20,9 +20,9 @@ public class TimeTableManager {
      *
      */
     public TimeTableManager() {
-        this.timetables = new HashMap<String, TimeTable>(){{
-            put("Fall", new TimeTable());
-            put("Winter", new TimeTable());
+        this.timetables = new HashMap<>(){{
+            put(Constants.FALL, new TimeTable());
+            put(Constants.WINTER, new TimeTable());
         }};
     }
 
@@ -88,10 +88,10 @@ public class TimeTableManager {
      * @param type a String passed from user interface representing the type of the TimeTableObject
      */
     public void schedule(TimeTableObject event, String type) {
-        if (type.equals("Life")){
+        if (type.equals(Constants.LIFE)){
             Life life = (Life) event;
         }
-        else if (type.equals("Descriptionless Life")){
+        else if (type.equals(Constants.DESCRIPTIONLESS_LIFE)){
             DescriptionlessLife life = (DescriptionlessLife) event;
         }
         //TODO More types of events.
