@@ -29,5 +29,4 @@ public class Life extends TimeTableObject{
         return this.getStartTime() + " - " + this.getEndTime() + ": " +
                 this.description + " at " + this.getLocation();
     }
-    // Add code here!
 }

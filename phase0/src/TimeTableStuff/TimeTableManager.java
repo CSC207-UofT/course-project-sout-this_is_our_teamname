@@ -11,6 +11,7 @@ import TimeTableObjects.DescriptionlessLife;
 // Importing HashMap class
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class TimeTableManager {
     private final HashMap<String, TimeTable> timetables;
@@ -88,24 +89,37 @@ public class TimeTableManager {
      * @param type a String passed from user interface representing the type of the TimeTableObject
      */
     public void schedule(TimeTableObject event, String type) {
-        if (type.equals(Constants.LIFE)){
-            Life life = (Life) event;
-        }
-        else if (type.equals(Constants.DESCRIPTIONLESS_LIFE)){
-            DescriptionlessLife life = (DescriptionlessLife) event;
-        }
-        //TODO More types of events.
+        TimeTableObject life = getCorrectTimeTableObject(event, type);
 
         // Add to corresponding timetable(s).
         if (event.getTerm().equals(Constants.FALL)){
-            timetables.get(Constants.FALL).schedule(event);
+            timetables.get(Constants.FALL).schedule(life);
         }
         else if (event.getTerm().equals(Constants.WINTER)){
-            timetables.get(Constants.WINTER).schedule(event);
+            timetables.get(Constants.WINTER).schedule(life);
         }
         else{
             timetables.get(Constants.FALL).schedule(event);
             timetables.get(Constants.WINTER).schedule(event);
+        }
+    }
+
+    private TimeTableObject getCorrectTimeTableObject(TimeTableObject event, String type) {
+        if (type.equals(Constants.LIFE)){
+            Scanner descriptionScanner = new Scanner(System.in);
+            System.out.println("Please provide a description of your life " +
+                    "activity: ");
+            return new Life(event.getStartTime(), event.getEndTime(),
+                    event.getLocation(), event.getDate(), event.getTerm(),
+                    descriptionScanner.nextLine());
+        }
+        else if (type.equals(Constants.DESCRIPTIONLESS_LIFE)){
+            return new DescriptionlessLife(event.getStartTime(),
+                    event.getEndTime(), event.getLocation(), event.getDate(),
+                    event.getTerm());
+        } else {
+            // TODO More types of events.
+            return null;
         }
     }
 

@@ -1,6 +1,8 @@
 package TimeTableStuff;
 
 import TimeTableObjects.CourseStuff.Section;
+import TimeTableObjects.DescriptionlessLife;
+import TimeTableObjects.Life;
 import TimeTableObjects.TimeTableObject;
 
 import java.util.ArrayList;
@@ -30,7 +32,10 @@ public class TimeTable {
      * @return true if scheduling is successful, false if there is a conflict
      */
     public boolean schedule(TimeTableObject activity) {
-        if (activity instanceof Section && checkConflicts((Section) activity)) {
+        if (activity instanceof Life || activity instanceof DescriptionlessLife){
+            (this.calender.get(activity.getDate())).add(activity);
+            return true;
+        } else if (activity instanceof Section && checkConflicts((Section) activity)) {
             (this.calender.get(activity.getDate())).add(activity);
             return true;
         } else {
