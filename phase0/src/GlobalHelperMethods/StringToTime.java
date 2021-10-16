@@ -3,7 +3,7 @@ package GlobalHelperMethods;
 import java.sql.Time;
 
 public class StringToTime {
-    /** Turns a string in the format "13:00pM" to 13:00:00
+    /** Turns a string in the format "13:00PM" to 13:00:00
      *
      * @param timeString A string representing time
      * @return a Time object
