@@ -136,3 +136,10 @@ an instructor in CSC148H1 Winter 2021, source of code)
 * Created TimetableManager class
 * Created TimetableManagerTest
 * The implementation and update of schedule method in TimeTableManager class.
+
+### Jennie Fang (jennie-f - jennie.fang@mail.utoronto.ca)
+* Created TimeTableObject class
+* Created Section class
+* Created Life class
+* Created Course class
+* Helped create the Comparable and Sliceable interfaces
