@@ -21,7 +21,7 @@ public class TimeTableManager {
      *
      */
     public TimeTableManager() {
-        this.timetables = new HashMap<>(){{
+        this.timetables = new HashMap<String, TimeTable>(){{
             put(Constants.FALL, new TimeTable());
             put(Constants.WINTER, new TimeTable());
         }};
