@@ -35,7 +35,7 @@ It has 2 subclasses: **HCourse**, half-year course, and **YCourse**, year course
 12. **DatabaseController** collaborates with **UserInterface** and **TimeTableManager**. It generates prompts based on the information received from **UserInterface** and sends objects to **TimeTableManager** to schedule.
 13. **OperatorInterface** collaborates with **TimeTableManager**. Operator interacts with it, and it configures **TimeTableManager** and **DataGetter**.
 
-## Scenario walk-through
+## Summary of Scenario walk-through and Skeleton program 1 
 1. Before user searches a course,  an operator uses the OperatorInterface class and set the source of data and  UserInterfaces will refer to the operator. The operator can use `configure` method to configure the
    `dataSource` instance variable of `UserInterface` to the correct object
    of the DataGetter class.
@@ -59,7 +59,7 @@ It has 2 subclasses: **HCourse**, half-year course, and **YCourse**, year course
    confirmation on UserInterface that the course has been scheduled. He then
    can add the next course or life object into his timetable.
 
-## Walk Through2
+## WSummary of Scenario walk-through and Skeleton program 2 
 
 If the user wants to schedule a **Life** object, he selects to add a **Life** object on the UserInterface by typing 'Life' into the command line when prompted. Then he will be required to select a time and description.
 
