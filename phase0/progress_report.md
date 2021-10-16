@@ -101,7 +101,11 @@ If successfully, the user will receive a confirmation on UserInterface that the 
 
 ## Contribution Of Each Group Member
 
-### Aiden Lin (linhaoz3 - aiden.lin@mail.utoronto.ca)
+**Aiden Lin (linhaoz3 - aiden.lin@mail.utoronto.ca)**
 
 * Writing part of the progress report for phase 0
 * Handling the implementation of coding for catching and reporting exceptions and conflicts in TimeTableManager class
+
+**Caules Ge (gehongsh - caules.ge@mail.utoronto.ca)**
+* Writing part of the progress report for phase 0
+* The implement of schedule method in TimeTableManager class
