@@ -62,20 +62,21 @@ public class DatabaseController {
         manager.schedule(selectedCourse);
     }
 
-    public void makeTimeTableObject(){
+    public void makeTimeTableObject(String theType){
         LinkedHashMap<String, String> prompts = new LinkedHashMap<>();
         prompts.put(NAME, "Enter a title of an object");
         prompts.put(START_TIME, "Enter the Start Time");
         prompts.put(END_TIME, "Enter the End Time");
         prompts.put(LOCATION, "Enter the Location");
         prompts.put(DATE, "Enter the Date");
-        prompts.put(TYPE, "Enter the Type of the Object");
+        prompts.put(TERM, "Enter the Term");
 
         HashMap<String, String> responses = new HashMap<>();
+        responses.put(TYPE, theType);
 
         for (String prompt : prompts.keySet()) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println(prompt + ": ");
+            System.out.println(prompts.get(prompt) + ": ");
             responses.put(prompt, scanner.nextLine());
         }
 

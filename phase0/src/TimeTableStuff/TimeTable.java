@@ -1,22 +1,22 @@
 package TimeTableStuff;
 
-import TimeTableObjects.CourseStuff.Course;
 import TimeTableObjects.CourseStuff.Section;
+import TimeTableObjects.DescriptionlessLife;
+import TimeTableObjects.Life;
 import TimeTableObjects.TimeTableObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * TimeTable class stores all the activities from Monday to Sunday. If there is a conflict when storing a new activity,
  * it will still be stored, and a conflict warning will be sent back prmopting user to take action or ignore it.
  */
 public class TimeTable {
-    //TODO maybe use linkedmap or treemap?
-    private HashMap<String, ArrayList<TimeTableObject>> calender;
+    private final LinkedHashMap<String, ArrayList<TimeTableObject>> calender;
 
     public TimeTable() {
-        this.calender = new HashMap<>() {{
+        this.calender = new LinkedHashMap<>() {{
             put("Monday", new ArrayList<>());
             put("Tuesday", new ArrayList<>());
             put("Wednesday", new ArrayList<>());
@@ -32,7 +32,10 @@ public class TimeTable {
      * @return true if scheduling is successful, false if there is a conflict
      */
     public boolean schedule(TimeTableObject activity) {
-        if (activity instanceof Section && checkConflicts((Section) activity)) {
+        if (activity instanceof Life || activity instanceof DescriptionlessLife){
+            (this.calender.get(activity.getDate())).add(activity);
+            return true;
+        } else if (activity instanceof Section && checkConflicts((Section) activity)) {
             (this.calender.get(activity.getDate())).add(activity);
             return true;
         } else {
@@ -54,7 +57,7 @@ public class TimeTable {
         for (TimeTableObject session: this.calender.get(activity.getDate())) {
             //only comparing sections, so check for type, then compare.
             if (session instanceof Section) {
-                if (activity.compareTo((Section) session) == -1) {
+                if (activity.compareTo((Section) session) < 0) {
                     //conflict has been found
                     return false;
                 }
@@ -68,7 +71,7 @@ public class TimeTable {
      * Grabs the calendar
      * @return calendar
      */
-    public HashMap<String, ArrayList<TimeTableObject>> getCalender() {
+    public LinkedHashMap<String, ArrayList<TimeTableObject>> getCalender() {
         return calender;
     }
 
@@ -77,7 +80,7 @@ public class TimeTable {
      * @return the string of calender
      */
     public String toString() {
-        HashMap<String, ArrayList<String>> times = new HashMap<>();
+        LinkedHashMap<String, ArrayList<String>> times = new LinkedHashMap<>();
         for (String day : this.calender.keySet()) {
             ArrayList<String> sections = new ArrayList<>();
             for (TimeTableObject time : this.calender.get(day)) {
