@@ -59,7 +59,7 @@ It has 2 subclasses: **HCourse**, half-year course, and **YCourse**, year course
    confirmation on UserInterface that the course has been scheduled. He then
    can add the next course or life object into his timetable.
 
-## WSummary of Scenario walk-through and Skeleton program 2 
+## Summary of Scenario walk-through and Skeleton program 2 
 
 If the user wants to schedule a **Life** object, he selects to add a **Life** object on the UserInterface by typing 'Life' into the command line when prompted. Then he will be required to select a time and description.
 
