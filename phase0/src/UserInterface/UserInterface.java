@@ -2,7 +2,6 @@ package UserInterface;
 
 import ConstantsAndExceptions.Constants;
 import TimeTableStuff.DatabaseController;
-import TimeTableStuff.TimeTable;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -50,9 +49,8 @@ public class UserInterface {
     /**
      * Runs the UserInterface.
      *
-     * @return An array of timetables.
      */
-    public TimeTable[] run(){
+    public void run(){
         DatabaseController control = new DatabaseController();
 
         // As long as the program is running
@@ -87,7 +85,7 @@ public class UserInterface {
                 running = false;
             }
         }
-        return control.getAllTimeTables();
+        control.getAllTimeTables();
     }
 
     /**
@@ -99,12 +97,8 @@ public class UserInterface {
     public static void main(String[] args) {
         UserInterface user = new UserInterface();
 
-        TimeTable[] output =  user.run();
+        user.run();
 
-        for (TimeTable table : output) {
-            // Prints out the timetable
-            System.out.println(table.toString());
-        }
         System.out.println("Here are your TimeTable!");
     }
 }

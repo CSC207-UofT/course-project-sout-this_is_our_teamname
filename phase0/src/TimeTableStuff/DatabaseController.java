@@ -3,7 +3,7 @@ import DataCollection.CSVScraper;
 import DataCollection.DataGetter;
 import GlobalHelperMethods.StringToTime;
 import TimeTableObjects.CourseStuff.Course;
-import TimeTableObjects.TimeTableObject;
+import TimeTableObjects.CourseStuff.NonCourseObject;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -80,18 +80,23 @@ public class DatabaseController {
             responses.put(prompt, scanner.nextLine());
         }
 
-        TimeTableObject selectedObject =
-                new TimeTableObject(
+        NonCourseObject selectedObject =
+                new NonCourseObject(
                         StringToTime.makeTime(responses.get(START_TIME)),
                         StringToTime.makeTime(responses.get(END_TIME)),
                         responses.get(LOCATION),
                         responses.get(DATE),
-                        responses.get(TERM));
+                        responses.get(TERM),
+                        responses.get(TYPE));
 
-        manager.schedule(selectedObject, responses.get(TYPE));
+        manager.schedule(selectedObject);
     }
 
-    public TimeTable[] getAllTimeTables(){
-        return manager.getAllTimeTables();
+    public void getAllTimeTables(){
+        TimeTable[] output = manager.getAllTimeTables();
+        for (TimeTable table : output) {
+            // Prints out the timetable
+            System.out.println(table.toString());
+        }
     }
 }

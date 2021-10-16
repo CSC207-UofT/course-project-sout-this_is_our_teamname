@@ -4,6 +4,7 @@ import TimeTableObjects.CourseStuff.Course;
 import TimeTableObjects.CourseStuff.Section;
 
 import ConstantsAndExceptions.Constants;
+import TimeTableObjects.CourseStuff.NonCourseObject;
 import TimeTableObjects.TimeTableObject;
 import TimeTableObjects.Life;
 import TimeTableObjects.DescriptionlessLife;
@@ -86,10 +87,10 @@ public class TimeTableManager {
      * Get the an event from the user interface and schedule it to the corresponding timetable(s).
      *
      * @param event a TimeTableObject passed from user interface
-     * @param type a String passed from user interface representing the type of the TimeTableObject
+     *
      */
-    public void schedule(TimeTableObject event, String type) {
-        TimeTableObject life = getCorrectTimeTableObject(event, type);
+    public void schedule(NonCourseObject event) {
+        TimeTableObject life = getCorrectTimeTableObject(event);
 
         // Add to corresponding timetable(s).
         if (event.getTerm().equals(Constants.FALL)){
@@ -99,8 +100,8 @@ public class TimeTableManager {
             timetables.get(Constants.WINTER).schedule(life);
         }
         else{
-            timetables.get(Constants.FALL).schedule(event);
-            timetables.get(Constants.WINTER).schedule(event);
+            timetables.get(Constants.FALL).schedule(life);
+            timetables.get(Constants.WINTER).schedule(life);
         }
     }
 
@@ -108,12 +109,11 @@ public class TimeTableManager {
      * A helper method for schedule (TimeTableObject). Returns event to the
      * correct type.
      *
-     * @param event The TimetableObject that needs to be scheduled
-     * @param type The type of the object
+     * @param event The TimetableObject that needs to be scheduled.
      * @return event "cast" to the correct type.
      */
-    private TimeTableObject getCorrectTimeTableObject(TimeTableObject event, String type) {
-        if (type.equals(Constants.LIFE)){
+    private TimeTableObject getCorrectTimeTableObject(NonCourseObject event) {
+        if (event.getType().equals(Constants.LIFE)){
             Scanner descriptionScanner = new Scanner(System.in);
             System.out.println("Please provide a description of your life " +
                     "activity: ");
@@ -121,7 +121,7 @@ public class TimeTableManager {
                     event.getLocation(), event.getDate(), event.getTerm(),
                     descriptionScanner.nextLine());
         }
-        else if (type.equals(Constants.DESCRIPTIONLESS_LIFE)){
+        else if (event.getType().equals(Constants.DESCRIPTIONLESS_LIFE)){
             return new DescriptionlessLife(event.getStartTime(),
                     event.getEndTime(), event.getLocation(), event.getDate(),
                     event.getTerm());
