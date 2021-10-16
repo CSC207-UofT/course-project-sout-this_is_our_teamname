@@ -94,12 +94,17 @@ If successfully, the user will receive a confirmation on UserInterface that the 
 * Modify Life class for referring sessions
 * Modify Descriptionlesslife class for further needs
 * Add JavaDoc
+* Better name for life, descriptionlesslife, NonCourseObject, etc.
+* Change how conflicts are handled in the future.
 
 ## Difficulties That We Currently Face With (Suggestions Eagerly Needed)
 
 * Lack of JavaDoc makes it difficult for quick communication.
 * Frequent changing of the code structure costs great amount of time and effort.
-* There is always a conflict between keeping adding features to make the program better and the will of reducing workload even if it is just phase 0.
+* There is always a conflict between keeping adding features to make the program 
+  better and the will of reducing workload even if it is just phase 0.
+* Lack of a better time management plan between the project and school work. 
+  Too much time spent on the project with too little done.(Keeps getting interrupted by the project)
 
 ## Questions to TA
 
@@ -136,6 +141,15 @@ an instructor in CSC148H1 Winter 2021, source of code)
 * Created TimetableManager class
 * Created TimetableManagerTest
 * The implementation and update of schedule method in TimeTableManager class.
+
+### Liyu Feng (Liquid - liyu.feng@mail.utoronto.ca)
+* Helped created the bare-bone structure for TimeTable class
+* Maintained and completely modified TimeTable Class after architecture changes in the project.
+* Created TimeTableTest
+* Fixed CompareTo interface, (All 13 cases has to work)
+* Created SectionTest to test the implementation of CompareTo in Section class
+* Modified Skeleton Summary.
+* Phase 0 bug finding.
 
 ### Jennie Fang (jennie-f - jennie.fang@mail.utoronto.ca)
 * Created TimeTableObject class

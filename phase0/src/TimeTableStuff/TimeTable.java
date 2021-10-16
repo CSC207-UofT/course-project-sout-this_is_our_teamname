@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 
 /**
  * TimeTable class stores all the activities from Monday to Sunday. If there is a conflict when storing a new activity,
- * it will still be stored, and a conflict warning will be sent back prmopting user to take action or ignore it.
+ * it will still be stored, and a conflict warning will be sent back prompting user to take action or ignore it.
  */
 public class TimeTable {
     private final LinkedHashMap<String, ArrayList<TimeTableObject>> calender;
@@ -67,13 +67,6 @@ public class TimeTable {
         return true;
     }
 
-    /**
-     * Grabs the calendar
-     * @return calendar
-     */
-    public LinkedHashMap<String, ArrayList<TimeTableObject>> getCalender() {
-        return calender;
-    }
 
     /**
      * Generate the String representation of the calender.
