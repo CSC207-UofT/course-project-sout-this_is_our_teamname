@@ -121,7 +121,7 @@ public class TimeTableManager {
                     event.getLocation(), event.getDate(), event.getTerm(),
                     descriptionScanner.nextLine());
         }
-        else if (event.getType().equals(Constants.DESCRIPTIONLESS_LIFE)){
+        else if (event.getType().equals(Constants.DESCRIPTION_LESS_LIFE)){
             return new DescriptionlessLife(event.getStartTime(),
                     event.getEndTime(), event.getLocation(), event.getDate(),
                     event.getTerm());
