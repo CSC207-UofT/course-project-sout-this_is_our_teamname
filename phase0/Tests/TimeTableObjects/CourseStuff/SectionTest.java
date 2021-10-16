@@ -62,5 +62,8 @@ public class SectionTest {
         assertEquals(lecture1.compareTo(lecture3), 1);
         assertEquals(lecture1.compareTo(lecture4), 1);
         assertEquals(lecture1.compareTo(lecture5), -1);
+        assertEquals(lecture2.compareTo(lecture1), -1);
+        assertEquals(lecture2.compareTo(lecture3), -1);
+
     }
 }
