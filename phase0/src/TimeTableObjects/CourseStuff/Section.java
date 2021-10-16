@@ -87,9 +87,11 @@ public class Section extends TimeTableObject implements Comparable<Section>{
     @Override
     public int compareTo(Section anotherSection) {
         if (this.getDate().equals(anotherSection.getDate())) {
-            int compare1 = anotherSection.getStartTime().compareTo(this.getEndTime());
-            int compare2 = this.getStartTime().compareTo(anotherSection.getEndTime());
-            if (compare1 <= 0 || compare2 <= 0) {
+            int compare1 = this.getStartTime().compareTo(anotherSection.getStartTime());
+            int compare2 = this.getEndTime().compareTo(anotherSection.getStartTime());
+            int compare3 = this.getStartTime().compareTo(anotherSection.getEndTime());
+            int compare4 = this.getEndTime().compareTo(anotherSection.getEndTime());
+            if (compare1 >= 0 && compare2 >= 0 && compare3 <= 0 && compare4 <=0) {
                 return -1;
             }
             else {
