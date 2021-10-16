@@ -1,10 +1,9 @@
 # TimeTableObject
 
 ## Class
-* A Data Structure
-* Behaves like an abstract class, but is not abstract, as it does not have 
-  any abstract methods.
-### Extended by:
+* An Entity
+* An abstract class.
+### Parent of:
 * `Section`
 * `DescriptionlessLife`
 * `Life`
