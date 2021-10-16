@@ -99,6 +99,12 @@ If successfully, the user will receive a confirmation on UserInterface that the 
 * Frequent changing of the code structure costs great amount of time and effort.
 * There is always a conflict between keeping adding features to make the program better and the will of reducing workload even if it is just phase 0.
 
+## Questions to TA
+
+Should we use Maps or Arrays when storing Timeblocks?
+
+Are we allowed to use Dfssolver from CSC148?
+
 ## Contribution Of Each Group Member
 
 **Aiden Lin (linhaoz3 - aiden.lin@mail.utoronto.ca)**
