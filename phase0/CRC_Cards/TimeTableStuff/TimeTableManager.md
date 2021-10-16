@@ -5,10 +5,13 @@
 
 ## Collaborators
 * `DatabaseController` (receives the `TimeTableObjects` to schedule)
+* `Course` (One data structure that passed from interface)
+* `Section` (Created by `.split()` in `Course`, the object being scheduled)
+* `TimeTableObject` + their children (the object being scheduled)
 * `TimeTable` (Schedules the object into)
-* `Course`/`TimeTableObject` + their children (the object it is scheduling)
 
 ## Functions
-* Stores and manage `TimeTableObjects` by creating the correct object
-* Schedules the courses by calling schedule method in `TimeTable`
-* Report and Respond to conflicts
+* Stores and manages different `TimeTable` 
+* Receives `Course` data structure and schedules corresponding sections to the timetable.
+* Identifies the type of `TimeTableObjects` and schedules them to the correct `TimeTable`
+* Reports and Responds if there are conflicts with existing events in `Timetable`

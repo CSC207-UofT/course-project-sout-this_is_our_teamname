@@ -131,3 +131,8 @@ an instructor in CSC148H1 Winter 2021, source of code)
 * Wrote Specifications
 * Added specific details to Walk Through
 * Transcribed CRC Cards from slides
+
+### Sonny Chen (chenz347 - sonnyzijia.chen@mail.utoronto.ca)
+* Created TimetableManager class
+* Created TimetableManagerTest
+* The implementation and update of schedule method in TimeTableManager class.
