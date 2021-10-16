@@ -2,7 +2,6 @@ package UserInterface;
 
 import ConstantsAndExceptions.Constants;
 import TimeTableStuff.DatabaseController;
-import TimeTableStuff.TimeTable;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -14,9 +13,9 @@ public class UserInterface {
         // Will be replaced with something by OperatorInterface in later Phases.
         usableClasses = new HashMap<>();
         usableClasses.put(Constants.COURSE, new String[]{Constants.COURSE});
-        usableClasses.put(Constants.TIMETABLEOBJECT,
+        usableClasses.put(Constants.NON_COURSE_OBJECT,
                 new String[]{Constants.LIFE,
-                        Constants.DESCRIPTIONLESS_LIFE});
+                        Constants.DESCRIPTION_LESS_LIFE});
     }
 
     private boolean BinarySearch(String query, String[] array){
@@ -50,16 +49,15 @@ public class UserInterface {
     /**
      * Runs the UserInterface.
      *
-     * @return An array of timetables.
      */
-    public TimeTable[] run(){
+    public void run(){
         DatabaseController control = new DatabaseController();
 
         // As long as the program is running
         boolean running = true;
 
         while(running) {
-            System.out.println("Usable Objects: " + this.getUsableClasses());
+            System.out.println("\nUsable Objects: " + this.getUsableClasses());
             Scanner objectScanner = new Scanner(System.in);
             System.out.println("Please enter what type of object: ");
             String schedulingObject = objectScanner.nextLine();
@@ -69,7 +67,7 @@ public class UserInterface {
 
             if (dataCategory.equals(Constants.COURSE)) {
                 control.makeCourse();
-            } else if (dataCategory.equals(Constants.TIMETABLEOBJECT)){
+            } else if (dataCategory.equals(Constants.NON_COURSE_OBJECT)){
                 control.makeTimeTableObject(schedulingObject);
             } else {
                 throw new UnsupportedOperationException(
@@ -87,7 +85,7 @@ public class UserInterface {
                 running = false;
             }
         }
-        return control.getAllTimeTables();
+        control.getAllTimeTables();
     }
 
     /**
@@ -99,12 +97,8 @@ public class UserInterface {
     public static void main(String[] args) {
         UserInterface user = new UserInterface();
 
-        TimeTable[] output =  user.run();
+        user.run();
 
-        for (TimeTable table : output) {
-            // Prints out the timetable
-            System.out.println(table.toString());
-        }
         System.out.println("Here are your TimeTable!");
     }
 }

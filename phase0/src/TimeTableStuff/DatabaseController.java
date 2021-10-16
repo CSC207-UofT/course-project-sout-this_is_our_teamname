@@ -3,7 +3,7 @@ import DataCollection.CSVScraper;
 import DataCollection.DataGetter;
 import GlobalHelperMethods.StringToTime;
 import TimeTableObjects.CourseStuff.Course;
-import TimeTableObjects.TimeTableObject;
+import TimeTableObjects.CourseStuff.NonCourseObject;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -37,7 +37,7 @@ public class DatabaseController {
      */
     private static void promptUserToChoose(HashMap<String, Course> courses) {
         for (String course : courses.keySet()) {
-            System.out.println(course);
+            System.out.println(course + ": " + courses.get(course).toString());
         }
     }
 
@@ -45,7 +45,8 @@ public class DatabaseController {
     public void makeCourse(){
         // The user enters the section they want to search
         Scanner CourseNameScanner = new Scanner(System.in);
-        System.out.println("Please Enter the Course Name: ");
+        System.out.println("Please Enter the course Name (eg CSC207H1 or " +
+                "APS113Y1. Don't forget the 'H1'!!!): ");
         String course = CourseNameScanner.nextLine();
 
         // Gets the data from the datasource
@@ -54,7 +55,8 @@ public class DatabaseController {
 
         // The user enters the section they want to search
         Scanner userChoice = new Scanner(System.in);
-        System.out.println("Please Choose a section: ");
+        System.out.println("Please choose a section (eg; LEC 0101. Only enter" +
+                " the section code): ");
         String selected = userChoice.nextLine();
 
         // Pass this to the TimeTableManager
@@ -64,12 +66,18 @@ public class DatabaseController {
 
     public void makeTimeTableObject(String theType){
         LinkedHashMap<String, String> prompts = new LinkedHashMap<>();
-        prompts.put(NAME, "Enter a title of an object");
-        prompts.put(START_TIME, "Enter the Start Time");
-        prompts.put(END_TIME, "Enter the End Time");
-        prompts.put(LOCATION, "Enter the Location");
-        prompts.put(DATE, "Enter the Date");
-        prompts.put(TERM, "Enter the Term");
+        prompts.put(NAME, "Enter a name for an object (eg; Dinner with Prof " +
+                "Gries and Friends)");
+        prompts.put(START_TIME, "Enter the Start Time (in a 12h clock format." +
+                " eg: 10:00AM or 9:00PM. No space between time and AM/PM)");
+        prompts.put(END_TIME, "Enter the End Time (in a 12h clock format. (" +
+                "eg: 10:00AM or 9:00PM. No space between time and AM/PM)");
+        prompts.put(LOCATION, "Enter the Location (eg; MY150, Home, Middle of" +
+                " Nowhere)");
+        prompts.put(DATE, "Enter the Day of the week (eg; Monday, Tuesday, " +
+                "Wednesday, etc.)");
+        prompts.put(TERM, "Enter the Term (Fall/Winter - NB will add more in " +
+                "later Phases)");
 
         HashMap<String, String> responses = new HashMap<>();
         responses.put(TYPE, theType);
@@ -80,18 +88,23 @@ public class DatabaseController {
             responses.put(prompt, scanner.nextLine());
         }
 
-        TimeTableObject selectedObject =
-                new TimeTableObject(
+        NonCourseObject selectedObject =
+                new NonCourseObject(
                         StringToTime.makeTime(responses.get(START_TIME)),
                         StringToTime.makeTime(responses.get(END_TIME)),
                         responses.get(LOCATION),
                         responses.get(DATE),
-                        responses.get(TERM));
+                        responses.get(TERM),
+                        responses.get(TYPE));
 
-        manager.schedule(selectedObject, responses.get(TYPE));
+        manager.schedule(selectedObject);
     }
 
-    public TimeTable[] getAllTimeTables(){
-        return manager.getAllTimeTables();
+    public void getAllTimeTables(){
+        TimeTable[] output = manager.getAllTimeTables();
+        for (TimeTable table : output) {
+            // Prints out the timetable
+            System.out.println(table.toString());
+        }
     }
 }

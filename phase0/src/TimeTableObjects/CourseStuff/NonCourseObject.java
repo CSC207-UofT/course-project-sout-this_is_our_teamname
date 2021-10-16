@@ -1,15 +1,14 @@
-package TimeTableObjects;
+package TimeTableObjects.CourseStuff;
+
 import java.sql.Time;
 
-/**
- * TimeTableObject class is a class that can be stored in a TimeTable class.
- */
-public abstract class TimeTableObject {
+public class NonCourseObject {
     private final Time startTime;
     private final Time endTime;
     private final String location;
     private final String date;
     private final String term;
+    private final String type;
 
     /**
      * Construct an activity with time, location and a description.
@@ -18,17 +17,24 @@ public abstract class TimeTableObject {
      * @param theLocation is the location of the activity.
      * @param theDate is the weekday of the activity.
      * @param term is the term of the activity
+     * @param type the type of the object
      */
-    public TimeTableObject(Time startTime,
+    public NonCourseObject(Time startTime,
                            Time endTime,
                            String theLocation,
                            String theDate,
-                           String term) {
+                           String term,
+                           String type) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = theLocation;
         this.date = theDate;
         this.term = term;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
     }
 
     /**
@@ -76,5 +82,8 @@ public abstract class TimeTableObject {
      * Generate the String representation of the activity.
      * @return the string representation of the activity.
      */
-    public abstract String toString();
+    public String toString(){
+        //TODO: this is just a place holder!!!
+        return "A(n) " + type + "object";
+    }
 }
