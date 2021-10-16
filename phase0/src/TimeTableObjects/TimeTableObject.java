@@ -2,7 +2,7 @@ package TimeTableObjects;
 import java.sql.Time;
 
 /**
- * TimeTableObject class is an abstract class that can be stored in a TimeTable class.
+ * TimeTableObject class is a class that can be stored in a TimeTable class.
  */
 public class TimeTableObject {
     private final Time startTime;
@@ -19,7 +19,6 @@ public class TimeTableObject {
      * @param theDate is the weekday of the activity.
      * @param term is the term of the activity
      */
-    //TODO: How do we add description? Here in the constructor or a separate method? or are we overriding in subclass?
     public TimeTableObject(Time startTime,
                            Time endTime,
                            String theLocation,

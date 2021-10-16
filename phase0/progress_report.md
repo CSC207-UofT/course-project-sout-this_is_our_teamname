@@ -35,6 +35,8 @@ It has 2 subclasses: **HCourse**, half-year course, and **YCourse**, year course
 12. **DatabaseController** collaborates with **UserInterface** and **TimeTableManager**. It generates prompts based on the information received from **UserInterface** and sends objects to **TimeTableManager** to schedule.
 13. **OperatorInterface** collaborates with **TimeTableManager**. Operator interacts with it, and it configures **TimeTableManager** and **DataGetter**.
 
+(See [CRC_Cards_README](CRC_Cards/CRC_Cards_README.md))
+
 ## Summary of Scenario walk-through and Skeleton program 1 
 1. Before user searches a course,  an operator uses the OperatorInterface class and set the source of data and  UserInterfaces will refer to the operator. The operator can use `configure` method to configure the
    `dataSource` instance variable of `UserInterface` to the correct object
@@ -85,11 +87,11 @@ If successfully, the user will receive a confirmation on UserInterface that the 
 ## Future TODOs
 
 * GUI
-* Implement Operateor Interface
+* Implement Operator Interface
 * Implement Functions class
 * Implement codes to catch invalid input exceptions
 * Implement codes to store data by user account (if possible)
-* Modify Life class for refurring sessions
+* Modify Life class for referring sessions
 * Modify Descriptionlesslife class for further needs
 * Add JavaDoc
 
@@ -101,17 +103,31 @@ If successfully, the user will receive a confirmation on UserInterface that the 
 
 ## Questions to TA
 
-Should we use Maps or Arrays when storing Timeblocks?
-
-Are we allowed to use Dfssolver from CSC148?
+1. Should we use Maps or Arrays when storing Timeblocks?
+2. Are we allowed to use Dfssolver from CSC148? (also for Prof Calver, who was 
+an instructor in CSC148H1 Winter 2021, source of code)
 
 ## Contribution Of Each Group Member
 
-**Aiden Lin (linhaoz3 - aiden.lin@mail.utoronto.ca)**
+### Aiden Lin (linhaoz3 - aiden.lin@mail.utoronto.ca)
 
 * Writing part of the progress report for phase 0
 * Handling the implementation of coding for catching and reporting exceptions and conflicts in TimeTableManager class
 
-**Caules Ge (gehongsh - caules.ge@mail.utoronto.ca)**
+### Caules Ge (gehongsh - caules.ge@mail.utoronto.ca)
 * Writing part of the progress report for phase 0
 * The implement of schedule method in TimeTableManager class
+
+### Matthew Du (dumatthe - matthew.du@mail.utoronto.ca)
+* Created classes:
+  * DataGetter
+  * CSVScraper
+  * WebScraper (Trivial Implementation)
+  * UserInterface
+  * OperatorInterface (Trivial Implementation)
+  * DatabaseController
+  * GlobalHelperMethod
+  * Constants (Trivial Implementation)
+* Wrote Specifications
+* Added specific details to Walk Through
+* Transcribed CRC Cards from slides

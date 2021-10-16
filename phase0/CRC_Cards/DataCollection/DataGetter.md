@@ -1,12 +1,16 @@
 # DataGetter
 
-## Abstract Class
-#### Parent Class of:
+## Class
+* Abstract Class
+* Interface Adaptor (Database)
+### Parent Class of:
 * `WebScraper`
+* `CSVScraper`
 
 ## Collaborators
-* `UserInterface`
+* `DatabaseController`
 
-## Functions
-* Should have a `get` method that finds the information and returns it in a Map (Data Type: Data)
+## Responsibilities
+* Should have a `getData` method that returns the data in a neat HashMap
+* Should have a calibrate method to generate the HashMap of the data
 

@@ -1,5 +1,7 @@
 # WebScraper
 
+# NOT IMPLEMENTED IN PHASE 0
+
 ## Class
 * Child Class of `DataGetter`
 * Interface Adaptor (Database)

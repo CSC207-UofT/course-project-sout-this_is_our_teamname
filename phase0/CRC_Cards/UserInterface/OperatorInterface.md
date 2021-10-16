@@ -2,8 +2,10 @@
 # NOT IMPLEMENTED IN PHASE 0
 
 ## Collaborators
-* `TimeTableManager`
+* `DataGetter` + its children (Configures which one the user can use)
+* `UserInterface` (Configures it)
+* `DatabaseController` (Configures it)
 
 ## Functions
 * Operator interacts with this. 
-* Configures `TimeTableManager` and `DataGetter` 
+* Configures `DatabaseController` and `DataGetter` 

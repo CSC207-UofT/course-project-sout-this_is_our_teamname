@@ -1,14 +1,17 @@
 # Course
 
 ## Class
-* `splittable` object
-* This is a "twin" class of TimeTableObject, which stores course information.
-* **DATA STRUCTURE** 
+* `sliceable` object
+* A Data Structure
 
 ## Collaborators
-* `DatabaseController` Creates the object
+* `DatabaseController` Requests the information and sends the object to 
+  `TimeTableManager`
+* `DataGathering` Creates the object
+* `TimeTableManager` Splits the course into sections to place into `TimeTable`
 
 ## Responsibilities
+* This is a "twin" class of TimeTableObject, which stores course information.
 * Should Hold:
   * Section type (LEC/TUT/PRA)
   * Professor

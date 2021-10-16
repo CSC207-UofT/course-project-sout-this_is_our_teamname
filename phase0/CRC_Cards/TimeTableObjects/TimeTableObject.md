@@ -1,13 +1,24 @@
 # TimeTableObject
 
-## Abstract Class
-#### Parent class of:
-* `Course`
+## Class
+* A Data Structure
+* Behaves like an abstract class, but is not abstract, as it does not have 
+  any abstract methods.
+### Extended by:
+* `Section`
+* `DescriptionlessLife`
 * `Life`
 
 ## Collaborators
-* Timetable
+* `TimeTableManager` ("Down Casts" the object into the correct "child class")
+* `DatabaseController` (Creates the object, based on user inputs)
 
-## Functions
-* An abstract class to hold an object for a timetable
+## Responsibilities
+* A class to hold an object for a timetable to schedule.
+* Stores:
+    * Start Time
+    * End Time
+    * Location
+    * Date
+    * Term
 
