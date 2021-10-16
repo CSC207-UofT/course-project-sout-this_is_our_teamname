@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class UserInterface {
-    private HashMap<String, String[]> usableClasses;
+    private final HashMap<String, String[]> usableClasses;
 
     public UserInterface(){
         // Will be replaced with something by OperatorInterface in later Phases.
@@ -37,6 +37,16 @@ public class UserInterface {
         return "";
     }
 
+    private String getUsableClasses(){
+        StringBuilder usables = new StringBuilder();
+        for (String[] item : usableClasses.values()){
+            for (String usableItem : item){
+                usables.append(usableItem).append(", ");
+            }
+        }
+        return usables.toString();
+    }
+
     /**
      * Runs the UserInterface.
      *
@@ -49,6 +59,7 @@ public class UserInterface {
         boolean running = true;
 
         while(running) {
+            System.out.println("Usable Objects: " + this.getUsableClasses());
             Scanner objectScanner = new Scanner(System.in);
             System.out.println("Please enter what type of object: ");
             String schedulingObject = objectScanner.nextLine();
@@ -59,7 +70,7 @@ public class UserInterface {
             if (dataCategory.equals(Constants.COURSE)) {
                 control.makeCourse();
             } else if (dataCategory.equals(Constants.TIMETABLEOBJECT)){
-                control.makeTimeTableObject();
+                control.makeTimeTableObject(schedulingObject);
             } else {
                 throw new UnsupportedOperationException(
                         "This is not Implemented in Phase 0.");
