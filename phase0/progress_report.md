@@ -18,9 +18,7 @@ courses according to a course database as well as schedule the courses they curr
 enrol in. They can also make full use of this tool by customizing and putting personal
 events in the timetable to plan their daily study and life.
 
-## Summary Of Current Progress
-
-##CRC model
+## CRC model
 We created following classes:
 1. **Course**. An abstract class stores course sections, professor, location, time, delivery method, and faculty. 
 It has 2 subclasses: **HCourse**, half-year course, and **YCourse**, year course.
