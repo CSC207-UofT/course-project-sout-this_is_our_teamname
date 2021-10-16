@@ -21,7 +21,7 @@ public class TimeTableManager {
      *
      */
     public TimeTableManager() {
-        this.timetables = new HashMap<String, TimeTable>(){{
+        this.timetables = new HashMap<>(){{
             put(Constants.FALL, new TimeTable());
             put(Constants.WINTER, new TimeTable());
         }};
@@ -44,7 +44,7 @@ public class TimeTableManager {
      * @return true if we successfully remove a TimeTable, else false.
      */
     public boolean removeTimeTable(String term) {
-        timetables.remove(term, new TimeTable());
+        timetables.remove(term);
         // TODO Failed to remove a new timetable.
         return true;
     }
