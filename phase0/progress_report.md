@@ -222,3 +222,9 @@ an instructor in CSC148H1 Winter 2021, source of code)
 * Created Life class
 * Created Course class
 * Helped create the Comparable and Sliceable interfaces
+
+### Hubert Gu (HubertGu - hubert.gu@mail.utpronto.ca)
+* Helped created the bare-bone structure for TimeTable class
+* Implemented methods for TimeTable class
+* Modified methods and fixed bugs for TimeTableManager and TimeTableManagerTest
+* Phase 0 bug finding/fixing

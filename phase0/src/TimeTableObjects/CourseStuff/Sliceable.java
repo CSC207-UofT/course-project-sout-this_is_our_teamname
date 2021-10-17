@@ -1,4 +1,4 @@
-package CourseStuff;
+package TimeTableObjects.CourseStuff;
 import java.util.ArrayList;
 //package TimeTableObjects
 
