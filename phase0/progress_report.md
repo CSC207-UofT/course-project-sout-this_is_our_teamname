@@ -81,7 +81,7 @@ been scheduled properly. If failed, the
 TimeTable will inform the TimeTableManager, which will inform the user
 that it has not been successful and that they should try again.
 
-If successfully, the user will receive a confirmation on UserInterface that the course has been scheduled. He then can add the next course or life object into his timetable.
+If success, the user will receive a confirmation on UserInterface that the course has been scheduled. He then can add the next course or life object into his timetable.
 
 
 ## Future TODOs
