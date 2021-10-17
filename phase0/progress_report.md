@@ -211,10 +211,10 @@ an instructor in CSC148H1 Winter 2021, source of code)
 
 ### Liyu Feng (Liquid - liyu.feng@mail.utoronto.ca)
 * Helped created the bare-bone structure for TimeTable class
-* Maintained and completely modified TimeTable Class after architecture changes in the project.
+* Complete overhaul on TimeTable Class after architectural changes.
 * Created TimeTableTest
 * Fixed CompareTo interface.
-* Created SectionTest to test the implementation of CompareTo in Section class
+* Created SectionTest to test the implementation of CompareTo in Section class.
 * Updates on Progress report due to new architectural change.
 * Phase 0 bug finding.
 
