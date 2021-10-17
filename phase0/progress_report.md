@@ -120,7 +120,7 @@ an instructor in CSC148H1 Winter 2021, source of code)
 * Handling the implementation of coding for catching and reporting exceptions and conflicts in TimeTableManager class
 
 ### Caules Ge (gehongsh - caules.ge@mail.utoronto.ca)
-* Writing the summary part of the progress report for phase 0
+* Writing the summary of CRC Model, Scenario walk-through and skeleton program in the progress report for phase 0
 * The implement of schedule method in TimeTableManager class
 
 ### Matthew Du (dumatthe - matthew.du@mail.utoronto.ca)
