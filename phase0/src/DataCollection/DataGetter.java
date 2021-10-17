@@ -2,18 +2,47 @@ package DataCollection;
 
 import TimeTableObjects.CourseStuff.Course;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
+/**
+ * A data gathering class / database class
+ */
 public abstract class DataGetter {
-    public HashMap<String, Course> data;
-    public String course_name;
+    private final LinkedHashMap<String, Course> data;
 
-    public DataGetter(String courseName){
-        this.data = new HashMap<>();
-        this.course_name = courseName;
+    /**
+     * A constructor for this class.
+     * - data is a HashMap, where the keys are the section name, and the
+     * values are the Course objects
+     */
+    public DataGetter(){
+        this.data = new LinkedHashMap<>();
     }
 
-    public HashMap<String, Course> getData(){
+    /**
+     * Add the Course to the data HashMap
+     *
+     * @param name the name of the section
+     * @param theCourse the course object
+     */
+    protected void placeToData(String name, Course theCourse) {
+        this.data.put(name, theCourse);
+    }
+
+    /**
+     * An abstract class to calibrate the data HashMap!
+     *
+     * @param courseName the Course Name
+     */
+    abstract void CalibrateData(String courseName);
+
+    /**
+     * A Getter class for the Data HashMap
+     * @param courseName the name of the Course
+     * @return the Data HashMap
+     */
+    public LinkedHashMap<String, Course> getData(String courseName){
+        CalibrateData(courseName);
         return this.data;
     }
 }

@@ -1,31 +1,12 @@
 # Team `sout("This_is_our_teamname")`
 
-## Table of Contents
-* [CRC Cards](phase0/whatever_you_called_your_CRC_model_files/CRC_Cards_README.md)
+## Replace this README.md!
+Welcome to our Team Repo! In this repo, please find our course project for 
+CSC207H1 F, Fall 2021 at the University of Toronto St.George.
+
+## Phase 0
+* [CRC Cards](phase0/CRC_Cards/CRC_Cards_README.md)
 * [walkthrough](phase0/walkthrough.md)
 * [specification](phase0/specification.md)
 * [progress_report](phase0/progress_report.md)
-
-## Replace this README.md!
-
-This is a standard README.md file for you to replace. You'll want to include your own content here!
-
-MD (Markdown) files use [Markdown formatting](https://guides.github.com/features/mastering-markdown/): 
-these look very much like .txt files, so you can write them in a very similar way.
-
-## General Comments
-You can place a global comment here.
-* I made these sections on the README.md. They are for communications within 
-  the group - Matthew Du
-* I propose two more classes. They are annotated with a leading `_`. For convince, they are linked here - Matthew:
-  * [_CSVScraper.md](phase0/whatever_you_called_your_CRC_model_files/DataCollection/_CSVScraper.md): Various TODOs to be discussed in next meeting - Matthew
-  * [_OperatorInterface.md](phase0/whatever_you_called_your_CRC_model_files/UserInterface/_OperatorInterface.md): Various TODOs to be discussed in next meeting - Matthew
-
-
-## TODOS
-Link your TODOs here so others can help. Clearly describe what needs to be 
-done and write your name.
-
-* [TimeTable.md](phase0/whatever_you_called_your_CRC_model_files/TimeTableStuff/TimeTable.md): Various TODOs to be discussed in next meeting - Matthew
-* [walkthrough.md](phase0/walkthrough.md): Various TODOs to be discussed in 
-  next meeting - Matthew
+* [skeleton_program](phase0/src/Skeleton_README.md)
