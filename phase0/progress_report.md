@@ -55,7 +55,7 @@ It has 2 subclasses: **HCourse**, half-year course, and **YCourse**, year course
 
 ## Scenario Walk-through and Skeleton Program Summary
 ### Goal
-We want the program to take input from the user and add an activity on a
+We want the program to take an input from the user and add an activity on a
 timetable.
 
 ##Setup
