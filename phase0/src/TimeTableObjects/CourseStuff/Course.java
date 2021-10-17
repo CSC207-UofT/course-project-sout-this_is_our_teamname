@@ -1,5 +1,4 @@
 package TimeTableObjects.CourseStuff;
-import TimeTableObjects.CourseStuff.Sliceable;
 
 import java.sql.Time;
 import java.util.ArrayList;
