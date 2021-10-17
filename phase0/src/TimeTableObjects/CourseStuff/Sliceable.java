@@ -1,8 +1,6 @@
 package TimeTableObjects.CourseStuff;
-import java.util.ArrayList;
-//package TimeTableObjects
 
-import TimeTableObjects.CourseStuff.Section;
+import java.util.ArrayList;
 
 /**
  * CourseStuff.Sliceable is an interface implemented by Course and all its subclasses.
