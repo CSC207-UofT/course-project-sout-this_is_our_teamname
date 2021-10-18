@@ -174,10 +174,4 @@ public class TimeTableManager {
         }
         return times.toString();
     }
-
-    public static void main(String[] args) {
-        TimeTableManager manager = new TimeTableManager();
-        manager.addTimeTable("H");
-        System.out.println(manager.getTerms());
-    }
 }

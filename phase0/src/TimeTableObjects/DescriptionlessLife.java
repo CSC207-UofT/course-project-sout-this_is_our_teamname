@@ -1,7 +1,5 @@
 package TimeTableObjects;
 
-import TimeTableObjects.TimeTableObject;
-
 import java.sql.Time;
 
 public class DescriptionlessLife extends TimeTableObject{
