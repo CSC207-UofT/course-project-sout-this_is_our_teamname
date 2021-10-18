@@ -1,5 +1,4 @@
 package TimeTableObjects.CourseStuff;
-import CourseStuff.Sliceable;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ public class Course implements Sliceable<Section>{
     /**
      * Construct a course with the given section, professor, faculty, delivery method,
      * time and location.
-     * //TODO missing documentation for term
      * @param section The section code for this course
      * @param professor The professor teaching this course section
      * @param faculty The faculty this course belongs to
@@ -32,6 +30,7 @@ public class Course implements Sliceable<Section>{
      *                     String[], String, where the string array will hold
      *                     the date and time information like the following:
      *                     {date, startTime, endTime}
+     * @param term The term for this course
      */
     public Course(String section,
                   String professor,
@@ -109,6 +108,11 @@ public class Course implements Sliceable<Section>{
         return CourseString.toString();
     }
 
+    /**
+     * Get the term for this course
+     *
+     * @return the term of this course
+     */
     public String getTerm() {
         return term;
     }

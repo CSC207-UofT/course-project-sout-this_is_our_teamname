@@ -21,67 +21,129 @@ events in the timetable to plan their daily study and life.
 ## CRC model
 We created following classes:
 1. **Course**. An abstract class stores course sections, professor, location, time, delivery method, and faculty. 
-It has 2 subclasses: **HCourse**, half-year course, and **YCourse**, year course.
-2. **TimeTableObject** is an abstract class that can be stored in a TimeTable class. It holds an object for timetable. It has follow subclasses: **Section**, **Life**, and **DescriptionlessLife**.
-3. **Section** is a subclass of  **TimeTableObject**. It stores startTime, endTime, location, date, term, code, professor, faculty, delivery method of the section.
-4. **Life** is a subclass of  **TimeTableObject**, it holds time and description of activity.
-5. **DescriptionlessLife** is a subclass of  **TimeTableObject**, it holds time of activity.
-6. **TimeTable** has a map to store all the activities from Monday to Sunday with <day, ArrayList<**TimeTableObject**>> key-value pair. It collaborates with **TimeTableObject** to schedule the given activity into the appropriate weekday and check if there is a conflict in the timetable with given activity.
-7. **TimeTableManager** collaborates with **Course**, **TimeTableObject**, and their subclasses. It manages and navigates through **TimeTable**, schedules the given **Course** and **TimeTableObject**, reports and responds to conflict, and discern term of course. 
-8. **DataGetter** is an abstract class. It collaborates with **UserInterface** and should have a **get** method that finds the information and returns it in a Map (Data Type: Data). Its subclasses are **WebScraper** and **CSVScraper**.
-9. **WebScraper** is the subclass of **DataGetter**. It collaborates with **DatabaseController** and **OperatorInterface**. It reads the HTML of the UofT Course finder for the giver course and throws an Error when the given course is not found, analyze, filters the data, and stores the data as a Course Objects, and stores the course objects in a HashMap with section codes as keys and the courses as values.
-10. **CSVScraper** is the subclass of **DataGetter**. It collaborates with **DatabaseController** and **OperatorInterface**. It reads a CSV file for the given course for information and throws an Error when the given course is not found, analyzes and filters the data and stores the data as **Course** Objects, and stores the **Course** objects in a HashMap with section codes as keys and the courses as values.
-11. **UserInterface** collaborates with **TimeTableManager**. User interacts with it to input the course to search. It sends Input to **TimeTableManager** to interpret and deal with and displays final product to the user.
-12. **DatabaseController** collaborates with **UserInterface** and **TimeTableManager**. It generates prompts based on the information received from **UserInterface** and sends objects to **TimeTableManager** to schedule.
-13. **OperatorInterface** collaborates with **TimeTableManager**. Operator interacts with it, and it configures **TimeTableManager** and **DataGetter**.
+It has 2 subclasses: **HCourse**, half-year course, and **YCourse**, year course.<br />
+   <br />
+2. **TimeTableObject** is an abstract class that can be stored in a TimeTable class. It holds an object for timetable. It has follow subclasses: **Section**, **Life**, and **DescriptionlessLife**.<br />
+   <br />
+3. **Section** is a subclass of  **TimeTableObject**. It stores startTime, endTime, location, date, term, code, professor, faculty, delivery method of the section.<br />
+   <br />
+4. **Life** is a subclass of  **TimeTableObject**, it holds time and description of activity.<br />
+   <br />
+5. **DescriptionlessLife** is a subclass of  **TimeTableObject**, it holds time of activity.<br />
+   <br />
+6. **TimeTable** has a map to store all the activities from Monday to Sunday with <day, ArrayList<**TimeTableObject**>> key-value pair. It collaborates with **TimeTableObject** to schedule the given activity into the appropriate weekday and check if there is a conflict in the timetable with given activity.<br />
+   <br />
+7. **TimeTableManager** collaborates with **Course**, **TimeTableObject**, and their subclasses. It manages and navigates through **TimeTable**, schedules the given **Course** and **TimeTableObject**, reports and responds to conflict, and discern term of course. <br />
+   <br />
+8. **DataGetter** is an abstract class. It collaborates with **UserInterface** and should have a **get** method that finds the information and returns it in a Map (Data Type: Data). Its subclasses are **WebScraper** and **CSVScraper**.<br />
+   <br />
+9. **WebScraper** is the subclass of **DataGetter**. It collaborates with **DatabaseController** and **OperatorInterface**. It reads the HTML of the UofT Course finder for the giver course and throws an Error when the given course is not found, analyze, filters the data, and stores the data as a Course Objects, and stores the course objects in a HashMap with section codes as keys and the courses as values.<br />
+   <br />
+10. **CSVScraper** is the subclass of **DataGetter**. It collaborates with **DatabaseController** and **OperatorInterface**. It reads a CSV file for the given course for information and throws an Error when the given course is not found, analyzes and filters the data and stores the data as **Course** Objects, and stores the **Course** objects in a HashMap with section codes as keys and the courses as values.<br />
+    <br />
+11. **UserInterface** collaborates with **TimeTableManager**. User interacts with it to input the course to search. It sends Input to **TimeTableManager** to interpret and deal with and displays final product to the user.<br />
+    <br />
+12. **DatabaseController** collaborates with **UserInterface** and **TimeTableManager**. It generates prompts based on the information received from **UserInterface** and sends objects to **TimeTableManager** to schedule.<br />
+    <br />
+13. **OperatorInterface** collaborates with **TimeTableManager**. Operator interacts with it, and it configures **TimeTableManager** and **DataGetter**.<br />
+    <br />
+14. **NonCourseObject** collaborates with **TimeTableManager** and **DatabaseController** Responsible for holding the information from the user and passing it to
+    **TimeTableManager** to create individual **TimeTableObjects**.
 
 (See [CRC_Cards_README](CRC_Cards/CRC_Cards_README.md))
 
-## Summary of Scenario walk-through and Skeleton program 1 
-1. Before user searches a course,  an operator uses the OperatorInterface class and set the source of data and  UserInterfaces will refer to the operator. The operator can use `configure` method to configure the
-   `dataSource` instance variable of `UserInterface` to the correct object
-   of the DataGetter class.
-2. If user searches for a course, he needs to select to schedule a Course Object in the UserInterface.
-3. **UserInterface** will request the data from the DataGathering
-   class set by the instance `dataSource`. The query is then sent to the
-   DataGathering class which was set by the `OperatorInterface`.
-4. The DataGathering class (whatever it is) then collects and sorts all the course information as a **HashMap<String, Course>**,the key is the **section name** and the value is **course object**. The Course object will hold all the times of the lectures of the courses, as well as the locations of the classes at that time.
-5. The **UserInterface** retrieves the HashMap from the DataGathering class and prompts the user to select a course object by printing each key and perhaps details of the section obtained from the values. The user then **types** the course into the command line (at least for Phase 0) to "commit" their choice. The UserInterface then **sends the course object at the value of the course section that the user selected to the 'TimeTableManager' class**.
-6. The **TimeTableManager** will look for the term of the course **which has been stored in the course object**. The TimeTableManager will then use a **`Split` method OF the Course object to get an array of Section objects that only stores one time and one location of a course**.
-7. The **TimeTable Object** will then find the correct location to put the
-   course in its storage space, which will be a `HashMap<String, String>`,
-   where the keys are the time and **the values are the `TimeTableObjects`**.
-   **Class `TimeTable`** will then send a confirmation that it has scheduled the
-   course properly **to `TimeTableManager`**, which will pass the information to
-   the `UserInterface` to inform them that the course has been scheduled
-   properly. If it hasn't been scheduled successfully, the TimeTable will
-   inform the TimeTableManager, which will inform the user that it has not
-   been successful and that they should try again. 
-8. If the course is added successfully, the user will receive a
-   confirmation on UserInterface that the course has been scheduled. He then
-   can add the next course or life object into his timetable.
 
-## Summary of Scenario walk-through and Skeleton program 2 
+## Scenario Walk-through and Skeleton Program Summary
+### Goal
+We want the program to take an input from the user and add an activity on a
+timetable.
 
-If the user wants to schedule a **Life** object, he selects to add a **Life** object on the UserInterface by typing 'Life' into the command line when prompted. Then he will be required to select a time and description.
+##Setup
+The User interface asks the user to choose what type of activity the user
+wants to add on to the timetable. The activities available right now are:
+Course, Life, DescriptionlessLife.
 
-The UserInterface class will then create a life object from the given
-information and send it to the TimeTableManager through the `Schedule`
-method.
+####Case 1:  User inputs Course.
+1. The `UserInterface` will send the input "Course" to the
+   `DatabaseController`, which will prompt the user with questions about
+   what they want to input. In this case, it will ask for what course
+   User wants to input.<br />
+   <br />
+2. The `UserInterface` will send this information to the
+   `DatabaseController`, which will prompt the User with questions about
+   the course code they want to input.<br />
+   <br />
+3. The `DatabaseController` class then will request the data from the
+   `CSVScraper` by using the `getData` method.<br />
+   <br />
+4. The `CSVScraper` then collects and sorts all the
+   course information as a `HashMap<String, Course>` where each `Course`
+   object only holds one section (LEC/TUT/PRA) and all the times and
+   information relating to that one section. All the courses are then stored
+   in a `HashMap<String, Course>`, where each key is the section name and
+   the value is the `Course` object it found. The `Course` object will hold
+   all the times of the lectures of the courses, as well as the locations of
+   the classes at that time. Each course block will hold the Times and Locations
+   as an `HashMap<ArrayList<Object>, String>`.<br />
+   <br />
+5. The `DatabaseController` retrieves the HashMap from the `CSVScraper` class
+   and prompts the user to select a LEC/TUT/PRA of the course by printing each
+   the details of the `Course`. The `DatabaseController` then sends the chosen
+   to the `TimeTableManager` class through a `schedule` method. <br />
+   <br />
 
-The `TimeTableManager` then **sends this information to the correct
-timetable based on the term stored from above** by sending it through the
-**`Schedule` Method of TimeTable Class**.
+6. The `TimeTableManager` will look for the term of the course which has
+   been stored in the course object. The `TimeTableManager` will then use a
+   `split` method of the `Course` object (since Course is splittable) to get an
+   array of `section` objects that only stores one time interval of
+   the chosen LEC/TUT/PRA.
+   The `TimeTableManager` then will schedule the section in the appropriate
+   `TimeTable` using a `schedule` method of `TimeTable`.<br />
+   <br />
 
-The **TimeTable Object** will find the correct location to put the course in its storage space.
-**Class `TimeTable`** will then send a confirmation that it has scheduled
-the life object properly **to `TimeTableManager`**, which will pass the
-information to the `UserInterface` to inform them that the life object has
-been scheduled properly. If failed, the
-TimeTable will inform the TimeTableManager, which will inform the user
-that it has not been successful and that they should try again.
+7. The `TimeTable` Object will then find the correct location to put the
+   section in its storage space, which will be a `LinkedHashMap<String,
+   ArrayList<String>>`, where the keys are the days of the week and the
+   values are the `TimeTableObject`. Class `TimeTable` checks for conflicts
+   in time for `Section` objects before scheduling, it is done so by using the
+   Comparable interface implemented by 'Section'. For phase 0 anything with a
+   conflict will not be scheduled. The confirmation that the object has been
+   scheduled will be sent to `TimeTableManager`.<br />
+   <br />
 
-If successfully, the user will receive a confirmation on UserInterface that the course has been scheduled. He then can add the next course or life object into his timetable.
+8. After the course was added successfully. The User will be prompted on
+   whether he/she wants to add more object into his/hers timetable.<br />
+   <br />
+
+### Case 2: User inputs Life or DescriptionlessLife
+**The process are the same for both, so we will use Life here for simplicity.**
+
+1. The input `Life` will then be sent over to `DataBaseController` to be scheduled as an
+   `NonCourseObject`. The User will then be prompted to enter all the information
+   required for the Life Object.<br />
+   <br />
+
+2. The `DatabaseController` class will then create a `NonCourseObject`,
+   which will store all the necessary information of the input, including
+   the type of object. In this case, the `NonCourseObject` will store the
+   date, start/end time, description, term, and the name of the activity, along
+   with the type of object, which is a `Life` object<br />
+   <br />
+
+3. The `NonCourseObject` is then sent to the `TimeTableManager` through the
+   `schedule` method. (Which is overloaded)<br />
+   <br />
+
+4. The `TimeTableManager` then will read the type of the `NonCourseObject`
+   and create a `Life` Object. Then it will be sent to the`TimeTable` to be scheduled.<br />
+   <br />
+
+5. The `TimeTable` will then find the correct location to put the course in
+   its storage space. (Note: Conflicts are only checked for `Section` Objects.)<br />
+   <br />
+
+6. After the `Life` object was added successfully. The User will be prompted on
+   whether he/she wants to add more object into his/hers timetable.
 
 
 ## Future TODOs
@@ -94,12 +156,20 @@ If successfully, the user will receive a confirmation on UserInterface that the 
 * Modify Life class for referring sessions
 * Modify Descriptionlesslife class for further needs
 * Add JavaDoc
+* Better name for life, descriptionlesslife, NonCourseObject, etc.
+* Change how conflicts are handled in the future.
 
 ## Difficulties That We Currently Face With (Suggestions Eagerly Needed)
 
 * Lack of JavaDoc makes it difficult for quick communication.
 * Frequent changing of the code structure costs great amount of time and effort.
-* There is always a conflict between keeping adding features to make the program better and the will of reducing workload even if it is just phase 0.
+* There is always a conflict between keeping adding features to make the program 
+  better and the will of reducing workload even if it is just phase 0.
+* Lack of a better time management plan between the project and school work. 
+  Too much time spent on the project with too little done. Keeps getting interrupted by the project.
+* Lack of communication sometimes results in duplicated work.
+  Solution: Perhaps a google doc that everyone updates what they are working on in realtime?
+
 
 ## Questions to TA
 
@@ -115,8 +185,8 @@ an instructor in CSC148H1 Winter 2021, source of code)
 * Handling the implementation of coding for catching and reporting exceptions and conflicts in TimeTableManager class
 
 ### Caules Ge (gehongsh - caules.ge@mail.utoronto.ca)
-* Writing part of the progress report for phase 0
-* The implement of schedule method in TimeTableManager class
+* Writing the summary of CRC Model, Scenario walk-through and skeleton program in the progress report for phase 0
+* The implementation of schedule method in TimeTableManager class
 
 ### Matthew Du (dumatthe - matthew.du@mail.utoronto.ca)
 * Created classes:
@@ -136,3 +206,25 @@ an instructor in CSC148H1 Winter 2021, source of code)
 * Created TimetableManager class
 * Created TimetableManagerTest
 * The implementation and update of schedule method in TimeTableManager class.
+
+### Liyu Feng (Liquid - liyu.feng@mail.utoronto.ca)
+* Helped created the bare-bone structure for TimeTable class
+* Complete overhaul on TimeTable Class after architectural changes.
+* Created TimeTableTest
+* Fixed CompareTo interface.
+* Created SectionTest to test the implementation of CompareTo in Section class.
+* Updates on Progress report due to new architectural change.
+* Phase 0 bug finding.
+
+### Jennie Fang (jennie-f - jennie.fang@mail.utoronto.ca)
+* Created TimeTableObject class
+* Created Section class
+* Created Life class
+* Created Course class
+* Helped create the Comparable and Sliceable interfaces
+
+### Hubert Gu (HubertGu - hubert.gu@mail.utpronto.ca)
+* Helped created the bare-bone structure for TimeTable class
+* Implemented methods for TimeTable class
+* Modified methods and fixed bugs for TimeTableManager and TimeTableManagerTest
+* Phase 0 bug finding/fixing

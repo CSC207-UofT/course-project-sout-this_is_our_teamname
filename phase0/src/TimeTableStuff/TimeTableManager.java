@@ -10,9 +10,7 @@ import TimeTableObjects.Life;
 import TimeTableObjects.DescriptionlessLife;
 
 // Importing HashMap class
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class TimeTableManager {
     private final HashMap<String, TimeTable> timetables;
@@ -34,9 +32,13 @@ public class TimeTableManager {
      * @return true if we successfully add a new TimeTable, else false.
      */
     public boolean addTimeTable(String term) {
-        timetables.put(term, new TimeTable());
-        // TODO Failed to add a new timetable.
-        return true;
+        if (this.timetables.containsKey(term)) {
+            return false;
+        }
+        else{
+            timetables.put(term, new TimeTable());
+            return true;
+        }
     }
 
     /**
@@ -45,9 +47,21 @@ public class TimeTableManager {
      * @return true if we successfully remove a TimeTable, else false.
      */
     public boolean removeTimeTable(String term) {
-        timetables.remove(term);
-        // TODO Failed to remove a new timetable.
-        return true;
+        if (this.timetables.containsKey(term)) {
+            timetables.remove(term);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    /**
+     * Get the terms of the timetables
+     * @return the set of terms of the timetables
+     */
+    public Set<String> getTerms() {
+        return this.timetables.keySet();
     }
 
     /**
@@ -56,8 +70,13 @@ public class TimeTableManager {
      * @return the corresponding TimeTable object.
      */
     public TimeTable getTimetable(String term) {
-        return timetables.get(term);
-        // TODO What if the timetable is not found.
+        if (this.timetables.containsKey(term)) {
+            return timetables.get(term);
+        }
+        else{
+            //TODO exceptions later
+            return null;
+        }
     }
 
     /**
@@ -84,7 +103,7 @@ public class TimeTableManager {
     }
 
     /**
-     * Get the an event from the user interface and schedule it to the corresponding timetable(s).
+     * Get an event from the user interface and schedule it to the corresponding timetable(s).
      *
      * @param event a TimeTableObject passed from user interface
      *
@@ -146,5 +165,13 @@ public class TimeTableManager {
             i++;
         }
         return theTimes;
+    }
+
+    public String toString() {
+        LinkedHashMap<String, String> times = new LinkedHashMap<>();
+        for (String term : this.timetables.keySet()) {
+            times.put(term, this.timetables.get(term).toString());
+        }
+        return times.toString();
     }
 }

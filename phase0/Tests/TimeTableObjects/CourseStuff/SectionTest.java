@@ -1,7 +1,6 @@
 package TimeTableObjects.CourseStuff;
 
 import ConstantsAndExceptions.Constants;
-import TimeTableStuff.TimeTable;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -56,7 +55,9 @@ public class SectionTest {
                 "MAT137", "Alphonso","Arts and Science","Online");
         Section lecture5 = new Section(Time8,Time10,"SS100",Constants.MONDAY,Constants.FALL,
                 "MAT137", "Alphonso","Arts and Science","Online");
-        TimeTable table = new TimeTable();
+        Section lecture6 = new Section(Time8,Time11,"SS100",Constants.MONDAY,Constants.FALL,
+                "MAT137", "Alphonso","Arts and Science","Online");
+
         assertEquals(lecture1.compareTo(lecture0), -1);
         assertEquals(lecture1.compareTo(lecture2), -1);
         assertEquals(lecture1.compareTo(lecture3), 1);
@@ -64,6 +65,6 @@ public class SectionTest {
         assertEquals(lecture1.compareTo(lecture5), -1);
         assertEquals(lecture2.compareTo(lecture1), -1);
         assertEquals(lecture2.compareTo(lecture3), -1);
-
+        assertEquals(lecture6.compareTo(lecture2), -1);
     }
 }

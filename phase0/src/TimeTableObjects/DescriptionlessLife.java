@@ -1,11 +1,8 @@
 package TimeTableObjects;
 
-import TimeTableObjects.TimeTableObject;
-
 import java.sql.Time;
 
 public class DescriptionlessLife extends TimeTableObject{
-    //TODO Missing docstrings
     public DescriptionlessLife(Time theStartTime,
                 Time theEndTime,
                 String theLocation,
@@ -16,8 +13,7 @@ public class DescriptionlessLife extends TimeTableObject{
 
     @Override
     public String toString() {
-        //TODO Fix this!
-        return "";
+        return this.getStartTime() + " - " + this.getEndTime() + ": " +
+                "Descriptionless Life";
     }
-    // Add code here!
 }
