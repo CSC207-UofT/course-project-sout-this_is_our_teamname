@@ -35,20 +35,20 @@ It has 2 subclasses: **HCourse**, half-year course, and **YCourse**, year course
    <br />
 7. **TimeTableManager** collaborates with **Course**, **TimeTableObject**, and their subclasses. It manages and navigates through **TimeTable**, schedules the given **Course** and **TimeTableObject**, reports and responds to conflict, and discern term of course. <br />
    <br />
-8. **DataGetter** is an abstract class. It collaborates with **UserInterface** and should have a **get** method that finds the information and returns it in a Map (Data Type: Data). Its subclasses are **WebScraper** and **CSVScraper**.<br />
+8. **DataGetter** is an abstract class. It collaborates with **Interfaces** and should have a **get** method that finds the information and returns it in a Map (Data Type: Data). Its subclasses are **WebScraper** and **CSVScraper**.<br />
    <br />
 9. **WebScraper** is the subclass of **DataGetter**. It collaborates with **DatabaseController** and **OperatorInterface**. It reads the HTML of the UofT Course finder for the giver course and throws an Error when the given course is not found, analyze, filters the data, and stores the data as a Course Objects, and stores the course objects in a HashMap with section codes as keys and the courses as values.<br />
    <br />
 10. **CSVScraper** is the subclass of **DataGetter**. It collaborates with **DatabaseController** and **OperatorInterface**. It reads a CSV file for the given course for information and throws an Error when the given course is not found, analyzes and filters the data and stores the data as **Course** Objects, and stores the **Course** objects in a HashMap with section codes as keys and the courses as values.<br />
     <br />
-11. **UserInterface** collaborates with **TimeTableManager**. User interacts with it to input the course to search. It sends Input to **TimeTableManager** to interpret and deal with and displays final product to the user.<br />
+11. **Interfaces** collaborates with **TimeTableManager**. User interacts with it to input the course to search. It sends Input to **TimeTableManager** to interpret and deal with and displays final product to the user.<br />
     <br />
-12. **DatabaseController** collaborates with **UserInterface** and **TimeTableManager**. It generates prompts based on the information received from **UserInterface** and sends objects to **TimeTableManager** to schedule.<br />
+12. **DatabaseController** collaborates with **Interfaces** and **TimeTableManager**. It generates prompts based on the information received from **Interfaces** and sends objects to **TimeTableManager** to schedule.<br />
     <br />
 13. **OperatorInterface** collaborates with **TimeTableManager**. Operator interacts with it, and it configures **TimeTableManager** and **DataGetter**.<br />
     <br />
 14. **NonCourseObject** collaborates with **TimeTableManager** and **DatabaseController** Responsible for holding the information from the user and passing it to
-    **TimeTableManager** to create individual **TimeTableObjects**.
+    **TimeTableManager** to create individual **EntitiesAndObjects**.
 
 (See [CRC_Cards_README](CRC_Cards/CRC_Cards_README.md))
 
@@ -64,12 +64,12 @@ wants to add on to the timetable. The activities available right now are:
 Course, Life, DescriptionlessLife.
 
 ####Case 1:  User inputs Course.
-1. The `UserInterface` will send the input "Course" to the
+1. The `Interfaces` will send the input "Course" to the
    `DatabaseController`, which will prompt the user with questions about
    what they want to input. In this case, it will ask for what course
    User wants to input.<br />
    <br />
-2. The `UserInterface` will send this information to the
+2. The `Interfaces` will send this information to the
    `DatabaseController`, which will prompt the User with questions about
    the course code they want to input.<br />
    <br />
@@ -193,7 +193,7 @@ an instructor in CSC148H1 Winter 2021, source of code)
   * DataGetter
   * CSVScraper
   * WebScraper (Trivial Implementation)
-  * UserInterface
+  * Interfaces
   * OperatorInterface (Trivial Implementation)
   * DatabaseController
   * GlobalHelperMethod
