@@ -158,6 +158,7 @@ Course, Life, DescriptionlessLife.
 * Add JavaDoc
 * Better name for life, descriptionlesslife, NonCourseObject, etc.
 * Change how conflicts are handled in the future.
+* do something with waitlist courses.(Since we did mention it the purpose of the project)
 
 ## Difficulties That We Currently Face With (Suggestions Eagerly Needed)
 
