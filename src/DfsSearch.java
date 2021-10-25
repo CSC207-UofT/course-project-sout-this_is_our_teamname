@@ -1,10 +1,11 @@
-package Domain;
-
 import java.util.ArrayList;
 import java.util.Set;
 
 /**
  * A Depth first search program
+ *
+ * TRANSCRIBED FROM CODE WRITTEN USED IN CSC148H1 202101 TERM. PERMISSION TO
+ * USE GRANTED BY JONATHAN CALVER (RT #363)
  *
  */
 public class DfsSearch extends Solver{
