@@ -1,3 +1,5 @@
+package FunctionsAndCommands;
+
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -16,7 +18,7 @@ public class DfsSearch extends Solver{
     ArrayList<Puzzle> path;
 
     /**
-     * Constructor. Initializes a DfsSearch object
+     * Constructor. Initializes a FunctionsAndCommands.DfsSearch object
      */
     public DfsSearch(){
         super();
