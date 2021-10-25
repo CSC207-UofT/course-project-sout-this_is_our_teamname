@@ -14,6 +14,6 @@ public class DescriptionlessLife extends TimeTableObject{
     @Override
     public String toString() {
         return this.getStartTime() + " - " + this.getEndTime() + ": " +
-                "s Life";
+                "Descriptionless Life";
     }
 }
