@@ -18,7 +18,7 @@ assume all times are PM for simplicity)
    the OperatorInterface class and set the source of data. UserInterfaces 
    will have an instance variable `operator` that is referring to the 
    operator. The operator can use `configure` method to configure the 
-   `dataSource` instance variable of `UserInterface` to the correct object 
+   `dataSource` instance variable of `Interfaces` to the correct object 
    of the DataGetter class. **For the purpose of the Phase 0, this is 
    will not be implemented. The reader automatically set to `CSVReader` for 
    this part, but for the rest of the project, we hope to use primarily 
@@ -26,12 +26,12 @@ assume all times are PM for simplicity)
    <br />
 
 2. BillyBobJoe searches for the first course, which is `MAT257Y1` in 
-   UserInterface class. He will first be prompted to select the type 
+   Interfaces class. He will first be prompted to select the type 
    of object that he wants to schedule. So he will enter `Course`. (See the 
    Walk Through 2 below for scheduling a `NonCourseObject`.)<br />
    <br />
 
-3. The `UserInterface` will send this information to the 
+3. The `Interfaces` will send this information to the 
    `DatabaseController`, which will prompt the user with questions about 
    what they want to input. In this case, it will ask for what course 
    BillyBobJoe wants to input, which he then enters `MAT257Y1`.<br />
@@ -116,7 +116,7 @@ new ArrayList<Object>{"Friday", Time(14, 0, 0), Time(15, 0, 0)}: MY150
    <br />
 
 9. Let's say the course was added successfully. BillyBobJoe will then receive a 
-   confirmation on `UserInterface` that the course has been scheduled. He then 
+   confirmation on `Interfaces` that the course has been scheduled. He then 
    can add the next object into his timetable.<br />
    <br />
 
@@ -125,7 +125,7 @@ Now let's say BillyBobJoe wants to schedule a Life object. For this example,
 let's say he wants to schedule an hour on Wednesday to play the Theremin 
 with the Toronto Theremin Orchestra (IDK if this is real).
 1. First, he would select that he wants to add a `Life` object on the 
-   UserInterface. This is done (at least in Phase 0) by typing 'Life' into 
+   Interfaces. This is done (at least in Phase 0) by typing 'Life' into 
    the command line when prompted.<br />
    <br />
 
@@ -158,5 +158,5 @@ with the Toronto Theremin Orchestra (IDK if this is real).
    <br />
 
 7. Let's say the `Life` object was added successfully. BillyBobJoe will then 
-   receive a confirmation on UserInterface that the life has been scheduled. He 
+   receive a confirmation on Interfaces that the life has been scheduled. He 
    then can add the next course or life object into his timetable.
