@@ -93,8 +93,6 @@ public class Course implements Sliceable<CourseSection> {
         return term;
     }
 
-    //TODO place getDescription here after parameter change
-
      /** Split the course into section objects
      *
      * @return A list of section objects

@@ -7,10 +7,9 @@ import java.sql.Time;
 public abstract class Events {
     private final Time startTime;
     private final Time endTime;
-    private final String location;
     private final String date;
     private final String term;
-//TODO fix and add description parameter here, remove location, need a getter for description.
+    private final String description;
     /**
      * Construct an activity with time, location and a description.
      * @param startTime is the start time of the activity.
@@ -26,9 +25,9 @@ public abstract class Events {
                   String term) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.location = theLocation;
         this.date = theDate;
         this.term = term;
+        this.description = "at " + theLocation;
     }
 
     /**
@@ -56,11 +55,11 @@ public abstract class Events {
     }
 
     /**
-     * Get the location for the activity
-     * @return  location
+     * Get the description for the activity
+     * @return  description for this activity
      */
-    public String getLocation() {
-        return location;
+    public String getDescription() {
+        return description;
     }
 
     /**
