@@ -1,13 +1,13 @@
 package TimeTableStuff;
 
 import EntitiesAndObjects.Course;
-import EntitiesAndObjects.TimeTableObjects.Section;
+import EntitiesAndObjects.TimeTableObjects.CourseSection;
 
 import GlobalHelpers.Constants;
 import EntitiesAndObjects.NonCourseObject;
-import EntitiesAndObjects.TimeTableObjects.TimeTableObject;
-import EntitiesAndObjects.TimeTableObjects.Life;
-import EntitiesAndObjects.TimeTableObjects.DescriptionlessLife;
+import EntitiesAndObjects.TimeTableObjects.Events;
+import EntitiesAndObjects.TimeTableObjects.Activity;
+import EntitiesAndObjects.TimeTableObjects.Task;
 
 // Importing HashMap class
 import java.util.*;
@@ -85,17 +85,17 @@ public class TimeTableManager {
      * @param c a Course object passed from user interface
      */
     public void schedule(Course c) {
-        ArrayList<Section> list = c.split();
+        ArrayList<CourseSection> list = c.split();
         if (c.getTerm().equals(Constants.FALL)) {
-            for (Section x : list) {
+            for (CourseSection x : list) {
                 timetables.get(Constants.FALL).schedule(x);
             }
         } else if (c.getTerm().equals(Constants.WINTER)) {
-            for (Section x : list) {
+            for (CourseSection x : list) {
                 timetables.get(Constants.FALL).schedule(x);
             }
         } else {
-            for (Section x : list) {
+            for (CourseSection x : list) {
                 timetables.get(Constants.FALL).schedule(x);
                 timetables.get(Constants.WINTER).schedule(x);
             }
@@ -105,11 +105,11 @@ public class TimeTableManager {
     /**
      * Get an event from the user interface and schedule it to the corresponding timetable(s).
      *
-     * @param event a TimeTableObject passed from user interface
+     * @param event a Events passed from user interface
      *
      */
     public void schedule(NonCourseObject event) {
-        TimeTableObject life = getCorrectTimeTableObject(event);
+        Events life = getCorrectTimeTableObject(event);
 
         // Add to corresponding timetable(s).
         if (event.getTerm().equals(Constants.FALL)){
@@ -125,23 +125,23 @@ public class TimeTableManager {
     }
 
     /**
-     * A helper method for schedule (TimeTableObject). Returns event to the
+     * A helper method for schedule (Events). Returns event to the
      * correct type.
      *
      * @param event The TimetableObject that needs to be scheduled.
      * @return event "cast" to the correct type.
      */
-    private TimeTableObject getCorrectTimeTableObject(NonCourseObject event) {
+    private Events getCorrectTimeTableObject(NonCourseObject event) {
         if (event.getType().equals(Constants.LIFE)){
             Scanner descriptionScanner = new Scanner(System.in);
             System.out.println("Please provide a description of your life " +
                     "activity: ");
-            return new Life(event.getStartTime(), event.getEndTime(),
+            return new Activity(event.getStartTime(), event.getEndTime(),
                     event.getLocation(), event.getDate(), event.getTerm(),
                     descriptionScanner.nextLine());
         }
         else if (event.getType().equals(Constants.DESCRIPTION_LESS_LIFE)){
-            return new DescriptionlessLife(event.getStartTime(),
+            return new Task(event.getStartTime(),
                     event.getEndTime(), event.getLocation(), event.getDate(),
                     event.getTerm());
         } else {

@@ -1,6 +1,6 @@
 package EntitiesAndObjects.TimeTableObjects.Interfaces;
 
-import EntitiesAndObjects.TimeTableObjects.Section;
+import EntitiesAndObjects.TimeTableObjects.CourseSection;
 
 import java.util.ArrayList;
 
@@ -11,5 +11,5 @@ import java.util.ArrayList;
  * @param <T> A section
  */
 public interface Sliceable<T> {
-    ArrayList<Section> split();
+    ArrayList<CourseSection> split();
 }

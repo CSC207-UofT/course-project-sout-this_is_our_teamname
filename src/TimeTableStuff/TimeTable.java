@@ -1,10 +1,10 @@
 package TimeTableStuff;
 
+import EntitiesAndObjects.TimeTableObjects.Events;
 import GlobalHelpers.Constants;
-import EntitiesAndObjects.TimeTableObjects.Section;
-import EntitiesAndObjects.TimeTableObjects.DescriptionlessLife;
-import EntitiesAndObjects.TimeTableObjects.Life;
-import EntitiesAndObjects.TimeTableObjects.TimeTableObject;
+import EntitiesAndObjects.TimeTableObjects.CourseSection;
+import EntitiesAndObjects.TimeTableObjects.Task;
+import EntitiesAndObjects.TimeTableObjects.Activity;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
  */
 public class TimeTable {
     //TODO leave the warning for now, check after reformatted TimeTable.
-    private final LinkedHashMap<String, ArrayList<TimeTableObject>> calender;
+    private final LinkedHashMap<String, ArrayList<Events>> calender;
 
     public TimeTable() {
         this.calender = new LinkedHashMap<>() {{
@@ -33,11 +33,11 @@ public class TimeTable {
      * @param activity the given activity
      * @return true if scheduling is successful, false if there is a conflict
      */
-    public boolean schedule(TimeTableObject activity) {
-        if (activity instanceof Life || activity instanceof DescriptionlessLife){
+    public boolean schedule(Events activity) {
+        if (activity instanceof Activity || activity instanceof Task){
             (this.calender.get(activity.getDate())).add(activity);
             return true;
-        } else if (activity instanceof Section && checkConflicts((Section) activity)) {
+        } else if (activity instanceof CourseSection && checkConflicts((CourseSection) activity)) {
             (this.calender.get(activity.getDate())).add(activity);
             return true;
         } else {
@@ -50,16 +50,16 @@ public class TimeTable {
      * @param activity the given activity
      * @return true if there is no conflict, false otherwise
      */
-    public boolean checkConflicts(Section activity) {
+    public boolean checkConflicts(CourseSection activity) {
         //if the specific weekday is empty, there is no conflict.
         if ((this.calender.get(activity.getDate()).isEmpty())) {
             return true;
         }
         //otherwise, comparing all the sections in that specific day.
-        for (TimeTableObject session: this.calender.get(activity.getDate())) {
+        for (Events session: this.calender.get(activity.getDate())) {
             //only comparing sections, so check for type, then compare.
-            if (session instanceof Section) {
-                if (activity.compareTo((Section) session) < 0) {
+            if (session instanceof CourseSection) {
+                if (activity.compareTo((CourseSection) session) < 0) {
                     //conflict has been found
                     return false;
                 }
@@ -78,7 +78,7 @@ public class TimeTable {
         LinkedHashMap<String, ArrayList<String>> times = new LinkedHashMap<>();
         for (String day : this.calender.keySet()) {
             ArrayList<String> sections = new ArrayList<>();
-            for (TimeTableObject time : this.calender.get(day)) {
+            for (Events time : this.calender.get(day)) {
                 sections.add(time.toString());
             }
             times.put(day, sections);
