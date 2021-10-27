@@ -18,25 +18,29 @@ assume all times are PM for simplicity)
    the OperatorInterface class and set the source of data. UserInterfaces 
    will have an instance variable `operator` that is referring to the 
    operator. The operator can use `configure` method to configure the 
-   `dataSource` instance variable of `UserInterface` to the correct object 
+   `dataSource` instance variable of `Interfaces` to the correct object 
    of the DataGetter class. **For the purpose of the Phase 0, this is 
    will not be implemented. The reader automatically set to `CSVReader` for 
    this part, but for the rest of the project, we hope to use primarily 
-   WebScraper.**
+   WebScraper.**<br />
+   <br />
 
 2. BillyBobJoe searches for the first course, which is `MAT257Y1` in 
-   UserInterface class. He will first be prompted to select the type 
+   Interfaces class. He will first be prompted to select the type 
    of object that he wants to schedule. So he will enter `Course`. (See the 
-   Walk Through 2 below for scheduling a `NonCourseObject`.)
+   Walk Through 2 below for scheduling a `NonCourseObject`.)<br />
+   <br />
 
-3. The `UserInterface` will send this information to the 
+3. The `Interfaces` will send this information to the 
    `DatabaseController`, which will prompt the user with questions about 
    what they want to input. In this case, it will ask for what course 
-   BillyBobJoe wants to input, which he then enters `MAT257Y1`.
+   BillyBobJoe wants to input, which he then enters `MAT257Y1`.<br />
+   <br />
 
 4. The `DatabaseController` class then will request the data from the 
-   DataGathering class by using the instance `getData` , method. The query is 
-   then sent to the `DataGathering` class (whatever it is).
+   DataGathering class by using the instance `getData` method. The query is 
+   then sent to the `DataGathering` class (whatever it is).<br />
+   <br />
 
 5. The DataGathering class (whatever it is) then collects and sorts all the
    course information as a `HashMap<String, Course>` where each `Course` 
@@ -63,7 +67,8 @@ new ArrayList<Object>{"Friday", Time(14, 0, 0), Time(15, 0, 0)}: MY150
 }
 ```
    This is because for some courses, they occur at different locations at 
-   different times.  
+   different times.  <br />
+   <br />
 
 6. The `DatabaseController` retrieves the HashMap from the `DataGathering` class 
    and prompts the user to select a course object by printing each the details 
@@ -74,7 +79,8 @@ new ArrayList<Object>{"Friday", Time(14, 0, 0), Time(15, 0, 0)}: MY150
    `DatabaseController` will send the LEC 0101 `Course` object to 
    `TimeTableManager` through a `schedule` method. The `Schedule` method 
    here is Overloaded to be able to deal with both `course` objects and 
-   `NonCourseObjects` (see Walk Through 2 for more details on this).
+   `NonCourseObjects` (see Walk Through 2 for more details on this).<br />
+   <br />
     
 7. The `TimeTableManager` will look for the term of the course which has 
    been stored in the course object. The `TimeTableManager` will then use a 
@@ -93,7 +99,8 @@ new ArrayList<Object>{"Friday", Time(14, 0, 0), Time(15, 0, 0)}: MY150
    COURSE (HCourse) THERE WILL ONLY BE 3 OR SECTIONS.**
    The `TimeTableManager` then will schedule the section in the appropriate 
    `TimeTable` using a `schedule` method of `TimeTable`. This method behaves 
-   like the `put` or `add` methods in HashMap and ArrayList respectively.
+   like the `put` or `add` methods in HashMap and ArrayList respectively.<br />
+   <br />
 
 8. The `TimeTable` Object will then find the correct location to put the 
    course in its storage space, which will be a `HashMap<String, 
@@ -105,43 +112,51 @@ new ArrayList<Object>{"Friday", Time(14, 0, 0), Time(15, 0, 0)}: MY150
    inform the `TimeTableManager`, which will inform the user that it has not 
    been successful and that they should try again. **For simplicity in Phase 
    0, we will assume all courses are scheduled correctly and there are no 
-   conflicts**
+   conflicts**<br />
+   <br />
 
 9. Let's say the course was added successfully. BillyBobJoe will then receive a 
-   confirmation on `UserInterface` that the course has been scheduled. He then 
-   can add the next object into his timetable.
+   confirmation on `Interfaces` that the course has been scheduled. He then 
+   can add the next object into his timetable.<br />
+   <br />
 
 ## Walk Through 2
 Now let's say BillyBobJoe wants to schedule a Life object. For this example, 
 let's say he wants to schedule an hour on Wednesday to play the Theremin 
 with the Toronto Theremin Orchestra (IDK if this is real).
 1. First, he would select that he wants to add a `Life` object on the 
-   UserInterface. This is done (at least in Phase 0) by typing 'Life' into 
-   the command line when prompted.
+   Interfaces. This is done (at least in Phase 0) by typing 'Life' into 
+   the command line when prompted.<br />
+   <br />
 
 2. This will then be sent over to `DataBaseController` to be scheduled as an 
    `NonCourseObject`. He will then be prompted to enter all the information 
-   required for the Life Object.
+   required for the Life Object.<br />
+   <br />
 
 3. The `DatabaseController` class will then create a `NonCourseObject`, 
    which will store all the necessary information of the input, including 
    the type of object. In this case, the `NonCourseObject` will store the 
    date, start/end time, description, term, and the name of the activity, along 
-   with the type of object, which is a `Life` object
+   with the type of object, which is a `Life` object<br />
+   <br />
 
 4. The `NonCourseObject` is then sent to the `TimeTableManager` through the 
    `schedule` method. **ONCE AGAIN, PLEASE NOTE THAT THE `schedule` METHOD IN 
-   `TimeTableManager` IS OVERLOADED**.
+   `TimeTableManager` IS OVERLOADED**.<br />
+   <br />
 
 5. The `TimeTableManager` then will read the type of the `NonCourseObject` 
    and create the appropriate `TimeTableObject` to be scheduled. In this 
    case, it will read a Life object and create a `Life` Object. The correct 
    `TimeTableObject` (in this case, a life object) will then be sent to the 
-   `TimeTable` to be scheduled.
+   `TimeTable` to be scheduled.<br />
+   <br />
 
 6. The `TimeTable` will then find the correct location to put the course in 
-   its storage space. Please see Part 1 for details on how this done.
+   its storage space. Please see Part 1 for details on how this done.<br />
+   <br />
 
 7. Let's say the `Life` object was added successfully. BillyBobJoe will then 
-   receive a confirmation on UserInterface that the life has been scheduled. He 
+   receive a confirmation on Interfaces that the life has been scheduled. He 
    then can add the next course or life object into his timetable.
