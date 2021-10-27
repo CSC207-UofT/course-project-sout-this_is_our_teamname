@@ -15,14 +15,6 @@ public class Life extends TimeTableObject{
         this.description = description;
     }
 
-    /**
-     * Get the description of the activity
-     *
-     * @return description The description of the activity
-     */
-    public String getDescription() {
-        return this.description;
-    }
 
     @Override
     public String toString() {

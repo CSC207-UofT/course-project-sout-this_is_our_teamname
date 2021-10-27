@@ -4,6 +4,7 @@ import java.sql.Time;
 
 public class Section extends TimeTableObject implements java.lang.Comparable<Section> {
     private final String code;
+    //TODO delete attributes after parameter change
     private final String professor;
     private final String faculty;
     private final String deliveryMethod;
@@ -49,32 +50,6 @@ public class Section extends TimeTableObject implements java.lang.Comparable<Sec
         return code;
     }
 
-    /**
-     * Get the Professor teaching this Course
-     *
-     * @return the name of the Professor
-     */
-    public String getProfessor() {
-        return professor;
-    }
-
-    /**
-     * Get the Faculty this course belongs to
-     *
-     * @return the Faculty this course belongs to
-     */
-    public String getFaculty() {
-        return faculty;
-    }
-
-    /**
-     * Get the delivery method this course is delivered in
-     *
-     * @return the delivery method for this course
-     */
-    public String getDeliveryMethod() {
-        return deliveryMethod;
-    }
 
     /**
      * Compare two sections to check if they overlap in time.
