@@ -14,6 +14,7 @@ import java.util.LinkedHashMap;
  * it will still be stored, and a conflict warning will be sent back prompting user to take action or ignore it.
  */
 public class TimeTable {
+    //TODO leave the warning for now, check after reformatted TimeTable.
     private final LinkedHashMap<String, ArrayList<TimeTableObject>> calender;
 
     public TimeTable() {

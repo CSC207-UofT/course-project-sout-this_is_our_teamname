@@ -59,33 +59,6 @@ public class Course implements Sliceable<Section> {
     }
 
     /**
-     * Get the Professor teaching this Course
-     *
-     * @return the name of the Professor
-     */
-    public String getProfessor() {
-        return professor;
-    }
-
-    /**
-     * Get the Faculty this course belongs to
-     *
-     * @return the Faculty this course belongs to
-     */
-    public String getFaculty() {
-        return faculty;
-    }
-
-    /**
-     * Get the delivery method this course is delivered in
-     *
-     * @return the delivery method for this course
-     */
-    public String getDeliveryMethod() {
-        return deliveryMethod;
-    }
-
-    /**
      * Get the times and corresponding locations for this Course
      *
      * @return the times and corresponding locations
@@ -119,6 +92,8 @@ public class Course implements Sliceable<Section> {
     public String getTerm() {
         return term;
     }
+
+    //TODO place getDescription here after parameter change
 
      /** Split the course into section objects
      *

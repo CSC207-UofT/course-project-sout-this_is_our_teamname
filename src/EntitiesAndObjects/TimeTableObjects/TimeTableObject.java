@@ -10,7 +10,7 @@ public abstract class TimeTableObject {
     private final String location;
     private final String date;
     private final String term;
-
+//TODO fix and add description parameter here, remove location, need a getter for description.
     /**
      * Construct an activity with time, location and a description.
      * @param startTime is the start time of the activity.
