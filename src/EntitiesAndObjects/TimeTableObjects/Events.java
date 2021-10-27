@@ -2,9 +2,9 @@ package EntitiesAndObjects.TimeTableObjects;
 import java.sql.Time;
 
 /**
- * TimeTableObject class is a class that can be stored in a TimeTable class.
+ * Events class is a class that can be stored in a TimeTable class.
  */
-public abstract class TimeTableObject {
+public abstract class Events {
     private final Time startTime;
     private final Time endTime;
     private final String location;
@@ -19,11 +19,11 @@ public abstract class TimeTableObject {
      * @param theDate is the weekday of the activity.
      * @param term is the term of the activity
      */
-    public TimeTableObject(Time startTime,
-                           Time endTime,
-                           String theLocation,
-                           String theDate,
-                           String term) {
+    public Events(Time startTime,
+                  Time endTime,
+                  String theLocation,
+                  String theDate,
+                  String term) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = theLocation;

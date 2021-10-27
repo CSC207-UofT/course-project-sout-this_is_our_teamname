@@ -2,8 +2,8 @@ package EntitiesAndObjects.TimeTableObjects;
 
 import java.sql.Time;
 
-public class DescriptionlessLife extends TimeTableObject{
-    public DescriptionlessLife(Time theStartTime,
+public class Task extends Events {
+    public Task(Time theStartTime,
                 Time theEndTime,
                 String theLocation,
                 String theDate,
@@ -14,6 +14,6 @@ public class DescriptionlessLife extends TimeTableObject{
     @Override
     public String toString() {
         return this.getStartTime() + " - " + this.getEndTime() + ": " +
-                "Descriptionless Life";
+                "Descriptionless Activity";
     }
 }

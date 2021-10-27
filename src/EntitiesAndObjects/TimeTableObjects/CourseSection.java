@@ -2,7 +2,7 @@ package EntitiesAndObjects.TimeTableObjects;
 
 import java.sql.Time;
 
-public class Section extends TimeTableObject implements java.lang.Comparable<Section> {
+public class CourseSection extends Events implements java.lang.Comparable<CourseSection> {
     private final String code;
     //TODO delete attributes after parameter change
     private final String professor;
@@ -25,9 +25,9 @@ public class Section extends TimeTableObject implements java.lang.Comparable<Sec
      * @param faculty The faculty this course belongs to
      * @param deliveryMethod The delivery method for this course section
      */
-    public Section(Time startTime, Time endTime, String location,
-                   String thedate, String term, String code, String professor,
-                   String faculty, String deliveryMethod) {
+    public CourseSection(Time startTime, Time endTime, String location,
+                         String thedate, String term, String code, String professor,
+                         String faculty, String deliveryMethod) {
         super(startTime, endTime, location, thedate, term);
         this.code = code;
         this.professor = professor;
@@ -58,7 +58,7 @@ public class Section extends TimeTableObject implements java.lang.Comparable<Sec
      * @return -1 if they overlap, 1 otherwise.
      */
     @Override
-    public int compareTo(Section other) {
+    public int compareTo(CourseSection other) {
         if (this.getDate().equals(other.getDate())) {
             int compare1 = this.getStartTime().compareTo(other.getStartTime());
             int compare2 = this.getEndTime().compareTo(other.getStartTime());
