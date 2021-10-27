@@ -21,6 +21,8 @@ public class AClass{
 }  
 ```
 
+2. Write JavaDocs and Tests for your clases
+
 ## Pull Requests
 _Note: team member approving something refers to them commenting something 
 like "Approved" on your pull request_
