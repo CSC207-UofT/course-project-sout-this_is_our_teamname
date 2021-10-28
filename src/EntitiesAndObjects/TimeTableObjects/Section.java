@@ -1,6 +1,11 @@
 package EntitiesAndObjects.TimeTableObjects;
 
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Date;
 
 public class Section extends TimeTableObject implements java.lang.Comparable<Section> {
     private final String code;
@@ -76,4 +81,13 @@ public class Section extends TimeTableObject implements java.lang.Comparable<Sec
         }
     }
 
+//    public static void main(String[] args) {
+//        LocalTime time = LocalTime.of(6,30);
+//        LocalTime time2 = LocalTime.of(6,30);
+//        LocalTime time3 = LocalTime.of(7,30);
+//        LocalTime time4 = LocalTime.of(5,30);
+//        System.out.println(time);
+//        System.out.println(time.compareTo(time4
+//        ));
+//    }
 }
