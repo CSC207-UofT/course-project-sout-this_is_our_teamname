@@ -1,5 +1,8 @@
 package FunctionsAndCommands.Commands;
 
-interface Command {
-    void execute();
+abstract public class Command {
+    /**
+     * Execute the command
+     */
+    abstract public void execute();
 }

@@ -1,5 +1,6 @@
-package FunctionsAndCommands.Commands;
+package FunctionsAndCommands.Commands.FunctionCommands;
 
+import FunctionsAndCommands.Commands.Command;
 import FunctionsAndCommands.DfsSearch;
 import FunctionsAndCommands.Puzzle;
 import FunctionsAndCommands.Solver;
@@ -7,20 +8,14 @@ import TimeTableStuff.TimeTableManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.function.Function;
 
 /**
  * THIS IS AN EXAMPLE OF A COMMAND OBJECT. IT IS POORLY DESIGNED ON PURPOSE.
- * TODO PLEASE IMPLEMENT THIS CLASS
+ * TODO PLEASE IMPLEMENT THIS CLASS @TA IF THIS MESSAGE IS STILL HERE WHEN
+ * TODO YOU MARK THIS, DO NOT MARK THIS!!!
  */
-public class SolverCommand implements Command {
-    private final TimeTableManager ATimeTableManagerOrAnthingElseToConnectTo;
-
-    /**
-     * Constructor. Feel free to delete if you don't need.
-     */
-    public SolverCommand(){
-        ATimeTableManagerOrAnthingElseToConnectTo = new TimeTableManager();
-    }
+public class SolverCommand extends Command {
 
     /**
      * Treat this method as like the "main" (psvm method, or if __name__ ==
@@ -33,7 +28,7 @@ public class SolverCommand implements Command {
         Puzzle APuzzleToDemonstrateWhatThisClassDoes = new examplePuzzle();
         Solver ASolverToSolveTheAformentionedPuzzle = new DfsSearch();
         ArrayList<Puzzle> TheSolutionsToTheAforementionedPuzzleAsAnArrayListOfTheStepsItTookToGetFromThePuzzleStateToTheCurrentState = ASolverToSolveTheAformentionedPuzzle.solve(APuzzleToDemonstrateWhatThisClassDoes, new HashSet<>());
-//      ttbmg.schedule(TheSolutionsToTheAforementionedPuzzleAsAnArrayListOfTheStepsItTookToGetFromThePuzzleStateToTheCurrentState.get(TheSolutionsToTheAforementionedPuzzleAsAnArrayListOfTheStepsItTookToGetFromThePuzzleStateToTheCurrentState.size() - 1));
+        // Do something...
     }
 
     /**

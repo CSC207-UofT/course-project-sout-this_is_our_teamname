@@ -1,14 +1,25 @@
 package Interfaces;
 
+import FunctionsAndCommands.Commands.Command;
 import GlobalHelpers.Constants;
 import DatabaseController.DatabaseController;
+import GlobalHelpers.InvalidInputException;
 
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class UserInterface {
     private final HashMap<String, String[]> usableClasses;
+    private final DatabaseController control = new DatabaseController();
 
+    /**
+     * Constructor.
+     *
+     * === Private Attributes ===
+     * usableClasses: This is a hashmap of all the usable classes in the
+     * program. TODO Please attach Operator interface to make this more
+     * TODO compact, and obsolete
+     */
     public UserInterface(){
         // Will be replaced with something by OperatorInterface in later Phases.
         usableClasses = new HashMap<>();
@@ -18,6 +29,13 @@ public class UserInterface {
                         Constants.DESCRIPTION_LESS_LIFE});
     }
 
+    /**
+     * A Quick Binary Search helper method to find queries in an array.
+     *
+     * @param query The item that you are trying to see if it is in the array
+     * @param array The array to search
+     * @return true iff the item is in the array
+     */
     private boolean BinarySearch(String query, String[] array){
         for (String item : array){
             if (query.equals(item)){
@@ -27,32 +45,45 @@ public class UserInterface {
         return false;
     }
 
+    /**
+     * A helper method to help get the correct value key for the given
+     * function. For instance, if the user wants to schedule an event, it
+     * will correct the input so that it will return the 'Non Course Object'
+     * Constant.
+     *
+     * @param input The input that the uper gave
+     * @return The corresponding constant based on the input of the user.
+     * Returns null if the input in invalid.
+     */
     private String checkInputValue(String input){
         for (String key : usableClasses.keySet()){
             if (BinarySearch(input, usableClasses.get(key))){
                 return key;
             }
         }
-        return "";
-    }
-
-    private String getUsableClasses(){
-        StringBuilder usables = new StringBuilder();
-        for (String[] item : usableClasses.values()){
-            for (String usableItem : item){
-                usables.append(usableItem).append(", ");
-            }
-        }
-        return usables.toString();
+        return null;
     }
 
     /**
-     * Runs the UserInterface.
+     * Gets a printable string representation of the usable classes
+     *
+     * @return A string representation of all the usable classes.
+     */
+    private String getUsableClasses(){
+        StringBuilder usableClassesString = new StringBuilder();
+        for (String[] item : usableClasses.values()){
+            for (String usableItem : item){
+                usableClassesString.append(usableItem).append(", ");
+            }
+        }
+        return usableClassesString.toString();
+    }
+
+    /**
+     * Runs the UserInterface. TODO Make method more User Friendly!
      *
      */
     public void run(){
-        DatabaseController control = new DatabaseController();
-
         // As long as the program is running
         boolean running = true;
 
@@ -62,18 +93,13 @@ public class UserInterface {
             System.out.println("Please enter what type of object: ");
             String schedulingObject = objectScanner.nextLine();
 
-            // For Phase 0, assume valid inputs
             String dataCategory = checkInputValue(schedulingObject);
 
-            if (dataCategory.equals(Constants.COURSE)) {
-                control.makeCourse();
-            } else if (dataCategory.equals(Constants.NON_COURSE_OBJECT)){
-                control.makeTimeTableObject(schedulingObject);
-            } else {
-                throw new UnsupportedOperationException(
-                        "This is not Implemented in Phase 0.");
+            try {
+                control.addToCommandHistory(dataCategory);
+            } catch (InvalidInputException e){
+                ; // TODO FIXME
             }
-
             // User types in the section they want to search
             Scanner continueQuestion = new Scanner(System.in);
             System.out.println("Do you want to add another object? " +
@@ -85,7 +111,13 @@ public class UserInterface {
                 running = false;
             }
         }
-        control.getAllTimeTables();
+
+        // Gets all the timetables.
+        try {
+            control.addToCommandHistory("Get All TimeTables");
+        } catch (InvalidInputException e){
+            System.out.println("Oh No! I can't get the TimeTables");
+        }
     }
 
     /**
