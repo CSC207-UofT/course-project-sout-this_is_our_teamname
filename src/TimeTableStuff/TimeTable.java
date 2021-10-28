@@ -1,10 +1,7 @@
 package TimeTableStuff;
 
+import EntitiesAndObjects.TimeTableObjects.Events;
 import GlobalHelpers.Constants;
-import EntitiesAndObjects.TimeTableObjects.Section;
-import EntitiesAndObjects.TimeTableObjects.DescriptionlessLife;
-import EntitiesAndObjects.TimeTableObjects.Life;
-import EntitiesAndObjects.TimeTableObjects.TimeTableObject;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -14,17 +11,18 @@ import java.util.LinkedHashMap;
  * it will still be stored, and a conflict warning will be sent back prompting user to take action or ignore it.
  */
 public class TimeTable {
-    private final LinkedHashMap<String, ArrayList<TimeTableObject>> calender;
+    //TODO leave the warning for now, check after reformatted TimeTable.
+    private final LinkedHashMap<String, Events[]> calender;
 
     public TimeTable() {
         this.calender = new LinkedHashMap<>() {{
-            put(Constants.MONDAY, new ArrayList<>());
-            put(Constants.TUESDAY, new ArrayList<>());
-            put(Constants.WEDNESDAY, new ArrayList<>());
-            put(Constants.THURSDAY, new ArrayList<>());
-            put(Constants.FRIDAY, new ArrayList<>());
-            put(Constants.SATURDAY, new ArrayList<>());
-            put(Constants.SUNDAY, new ArrayList<>());
+            put(Constants.MONDAY, new Events[24]);
+            put(Constants.TUESDAY, new Events[24]);
+            put(Constants.WEDNESDAY, new Events[24]);
+            put(Constants.THURSDAY, new Events[24]);
+            put(Constants.FRIDAY, new Events[24]);
+            put(Constants.SATURDAY, new Events[24]);
+            put(Constants.SUNDAY, new Events[24]);
         }};
     }
     /**
@@ -32,16 +30,18 @@ public class TimeTable {
      * @param activity the given activity
      * @return true if scheduling is successful, false if there is a conflict
      */
-    public boolean schedule(TimeTableObject activity) {
-        if (activity instanceof Life || activity instanceof DescriptionlessLife){
-            (this.calender.get(activity.getDate())).add(activity);
+    public boolean schedule(Events activity) {
+        if (checkConflicts(activity)) {
+            int start = activity.getStartTime().getHour();
+            int end = activity.getEndTime().getHour();
+
+            //Add activity to interval between startTime and endTime
+            for (int i=start; i<end; i++) {
+                this.calender.get(activity.getDate())[i] = activity;
+            }
             return true;
-        } else if (activity instanceof Section && checkConflicts((Section) activity)) {
-            (this.calender.get(activity.getDate())).add(activity);
-            return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -49,25 +49,18 @@ public class TimeTable {
      * @param activity the given activity
      * @return true if there is no conflict, false otherwise
      */
-    public boolean checkConflicts(Section activity) {
-        //if the specific weekday is empty, there is no conflict.
-        if ((this.calender.get(activity.getDate()).isEmpty())) {
-            return true;
-        }
-        //otherwise, comparing all the sections in that specific day.
-        for (TimeTableObject session: this.calender.get(activity.getDate())) {
-            //only comparing sections, so check for type, then compare.
-            if (session instanceof Section) {
-                if (activity.compareTo((Section) session) < 0) {
-                    //conflict has been found
-                    return false;
-                }
+    public boolean checkConflicts(Events activity) {
+        int start = activity.getStartTime().getHour();
+        int end = activity.getEndTime().getHour();
+
+        //Check whether there is another activity between startTime and endTime
+        for (int i=start; i<end; i++) {
+            if (this.calender.get(activity.getDate())[i] != null) {
+                return false;
             }
         }
-        //no conflict has been found
         return true;
     }
-
 
     /**
      * Generate the String representation of the calender.
@@ -77,8 +70,8 @@ public class TimeTable {
         LinkedHashMap<String, ArrayList<String>> times = new LinkedHashMap<>();
         for (String day : this.calender.keySet()) {
             ArrayList<String> sections = new ArrayList<>();
-            for (TimeTableObject time : this.calender.get(day)) {
-                sections.add(time.toString());
+            for (Events activity : this.calender.get(day)) {
+                sections.add(activity.toString());
             }
             times.put(day, sections);
         }

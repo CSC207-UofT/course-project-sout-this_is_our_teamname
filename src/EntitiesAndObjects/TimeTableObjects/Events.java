@@ -1,16 +1,16 @@
 package EntitiesAndObjects.TimeTableObjects;
-import java.sql.Time;
+import java.time.LocalTime;
 
 /**
- * TimeTableObject class is a class that can be stored in a TimeTable class.
+ * Events class is a class that can be stored in a TimeTable class.
  */
-public abstract class TimeTableObject {
-    private final Time startTime;
-    private final Time endTime;
-    private final String location;
+public abstract class Events {
+    private final LocalTime startTime;
+    private final LocalTime endTime;
     private final String date;
     private final String term;
-
+    private final String description;
+    //TODO add desc and remove location
     /**
      * Construct an activity with time, location and a description.
      * @param startTime is the start time of the activity.
@@ -19,23 +19,23 @@ public abstract class TimeTableObject {
      * @param theDate is the weekday of the activity.
      * @param term is the term of the activity
      */
-    public TimeTableObject(Time startTime,
-                           Time endTime,
-                           String theLocation,
-                           String theDate,
-                           String term) {
+    public Events(LocalTime startTime,
+                  LocalTime endTime,
+                  String theLocation,
+                  String theDate,
+                  String term) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.location = theLocation;
         this.date = theDate;
         this.term = term;
+        this.description = "at " + theLocation;
     }
 
     /**
      * Get the start time for the activity
      * @return  startTime
      */
-    public Time getStartTime(){
+    public LocalTime getStartTime(){
         return this.startTime;
     }
 
@@ -43,7 +43,7 @@ public abstract class TimeTableObject {
      * Get the end time for the activity
      * @return  endTime
      */
-    public Time getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
@@ -56,11 +56,11 @@ public abstract class TimeTableObject {
     }
 
     /**
-     * Get the location for the activity
-     * @return  location
+     * Get the description for the activity
+     * @return  description for this activity
      */
-    public String getLocation() {
-        return location;
+    public String getDescription() {
+        return description;
     }
 
     /**

@@ -1,14 +1,14 @@
 package EntitiesAndObjects;
 
-import EntitiesAndObjects.TimeTableObjects.Section;
+import EntitiesAndObjects.TimeTableObjects.CourseSection;
 import EntitiesAndObjects.TimeTableObjects.Interfaces.Sliceable;
 
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class Course implements Sliceable<Section> {
+public class Course implements Sliceable<CourseSection> {
     private final String code;
     private final String professor;
     private final String faculty;
@@ -59,33 +59,6 @@ public class Course implements Sliceable<Section> {
     }
 
     /**
-     * Get the Professor teaching this Course
-     *
-     * @return the name of the Professor
-     */
-    public String getProfessor() {
-        return professor;
-    }
-
-    /**
-     * Get the Faculty this course belongs to
-     *
-     * @return the Faculty this course belongs to
-     */
-    public String getFaculty() {
-        return faculty;
-    }
-
-    /**
-     * Get the delivery method this course is delivered in
-     *
-     * @return the delivery method for this course
-     */
-    public String getDeliveryMethod() {
-        return deliveryMethod;
-    }
-
-    /**
      * Get the times and corresponding locations for this Course
      *
      * @return the times and corresponding locations
@@ -125,30 +98,31 @@ public class Course implements Sliceable<Section> {
      * @return A list of section objects
      */
     @Override
-    public ArrayList<Section> split(){
-        ArrayList<Section> sectionList = new ArrayList<>();
+    public ArrayList<CourseSection> split(){
+        ArrayList<CourseSection> courseSectionList = new ArrayList<>();
+
         for (ArrayList<Object> time : this.timeLocation.keySet()) {
-            Time start = ((Time) time.get(1));
-            Time end = ((Time) time.get(2));
+            LocalTime start = ((LocalTime) time.get(1));
+            LocalTime end = ((LocalTime) time.get(2));
             String date = ((String) time.get(0));
-            Section s = new Section(start, end, this.timeLocation.get(time),
+            CourseSection s = new CourseSection(start, end, this.timeLocation.get(time),
                     date, this.term, this.code, this.professor,
                     this.faculty, this.deliveryMethod);
-            sectionList.add(s);
+            courseSectionList.add(s);
         }
-        return sectionList;
+        return courseSectionList;
     }
 
     public static void main(String[] args) {
         ArrayList<Object> testDateTime1 = new ArrayList<>();
         testDateTime1.add("Friday");
-        testDateTime1.add(new Time(9, 0, 0));
-        testDateTime1.add(new Time(10, 0, 0));
+        testDateTime1.add(LocalTime.of(9, 0, 0));
+        testDateTime1.add(LocalTime.of(10, 0, 0));
 
         ArrayList<Object> testDateTime2 = new ArrayList<>();
         testDateTime2.add("Monday");
-        testDateTime2.add(new Time(9, 0, 0));
-        testDateTime2.add(new Time(10, 0, 0));
+        testDateTime2.add(LocalTime.of(9, 0, 0));
+        testDateTime2.add(LocalTime.of(10, 0, 0));
 
         HashMap<ArrayList<Object>, String> testDateTimeMap = new HashMap<>();
         testDateTimeMap.put(testDateTime1, "LM161");

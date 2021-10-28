@@ -1,10 +1,12 @@
 package EntitiesAndObjects.TimeTableObjects;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
-public class DescriptionlessLife extends TimeTableObject{
-    public DescriptionlessLife(Time theStartTime,
-                Time theEndTime,
+//TODO 1. docstrings
+//TODO 2. remove location and add description in param, add getter for the latter.
+public class Task extends Events {
+    public Task(LocalTime theStartTime,
+                LocalTime theEndTime,
                 String theLocation,
                 String theDate,
                 String term) {
@@ -14,6 +16,6 @@ public class DescriptionlessLife extends TimeTableObject{
     @Override
     public String toString() {
         return this.getStartTime() + " - " + this.getEndTime() + ": " +
-                "Descriptionless Life";
+                this.getDescription();
     }
 }
