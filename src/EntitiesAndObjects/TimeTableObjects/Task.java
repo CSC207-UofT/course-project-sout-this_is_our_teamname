@@ -14,6 +14,6 @@ public class Task extends Events {
     @Override
     public String toString() {
         return this.getStartTime() + " - " + this.getEndTime() + ": " +
-                "Descriptionless Activity";
+                this.getDescription();
     }
 }

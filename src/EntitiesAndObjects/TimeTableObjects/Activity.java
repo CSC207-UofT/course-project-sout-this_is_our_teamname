@@ -12,13 +12,13 @@ public class Activity extends Events {
                     String term,
                     String description) {
         super(theStartTime, theEndTime, theLocation, theDate, term);
-        this.description = description;
+        this.description = description + this.getDescription();
     }
 
 
     @Override
     public String toString() {
         return this.getStartTime() + " - " + this.getEndTime() + ": " +
-                this.description + " at " + this.getLocation();
+                this.description;
     }
 }
