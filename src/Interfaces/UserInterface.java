@@ -14,8 +14,8 @@ public class UserInterface {
         usableClasses = new HashMap<>();
         usableClasses.put(Constants.COURSE, new String[]{Constants.COURSE});
         usableClasses.put(Constants.NON_COURSE_OBJECT,
-                new String[]{Constants.LIFE,
-                        Constants.DESCRIPTION_LESS_LIFE});
+                new String[]{Constants.ACTIVITY,
+                        Constants.TASK});
     }
 
     private boolean BinarySearch(String query, String[] array){

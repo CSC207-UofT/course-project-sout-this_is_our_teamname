@@ -114,8 +114,8 @@ public class CSVScraper extends DataGetter {
                                                String> timeToLocationMap,
                                        String theInstructor,
                                        String theDeliveryMethod){
-        Course theCourse = new Course(sectionName, theInstructor, faculty,
-                theDeliveryMethod, timeToLocationMap, term);
+        Course theCourse = new Course( "Instructor: " + theInstructor + ", Faculty: "
+                + faculty + ", Delivery Method: " + theDeliveryMethod, term, sectionName, timeToLocationMap);
         placeToData(sectionName, theCourse);
     }
 
@@ -134,8 +134,9 @@ public class CSVScraper extends DataGetter {
                                      HashMap<ArrayList<Object>, String> timeToLocationMap,
                                      String theInstructor,
                                      String theDeliveryMethod){
-        Course theCourse = new Course(sectionName, theInstructor, faculty,
-                theDeliveryMethod, timeToLocationMap, Constants.YEAR);
+        Course theCourse = new Course("Instructor: " + theInstructor +
+                ", Faculty: " + faculty + "Delivery Method: " + theDeliveryMethod,
+                Constants.YEAR, sectionName, timeToLocationMap);
         placeToData(sectionName, theCourse);
     }
 

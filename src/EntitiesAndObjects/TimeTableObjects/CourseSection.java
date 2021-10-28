@@ -4,11 +4,6 @@ import java.sql.Time;
 
 public class CourseSection extends Events implements java.lang.Comparable<CourseSection> {
     private final String code;
-    //TODO delete attributes after parameter change
-    private final String professor;
-    private final String faculty;
-    private final String deliveryMethod;
-
 
 
     /**
@@ -17,28 +12,21 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
      *
      * @param startTime The start time of this section.
      * @param endTime The end time of the section
-     * @param location The location of this section
-     * @param thedate The date of the section
+     * @param description The description of this section
+     * @param theDate The date of the section
      * @param term The term for this course
      * @param code The code for this course
-     * @param professor The professor teaching this course section
-     * @param faculty The faculty this course belongs to
-     * @param deliveryMethod The delivery method for this course section
      */
-    public CourseSection(Time startTime, Time endTime, String location,
-                         String thedate, String term, String code, String professor,
-                         String faculty, String deliveryMethod) {
-        super(startTime, endTime, location, thedate, term);
+    public CourseSection(Time startTime, Time endTime, String description,
+                         String theDate, String term, String code) {
+        super(startTime, endTime, description, theDate, term);
         this.code = code;
-        this.professor = professor;
-        this.faculty = faculty;
-        this.deliveryMethod = deliveryMethod;
     }
 
     @Override
     public String toString() {
         return this.getStartTime() + " - " + this.getEndTime() + ": " +
-                this.code + " at " + this.getLocation();
+                this.code + " : " + this.getDescription();
     }
 
     /**

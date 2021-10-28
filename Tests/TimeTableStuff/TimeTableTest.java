@@ -20,12 +20,15 @@ class TimeTableTest {
         Time endTime1 = new Time (10,0,0);
         Time endTime2 = new Time(11,0,0);
 
-        CourseSection lecture1 = new CourseSection(startTime1,endTime1,"SS100",Constants.MONDAY,Constants.YEAR,
-                "MAT257","Gauss","Arts and Science","In Person");
-        CourseSection lecture2 = new CourseSection(startTime1,endTime2,"SS101",Constants.MONDAY,Constants.FALL,
-                "MAT157", "Descartes","Arts and Science","Online");
-        CourseSection lecture3 = new CourseSection(startTime2,endTime2,"SS100",Constants.MONDAY,Constants.FALL,
-                "MAT137", "Alphonso","Arts and Science","Online");
+        CourseSection lecture1 = new CourseSection(startTime1,endTime1, "Professor: Gauss, Faculty: " +
+                "Arts and Science, Delivery Method: In Person, Location: SS100", Constants.MONDAY, Constants.YEAR,
+                 "MAT257");
+        CourseSection lecture2 = new CourseSection(startTime1,endTime2, "Professor: Descartes, Faculty: " +
+                "Arts and Science, Delivery Method: Online, Location: SS101",Constants.MONDAY,Constants.FALL,
+                "MAT157");
+        CourseSection lecture3 = new CourseSection(startTime2,endTime2,"Professor: Alphonso, Faculty: " +
+                "Arts and Science, Delivery Method: Online, Location: SS100",Constants.MONDAY,Constants.FALL,
+                "MAT137");
         TimeTable table = new TimeTable();
         assertTrue(table.schedule(lecture1));
         assertFalse(table.schedule(lecture2));

@@ -3,22 +3,19 @@
 import java.sql.Time;
 
 public class Activity extends Events {
-    private final String description;
 
     public Activity(Time theStartTime,
                     Time theEndTime,
-                    String theLocation,
+                    String theDescription,
                     String theDate,
-                    String term,
-                    String description) {
-        super(theStartTime, theEndTime, theLocation, theDate, term);
-        this.description = description;
+                    String term) {
+        super(theStartTime, theEndTime, theDescription, theDate, term);
     }
 
 
     @Override
     public String toString() {
         return this.getStartTime() + " - " + this.getEndTime() + ": " +
-                this.description + " at " + this.getLocation();
+                this.getDescription();
     }
 }

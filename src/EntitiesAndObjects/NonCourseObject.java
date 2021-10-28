@@ -5,7 +5,7 @@ import java.sql.Time;
 public class NonCourseObject {
     private final Time startTime;
     private final Time endTime;
-    private final String location;
+    private final String description;
     private final String date;
     private final String term;
     private final String type;
@@ -14,20 +14,20 @@ public class NonCourseObject {
      * Construct an activity with time, location and a description.
      * @param startTime is the start time of the activity.
      * @param endTime is the end time of the activity.
-     * @param theLocation is the location of the activity.
+     * @param theDescription is the description of the activity.
      * @param theDate is the weekday of the activity.
      * @param term is the term of the activity
      * @param type the type of the object
      */
     public NonCourseObject(Time startTime,
                            Time endTime,
-                           String theLocation,
+                           String theDescription,
                            String theDate,
                            String term,
                            String type) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.location = theLocation;
+        this.description = theDescription;
         this.date = theDate;
         this.term = term;
         this.type = type;
@@ -62,11 +62,11 @@ public class NonCourseObject {
     }
 
     /**
-     * Get the location for the activity
-     * @return  location
+     * Get the description for the activity
+     * @return  description
      */
-    public String getLocation() {
-        return location;
+    public String getDescription() {
+        return description;
     }
 
     /**

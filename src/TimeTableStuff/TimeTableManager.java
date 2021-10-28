@@ -132,17 +132,16 @@ public class TimeTableManager {
      * @return event "cast" to the correct type.
      */
     private Events getCorrectTimeTableObject(NonCourseObject event) {
-        if (event.getType().equals(Constants.LIFE)){
+        if (event.getType().equals(Constants.ACTIVITY)){
             Scanner descriptionScanner = new Scanner(System.in);
             System.out.println("Please provide a description of your life " +
                     "activity: ");
             return new Activity(event.getStartTime(), event.getEndTime(),
-                    event.getLocation(), event.getDate(), event.getTerm(),
-                    descriptionScanner.nextLine());
+                    descriptionScanner.nextLine(), event.getDate(), event.getTerm());
         }
-        else if (event.getType().equals(Constants.DESCRIPTION_LESS_LIFE)){
+        else if (event.getType().equals(Constants.TASK)){
             return new Task(event.getStartTime(),
-                    event.getEndTime(), event.getLocation(), event.getDate(),
+                    event.getEndTime(), event.getDescription(), event.getDate(),
                     event.getTerm());
         } else {
             // TODO More types of events.
