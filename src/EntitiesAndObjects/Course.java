@@ -1,6 +1,6 @@
 package EntitiesAndObjects;
 
-import EntitiesAndObjects.TimeTableObjects.Section;
+import EntitiesAndObjects.TimeTableObjects.CourseSection;
 import EntitiesAndObjects.TimeTableObjects.Interfaces.Sliceable;
 
 import java.sql.Time;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class Course implements Sliceable<Section> {
+public class Course implements Sliceable<CourseSection> {
     private final String code;
     private final String professor;
     private final String faculty;
@@ -93,25 +93,23 @@ public class Course implements Sliceable<Section> {
         return term;
     }
 
-    //TODO place getDescription here after parameter change
-
      /** Split the course into section objects
      *
      * @return A list of section objects
      */
     @Override
-    public ArrayList<Section> split(){
-        ArrayList<Section> sectionList = new ArrayList<>();
+    public ArrayList<CourseSection> split(){
+        ArrayList<CourseSection> courseSectionList = new ArrayList<>();
         for (ArrayList<Object> time : this.timeLocation.keySet()) {
             Time start = ((Time) time.get(1));
             Time end = ((Time) time.get(2));
             String date = ((String) time.get(0));
-            Section s = new Section(start, end, this.timeLocation.get(time),
+            CourseSection s = new CourseSection(start, end, this.timeLocation.get(time),
                     date, this.term, this.code, this.professor,
                     this.faculty, this.deliveryMethod);
-            sectionList.add(s);
+            courseSectionList.add(s);
         }
-        return sectionList;
+        return courseSectionList;
     }
 
     public static void main(String[] args) {
