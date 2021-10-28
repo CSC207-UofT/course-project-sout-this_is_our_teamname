@@ -3,7 +3,7 @@ package EntitiesAndObjects;
 import EntitiesAndObjects.TimeTableObjects.CourseSection;
 import EntitiesAndObjects.TimeTableObjects.Interfaces.Sliceable;
 
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -100,9 +100,10 @@ public class Course implements Sliceable<CourseSection> {
     @Override
     public ArrayList<CourseSection> split(){
         ArrayList<CourseSection> courseSectionList = new ArrayList<>();
+
         for (ArrayList<Object> time : this.timeLocation.keySet()) {
-            Time start = ((Time) time.get(1));
-            Time end = ((Time) time.get(2));
+            LocalTime start = ((LocalTime) time.get(1));
+            LocalTime end = ((LocalTime) time.get(2));
             String date = ((String) time.get(0));
             CourseSection s = new CourseSection(start, end, this.timeLocation.get(time),
                     date, this.term, this.code, this.professor,
@@ -115,13 +116,13 @@ public class Course implements Sliceable<CourseSection> {
     public static void main(String[] args) {
         ArrayList<Object> testDateTime1 = new ArrayList<>();
         testDateTime1.add("Friday");
-        testDateTime1.add(new Time(9, 0, 0));
-        testDateTime1.add(new Time(10, 0, 0));
+        testDateTime1.add(LocalTime.of(9, 0, 0));
+        testDateTime1.add(LocalTime.of(10, 0, 0));
 
         ArrayList<Object> testDateTime2 = new ArrayList<>();
         testDateTime2.add("Monday");
-        testDateTime2.add(new Time(9, 0, 0));
-        testDateTime2.add(new Time(10, 0, 0));
+        testDateTime2.add(LocalTime.of(9, 0, 0));
+        testDateTime2.add(LocalTime.of(10, 0, 0));
 
         HashMap<ArrayList<Object>, String> testDateTimeMap = new HashMap<>();
         testDateTimeMap.put(testDateTime1, "LM161");

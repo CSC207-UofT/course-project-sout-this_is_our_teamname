@@ -1,9 +1,12 @@
 package EntitiesAndObjects.TimeTableObjects;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
+
+//TODO change param here with description, add boolean param wait list.
 public class CourseSection extends Events implements java.lang.Comparable<CourseSection> {
     private final String description;
+
     /**
      * Construct a TimeTable section for the given time, location, section, professor,
      * faculty and delivery method
@@ -18,7 +21,7 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
      * @param faculty The faculty this course belongs to
      * @param deliveryMethod The delivery method for this course section
      */
-    public CourseSection(Time startTime, Time endTime, String location,
+    public CourseSection(LocalTime startTime, LocalTime endTime, String location,
                          String theDate, String term, String code, String professor,
                          String faculty, String deliveryMethod) {
         super(startTime, endTime, location, theDate, term);
@@ -68,4 +71,13 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
         }
     }
 
+//    public static void main(String[] args) {
+//        LocalTime time = LocalTime.of(6,30);
+//        LocalTime time2 = LocalTime.of(6,30);
+//        LocalTime time3 = LocalTime.of(7,30);
+//        LocalTime time4 = LocalTime.of(5,30);
+//        System.out.println(time);
+//        System.out.println(time.compareTo(time4
+//        ));
+//    }
 }

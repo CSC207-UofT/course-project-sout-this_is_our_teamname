@@ -1,12 +1,13 @@
  package EntitiesAndObjects.TimeTableObjects;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
+ //TODO docstrings,remove location param
 public class Activity extends Events {
     private final String description;
 
-    public Activity(Time theStartTime,
-                    Time theEndTime,
+    public Activity(LocalTime theStartTime,
+                    LocalTime theEndTime,
                     String theLocation,
                     String theDate,
                     String term,
