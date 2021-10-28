@@ -2,9 +2,13 @@ package EntitiesAndObjects.TimeTableObjects;
 
 import java.time.LocalTime;
 
+//TODO add boolean param wait list.
+/**
+ * CourseSection class is a class that can be stored in a TimeTable class. It stores all
+ * information relevant to its course
+ */
 public class CourseSection extends Events implements java.lang.Comparable<CourseSection> {
     private final String code;
-
 
     /**
      * Construct a TimeTable section for the given time, location, section, professor,
@@ -64,4 +68,13 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
         }
     }
 
+    //    public static void main(String[] args) {
+//        LocalTime time = LocalTime.of(6,30);
+//        LocalTime time2 = LocalTime.of(6,30);
+//        LocalTime time3 = LocalTime.of(7,30);
+//        LocalTime time4 = LocalTime.of(5,30);
+//        System.out.println(time);
+//        System.out.println(time.compareTo(time4
+//        ));
+//    }
 }

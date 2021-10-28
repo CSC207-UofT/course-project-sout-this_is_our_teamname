@@ -11,7 +11,7 @@ public abstract class Events {
     private final String date;
     private final String term;
     /**
-     * Construct an activity with time, location and a description.
+     * Construct an event with time, location and a description.
      * @param startTime is the start time of the activity.
      * @param endTime is the end time of the activity.
      * @param description is the description of the activity.

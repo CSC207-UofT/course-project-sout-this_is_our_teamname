@@ -7,7 +7,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/**
+ * Course class stores all relevant information, like professor, location, delivery method,
+ * etc.
+ */
 public class Course implements Sliceable<CourseSection> {
     private final String description;
     private final String term;
