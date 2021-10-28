@@ -32,8 +32,8 @@ public class TimeTable {
      */
     public boolean schedule(Events activity) {
         if (checkConflicts(activity)) {
-            int start = activity.getStartTime().getHours();
-            int end = activity.getEndTime().getHours();
+            int start = activity.getStartTime().getHour();
+            int end = activity.getEndTime().getHour();
 
             //Add activity to interval between startTime and endTime
             for (int i=start; i<end; i++) {
@@ -50,8 +50,8 @@ public class TimeTable {
      * @return true if there is no conflict, false otherwise
      */
     public boolean checkConflicts(Events activity) {
-        int start = activity.getStartTime().getHours();
-        int end = activity.getEndTime().getHours();
+        int start = activity.getStartTime().getHour();
+        int end = activity.getEndTime().getHour();
 
         //Check whether there is another activity between startTime and endTime
         for (int i=start; i<end; i++) {

@@ -6,7 +6,7 @@ import EntitiesAndObjects.Course;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -162,8 +162,8 @@ public class CSVScraper extends DataGetter {
             retList.add(StringToTime.makeTime(splicedInfo[3]));
         } else {
             retList.add(Constants.TBA);
-            retList.add(new Time(0,0, 0));
-            retList.add(new Time(0,0, 0));
+            retList.add(LocalTime.of(0,0,0));
+            retList.add(LocalTime.of(0,0, 0));
         }
         return retList;
     }

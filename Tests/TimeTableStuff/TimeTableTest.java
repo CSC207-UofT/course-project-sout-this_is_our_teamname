@@ -6,7 +6,7 @@ import EntitiesAndObjects.TimeTableObjects.CourseSection;
 
 import org.junit.jupiter.api.Test;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,10 +15,10 @@ class TimeTableTest {
 
     @Test
     public void schedule() {
-        Time startTime1 = new Time(9,0,0);
-        Time startTime2 = new Time(10, 0,0);
-        Time endTime1 = new Time (10,0,0);
-        Time endTime2 = new Time(11,0,0);
+        LocalTime startTime1 =  LocalTime.of(9,0,0);
+        LocalTime startTime2 = LocalTime.of(10, 0,0);
+        LocalTime endTime1 = LocalTime.of(10,0,0);
+        LocalTime endTime2 = LocalTime.of(11,0,0);
 
         CourseSection lecture1 = new CourseSection(startTime1,endTime1, "Professor: Gauss, Faculty: " +
                 "Arts and Science, Delivery Method: In Person, Location: SS100", Constants.MONDAY, Constants.YEAR,

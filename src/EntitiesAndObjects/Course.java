@@ -102,6 +102,7 @@ public class Course implements Sliceable<CourseSection> {
     @Override
     public ArrayList<CourseSection> split(){
         ArrayList<CourseSection> courseSectionList = new ArrayList<>();
+
         for (ArrayList<Object> time : this.timeLocation.keySet()) {
             LocalTime start = ((LocalTime) time.get(1));
             LocalTime end = ((LocalTime) time.get(2));
