@@ -1,11 +1,11 @@
  package EntitiesAndObjects.TimeTableObjects;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 public class Activity extends Events {
 
-    public Activity(Time theStartTime,
-                    Time theEndTime,
+    public Activity(LocalTime theStartTime,
+                    LocalTime theEndTime,
                     String theDescription,
                     String theDate,
                     String term) {

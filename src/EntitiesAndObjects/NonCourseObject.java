@@ -1,10 +1,10 @@
 package EntitiesAndObjects;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 public class NonCourseObject {
-    private final Time startTime;
-    private final Time endTime;
+    private final LocalTime startTime;
+    private final LocalTime endTime;
     private final String description;
     private final String date;
     private final String term;
@@ -19,8 +19,8 @@ public class NonCourseObject {
      * @param term is the term of the activity
      * @param type the type of the object
      */
-    public NonCourseObject(Time startTime,
-                           Time endTime,
+    public NonCourseObject(LocalTime startTime,
+                           LocalTime endTime,
                            String theDescription,
                            String theDate,
                            String term,
@@ -41,7 +41,7 @@ public class NonCourseObject {
      * Get the start time for the activity
      * @return  startTime
      */
-    public Time getStartTime(){
+    public LocalTime getStartTime(){
         return this.startTime;
     }
 
@@ -49,7 +49,7 @@ public class NonCourseObject {
      * Get the end time for the activity
      * @return  endTime
      */
-    public Time getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 

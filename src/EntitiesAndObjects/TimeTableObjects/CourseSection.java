@@ -1,6 +1,6 @@
 package EntitiesAndObjects.TimeTableObjects;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 public class CourseSection extends Events implements java.lang.Comparable<CourseSection> {
     private final String code;
@@ -17,7 +17,7 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
      * @param term The term for this course
      * @param code The code for this course
      */
-    public CourseSection(Time startTime, Time endTime, String description,
+    public CourseSection(LocalTime startTime, LocalTime endTime, String description,
                          String theDate, String term, String code) {
         super(startTime, endTime, description, theDate, term);
         this.code = code;
