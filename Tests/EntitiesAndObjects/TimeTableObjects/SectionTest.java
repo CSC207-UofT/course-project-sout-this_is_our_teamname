@@ -4,7 +4,7 @@ import GlobalHelpers.Constants;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 import static org.junit.Assert.*;
 
@@ -36,12 +36,11 @@ public class SectionTest {
 
     @Test
     public void compareTo() {
-        Time Time8 = new Time(8,0,0);
-        Time Time9 = new Time(9,0,0);
-        Time Time10 = new Time(10, 0,0);
-
-        Time Time1030 = new Time (10,30,0);
-        Time Time11 = new Time(11,0,0);
+        LocalTime Time8 = LocalTime.of(8,0,0);
+        LocalTime Time9 = LocalTime.of(9,0,0);
+        LocalTime Time10 = LocalTime.of(10, 0,0);
+        LocalTime Time1030 = LocalTime.of(10,30,0);
+        LocalTime Time11 = LocalTime.of(11,0,0);
 
         CourseSection lecture0 = new CourseSection(Time9,Time10,"SS100", Constants.MONDAY,Constants.YEAR,
                 "MAT257","Gauss","Arts and Science","In Person");

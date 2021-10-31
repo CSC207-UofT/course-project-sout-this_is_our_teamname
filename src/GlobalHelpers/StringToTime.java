@@ -1,6 +1,6 @@
 package GlobalHelpers;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 public class StringToTime {
     /** Turns a string in the format "13:00PM" to 13:00:00
@@ -8,7 +8,7 @@ public class StringToTime {
      * @param timeString A string representing time
      * @return a Time object
      */
-    public static Time makeTime(String timeString) {
+    public static LocalTime makeTime(String timeString) {
         String[] timeStringSplit = timeString.split(":");
         String stringHour = timeStringSplit[0];
         String stringMinute = timeStringSplit[1].substring(0, 2);
@@ -19,15 +19,15 @@ public class StringToTime {
 
         if (indicator.equals("AM")) {
             if (hour == 12) {
-                return new Time(0, minute, 0);
+                return LocalTime.of(0, minute, 0);
             } else {
-                return new Time(hour, minute, 0);
+                return LocalTime.of(hour, minute, 0);
             }
         } else if (indicator.equals("PM")) {
             if (hour == 12) {
-                return new Time(12, minute, 0);
+                return LocalTime.of(12, minute, 0);
             } else {
-                return new Time(12 + hour, minute, 0);
+                return LocalTime.of(12 + hour, minute, 0);
             }
         } else {
             return null;
