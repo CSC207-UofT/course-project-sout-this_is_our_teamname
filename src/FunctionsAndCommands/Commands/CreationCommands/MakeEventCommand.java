@@ -15,7 +15,7 @@ import java.util.Scanner;
  * === Private Attributes ===
  * manager: The manager that will eventually schedule the object
  */
-public class MakeEventCommand extends Command {
+public class MakeEventCommand implements Command {
     // Some Constants:
     final String NAME = "Name";
     final String START_TIME = "Start Time";
@@ -26,6 +26,7 @@ public class MakeEventCommand extends Command {
     final String TYPE = "Type";
 
     private final TimeTableManager manager;
+    private NonCourseObject scheduledObject;
 
     /**
      * A constructor to set the command
@@ -33,6 +34,15 @@ public class MakeEventCommand extends Command {
      */
     public MakeEventCommand(TimeTableManager theManager){
         this.manager = theManager;
+        this.scheduledObject = null;
+    }
+
+    /**
+     * Return if there has already been an object been scheduled
+     * @return true iff there has been a course scheduled.
+     */
+    protected boolean hasScheduled(){
+        return scheduledObject != null;
     }
 
     /**
@@ -64,14 +74,25 @@ public class MakeEventCommand extends Command {
             responses.put(prompt, scanner.nextLine());
         }
 
-        manager.schedule(
-                new NonCourseObject(
-                        StringToTime.makeTime(responses.get(START_TIME)),
-                        StringToTime.makeTime(responses.get(END_TIME)),
-                        responses.get(LOCATION),
-                        responses.get(DATE),
-                        responses.get(TERM),
-                        responses.get(TYPE))
-        );
+        NonCourseObject toSchedule = new NonCourseObject(
+                StringToTime.makeTime(responses.get(START_TIME)),
+                StringToTime.makeTime(responses.get(END_TIME)),
+                responses.get(LOCATION),
+                responses.get(DATE),
+                responses.get(TERM),
+                responses.get(TYPE));
+
+        this.scheduledObject = toSchedule;
+
+        manager.schedule(toSchedule);
+    }
+
+    @Override
+    public String toString() {
+        if (this.hasScheduled()){
+            return "Scheduled the item" + this.scheduledObject.toString();
+        } else {
+            return "No Course Scheduled";
+        }
     }
 }

@@ -7,7 +7,7 @@ import TimeTableStuff.TimeTableManager;
 /**
  * A command object to get all the timetables
  */
-public class GetAllTimeTablesCommand extends Command {
+public class GetAllTimeTablesCommand implements Command {
     private final TimeTableManager manager;
 
     /**
@@ -30,5 +30,10 @@ public class GetAllTimeTablesCommand extends Command {
             // Prints out the timetable
             System.out.println(table.toString());
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Extracted all Saved TimeTables";
     }
 }

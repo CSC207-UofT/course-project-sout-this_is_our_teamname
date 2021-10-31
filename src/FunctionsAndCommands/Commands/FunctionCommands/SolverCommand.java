@@ -15,7 +15,7 @@ import java.util.function.Function;
  * TODO PLEASE IMPLEMENT THIS CLASS @TA IF THIS MESSAGE IS STILL HERE WHEN
  * TODO YOU MARK THIS, DO NOT MARK THIS!!!
  */
-public class SolverCommand extends Command {
+public class SolverCommand implements Command {
 
     /**
      * Treat this method as like the "main" (psvm method, or if __name__ ==
@@ -50,5 +50,10 @@ public class SolverCommand extends Command {
         public Puzzle[] extensions() {
             return new Puzzle[0];
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Used the Solver Function";
     }
 }

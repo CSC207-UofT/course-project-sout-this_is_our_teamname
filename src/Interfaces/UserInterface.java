@@ -1,8 +1,9 @@
 package Interfaces;
 
-import FunctionsAndCommands.Commands.Command;
+
 import GlobalHelpers.Constants;
 import DatabaseController.DatabaseController;
+import DatabaseController.CommandFactory;
 import GlobalHelpers.InvalidInputException;
 
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 
 public class UserInterface {
     private final HashMap<String, String[]> usableClasses;
-    private final DatabaseController control = new DatabaseController();
+    private final DatabaseController control;
 
     /**
      * Constructor.
@@ -21,6 +22,9 @@ public class UserInterface {
      * TODO compact, and obsolete
      */
     public UserInterface(){
+        this.control = new DatabaseController();
+        this.control.addFactory(new CommandFactory(control));
+
         // Will be replaced with something by OperatorInterface in later Phases.
         usableClasses = new HashMap<>();
         usableClasses.put(Constants.COURSE, new String[]{Constants.COURSE});

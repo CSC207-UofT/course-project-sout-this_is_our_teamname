@@ -6,6 +6,7 @@ import FunctionsAndCommands.Commands.Command;
 import FunctionsAndCommands.Commands.CreationCommands.GetAllTimeTablesCommand;
 import FunctionsAndCommands.Commands.CreationCommands.MakeCourseCommand;
 import FunctionsAndCommands.Commands.CreationCommands.MakeEventCommand;
+import FunctionsAndCommands.Commands.CreationCommands.PrintHistoryCommand;
 import GlobalHelpers.Constants;
 import GlobalHelpers.InvalidInputException;
 import TimeTableStuff.TimeTableManager;
@@ -17,20 +18,23 @@ public class CommandFactory {
     // TODO @Caules. Please configure Operator Interface here!
     public final TimeTableManager courseManager;
     public final DataGetter dataSource;
+    public final DatabaseController controller;
 
-    // Command Keys:
+    // Command Keys: TODO Please fix
     public static final String SCHEDULE_COURSE = Constants.COURSE;
     public static final String SCHEDULE_EVENT = Constants.NON_COURSE_OBJECT;
     public static final String GET_ALL_TIMETABLE = "Get All TimeTables";
+    public static final String PRINT_HISTORY = "Get History";
 
     /**
      * Constructor. Sets the TimeTable Manager and DataSource of the file
      * TODO @Caules Use OperatorInterface
      * TODO @Aiden Add DataLoaders here too!
      */
-    public CommandFactory(){
+    public CommandFactory(DatabaseController theController){
         this.courseManager = new TimeTableManager();
         this.dataSource = new CSVScraper();
+        this.controller = theController;
     }
 
     /**
@@ -48,24 +52,28 @@ public class CommandFactory {
      */
     public Command getCommand(String inputCommand) throws InvalidInputException {
         // To schedule a course
-        if (inputCommand.equals(SCHEDULE_COURSE)) {
-            return new MakeCourseCommand(courseManager, dataSource);
-        }
+        switch (inputCommand) {
+            case SCHEDULE_COURSE:
+                return new MakeCourseCommand(courseManager, dataSource);
 
-        // To schedule an event
-        else if (inputCommand.equals(SCHEDULE_EVENT)) {
-            return new MakeEventCommand(courseManager);
-        }
 
-        // To get all the timetables in the TimeTableManager
-        else if (inputCommand.equals(GET_ALL_TIMETABLE)){
-            return new GetAllTimeTablesCommand(courseManager);
-        }
-        // ... ADD YOUR NEW OBJECTS HERE!
+            // To schedule an event
+            case SCHEDULE_EVENT:
+                return new MakeEventCommand(courseManager);
 
-        // The command is invalid
-        else {
-            throw new InvalidInputException();
+
+            // To get all the timetables in the TimeTableManager
+            case GET_ALL_TIMETABLE:
+                return new GetAllTimeTablesCommand(courseManager);
+            case PRINT_HISTORY:
+                return new PrintHistoryCommand(controller);
+
+
+            // ... ADD YOUR NEW OBJECTS HERE!
+
+            // The command is invalid
+            default:
+                throw new InvalidInputException();
         }
     }
 }

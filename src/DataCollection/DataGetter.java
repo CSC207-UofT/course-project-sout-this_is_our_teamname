@@ -3,12 +3,13 @@ package DataCollection;
 import EntitiesAndObjects.Course;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * A data gathering class / database class
  */
 public abstract class DataGetter {
-    private final LinkedHashMap<String, Course> data;
+    private LinkedHashMap<String, Course> data;
 
     /**
      * A constructor for this class.
@@ -43,6 +44,11 @@ public abstract class DataGetter {
      */
     public LinkedHashMap<String, Course> getData(String courseName){
         CalibrateData(courseName);
-        return this.data;
+
+        // TODO @SONNY NOTICE CHANGE HERE!
+        LinkedHashMap<String, Course> returnMap =
+                new LinkedHashMap<>(this.data);
+        this.data = new LinkedHashMap<>();
+        return returnMap;
     }
 }

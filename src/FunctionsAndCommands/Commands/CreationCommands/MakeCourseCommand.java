@@ -15,9 +15,10 @@ import java.util.Scanner;
  * dataSource: The source where the data is from.
  * manager: The manager that will eventually schedule the object
  */
-public class MakeCourseCommand extends Command {
+public class MakeCourseCommand implements Command {
     private final DataGetter dataSource;
     private final TimeTableManager manager;
+    private Course scheduledCourse;
 
     /**
      * A constructor to initialize what this command is connected to
@@ -28,6 +29,15 @@ public class MakeCourseCommand extends Command {
     public MakeCourseCommand(TimeTableManager sendTo, DataGetter dataSource){
         this.manager = sendTo;
         this.dataSource = dataSource;
+        this.scheduledCourse = null;
+    }
+
+    /**
+     * Return if there has already been a course been scheduled
+     * @return true iff there has been a course scheduled.
+     */
+    protected boolean hasScheduled(){
+        return scheduledCourse != null;
     }
 
     /**
@@ -63,7 +73,22 @@ public class MakeCourseCommand extends Command {
                 " the section code): ");
         String selected = userChoice.nextLine();
 
+        // Get the course to schedule
+        Course toSchedule = course_data.get(selected);
+
+        // Save the course to the command object
+        this.scheduledCourse = toSchedule;
+
         // Pass this to the TimeTableManager
-        manager.schedule(course_data.get(selected));
+        manager.schedule(toSchedule);
+    }
+
+    @Override
+    public String toString(){
+        if (this.hasScheduled()){
+            return "Scheduled the item" + this.scheduledCourse.toString();
+        } else {
+            return "No Course Scheduled";
+        }
     }
 }

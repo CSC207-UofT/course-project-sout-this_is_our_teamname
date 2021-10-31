@@ -20,14 +20,20 @@ import java.util.Stack;
  */
 public class DatabaseController {
     private final Stack<Command> CommandHistory;
-    private final CommandFactory Factory;
+    private CommandFactory Factory;
 
     /**
      * A constructor. Sets the commandHistory and Factory
      */
     public DatabaseController(){
         this.CommandHistory = new Stack<>();
-        this.Factory = new CommandFactory();
+        this.Factory = null;
+    }
+
+    public void addFactory(CommandFactory theFactory){
+        if (this.Factory == null){
+            this.Factory = theFactory;
+        }
     }
 
     /**
@@ -37,6 +43,7 @@ public class DatabaseController {
      * they were added. The setCommands will also execute the command.
      */
     public void addToCommandHistory(String commandKey) throws InvalidInputException {
+        assert this.Factory != null;
         Command theCommand = this.Factory.getCommand(commandKey);
         setCommands(theCommand);
     }
@@ -63,5 +70,13 @@ public class DatabaseController {
     private void setCommands(Command theCommand){
         this.CommandHistory.push(theCommand);
         theCommand.execute();
+    }
+
+    /**
+     * Get a Stack of the commands that has been executed in the history
+     * @return The Stack of commands.
+     */
+    public Stack<Command> getCommandHistory() {
+        return CommandHistory;
     }
 }

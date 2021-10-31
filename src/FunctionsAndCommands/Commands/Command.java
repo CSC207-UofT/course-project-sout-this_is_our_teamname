@@ -1,8 +1,14 @@
 package FunctionsAndCommands.Commands;
 
-abstract public class Command {
+public interface Command {
     /**
      * Execute the command
      */
-    abstract public void execute();
+    void execute();
+
+    /**
+     * Returns a String representation of the command
+     * @return
+     */
+    String toString();
 }
