@@ -5,6 +5,7 @@ import EntitiesAndObjects.Course;
 import FunctionsAndCommands.Commands.Command;
 import TimeTableStuff.TimeTableManager;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -57,14 +58,28 @@ public class MakeCourseCommand implements Command {
      */
     @Override
     public void execute() {
-        // The user enters the section they want to search
-        Scanner CourseNameScanner = new Scanner(System.in);
-        System.out.println("Please Enter the course Name (eg CSC207H1 or " +
-                "APS113Y1. Don't forget the 'H1'!!!): ");
-        String course = CourseNameScanner.nextLine();
+        // Clears the dataSource so it doesn't build up.
+        dataSource.clearData();
 
-        // Gets the data from the datasource
-        HashMap<String, Course> course_data = dataSource.getData(course);
+        boolean validCourseChecker = true;
+
+        HashMap<String, Course> course_data = new HashMap<>();
+        while (validCourseChecker){
+            // The user enters the section they want to search
+            Scanner CourseNameScanner = new Scanner(System.in);
+            System.out.println("Please Enter the course Name (eg CSC207H1 or " +
+                    "APS113Y1. Don't forget the 'H1'!!!): ");
+            String course = CourseNameScanner.nextLine();
+
+            try {
+                // Gets the data from the datasource
+                course_data = dataSource.getData(course);
+                validCourseChecker = false;
+            } catch (FileNotFoundException e) {
+                System.out.println("Course not found. Please try again!");
+            }
+        }
+
         promptUserToChoose(course_data);
 
         // The user enters the section they want to search
