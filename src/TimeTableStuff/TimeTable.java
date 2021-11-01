@@ -71,7 +71,9 @@ public class TimeTable {
         for (String day : this.calender.keySet()) {
             ArrayList<String> sections = new ArrayList<>();
             for (Events activity : this.calender.get(day)) {
-                sections.add(activity.toString());
+                if (activity != null) {
+                    sections.add(activity.toString());
+                }
             }
             times.put(day, sections);
         }

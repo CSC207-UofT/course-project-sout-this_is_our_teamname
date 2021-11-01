@@ -15,6 +15,7 @@ public class Course implements Sliceable<CourseSection> {
     private final String deliveryMethod;
     private final String term;
     private final HashMap<ArrayList<Object>, String> timeLocation;
+    private final boolean waitlist;
 
     // Constants for TimeLocation key
     final int THE_DATE = 0;
@@ -34,19 +35,22 @@ public class Course implements Sliceable<CourseSection> {
      *                     the date and time information like the following:
      *                     {date, startTime, endTime}
      * @param term The term for this course
+     * @param waitlist Whether the course is waitlisted
      */
     public Course(String section,
                   String professor,
                   String faculty,
                   String deliveryMethod,
                   HashMap<ArrayList<Object>, String> timeLocation,
-                  String term) {
+                  String term,
+                  boolean waitlist) {
         this.code = section;
         this.professor = professor;
         this.faculty = faculty;
         this.deliveryMethod = deliveryMethod;
         this.timeLocation = timeLocation;
         this.term = term;
+        this.waitlist = waitlist;
     }
 
     /**
@@ -107,7 +111,7 @@ public class Course implements Sliceable<CourseSection> {
             String date = ((String) time.get(0));
             CourseSection s = new CourseSection(start, end, this.timeLocation.get(time),
                     date, this.term, this.code, this.professor,
-                    this.faculty, this.deliveryMethod);
+                    this.faculty, this.deliveryMethod, this.waitlist);
             courseSectionList.add(s);
         }
         return courseSectionList;
@@ -129,7 +133,7 @@ public class Course implements Sliceable<CourseSection> {
         testDateTimeMap.put(testDateTime2, "LM161");
 
         Course A = new Course("LEC 0101", "Paul Gries", "A&S", "In-Person",
-                testDateTimeMap, "Fall");
+                testDateTimeMap, "Fall", false);
         System.out.println(A);
     }
 }
