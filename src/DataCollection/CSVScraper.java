@@ -25,6 +25,7 @@ public class CSVScraper extends DataGetter {
     private final static int LOCATION = 2;
     private final static int INSTRUCTOR = 3;
     private final static int DELIVERY = 4;
+    private final static int WAITLIST = 5;
 
     /**
      * Constructor of the CSVScraper. Reads and filters the data correctly
@@ -107,9 +108,10 @@ public class CSVScraper extends DataGetter {
                                        HashMap<ArrayList<Object>,
                                                String> timeToLocationMap,
                                        String theInstructor,
-                                       String theDeliveryMethod){
-        Course theCourse = new Course( "Instructor: " + theInstructor + ", Faculty: "
-                + faculty + ", Delivery Method: " + theDeliveryMethod, term, sectionName, timeToLocationMap);
+                                       String theDeliveryMethod,
+                                       boolean theWaitlist){
+        Course theCourse = new Course(sectionName, theInstructor, faculty,
+                theDeliveryMethod, timeToLocationMap, term, theWaitlist);
         placeToData(sectionName, theCourse);
     }
 
@@ -127,10 +129,10 @@ public class CSVScraper extends DataGetter {
                                      String faculty,
                                      HashMap<ArrayList<Object>, String> timeToLocationMap,
                                      String theInstructor,
-                                     String theDeliveryMethod){
-        Course theCourse = new Course("Instructor: " + theInstructor +
-                ", Faculty: " + faculty + "Delivery Method: " + theDeliveryMethod,
-                Constants.YEAR, sectionName, timeToLocationMap);
+                                     String theDeliveryMethod,
+                                     boolean theWaitlist){
+        Course theCourse = new Course(sectionName, theInstructor, faculty,
+                theDeliveryMethod, timeToLocationMap, Constants.YEAR, theWaitlist);
         placeToData(sectionName, theCourse);
     }
 
@@ -179,22 +181,26 @@ public class CSVScraper extends DataGetter {
         HashMap<ArrayList<Object>, String> currTimeLocation = new HashMap<>();
         String currInstructor = "";
         String currDelivery = "";
+        String currWaitList = "";
 
         // for line in FileData
         for (String[] splicedLine : theFileData){
 
             // If the current name is "", and splicedLine = [], then this is
             // a new line, thus we have reached the end of a section
-            // information, so add the inforamtion.
+            // information, so add the information.
             if (!currName.equals("") && Arrays.equals(splicedLine, new String[]{})){
+                boolean hasWaitList;
+                hasWaitList = currWaitList.equals("0");
 
                 // Add the course to the data
                 if (theTerm.equals(Constants.YEAR)){
                 addYearCourseToData(currName, theFaculty, currTimeLocation,
-                        currInstructor, currDelivery);
+                        currInstructor, currDelivery, hasWaitList);
                 } else {
                     addTermedCourseToData(theTerm, currName, theFaculty,
-                            currTimeLocation, currInstructor, currDelivery);
+                            currTimeLocation, currInstructor, currDelivery,
+                            hasWaitList);
                 }
 
                 // Else, that mean that we are still in the section
@@ -207,6 +213,7 @@ public class CSVScraper extends DataGetter {
                     currInstructor = splicedLine[INSTRUCTOR];
                     currDelivery = splicedLine[DELIVERY];
                     currTimeLocation = new HashMap<>();
+                    currWaitList = splicedLine[WAITLIST];
                 }
 
                 // Add the time and location of the line.
