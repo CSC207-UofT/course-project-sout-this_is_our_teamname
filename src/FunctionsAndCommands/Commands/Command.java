@@ -8,7 +8,7 @@ public interface Command {
 
     /**
      * Returns a String representation of the command
-     * @return
+     * @return A string
      */
     String toString();
 }

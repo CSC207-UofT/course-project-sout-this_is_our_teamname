@@ -15,7 +15,7 @@ import TimeTableStuff.TimeTableManager;
  * A factory class to create the individual commands of the class.
  */
 public class CommandFactory {
-    // TODO @Caules. Please configure Operator Interface here!
+    // TODO @Caules. Add set method
     public final TimeTableManager courseManager;
     public final DataGetter dataSource;
     public final DatabaseController controller;
