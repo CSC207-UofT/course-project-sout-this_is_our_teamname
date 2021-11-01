@@ -55,13 +55,9 @@ public class CommandFactory {
         switch (inputCommand) {
             case SCHEDULE_COURSE:
                 return new MakeCourseCommand(courseManager, dataSource);
-
-
             // To schedule an event
             case SCHEDULE_EVENT:
                 return new MakeEventCommand(courseManager);
-
-
             // To get all the timetables in the TimeTableManager
             case GET_ALL_TIMETABLE:
                 return new GetAllTimeTablesCommand(courseManager);

@@ -2,6 +2,7 @@ package DataCollection;
 
 import EntitiesAndObjects.Course;
 
+import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -33,22 +34,23 @@ public abstract class DataGetter {
     /**
      * An abstract class to calibrate the data HashMap!
      *
+     * TODO @Sonny NOTICE CHANGE HERE. I added the throw exceptions
+     *
      * @param courseName the Course Name
      */
-    abstract void CalibrateData(String courseName);
+    abstract void CalibrateData(String courseName) throws FileNotFoundException;
+
+    public void clearData(){
+        this.data.clear();
+    }
 
     /**
      * A Getter class for the Data HashMap
      * @param courseName the name of the Course
      * @return the Data HashMap
      */
-    public LinkedHashMap<String, Course> getData(String courseName){
+    public LinkedHashMap<String, Course> getData(String courseName) throws FileNotFoundException {
         CalibrateData(courseName);
-
-        // TODO @SONNY NOTICE CHANGE HERE!
-        LinkedHashMap<String, Course> returnMap =
-                new LinkedHashMap<>(this.data);
-        this.data = new LinkedHashMap<>();
-        return returnMap;
+        return this.data;
     }
 }
