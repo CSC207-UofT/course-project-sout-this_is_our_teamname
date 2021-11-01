@@ -21,7 +21,7 @@ public abstract class DataGetter {
     }
 
     /**
-     * Add the Course to the data HashMap
+     * Add the Course to the data HashMap (LinkedHashMap?)
      *
      * @param name the name of the section
      * @param theCourse the course object
@@ -31,7 +31,7 @@ public abstract class DataGetter {
     }
 
     /**
-     * An abstract class to calibrate the data HashMap!
+     * An abstract class to calibrate the data HashMap! (LinkedHashMap?)
      *
      * @param courseName the Course Name
      */
@@ -45,7 +45,6 @@ public abstract class DataGetter {
     public LinkedHashMap<String, Course> getData(String courseName){
         CalibrateData(courseName);
 
-        // TODO @SONNY NOTICE CHANGE HERE!
         LinkedHashMap<String, Course> returnMap =
                 new LinkedHashMap<>(this.data);
         this.data = new LinkedHashMap<>();
