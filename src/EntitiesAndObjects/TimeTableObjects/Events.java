@@ -7,31 +7,52 @@ import java.time.LocalTime;
 public abstract class Events {
     private final LocalTime startTime;
     private final LocalTime endTime;
-    private final String description;
     private final String date;
     private final String term;
+    private final String description;
+
+    /**
+     * Construct an event with time and a description.
+     * @param startTime is the start time of the event.
+     * @param endTime is the end time of the event.
+     * @param theDate is the weekday of the event.
+     * @param term is the term of the event.
+     */
+    public Events (LocalTime startTime,
+                   LocalTime endTime,
+                   String theDate,
+                   String term) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.date = theDate;
+        this.term = term;
+        this.description = null;
+    }
+
+
     /**
      * Construct an event with time, location and a description.
-     * @param startTime is the start time of the activity.
-     * @param endTime is the end time of the activity.
-     * @param description is the description of the activity.
-     * @param theDate is the weekday of the activity.
-     * @param term is the term of the activity
+     * @param startTime is the start time of the event.
+     * @param endTime is the end time of the event.
+     * @param theLocation is the location of the event.
+     * @param theDate is the weekday of the event.
+     * @param term is the term of the event.
      */
+
     public Events(LocalTime startTime,
                   LocalTime endTime,
-                  String description,
+                  String theLocation,
                   String theDate,
                   String term) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.description = description;
         this.date = theDate;
         this.term = term;
+        this.description = "at " + theLocation;
     }
 
     /**
-     * Get the start time for the activity
+     * Get the start time for the event
      * @return  startTime
      */
     public LocalTime getStartTime(){
@@ -39,7 +60,7 @@ public abstract class Events {
     }
 
     /**
-     * Get the end time for the activity
+     * Get the end time for the event
      * @return  endTime
      */
     public LocalTime getEndTime() {
@@ -47,7 +68,7 @@ public abstract class Events {
     }
 
     /**
-     * Get the date for the activity
+     * Get the date for the event
      * @return  date
      */
     public String getDate() {
@@ -55,7 +76,7 @@ public abstract class Events {
     }
 
     /**
-     * Get the description for the activity
+     * Get the description for the event
      * @return  description
      */
     public String getDescription() {
@@ -63,17 +84,17 @@ public abstract class Events {
     }
 
     /**
-     * Get the term for this activity
+     * Get the term for this event
      *
-     * @return the term for this activity
+     * @return term
      */
     public String getTerm() {
         return term;
     }
 
     /**
-     * Generate the String representation of the activity.
-     * @return the string representation of the activity.
+     * Generate the String representation of the event.
+     * @return the string representation of the event.
      */
     public abstract String toString();
 }

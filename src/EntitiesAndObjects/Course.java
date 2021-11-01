@@ -7,15 +7,15 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Course class stores all relevant information, like professor, location, delivery method,
- * etc.
- */
+
 public class Course implements Sliceable<CourseSection> {
-    private final String description;
-    private final String term;
     private final String code;
+    private final String professor;
+    private final String faculty;
+    private final String deliveryMethod;
+    private final String term;
     private final HashMap<ArrayList<Object>, String> timeLocation;
+    private final boolean waitlist;
 
     // Constants for TimeLocation key
     final int THE_DATE = 0;
@@ -25,23 +25,32 @@ public class Course implements Sliceable<CourseSection> {
     /**
      * Construct a course with the given section, professor, faculty, delivery method,
      * time and location.
-     * @param description The description for this course
-     * @param term The term for this course
-     * @param code The code for this course
+     * @param section The section code for this course
+     * @param professor The professor teaching this course section
+     * @param faculty The faculty this course belongs to
+     * @param deliveryMethod The delivery method for this course section
      * @param timeLocation The time and corresponding location for this course
      *                     section **NEW** The hashmap will be in the form of
      *                     String[], String, where the string array will hold
      *                     the date and time information like the following:
      *                     {date, startTime, endTime}
+     * @param term The term for this course
+     * @param waitlist Whether the course is waitlisted
      */
-    public Course(String description,
+    public Course(String section,
+                  String professor,
+                  String faculty,
+                  String deliveryMethod,
+                  HashMap<ArrayList<Object>, String> timeLocation,
                   String term,
-                  String code,
-                  HashMap<ArrayList<Object>, String> timeLocation) {
-        this.term = term;
-        this.description = description;
-        this.code = code;
+                  boolean waitlist) {
+        this.code = section;
+        this.professor = professor;
+        this.faculty = faculty;
+        this.deliveryMethod = deliveryMethod;
         this.timeLocation = timeLocation;
+        this.term = term;
+        this.waitlist = waitlist;
     }
 
     /**
@@ -73,19 +82,10 @@ public class Course implements Sliceable<CourseSection> {
             CourseString.append(loc.get(THE_DATE)).append(" ");
             CourseString.append(loc.get(THE_START)).append(" - ");
             CourseString.append(loc.get(THE_END)).append(" at ");
-            CourseString.append(timeLocation.get(loc)).append(". ");
+            CourseString.append(timeLocation.get(loc)).append(", ");
         }
-        CourseString.append("Details: ").append(this.description);
+        CourseString.append("with ").append(this.professor);
         return CourseString.toString();
-    }
-
-    /**
-     * Get the description for this course
-     *
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
     }
 
     /**
@@ -96,7 +96,6 @@ public class Course implements Sliceable<CourseSection> {
     public String getTerm() {
         return term;
     }
-
 
      /** Split the course into section objects
      *
@@ -110,8 +109,9 @@ public class Course implements Sliceable<CourseSection> {
             LocalTime start = ((LocalTime) time.get(1));
             LocalTime end = ((LocalTime) time.get(2));
             String date = ((String) time.get(0));
-            CourseSection s = new CourseSection(start, end, this.description,
-                    date, this.term, this.code);
+            CourseSection s = new CourseSection(start, end, this.timeLocation.get(time),
+                    date, this.term, this.code, this.professor,
+                    this.faculty, this.deliveryMethod, this.waitlist);
             courseSectionList.add(s);
         }
         return courseSectionList;
@@ -132,9 +132,8 @@ public class Course implements Sliceable<CourseSection> {
         testDateTimeMap.put(testDateTime1, "LM161");
         testDateTimeMap.put(testDateTime2, "LM161");
 
-        Course A = new Course("Professor: Paul Gries, Faculty: A&S, " +
-                "Delivery Method: In-Person", "Fall", "LEC 0101",
-                testDateTimeMap);
+        Course A = new Course("LEC 0101", "Paul Gries", "A&S", "In-Person",
+                testDateTimeMap, "Fall", false);
         System.out.println(A);
     }
 }

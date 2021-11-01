@@ -2,32 +2,48 @@ package EntitiesAndObjects.TimeTableObjects;
 
 import java.time.LocalTime;
 
-/**
- * Task class is a class that can be stored in a TimeTable class. It acts as a reminder.
- */
 public class Task extends Events {
-
     /**
-     * Construct a TimeTable Task for the given start time, end time, description,
-     * date and term.
-     *
-     * @param theStartTime The start time for this task
-     * @param theEndTime The end time for this task
-     * @param theDescription The description for this task
-     * @param theDate The date for this task
-     * @param term The term this task belongs to
+     * Construct a task with time and a description.
+     * @param theStartTime is the start time of the task.
+     * @param theEndTime is the end time of the task.
+     * @param theDate is the weekday of the task.
+     * @param term is the term of the task
      */
     public Task(LocalTime theStartTime,
                 LocalTime theEndTime,
-                String theDescription,
                 String theDate,
                 String term) {
-        super(theStartTime, theEndTime, theDescription, theDate, term);
+        super(theStartTime, theEndTime, theDate, term);
     }
 
+    /**
+     * Construct a task with time, location and a description.
+     * @param theStartTime is the start time of the task.
+     * @param theEndTime is the end time of the task.
+     * @param theLocation is the location of the task.
+     * @param theDate is the weekday of the task.
+     * @param term is the term of the task
+     */
+    public Task(LocalTime theStartTime,
+                LocalTime theEndTime,
+                String theLocation,
+                String theDate,
+                String term) {
+        super(theStartTime, theEndTime, theLocation, theDate, term);
+    }
+
+    /**
+     *  Generate the string representation of the task.
+     * @return the string representation of the task.
+     */
     @Override
     public String toString() {
-        return this.getStartTime() + " - " + this.getEndTime() + ": " +
-                this.getDescription();
+        if (this.getDescription() == null) {
+            return this.getStartTime() + " - " + this.getEndTime() + ": " + "N/A";
+        }
+        else{
+            return this.getStartTime() + " - " + this.getEndTime() + ": " + this.getDescription();
+        }
     }
 }

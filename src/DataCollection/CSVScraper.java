@@ -33,7 +33,7 @@ public class CSVScraper extends DataGetter {
      * @param courseName the name of the course
      */
     @Override
-    public void CalibrateData(String courseName){
+    public void CalibrateData(String courseName) throws FileNotFoundException {
         // Opens the file and gets an arraylist of all the lines of the file.
         String fileName = "src\\DataCollection\\SampleDirectory\\"
                 + courseName + ".csv";
@@ -65,20 +65,14 @@ public class CSVScraper extends DataGetter {
      * @return an arraylist of all the lines of the code at filename
      * @param filename the name of the file
      */
-    private ArrayList<String> readFile(String filename){
+    private ArrayList<String> readFile(String filename) throws FileNotFoundException {
         ArrayList<String> readData = new ArrayList<>();
-        try {
-            File myObj = new File(filename);
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                readData.add(myReader.nextLine());
-            }
-            myReader.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Course not found. Please Try Again!");
-            e.printStackTrace();
+        File myObj = new File(filename);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            readData.add(myReader.nextLine());
         }
+        myReader.close();
         return readData;
     }
 
@@ -229,7 +223,12 @@ public class CSVScraper extends DataGetter {
      */
     public static void main(String[] args) {
         CSVScraper a = new CSVScraper();
-        HashMap<String, Course> got = a.getData("CSC207H1");
-        System.out.println(got);
+        try {
+            HashMap<String, Course> got = a.getData("CSC207H1");
+            System.out.println(got);
+        } catch (FileNotFoundException e){
+            System.out.println("File Not Found");
+        }
+
     }
 }

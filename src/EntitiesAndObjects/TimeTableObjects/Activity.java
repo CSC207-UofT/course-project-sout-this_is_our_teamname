@@ -2,33 +2,51 @@
 
 import java.time.LocalTime;
 
- /**
-  * Activity class is a class that can be stored in a TimeTable class.
-  */
 public class Activity extends Events {
+    private final String description;
 
-    /**
-     * Consyruct a TimeTable activity for the given start time, end time, description,
-     * date and term.
-     *
-     * @param theStartTime The start time of this activity
-     * @param theEndTime The end time of this activity
-     * @param theDescription The description of this activity
-     * @param theDate The date of this activity
-     * @param term The term this activity belongs in
-     */
+     /**
+      * Construct a activity with time and a description.
+      * @param theStartTime is the start time of the activity.
+      * @param theEndTime is the end time of the activity.
+      * @param theDate is the weekday of the activity.
+      * @param term is the term of the activity.
+      * @param description is the description of the activity.
+      */
+     public Activity(LocalTime theStartTime,
+                     LocalTime theEndTime,
+                     String theDate,
+                     String term,
+                     String description) {
+         super(theStartTime, theEndTime, theDate, term);
+         this.description = description;
+     }
+
+     /**
+      * Construct a activity with time, location and a description.
+      * @param theStartTime is the start time of the activity.
+      * @param theEndTime is the end time of the activity.
+      * @param theLocation is the location of the activity.
+      * @param theDate is the weekday of the activity.
+      * @param term is the term of the activity
+      * @param description is the description of the activity.
+      */
     public Activity(LocalTime theStartTime,
                     LocalTime theEndTime,
-                    String theDescription,
+                    String theLocation,
                     String theDate,
-                    String term) {
-        super(theStartTime, theEndTime, theDescription, theDate, term);
+                    String term,
+                    String description) {
+        super(theStartTime, theEndTime, theLocation, theDate, term);
+        this.description = description + " " + this.getDescription();
     }
 
-
+    /**
+     *  Generate the string representation of the activity.
+     * @return the string representation of the activity.
+     */
     @Override
     public String toString() {
-        return this.getStartTime() + " - " + this.getEndTime() + ": " +
-                this.getDescription();
+        return this.getStartTime() + " - " + this.getEndTime() + ": " + this.description;
     }
 }
