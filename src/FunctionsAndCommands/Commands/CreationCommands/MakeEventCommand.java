@@ -1,10 +1,15 @@
 package FunctionsAndCommands.Commands.CreationCommands;
 
 import EntitiesAndObjects.NonCourseObject;
+import EntitiesAndObjects.TimeTableObjects.Activity;
+import EntitiesAndObjects.TimeTableObjects.Events;
+import EntitiesAndObjects.TimeTableObjects.Task;
 import FunctionsAndCommands.Commands.Command;
+import GlobalHelpers.Constants;
 import GlobalHelpers.StringToTime;
 import TimeTableStuff.TimeTableManager;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
@@ -63,8 +68,8 @@ public class MakeEventCommand implements Command {
                 "Wednesday, etc.)");
         prompts.put(TERM, "Enter the Term (Fall/Winter - NB will add more in " +
                 "later Phases)");
-        prompts.put(TYPE, "Enter the Type of the Object (Life, " +
-                "DescriptionlessLife...");
+        prompts.put(TYPE, "Enter the Type of the Object (Activity, " +
+                "Task...");
 
         HashMap<String, String> responses = new HashMap<>();
 
@@ -86,6 +91,7 @@ public class MakeEventCommand implements Command {
 
         manager.schedule(toSchedule);
     }
+
 
     @Override
     public String toString() {

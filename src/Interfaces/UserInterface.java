@@ -30,7 +30,7 @@ public class UserInterface {
         usableClasses.put(Constants.COURSE, new String[]{Constants.COURSE});
         usableClasses.put(Constants.NON_COURSE_OBJECT,
                 new String[]{Constants.LIFE,
-                        Constants.DESCRIPTION_LESS_LIFE});
+                        Constants.TASK});
     }
 
     /**

@@ -26,9 +26,8 @@ public abstract class Events {
         this.endTime = endTime;
         this.date = theDate;
         this.term = term;
-        this.description = null;
+        this.description = "";
     }
-
 
     /**
      * Construct an event with time, location and a description.
