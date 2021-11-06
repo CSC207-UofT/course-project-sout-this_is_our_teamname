@@ -1,7 +1,8 @@
 # Phase 1 Program
 
-![img.png](img.png)
-
-Well... uh... This is not good....
-
-## New Classes
+## New (Non-Helper) Classes
+* `Command Factory`
+* `WebScraper`
+* `WelcomeInterface` (Facade)
+* `DataLoader`
+* `DfsSolver`

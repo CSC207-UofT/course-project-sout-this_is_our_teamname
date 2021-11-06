@@ -9,13 +9,13 @@ import java.util.HashMap;
 
 
 public class Course implements Sliceable<CourseSection> {
-    private final String code;
+    private final String sectionName;
     private final String professor;
     private final String faculty;
     private final String deliveryMethod;
     private final String term;
-    private final HashMap<ArrayList<Object>, String> timeLocation;
-    private final boolean waitlist;
+    private final HashMap<Object[], String> timeLocation;
+    private final boolean wait_list;
 
     // Constants for TimeLocation key
     final int THE_DATE = 0;
@@ -35,22 +35,22 @@ public class Course implements Sliceable<CourseSection> {
      *                     the date and time information like the following:
      *                     {date, startTime, endTime}
      * @param term The term for this course
-     * @param waitlist Whether the course is waitlisted
+     * @param wait_list Whether the course is waitlisted
      */
     public Course(String section,
                   String professor,
                   String faculty,
                   String deliveryMethod,
-                  HashMap<ArrayList<Object>, String> timeLocation,
+                  HashMap<Object[], String> timeLocation,
                   String term,
-                  boolean waitlist) {
-        this.code = section;
+                  boolean wait_list) {
+        this.sectionName = section;
         this.professor = professor;
         this.faculty = faculty;
         this.deliveryMethod = deliveryMethod;
         this.timeLocation = timeLocation;
         this.term = term;
-        this.waitlist = waitlist;
+        this.wait_list = wait_list;
     }
 
     /**
@@ -58,8 +58,8 @@ public class Course implements Sliceable<CourseSection> {
      *
      * @return the course code
      */
-    public String getCode() {
-        return this.code;
+    public String getSectionName() {
+        return this.sectionName;
     }
 
     /**
@@ -67,7 +67,7 @@ public class Course implements Sliceable<CourseSection> {
      *
      * @return the times and corresponding locations
      */
-    public HashMap<ArrayList<Object>, String> getTimeLocation() {
+    public HashMap<Object[], String> getTimeLocation() {
         return this.timeLocation;
     }
 
@@ -78,10 +78,10 @@ public class Course implements Sliceable<CourseSection> {
      */
     public String toString() {
         StringBuilder CourseString = new StringBuilder();
-        for (ArrayList<Object> loc : this.timeLocation.keySet()){
-            CourseString.append(loc.get(THE_DATE)).append(" ");
-            CourseString.append(loc.get(THE_START)).append(" - ");
-            CourseString.append(loc.get(THE_END)).append(" at ");
+        for (Object[] loc : this.timeLocation.keySet()){
+            CourseString.append(loc[THE_DATE]).append(" ");
+            CourseString.append(loc[THE_START]).append(" - ");
+            CourseString.append(loc[THE_END]).append(" at ");
             CourseString.append(timeLocation.get(loc)).append(", ");
         }
         CourseString.append("with ").append(this.professor);
@@ -97,6 +97,16 @@ public class Course implements Sliceable<CourseSection> {
         return term;
     }
 
+    /**
+     * Add to the TimeLocation List.
+     *
+     * @param dateTimeArray the time and date to add
+     * @param location the location of the object
+     */
+    public void addToTimeLocation(Object[] dateTimeArray, String location){
+        this.timeLocation.put(dateTimeArray, location);
+    }
+
      /** Split the course into section objects
      *
      * @return A list of section objects
@@ -105,30 +115,28 @@ public class Course implements Sliceable<CourseSection> {
     public ArrayList<CourseSection> split(){
         ArrayList<CourseSection> courseSectionList = new ArrayList<>();
 
-        for (ArrayList<Object> time : this.timeLocation.keySet()) {
-            LocalTime start = ((LocalTime) time.get(1));
-            LocalTime end = ((LocalTime) time.get(2));
-            String date = ((String) time.get(0));
+        for (Object[] time : this.timeLocation.keySet()) {
+            LocalTime start = ((LocalTime) time[1]);
+            LocalTime end = ((LocalTime) time[2]);
+            String date = ((String) time[0]);
             CourseSection s = new CourseSection(start, end, this.timeLocation.get(time),
-                    date, this.term, this.code, this.professor,
-                    this.faculty, this.deliveryMethod, this.waitlist);
+                    date, this.term, this.sectionName, this.professor,
+                    this.faculty, this.deliveryMethod, this.wait_list);
             courseSectionList.add(s);
         }
         return courseSectionList;
     }
 
     public static void main(String[] args) {
-        ArrayList<Object> testDateTime1 = new ArrayList<>();
-        testDateTime1.add("Friday");
-        testDateTime1.add(LocalTime.of(9, 0, 0));
-        testDateTime1.add(LocalTime.of(10, 0, 0));
+        Object[] testDateTime1 = {"Friday",
+                LocalTime.of(9, 0, 0),
+                LocalTime.of(10, 0, 0)};
 
-        ArrayList<Object> testDateTime2 = new ArrayList<>();
-        testDateTime2.add("Monday");
-        testDateTime2.add(LocalTime.of(9, 0, 0));
-        testDateTime2.add(LocalTime.of(10, 0, 0));
+        Object[] testDateTime2 = {"Monday",
+                LocalTime.of(9, 0, 0),
+                LocalTime.of(10, 0, 0)};
 
-        HashMap<ArrayList<Object>, String> testDateTimeMap = new HashMap<>();
+        HashMap<Object[], String> testDateTimeMap = new HashMap<>();
         testDateTimeMap.put(testDateTime1, "LM161");
         testDateTimeMap.put(testDateTime2, "LM161");
 

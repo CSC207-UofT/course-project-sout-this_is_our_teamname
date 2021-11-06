@@ -1,5 +1,6 @@
-package EntitiesAndObjects.TimeTableObjects;
+package EntitiesAndObjectsTests;
 
+import EntitiesAndObjects.TimeTableObjects.Task;
 import GlobalHelpers.Constants;
 import org.junit.Before;
 import org.junit.Test;
