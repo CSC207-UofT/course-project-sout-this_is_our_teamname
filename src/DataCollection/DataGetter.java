@@ -9,7 +9,7 @@ import java.util.Map;
  * A data gathering class / database class
  */
 public abstract class DataGetter {
-    private LinkedHashMap<String, Course> data;
+    private final LinkedHashMap<String, Course> data;
 
     /**
      * A constructor for this class.

@@ -3,9 +3,9 @@ package EntitiesAndObjects.TimeTableObjects;
 import java.time.LocalTime;
 
 
-//TODO change param here with description, add boolean param wait list.
 public class CourseSection extends Events implements java.lang.Comparable<CourseSection> {
     private final String description;
+    private final boolean waitlist;
 
     /**
      * Construct a TimeTable section for the given time, location, section, professor,
@@ -20,12 +20,14 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
      * @param professor The professor teaching this course section
      * @param faculty The faculty this course belongs to
      * @param deliveryMethod The delivery method for this course section
+     * @param waitlist Whether the course is waitlisted
      */
     public CourseSection(LocalTime startTime, LocalTime endTime, String location,
                          String theDate, String term, String code, String professor,
-                         String faculty, String deliveryMethod) {
+                         String faculty, String deliveryMethod, boolean waitlist) {
         super(startTime, endTime, location, theDate, term);
-        this.description = code + " of " + faculty + " with " + professor + " by " + deliveryMethod +
+        this.waitlist = waitlist;
+        this.description = code + " of " + faculty + " with " + professor + " by " + deliveryMethod + " " +
                 this.getDescription();
     }
 
@@ -43,6 +45,15 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
     public String getCode() {
         String[] splitStr = this.description.trim().split(" ");
         return splitStr[0];
+    }
+
+    /**
+     * Get the waitlist for this Course
+     *
+     * @return true if section is waitlisted, false otherwise
+     */
+    public boolean getWaitlist() {
+        return this.waitlist;
     }
 
 
