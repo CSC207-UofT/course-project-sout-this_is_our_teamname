@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -16,7 +15,8 @@ import java.util.Scanner;
  * A CSVScraper class. It is a DataGetter class that gets the data from a CSV
  * file.
  *
- * Precondition: The file is a properly structured csv file.
+ * Precondition: The file is a properly structured csv file. Please see the
+ * sample directory for correctly formatted files.
  */
 public class CSVScraper extends DataGetter {
     // Some constants to sort the file
@@ -49,9 +49,56 @@ public class CSVScraper extends DataGetter {
 
         // Remove the header
         fileData.remove(0);
-        ArrayList<String[]> splicedFileData = splitData(fileData);
+        String[][] splicedFileData = splitData(fileData);
 
-        filterData(term, faculty, splicedFileData);
+        ArrayList<Course> courseList = new ArrayList<>();
+        filterData(courseList, term, faculty, splicedFileData);
+        for (Course item: courseList){
+            placeToData(item.getSectionName(), item);
+        }
+    }
+
+    /**
+     * Filters the data and searches for the required information. Then, adds
+     * the data into the data structure.
+     *
+     * This is a recursive method.
+     *
+     * Precondition: The file is structured correctly.
+     *
+     * @param courseData An arraylist of courses to sort
+     * @param theTerm The Term of the course
+     * @param theFaculty The Faculty offering the course
+     * @param theFileData the Arraylist of all the lines of the file.
+     */
+    private void filterData(ArrayList<Course> courseData, String theTerm,
+                            String theFaculty, String[][] theFileData){
+        // Base Case 1: Size 1 and this is a header.
+        if (theFileData.length == 1 && headingCondition(theFileData[0])){
+            // Some Parameters
+            HashMap<Object[], String> TimeLocation = new HashMap<>();
+            TimeLocation.put(splitDateTime(theFileData[0][TIME]),
+                    theFileData[0][LOCATION]);
+            boolean hasWaitList = theFileData[0][WAITLIST].equals("0");
+
+            courseData.add(new Course(theFileData[0][SECTION],
+                            theFileData[0][INSTRUCTOR], theFaculty,
+                            theFileData[0][DELIVERY], TimeLocation, theTerm, hasWaitList
+                    )
+            );
+
+        // Base Case 2: Size 1 and this is a not a header.
+        } else if (theFileData.length == 1 && subHeaderCondition(theFileData[0])) {
+            courseData.get(courseData.size() - 1).addToTimeLocation(splitDateTime(theFileData[0][TIME]),
+                    theFileData[0][LOCATION]);
+
+        // Inductive Step: All other list sizes
+        } else if (theFileData.length != 1){
+            for (String[] item: theFileData){
+                filterData(courseData, theTerm, theFaculty,
+                        new String[][]{item});
+            }
+        }
     }
 
     //======================== HELPER METHODS =================================
@@ -74,6 +121,7 @@ public class CSVScraper extends DataGetter {
             readData.add(myReader.nextLine());
         }
         myReader.close();
+
         return readData;
     }
 
@@ -84,56 +132,12 @@ public class CSVScraper extends DataGetter {
      * @param splittableString the splitableString that is required to be split
      * @return The Arraylist of all the splitableString in a string array
      */
-    private ArrayList<String[]> splitData(ArrayList<String> splittableString){
-        ArrayList<String[]> splitted = new ArrayList<>();
-        for (String it : splittableString){
-            splitted.add(it.split(","));
+    private String[][] splitData(ArrayList<String> splittableString){
+            String[][] spliced = new String[splittableString.size()][];
+        for (int i = 0; i < splittableString.size(); i++){
+            spliced[i] = splittableString.get(i).split(",");
         }
-        return splitted;
-    }
-
-    /**
-     * Add the given data to self.data
-     * @param term the term of course
-     * @param sectionName the name of the section
-     * @param faculty the associated faculty
-     * @param timeToLocationMap the current time and location. Given as a
-     *                         HashMap of the Time -> Location
-     * @param theInstructor the instructor of the course section
-     * @param theDeliveryMethod the delivery method of the course.
-     */
-    private void addTermedCourseToData(String term,
-                                       String sectionName,
-                                       String faculty,
-                                       HashMap<ArrayList<Object>,
-                                               String> timeToLocationMap,
-                                       String theInstructor,
-                                       String theDeliveryMethod,
-                                       boolean theWaitlist){
-        Course theCourse = new Course(sectionName, theInstructor, faculty,
-                theDeliveryMethod, timeToLocationMap, term, theWaitlist);
-        placeToData(sectionName, theCourse);
-    }
-
-    /**
-     * Add the given data to super.data.
-     *
-     * @param sectionName the name of the section
-     * @param faculty the associated faculty
-     * @param timeToLocationMap the current time and location. Given as a
-     *                         HashMap of the Time -> Location
-     * @param theInstructor the instructor of the course section
-     * @param theDeliveryMethod the delivery method of the course.
-     */
-    private void addYearCourseToData(String sectionName,
-                                     String faculty,
-                                     HashMap<ArrayList<Object>, String> timeToLocationMap,
-                                     String theInstructor,
-                                     String theDeliveryMethod,
-                                     boolean theWaitlist){
-        Course theCourse = new Course(sectionName, theInstructor, faculty,
-                theDeliveryMethod, timeToLocationMap, Constants.YEAR, theWaitlist);
-        placeToData(sectionName, theCourse);
+        return spliced;
     }
 
     /**
@@ -148,79 +152,51 @@ public class CSVScraper extends DataGetter {
      * @return the string array of length 3 of the date, start time, and end
      * time
      */
-    private ArrayList<Object> splitDateTime(String formattedTimeString){
+    private Object[] splitDateTime(String formattedTimeString){
         String[] splicedInfo = formattedTimeString.split(" ");
 
-        ArrayList<Object> retList = new ArrayList<>();
-        if (splicedInfo.length == 4 && splicedInfo[2].equals("-")) {
-            retList.add(splicedInfo[0]);
-            retList.add(StringToTime.makeTime(splicedInfo[1]));
-            retList.add(StringToTime.makeTime(splicedInfo[3]));
+        Object[] retList;
+        if (hasTime(splicedInfo)) {
+            retList = new Object[]{splicedInfo[0], StringToTime.makeTime(splicedInfo[1]),
+                    StringToTime.makeTime(splicedInfo[3])};
         } else {
-            retList.add(Constants.TBA);
-            retList.add(LocalTime.of(0,0,0));
-            retList.add(LocalTime.of(0,0, 0));
+            retList = new Object[]{Constants.TBA, LocalTime.of(0, 0, 0),
+                    LocalTime.of(0, 0, 0)};
         }
         return retList;
     }
 
+    // ============================== Predicates ===============================
     /**
-     * Filters the data and searches for the required information. Then, adds
-     * the data into the data structure.
+     * Returns true iff the input has all the required information to be
+     * formatted as a time
      *
-     * Precondition: The file is structured correctly.
-     *
-     * @param theTerm The Term of the course
-     * @param theFaculty The Faculty offering the course
-     * @param theFileData the Arraylist of all the lines of the file.
+     * @param input the string that array that needs to be checked
+     * @return true iff the input has all the required information to be
+     * formatted as a time
      */
-    private void filterData(String theTerm, String theFaculty,
-                                   ArrayList<String[]> theFileData){
-        // Temporary Constants to hold the information
-        String currName = "";
-        HashMap<ArrayList<Object>, String> currTimeLocation = new HashMap<>();
-        String currInstructor = "";
-        String currDelivery = "";
-        String currWaitList = "";
+    private boolean hasTime(String[] input){
+        return input.length == 4 && input[2].equals("-");
+    }
 
-        // for line in FileData
-        for (String[] splicedLine : theFileData){
+    /**
+     * Returns true iff the line is a header line
+     *
+     * @param line the line that needs to be checked
+     * @return true iff the line is a header line
+     */
+    private boolean headingCondition(String[] line){
+        return line.length >= 5 && !line[SECTION].equals("");
+    }
 
-            // If the current name is "", and splicedLine = [], then this is
-            // a new line, thus we have reached the end of a section
-            // information, so add the information.
-            if (!currName.equals("") && Arrays.equals(splicedLine, new String[]{})){
-                boolean hasWaitList;
-                hasWaitList = currWaitList.equals("0");
-
-                // Add the course to the data
-                if (theTerm.equals(Constants.YEAR)){
-                addYearCourseToData(currName, theFaculty, currTimeLocation,
-                        currInstructor, currDelivery, hasWaitList);
-                } else {
-                    addTermedCourseToData(theTerm, currName, theFaculty,
-                            currTimeLocation, currInstructor, currDelivery,
-                            hasWaitList);
-                }
-
-                // Else, that mean that we are still in the section
-                // information.
-            } else {
-                // If there is a section, that means we are in the next section
-                // Hence, recalibrate everything.
-                if (!splicedLine[SECTION].equals("")) {
-                    currName = splicedLine[SECTION];
-                    currInstructor = splicedLine[INSTRUCTOR];
-                    currDelivery = splicedLine[DELIVERY];
-                    currTimeLocation = new HashMap<>();
-                    currWaitList = splicedLine[WAITLIST];
-                }
-
-                // Add the time and location of the line.
-                currTimeLocation.put(splitDateTime(splicedLine[TIME]),
-                        splicedLine[LOCATION]);
-            }
-        }
+    /**
+     * Returns true iff the line is a subheader line
+     *
+     * @param line the line that needs to be checked
+     * @return true iff the line is a subheader line
+     */
+    private boolean subHeaderCondition(String[] line){
+        return line.length >= 2 && line[SECTION].equals("");
     }
 
     /**
