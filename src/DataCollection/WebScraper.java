@@ -2,12 +2,11 @@ package DataCollection;
 
 import EntitiesAndObjects.Course;
 import GlobalHelpers.Constants;
-import GlobalHelpers.StringToTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+//import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -19,58 +18,58 @@ public class WebScraper extends DataGetter{
             Document doc = Jsoup.connect(
                     "https://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId=CSC207H1F20219").get();
             System.out.println(doc.title());
+
             // find element by combination of elements with id.
-            String term;
-            String coursecode;
-            Elements ele5 = doc.select("span#u158");
-            Elements ele6 = doc.select("div#u19");
-            System.out.println(ele6.text());
-//            if (ele6.text().contains("Y1")){
-//                addYearCourseToData();
-//            }
-//            else if (ele5.text().contains("Fall")){
-//                term = 'Fall';
-//                addTermedCourseToData(term,);
-//            }
-//            else if (ele5.text().contains("Winter")){
-//                term = 'Winter';
-//                addTermedCourseToData(term,);
-//            }
+            String term = doc.select("span#u158").text();
+            String faculty = doc.select("span#u13").text();
+            String coursecode = doc.select("div#u19").text();
+            // clean the string
+            term = RemoveCss(term);
+            faculty = RemoveCss(faculty);
+            coursecode = RemoveCss(coursecode);
+
             int i = 0;
+            // rows
             while(i <= 100){
-                Elements ele = doc.select("span#u245_line"+ i);
-                String code = ele.text();
-                Elements ele2 = doc.select("span#u254_line"+ i);
-                String time = ele2.text();
-                if (code.equals("")){
+                String section = doc.select("span#u245_line"+ i).text();
+                String prof = doc.select("span#u263_line"+ i).text();
+                String time = doc.select("span#u254_line"+ i).text();
+                String location = doc.select("span#u272_line"+ i).text();
+                String delmethod = doc.select("span#u314_line"+ i).text();
+                if (section.equals("")){
                     break;
                 }
-                // remove css
-                code = RemoveCss(code);
-                time = RemoveCss(time);
 
-                System.out.println(code);
-                System.out.println(time);
+                // remove css
+                section = RemoveCss(section);
+                prof = RemoveCss(prof);
+                delmethod = RemoveCss(delmethod);
+                if (prof.isEmpty()){
+                    prof = Constants.TBA;
+                }
+                ArrayList<ArrayList<Object>> times = splitDateTime(RemoveCss(time));
+                ArrayList<String> locations = splitLocations(RemoveCss(location));
+
+                // create and put course objects
+                HashMap<ArrayList<Object>, String> locationTimeMap = new HashMap<>();
+                int j = 0;
+                while (j < locations.size()){
+                    locationTimeMap.put(times.get(j), locations.get(j));
+                    j++;
+                }
+
+                //TODO Waitlist and summer course?
+                if (coursecode.contains("Y1")){
+                    addYearCourseToData(section, faculty, locationTimeMap, prof, delmethod, false);
+                }
+                else if (term.contains("Fall")){
+                    addTermedCourseToData("Fall", section, faculty, locationTimeMap, prof, delmethod, false);
+                }
+                else if (term.contains("Winter")){
+                    addTermedCourseToData("Winter", section, faculty, locationTimeMap, prof, delmethod, false);
+                }
                 i++;
             }
-
-            Elements ele2 = doc.select("span#u254_line2");
-            String time = ele2.text();
-            // remove css tags.
-            time = time.replaceAll("(?is)<style.*?>.*?</style>", "");
-            System.out.println(time);
-
-            Elements ele3 = doc.select("span#u263_line2");
-            String prof = ele3.text();
-            // remove css tags.
-            prof = prof.replaceAll("(?is)<style.*?>.*?</style>", "");
-            System.out.println(prof);
-
-            Elements ele4 = doc.select("span#u272_line2");
-            String loc = ele4.text();
-            // remove css tags.
-            loc = loc.replaceAll("(?is)<style.*?>.*?</style>", "");
-            System.out.println(loc);
         }
         catch (Exception e){
             e.printStackTrace();
@@ -78,6 +77,7 @@ public class WebScraper extends DataGetter{
 
     }
     //TODO @ Matthew consider putting these method in datagetter? Since I am reusing them.
+    // Waitlist always false
     /**
      * Add the given data to self.data
      * @param term the term of course
@@ -137,21 +137,44 @@ public class WebScraper extends DataGetter{
      *
      * @param formattedTimeString the formattedTimeString of the date, start,
      *                           and end times
-     * @return the string array of length 3 of the date, start time, and end
-     * time
+     * @return nested arraylist with the form [[date, start time, end time], [date, start time, end time]]
      */
-    private ArrayList<Object> splitDateTime(String formattedTimeString){
-        String[] splicedInfo = formattedTimeString.split(" ");
-        ArrayList<Object> retList = new ArrayList<>();
-        if (!formattedTimeString.isEmpty()) {
-            retList.add(formatDate(splicedInfo[0]));
-            // split into times.
-            retList.add(splicedInfo[1].split("-")[0] + ":00");
-            retList.add(splicedInfo[1].split("-")[1] + ":00");
-        } else {
+    private ArrayList<ArrayList<Object>> splitDateTime(String formattedTimeString){
+        String[] times = formattedTimeString.split("(?=\\s[A-Z])");
+        ArrayList<ArrayList<Object>> retList = new ArrayList<>();
+        if (times.length != 0){
+            for (String element : times) {
+                element = element.trim();
+                String[]elementl = element.split(" ");
+                ArrayList<Object> l = new ArrayList<>();
+                l.add(formatDate(elementl[0]));
+                // split into times.
+                l.add(elementl[1].split("-")[0] + ":00");
+                l.add(elementl[1].split("-")[1] + ":00");
+                retList.add(l);
+            }
+        }
+        else{
+            ArrayList<Object> l = new ArrayList<>();
+            l.add(Constants.TBA);
+            l.add(LocalTime.of(0, 0, 0));
+            l.add(LocalTime.of(0, 0, 0));
+            retList.add(l);
+        }
+        return retList;
+    }
+
+    private ArrayList<String> splitLocations(String formattedLocationString){
+        ArrayList<String> retList = new ArrayList<>();
+        if (!formattedLocationString.isEmpty()){
+            String[] locations = formattedLocationString.split("(?=\\s[A-Z])");
+            for (String element : locations) {
+                element = element.trim();
+                retList.add(element);
+            }
+        }
+        else{
             retList.add(Constants.TBA);
-            retList.add(LocalTime.of(0,0,0));
-            retList.add(LocalTime.of(0,0, 0));
         }
         return retList;
     }
@@ -168,12 +191,13 @@ public class WebScraper extends DataGetter{
      *
      * @param args arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         WebScraper a = new WebScraper();
-        a.CalibrateData("");
-        String s = "18:00-20:00";
-       String[] b = s.split("-");
-        System.out.println(Arrays.toString(b));
+        LinkedHashMap<String, Course> data = a.getData("");
+        for (String key : data.keySet()) {
+            System.out.println(data.get(key));
+        }
+
     }
 }
 
