@@ -50,12 +50,11 @@ public class MakeEventCommand implements Command {
         prompts.put(NAME, new InputChecker("Enter a name for an object " +
                 "(eg; Dinner with Prof Gries and Friends)", new isTrivial()));
         prompts.put(START_TIME, new InputChecker("Enter the Start Time (in" +
-                " a 12h clock format. (eg: 10:00AM or 9:00PM. No space " +
-                "between time and AM/PM)",
-                new isTime()));
-        prompts.put(END_TIME, new InputChecker("Enter the End Time (in a " +
-                "12h clock format. (eg: 10:00AM or 9:00PM. No space between " +
-                "time and AM/PM)", new isTime()));
+                " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
+                "No space between time and AM/PM)", new isTime()));
+        prompts.put(END_TIME, new InputChecker("Enter the End Time (in " +
+                " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
+                "No space between time and AM/PM)", new isTime()));
         prompts.put(LOCATION, new InputChecker("Enter the Location (eg; " +
                 "MY150, Home, Middle of Nowhere)", new isTrivial()));
         prompts.put(DATE, new InputChecker("Enter the Day of the week (eg;" +
@@ -106,7 +105,7 @@ public class MakeEventCommand implements Command {
     private static class isTime extends Predicate {
         @Override
         public boolean run(String prompt) {
-            return Pattern.matches("^[0-24]{2}:[0-5][0-9][AP]M$",
+            return Pattern.matches("^[0-2][0-9]:[0-5][0-9][AP]M$",
                     prompt);
         }
     }
