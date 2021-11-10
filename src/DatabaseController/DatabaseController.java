@@ -60,9 +60,7 @@ public class DatabaseController {
      * @param theFactory the factory to be set
      */
     public void setFactory(CommandFactory theFactory){
-        if (this.Factory == null){
-            this.Factory = theFactory;
-        }
+        this.Factory = theFactory;
     }
 
     /**
