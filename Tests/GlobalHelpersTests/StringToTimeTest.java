@@ -1,5 +1,6 @@
-package GlobalHelpers;
+package GlobalHelpersTests;
 
+import GlobalHelpers.StringToTime;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,6 +1,5 @@
 package DatabaseController;
 
-import DataCollection.CSVScraper;
 import DataCollection.DataGetter;
 import FunctionsAndCommands.Commands.Command;
 import FunctionsAndCommands.Commands.CreationCommands.GetAllTimeTablesCommand;
@@ -13,18 +12,24 @@ import TimeTableStuff.TimeTableManager;
 
 /**
  * A factory class to create the individual commands of the class.
+ *
+ * === Attributes ===
+ * courseManager: The TimetableManager to connect to
+ * dataSource: The Data Getter to get the data from
+ * controller: The controller that this is connected to
+ * allowedFunctions: The list of allowed functions for the program as set out
+ *  by the OperatorInterface
  */
 public class CommandFactory {
-    // TODO @Caules. Add set method
-    public final TimeTableManager courseManager;
-    public final DataGetter dataSource;
-    public final DatabaseController controller;
+    private TimeTableManager courseManager;
+    private DataGetter dataSource;
+    private final DatabaseController controller;
+    private final String[] allowedFunctions;
 
-    // Command Keys: TODO Please fix
-    public static final String SCHEDULE_COURSE = Constants.COURSE;
-    public static final String SCHEDULE_EVENT = Constants.NON_COURSE_OBJECT;
-    public static final String GET_ALL_TIMETABLE = "Get All TimeTables";
-    public static final String PRINT_HISTORY = "Get History";
+    final String SCHEDULE_COURSE = Constants.COURSE;
+    final String SCHEDULE_EVENT = Constants.NON_COURSE_OBJECT;
+    final String GET_ALL_TIMETABLE = "Get All TimeTables";
+    final String PRINT_HISTORY = "Get History";
 
     /**
      * Constructor. Sets the TimeTable Manager and DataSource of the file
@@ -32,9 +37,12 @@ public class CommandFactory {
      * TODO @Aiden Add DataLoaders here too!
      */
     public CommandFactory(DatabaseController theController){
-        this.courseManager = new TimeTableManager();
-        this.dataSource = new CSVScraper();
+        this.courseManager = null;
+        this.dataSource = null;
         this.controller = theController;
+        // TODO @Caules please modify as needed
+        this.allowedFunctions = new String[]{SCHEDULE_COURSE, SCHEDULE_EVENT,
+                GET_ALL_TIMETABLE, PRINT_HISTORY};
     }
 
     /**
@@ -51,6 +59,7 @@ public class CommandFactory {
      * @throws InvalidInputException If the inputCommand is invalid, throw this!
      */
     public Command getCommand(String inputCommand) throws InvalidInputException {
+        assert this.dataSource != null && this.courseManager != null;
         // To schedule a course
         switch (inputCommand) {
             case SCHEDULE_COURSE:
@@ -71,5 +80,31 @@ public class CommandFactory {
             default:
                 throw new InvalidInputException();
         }
+    }
+
+    // ========================= Setters and Getters ===========================
+    /**
+     * Returns an string array of all the allowable functions of the program
+     *
+     * @return a string array of all the allowed functions of the program
+     */
+    public String[] getAllowedFunctions() {
+        return allowedFunctions;
+    }
+
+    /**
+     * Sets the TimeTableManager to connect to
+     * @param theManager the TimeTableManager to connect to
+     */
+    public void setManager(TimeTableManager theManager){
+        this.courseManager = theManager;
+    }
+
+    /**
+     * Sets the DataGetter to connect to
+     * @param theDataSource the DataGetter to connect to
+     */
+    public void setDataSource(DataGetter theDataSource){
+        this.dataSource = theDataSource;
     }
 }

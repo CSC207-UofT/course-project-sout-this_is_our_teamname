@@ -8,9 +8,6 @@ import java.util.Stack;
  * A database controller class that serves as the Invoker in the command
  * pattern. It sets the command and executes them.
  *
- * TODO @Caules If you think it's a good idea, maybe link Operator Interface
- * TODO here too so that it controls what inputs users add?
- *
  * === Private Attributes ===
  * CommandHistory: The history of all the commands that has ever been made
  *  since the program was run (For Phase 2, maybe serialize it so that it can
@@ -30,46 +27,40 @@ public class DatabaseController {
         this.Factory = null;
     }
 
-    public void addFactory(CommandFactory theFactory){
-        if (this.Factory == null){
-            this.Factory = theFactory;
-        }
-    }
-
     /**
      * Sets the command into the Command History.
      *
      * The command history will act as a history of all the commands in order
      * they were added. The setCommands will also execute the command.
      */
-    public void addToCommandHistory(String commandKey) throws InvalidInputException {
+    public void runCommand(String requestedCommand) throws InvalidInputException {
         assert this.Factory != null;
-        Command theCommand = this.Factory.getCommand(commandKey);
-        setCommands(theCommand);
+        Command theCommand = this.Factory.getCommand(requestedCommand);
+        executeCommand(theCommand);
     }
 
+    // ============================== Helpers ==================================
     /**
-     * Restores previous command
-     *
-     * TODO @Hubert perhaps use Momento here? What do you think? Is it a good
-     * TODO idea or not?
-     */
-    public void rollback(){
-        Command previous = this.CommandHistory.pop();
-        // TODO HELP!
-    }
-
-    /**
-     * Set the command into the commands and executes the command.
+     * Sends the command into the commandHistory and executes the command.
      *
      * The execute method is an abstract method so all command objects will
-     * have it. It serves as the "main" method of a command!
+     * have it.
      *
      * @param theCommand the command
      */
-    private void setCommands(Command theCommand){
+    private void executeCommand(Command theCommand){
         this.CommandHistory.push(theCommand);
         theCommand.execute();
+    }
+
+    // ============================ Setters and Getters ========================
+    /**
+     * Set the factory attached to this controller
+     *
+     * @param theFactory the factory to be set
+     */
+    public void setFactory(CommandFactory theFactory){
+        this.Factory = theFactory;
     }
 
     /**
