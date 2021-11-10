@@ -28,7 +28,7 @@ public class InterfaceFacade {
             } else if (type.equals("Operator")) {
                 this.operatorInterface.run();
             } else {
-                System.out.print("Please type (User/Operator)");
+                System.out.print("Please type (User/Operator).");
             }
 
         }

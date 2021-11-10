@@ -16,10 +16,21 @@ import java.util.Scanner;
 public class OperatorInterface {
     private final DatabaseController control;
 
+    /**
+     * Constructor.
+     *
+     * === Private Attributes ===
+     * control: This is a DatabaseController
+     */
     public OperatorInterface(DatabaseController controller) {
         this.control = controller;
     }
 
+
+    /**
+     * Set the DataGetter to the CommandFactory according to the operator's choice.
+     *
+     */
     private void SetDatasource(CommandFactory theFactory, String input){
         if (input.equals("CSVScraper")) {
             theFactory.setDataSource(new CSVScraper());
@@ -36,7 +47,7 @@ public class OperatorInterface {
     }
 
     /**
-     * Runs the InterfaceFacade
+     * Runs the OperatorInterface
      */
     public void run() {
         // As long as the program is running

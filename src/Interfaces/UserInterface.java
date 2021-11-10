@@ -22,14 +22,16 @@ public class UserInterface {
      *
      * === Private Attributes ===
      * usableClasses: This is a hashmap of all the usable classes in the
-     * program. TODO Please attach Operator interface to make this more
-     * TODO compact, and obsolete
+     * program.
+     * control: This is a DatabaseController
+     * operator: This is an OperatorInterface
      */
     public UserInterface(){
         this.control = new DatabaseController();
+        CommandFactory theFactory = new CommandFactory(control);
+        theFactory.setManager(new TimeTableManager());
+        this.control.setFactory(theFactory);
         this.operator = new OperatorInterface(this.control);
-
-
 
         // Will be replaced with something by OperatorInterface in later Phases.
         usableClasses = new HashMap<>();
@@ -74,7 +76,7 @@ public class UserInterface {
     }
 
     /**
-     * Runs the UserInterface. TODO Make method more User Friendly!
+     * Runs the UserInterface.
      *
      */
     public void run(){
