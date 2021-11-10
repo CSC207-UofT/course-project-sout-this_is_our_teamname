@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class UserInterface {
     private final HashMap<String, String[]> usableClasses;
     private final DatabaseController control;
+    private final OperatorInterface operator;
 
     /**
      * Constructor.
@@ -26,10 +27,9 @@ public class UserInterface {
      */
     public UserInterface(){
         this.control = new DatabaseController();
-        CommandFactory theFactory = new CommandFactory(control);
-        theFactory.setDataSource(new CSVScraper());
-        theFactory.setManager(new TimeTableManager());
-        this.control.setFactory(theFactory);
+        this.operator = new OperatorInterface(this.control);
+
+
 
         // Will be replaced with something by OperatorInterface in later Phases.
         usableClasses = new HashMap<>();
@@ -81,6 +81,7 @@ public class UserInterface {
         // As long as the program is running
         boolean running = true;
 
+
         while(running) {
             System.out.println("\nUsable Objects: " + this.getUsableClasses());
             Scanner objectScanner = new Scanner(System.in);
@@ -123,8 +124,9 @@ public class UserInterface {
     public static void main(String[] args) {
         UserInterface user = new UserInterface();
 
-        user.run();
+        InterfaceFacade facade = new InterfaceFacade(user, user.operator);
 
-        System.out.println("Here are your TimeTable!");
+        facade.run();
+
     }
 }

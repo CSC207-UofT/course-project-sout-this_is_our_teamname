@@ -24,21 +24,13 @@ public class InterfaceFacade {
             String type = objectScanner.nextLine();
             if (type.equals("User")) {
                 this.userInterface.run();
-                running = false;
-            }
-            if (type.equals("Operator")) {
-                this.operatorInterface.run;
-                running = false;
-            }
-            else {
+                System.out.println("Here are your TimeTable!");
+            } else if (type.equals("Operator")) {
+                this.operatorInterface.run();
+            } else {
                 System.out.print("Please type (User/Operator)");
             }
 
         }
-    }
-    public static void main(String[] args) {
-        InterfaceFacade user = new InterfaceFacade(new UserInterface(), new OperatorInterface());
-
-        user.run();
     }
 }
