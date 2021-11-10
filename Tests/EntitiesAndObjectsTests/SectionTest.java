@@ -1,5 +1,6 @@
-package EntitiesAndObjects.TimeTableObjects;
+package EntitiesAndObjectsTests;
 
+import EntitiesAndObjects.TimeTableObjects.CourseSection;
 import GlobalHelpers.Constants;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class SectionTest {
         CourseSection lecture1 = new CourseSection(Time10,Time11,"SS100",Constants.MONDAY,Constants.FALL,
                 "MAT137", "Alphonso","Arts and Science","Online", false);
 
-        
+
         assertEquals(lecture0.toString(),
                 "09:00 - 10:00: MAT257 of Arts and Science with Gauss by In Person at SS100");
         assertEquals(lecture1.toString(),

@@ -1,9 +1,10 @@
-package TimeTableStuff;
+package TimeTableStuffTests;
 
 import GlobalHelpers.Constants;
 
 import EntitiesAndObjects.TimeTableObjects.CourseSection;
 
+import TimeTableStuff.TimeTable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
