@@ -15,14 +15,17 @@ public class WebScraper extends DataGetter{
     @Override
     public void CalibrateData(String courseName){
         try {
+            // connect to the coursefinder
             Document doc = Jsoup.connect(
-                    "https://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId=CSC207H1F20219").get();
+                    "https://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId="+ courseName + "F20219")
+                    .get();
             System.out.println(doc.title());
 
             // find element by combination of elements with id.
             String term = doc.select("span#u158").text();
             String faculty = doc.select("span#u13").text();
             String coursecode = doc.select("div#u19").text();
+
             // clean the string
             term = RemoveCss(term);
             faculty = RemoveCss(faculty);
@@ -193,11 +196,10 @@ public class WebScraper extends DataGetter{
      */
     public static void main(String[] args) throws IOException {
         WebScraper a = new WebScraper();
-        LinkedHashMap<String, Course> data = a.getData("");
+        LinkedHashMap<String, Course> data = a.getData("CSC110Y1");
         for (String key : data.keySet()) {
             System.out.println(data.get(key));
         }
-
     }
 }
 
