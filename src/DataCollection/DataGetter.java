@@ -38,7 +38,8 @@ public abstract class DataGetter {
      *
      * @param courseName the Course Name
      */
-    abstract void CalibrateData(String courseName) throws FileNotFoundException;
+    abstract void CalibrateData(String courseName, String theTerm,
+                                String theYear) throws FileNotFoundException;
 
     public void clearData(){
         this.data.clear();
@@ -49,8 +50,8 @@ public abstract class DataGetter {
      * @param courseName the name of the Course
      * @return the Data HashMap
      */
-    public LinkedHashMap<String, Course> getData(String courseName) throws FileNotFoundException {
-        CalibrateData(courseName);
+    public LinkedHashMap<String, Course> getData(String courseName, String term, String year) throws FileNotFoundException {
+        CalibrateData(courseName, term, year);
         return this.data;
     }
 }

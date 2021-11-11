@@ -50,14 +50,21 @@ public class MakeCourseCommand implements Command {
         boolean validCourseChecker = true;
         while (validCourseChecker){
             // The user enters the section they want to search
-            Scanner userChoice = new Scanner(System.in);
-            System.out.println("Please Enter the course Name (eg CSC207H1. " +
-                    "Don't forget the 'H1'!!!): ");
-            String course = userChoice.nextLine();
+            String[] questions = {"Please Enter the course Name (eg CSC207H1. " +
+                    "Don't forget the 'H1'!!!): ", "Enter the term of the " +
+                    "course (Fall/Winter):", "Enter the year of the course " +
+                    "(2020/2021): "};
+            String[] responses = new String[3];
+            for (int i = 0; i < questions.length; i++) {
+                Scanner userChoice = new Scanner(System.in);
+                System.out.println(questions[i]);
+                responses[i] = userChoice.nextLine();
+            }
 
             try {
                 // Gets the data from the datasource
-                course_data = dataSource.getData(course);
+                course_data = dataSource.getData(responses[0], responses[1],
+                        responses[2]);
                 validCourseChecker = false;
             } catch (FileNotFoundException e) {
                 System.out.println("Course not found. Please try again!");
