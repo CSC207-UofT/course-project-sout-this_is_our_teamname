@@ -6,19 +6,34 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 //import org.jsoup.select.Elements;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.time.LocalTime;
 import java.util.*;
 
 public class WebScraper extends DataGetter{
 
+
+    private Object FileNotFoundException;
+
+    /**
+     * Constructor of the CSVScraper. Reads and filters the data correctly
+     * into the data hashmap.
+     *
+     * @param courseName the name of the course
+     */
     @Override
-    public void CalibrateData(String courseName){
+    public void CalibrateData(String courseName) throws FileNotFoundException {
         try {
             // connect to the coursefinder
             Document doc = Jsoup.connect(
                     "https://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId="+ courseName + "F20219")
                     .get();
+            
+            // If the html is blank, i.e. files not found.
+            if (doc.body().text().isEmpty()){
+                throw (Throwable) FileNotFoundException;
+            }
+
             System.out.println(doc.title());
 
             // find element by combination of elements with id.
@@ -50,11 +65,11 @@ public class WebScraper extends DataGetter{
                 if (prof.isEmpty()){
                     prof = Constants.TBA;
                 }
-                ArrayList<ArrayList<Object>> times = splitDateTime(RemoveCss(time));
+                ArrayList<Object[]> times = splitDateTime(RemoveCss(time));
                 ArrayList<String> locations = splitLocations(RemoveCss(location));
 
                 // create and put course objects
-                HashMap<ArrayList<Object>, String> locationTimeMap = new HashMap<>();
+                HashMap<Object[], String> locationTimeMap = new HashMap<>();
                 int j = 0;
                 while (j < locations.size()){
                     locationTimeMap.put(times.get(j), locations.get(j));
@@ -79,8 +94,7 @@ public class WebScraper extends DataGetter{
         }
 
     }
-    //TODO @ Matthew consider putting these method in datagetter? Since I am reusing them.
-    // Waitlist always false
+    //TODO Waitlist always false
     /**
      * Add the given data to self.data
      * @param term the term of course
@@ -94,7 +108,7 @@ public class WebScraper extends DataGetter{
     private void addTermedCourseToData(String term,
                                        String sectionName,
                                        String faculty,
-                                       HashMap<ArrayList<Object>,
+                                       HashMap<Object[],
                                                String> timeToLocationMap,
                                        String theInstructor,
                                        String theDeliveryMethod,
@@ -116,7 +130,7 @@ public class WebScraper extends DataGetter{
      */
     private void addYearCourseToData(String sectionName,
                                      String faculty,
-                                     HashMap<ArrayList<Object>, String> timeToLocationMap,
+                                     HashMap<Object[], String> timeToLocationMap,
                                      String theInstructor,
                                      String theDeliveryMethod,
                                      boolean theWaitlist){
@@ -125,6 +139,11 @@ public class WebScraper extends DataGetter{
         placeToData(sectionName, theCourse);
     }
 
+    /**
+     * Clean up the Css tags in html
+     *
+     * @param dirty the string being cleaned.
+     */
     private String RemoveCss(String dirty){
         String cleaned;
         cleaned = dirty.replaceAll("(?is)<style.*?>.*?</style>", "");
@@ -140,33 +159,33 @@ public class WebScraper extends DataGetter{
      *
      * @param formattedTimeString the formattedTimeString of the date, start,
      *                           and end times
-     * @return nested arraylist with the form [[date, start time, end time], [date, start time, end time]]
+     * @return nested arraylist with the form [{date, start time, end time}, {date, start time, end time}]
      */
-    private ArrayList<ArrayList<Object>> splitDateTime(String formattedTimeString){
+    private ArrayList<Object[]> splitDateTime(String formattedTimeString){
         String[] times = formattedTimeString.split("(?=\\s[A-Z])");
-        ArrayList<ArrayList<Object>> retList = new ArrayList<>();
+        ArrayList<Object[]> retList = new ArrayList<>();
         if (times.length != 0){
             for (String element : times) {
                 element = element.trim();
                 String[]elementl = element.split(" ");
-                ArrayList<Object> l = new ArrayList<>();
-                l.add(formatDate(elementl[0]));
-                // split into times.
-                l.add(elementl[1].split("-")[0] + ":00");
-                l.add(elementl[1].split("-")[1] + ":00");
+                Object[] l = {formatDate(elementl[0]), elementl[1].split("-")[0] + ":00", elementl[1].split("-")[1] + ":00"};
                 retList.add(l);
             }
         }
         else{
-            ArrayList<Object> l = new ArrayList<>();
-            l.add(Constants.TBA);
-            l.add(LocalTime.of(0, 0, 0));
-            l.add(LocalTime.of(0, 0, 0));
+            Object[] l = {Constants.TBA, LocalTime.of(0, 0, 0), LocalTime.of(0, 0, 0)};
             retList.add(l);
         }
         return retList;
     }
 
+    /**
+     * Splits the formattedLocationString into an arraylist with [location, location]
+     * If there is no location then the location is TBA.
+     *
+     * @param formattedLocationString the formattedLocationString of the "Location Location"
+     * @return arraylist with the form [location, location]
+     */
     private ArrayList<String> splitLocations(String formattedLocationString){
         ArrayList<String> retList = new ArrayList<>();
         if (!formattedLocationString.isEmpty()){
@@ -182,6 +201,12 @@ public class WebScraper extends DataGetter{
         return retList;
     }
 
+    /**
+     * Change the letter case of the given date.
+     *
+     * @param date  a string of date of with all upper case letter.
+     * @return new string of date with the upper case at the front and lower case follows.
+     */
     private String formatDate(String date){
         String firstLet = date.substring(0, 1);
         String remLet = date.substring(1);
@@ -194,11 +219,16 @@ public class WebScraper extends DataGetter{
      *
      * @param args arguments
      */
-    public static void main(String[] args) throws IOException {
-        WebScraper a = new WebScraper();
-        LinkedHashMap<String, Course> data = a.getData("CSC110Y1");
-        for (String key : data.keySet()) {
-            System.out.println(data.get(key));
+    public static void main(String[] args) {
+        try {
+            WebScraper a = new WebScraper();
+            LinkedHashMap<String, Course> data = a.getData("CSC110Y1");
+            for (String key : data.keySet()) {
+                System.out.println(data.get(key));
+            }
+        }
+        catch (FileNotFoundException e){
+            System.out.println("file not found");
         }
     }
 }
