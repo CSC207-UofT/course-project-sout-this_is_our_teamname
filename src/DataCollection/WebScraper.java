@@ -22,16 +22,24 @@ public class WebScraper extends DataGetter{
      * @param courseName the name of the course
      */
     @Override
-    public void CalibrateData(String courseName) throws FileNotFoundException {
+    public void CalibrateData(String courseName, String theTerm,
+                              String theYear) throws FileNotFoundException{
         try {
             // connect to the coursefinder
+            if (Integer.parseInt(theYear) == 2021){
+                theYear = theYear + "9";
+            }
+            else{
+                theYear = theYear + "1";
+            }
+
             Document doc = Jsoup.connect(
-                    "https://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId="+ courseName + "F20219")
+                    "https://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId="+ courseName + theTerm.charAt(0)+ theYear)
                     .get();
-            
-            // If the html is blank, i.e. files not found.
-            if (doc.body().text().isEmpty()){
-                throw (Throwable) FileNotFoundException;
+
+            // If the html has no infomation about term. i.e. files not found.
+            if (doc.select("span#u158").text().isEmpty()){
+                throw new FileNotFoundException();
             }
 
             System.out.println(doc.title());
@@ -222,7 +230,7 @@ public class WebScraper extends DataGetter{
     public static void main(String[] args) {
         try {
             WebScraper a = new WebScraper();
-            LinkedHashMap<String, Course> data = a.getData("CSC110Y1");
+            LinkedHashMap<String, Course> data = a.getData("CSC110Y1", "a", "2021");
             for (String key : data.keySet()) {
                 System.out.println(data.get(key));
             }
