@@ -32,5 +32,22 @@ public class InterfaceFacade {
             }
 
         }
+
     }
+
+    /**
+     * A InterfaceFacade. The main method of the program and the one that the
+     * user interacts with.
+     *
+     * @param args The arguments
+     */
+    public static void main(String[] args) {
+        UserInterface user = new UserInterface();
+
+        InterfaceFacade facade = new InterfaceFacade(user, user.getOperator());
+
+        facade.run();
+
+    }
+
 }

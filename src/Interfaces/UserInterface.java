@@ -1,7 +1,7 @@
 package Interfaces;
 
 
-import DataCollection.CSVScraper;
+
 import GlobalHelpers.Constants;
 import DatabaseController.DatabaseController;
 import DatabaseController.CommandFactory;
@@ -76,6 +76,15 @@ public class UserInterface {
     }
 
     /**
+     * Gets the OperatorInterface
+     *
+     * @return A object of the OperatorInterface.
+     */
+    public OperatorInterface getOperator(){
+        return this.operator;
+    }
+
+    /**
      * Runs the UserInterface.
      *
      */
@@ -117,18 +126,4 @@ public class UserInterface {
         }
     }
 
-    /**
-     * A UserInterface. The main method of the program and the one that the
-     * user interacts with.
-     *
-     * @param args The arguments
-     */
-    public static void main(String[] args) {
-        UserInterface user = new UserInterface();
-
-        InterfaceFacade facade = new InterfaceFacade(user, user.operator);
-
-        facade.run();
-
-    }
 }
