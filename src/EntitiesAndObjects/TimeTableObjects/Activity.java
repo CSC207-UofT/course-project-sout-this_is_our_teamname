@@ -47,6 +47,6 @@ public class Activity extends Events {
      */
     @Override
     public String toString() {
-        return this.getStartTime() + " - " + this.getEndTime() + ": " + this.description;
+        return this.description;
     }
 }
