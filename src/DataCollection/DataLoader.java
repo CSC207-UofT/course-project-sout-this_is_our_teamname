@@ -1,192 +1,144 @@
 package DataCollection;
 
-import EntitiesAndObjects.Course;
+
+import EntitiesAndObjects.TimeTableObjects.Activity;
+import EntitiesAndObjects.TimeTableObjects.Events;
 import GlobalHelpers.Constants;
-import GlobalHelpers.StringToTime;
+import TimeTableStuff.TimeTable;
 import TimeTableStuff.TimeTableManager;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.List;
+import java.util.Objects;
 
 /**
- * A DataLoader class. It is a CSVScraper class that can upload properly
- * formatted csv files to timetables and download timetables to properly
- * formatted csv files.
+ * A DataLoader class. It is a class that can upload properly formatted
+ * csv files to timetable manager objects and download timetable manager
+ * objects to properly formatted csv files.
  *
  * Precondition: The file needs to be uploaded is a properly formatted
- * csv file. Please see the sample directory for correctly formatted files.
+ * csv file.
  */
-public class DataLoader extends CSVScraper {
+public class DataLoader {
     /**
-     * Upload a properly formatted csv file to a timetable
+     * Upload a properly formatted csv file to a timetable manager object
      *
-     * @param filename the path of the csv file that needs to be uploaded
+     * @param filepath the path of the csv file that needs to be uploaded
+     * @param term     the term of the input timetable file
      */
-    public TimeTableManager upload(String filename) throws FileNotFoundException {
-        ArrayList<String> file_data = readFile(filename);
-        String[] adminDetails = file_data.remove(0).split(",");
-        String term = adminDetails[1];
-        String faculty = adminDetails[2];
-        file_data.remove(0);
-        String[][] splicedFileData = splitData(file_data);
-        ArrayList<Course> courseList = new ArrayList<>();
-        filterData(courseList, term, faculty, splicedFileData);
-        TimeTableManager timetables = new TimeTableManager();
-        for (Course item : courseList) {
-            timetables.schedule(item);
+    public TimeTableManager upload(String filepath, String term) throws IOException {
+        TimeTableManager ttbmanager = new TimeTableManager();
+        String[][] data = read(filepath);
+        String[][] meaningfuldata = new String[1][data.length - 1];
+        for (int i = 0; i + 1 < data.length; i++) {
+            meaningfuldata[i] = data[i + 1];
         }
-        return timetables;
-    }
-
-    /**
-     * Download a timetable to a properly formatted csv file
-     *
-     * @param timetables the timetable manager that needs to be downloaded
-     */
-    public void download(TimeTableManager timetables) {
-        
-    }
-
-    /**
-     * Read the file given by filename.
-     *
-     * Parts of this code were modified from
-     * `https://www.w3schools.com/java/java_files_read.asp`
-     *
-     * Precondition: Filename is a valid filename
-     *
-     * @return an arraylist of all the lines of the code at filename
-     * @param filename the name of the file
-     */
-    private ArrayList<String> readFile(String filename) throws FileNotFoundException {
-        ArrayList<String> readData = new ArrayList<>();
-        File myObj = new File(filename);
-        Scanner myReader = new Scanner(myObj);
-        while (myReader.hasNextLine()) {
-            readData.add(myReader.nextLine());
-        }
-        myReader.close();
-
-        return readData;
-    }
-
-    /**
-     * Filters the data and searches for the required information. Then, adds
-     * the data into the data structure.
-     *
-     * This is a recursive method.
-     *
-     * Precondition: The file is structured correctly.
-     *
-     * @param courseData An arraylist of courses to sort
-     * @param theTerm The Term of the course
-     * @param theFaculty The Faculty offering the course
-     * @param theFileData the Arraylist of all the lines of the file.
-     */
-    private void filterData(ArrayList<Course> courseData, String theTerm,
-                            String theFaculty, String[][] theFileData){
-        // Base Case 1: Size 1 and this is a header.
-        if (theFileData.length == 1 && headingCondition(theFileData[0])){
-            // Some Parameters
-            HashMap<Object[], String> TimeLocation = new HashMap<>();
-            TimeLocation.put(splitDateTime(theFileData[0][1]),
-                    theFileData[0][2]);
-            boolean hasWaitList = theFileData[0][5].equals("0");
-
-            courseData.add(new Course(theFileData[0][0],
-                            theFileData[0][3], theFaculty,
-                            theFileData[0][4], TimeLocation, theTerm, hasWaitList
-                    )
-            );
-
-            // Base Case 2: Size 1 and this is a not a header.
-        } else if (theFileData.length == 1 && subHeaderCondition(theFileData[0])) {
-            courseData.get(courseData.size() - 1).addToTimeLocation(splitDateTime(theFileData[0][1]),
-                    theFileData[0][2]);
-
-            // Inductive Step: All other list sizes
-        } else if (theFileData.length != 1){
-            for (String[] item: theFileData){
-                filterData(courseData, theTerm, theFaculty,
-                        new String[][]{item});
+        for (int timeindex = 0; timeindex <= 23; timeindex++) {
+            for (int dateindex = 1; dateindex <= 7; dateindex++) {
+                String[] days = {Constants.MONDAY, Constants.TUESDAY, Constants.WEDNESDAY,
+                        Constants.THURSDAY, Constants.FRIDAY, Constants.SATURDAY, Constants.SUNDAY};
+                if (!Objects.equals(meaningfuldata[timeindex][dateindex], " ")) {
+                    Events activity = new Activity(LocalTime.of(timeindex, 0, 0, 0),
+                            LocalTime.of(timeindex + 1, 0, 0, 0),
+                            days[dateindex - 1], term, meaningfuldata[timeindex][dateindex]);
+                    ttbmanager.getTimetable(term).schedule(activity);
+                }
             }
         }
+        return ttbmanager;
     }
 
     /**
-     * Split the splitableString into an arraylist of string arrays of the contents of
-     * each line seperated by the comma.
+     * Download a timetable manager object to a properly formatted csv file
      *
-     * @param splittableString the splitableString that is required to be split
-     * @return The Arraylist of all the splitableString in a string array
+     * @param ttbmanager the timetable manager that needs to be downloaded
+     * @param filename the name that users want to save the file as
      */
-    private String[][] splitData(ArrayList<String> splittableString){
-        String[][] spliced = new String[splittableString.size()][];
-        for (int i = 0; i < splittableString.size(); i++){
-            spliced[i] = splittableString.get(i).split(",");
+    public void download(TimeTableManager ttbmanager, String filename) throws IOException {
+        for (String term : ttbmanager.getTerms()) {
+            TimeTable timetable = ttbmanager.getTimetable(term);
+            List<List<String>> datalists = TimetableToList(timetable);
+            FileWriter csvWriter = new FileWriter(filename + "_" + term + ".csv");
+            csvWriter.append(" ");
+            csvWriter.append(Constants.MONDAY);
+            csvWriter.append(Constants.TUESDAY);
+            csvWriter.append(Constants.WEDNESDAY);
+            csvWriter.append(Constants.THURSDAY);
+            csvWriter.append(Constants.FRIDAY);
+            csvWriter.append(Constants.SATURDAY);
+            csvWriter.append(Constants.SUNDAY);
+            csvWriter.append("\n");
+            for (List<String> datalist : datalists) {
+                csvWriter.append(String.join(",", datalist));
+                csvWriter.append("\n");
+            }
+            csvWriter.flush();
+            csvWriter.close();
         }
-        return spliced;
     }
 
     /**
-     * Splits the formattedTimeString into the date, start time, end time in
-     * that order
+     * Read and return the data contained in a csv file at specific location as
+     * an array of arrays of strings
      *
-     * If the time is TBA, assign the time to be 00:00:00.
-     * WE WILL RESOLVE THIS IN PHASE 1.
-     *
-     * @param formattedTimeString the formattedTimeString of the date, start,
-     *                           and end times
-     * @return the string array of length 3 of the date, start time, and end
-     * time
+     * @param filepath the path of the csv file that needs to be read
      */
-    private Object[] splitDateTime(String formattedTimeString){
-        String[] splicedInfo = formattedTimeString.split(" ");
-
-        Object[] retList;
-        if (hasTime(splicedInfo)) {
-            retList = new Object[]{splicedInfo[0], StringToTime.makeTime(splicedInfo[1]),
-                    StringToTime.makeTime(splicedInfo[3])};
-        } else {
-            retList = new Object[]{Constants.TBA, LocalTime.of(0, 0, 0),
-                    LocalTime.of(0, 0, 0)};
+    private String[][] read(String filepath) throws IOException {
+        String[][] dataplus = {};
+        BufferedReader reader = new BufferedReader(new FileReader(filepath));
+        String row;
+        while ((row = reader.readLine()) != null) {
+            String[] data = row.split(",");
+            dataplus = (String[][]) add(dataplus, data);
         }
-        return retList;
+        reader.close();
+        return dataplus;
     }
 
     /**
-     * Returns true iff the input has all the required information to be
-     * formatted as a time
+     * Return a new array with one more object added to the original array
      *
-     * @param input the string that array that needs to be checked
-     * @return true iff the input has all the required information to be
-     * formatted as a time
+     * @param objects the original object array
+     * @param object the object that needs to be added
      */
-    private boolean hasTime(String[] input){
-        return input.length == 4 && input[2].equals("-");
+    private Object[] add(Object[] objects, Object object) {
+        Object[] newlist = new Object[objects.length + 1];
+        System.arraycopy(objects, 0, newlist, 0, objects.length);
+        newlist[objects.length] = object;
+        return newlist;
     }
 
     /**
-     * Returns true iff the line is a header line
+     * Convert a timetable to a list of lists of strings that contains the data
      *
-     * @param line the line that needs to be checked
-     * @return true iff the line is a header line
+     * @param timetable the timetable that needs to be converted
      */
-    private boolean headingCondition(String[] line){
-        return line.length >= 5 && !line[0].equals("");
-    }
-
-    /**
-     * Returns true iff the line is a subheader line
-     *
-     * @param line the line that needs to be checked
-     * @return true iff the line is a subheader line
-     */
-    private boolean subHeaderCondition(String[] line){
-        return line.length >= 2 && line[0].equals("");
+    private List<List<String>> TimetableToList(TimeTable timetable) {
+        List<List<String>> datalists = new ArrayList<>(24);
+        int i = 0;
+        while (i <= 23) {
+            String time = i + ":00 ~ " + (i + 1) + ":00";
+            List<String> datalist = new ArrayList<>();
+            datalist.add(time);
+            datalists.add(datalist);
+            i ++;
+        }
+        String[] days = {Constants.MONDAY, Constants.TUESDAY, Constants.WEDNESDAY,
+                Constants.THURSDAY, Constants.FRIDAY, Constants.SATURDAY, Constants.SUNDAY};
+        for (String day : days) {
+            int n = 0;
+            while (n <= 23) {
+                if (timetable.getCalender().get(day)[n] != null) {
+                    datalists.get(n).add(timetable.getCalender().get(day)[n].getDescription());
+                }
+                else {
+                    datalists.get(n).add(" ");
+                }
+                n ++;
+            }
+        }
+        return datalists;
     }
 }
