@@ -32,6 +32,8 @@ public class CSVScraper extends DataGetter {
      * into the data hashmap.
      *
      * @param courseName the name of the course
+     * @param theTerm the term of the course
+     * @param theYear the course starts.
      */
     @Override
     public void CalibrateData(String courseName, String theTerm,

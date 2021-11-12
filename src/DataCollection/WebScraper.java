@@ -12,20 +12,20 @@ import java.util.*;
 
 public class WebScraper extends DataGetter{
 
-
-    private Object FileNotFoundException;
-
     /**
      * Constructor of the CSVScraper. Reads and filters the data correctly
      * into the data hashmap.
      *
      * @param courseName the name of the course
+     * @param theTerm the term of the course
+     * @param theYear the course starts.
      */
+    //TODO FileNotOFoundException
     @Override
     public void CalibrateData(String courseName, String theTerm,
                               String theYear) throws FileNotFoundException{
         try {
-            // connect to the coursefinder
+            // format the url and connect to the coursefinder
             if (Integer.parseInt(theYear) == 2021){
                 theYear = theYear + "9";
             }
@@ -42,20 +42,18 @@ public class WebScraper extends DataGetter{
                 throw new FileNotFoundException();
             }
 
-            System.out.println(doc.title());
-
             // find element by combination of elements with id.
             String term = doc.select("span#u158").text();
             String faculty = doc.select("span#u13").text();
             String coursecode = doc.select("div#u19").text();
 
-            // clean the string
-            term = RemoveCss(term);
-            faculty = RemoveCss(faculty);
-            coursecode = RemoveCss(coursecode);
+            // clean up the string
+            term = removeCss(term);
+            faculty = removeCss(faculty);
+            coursecode = removeCss(coursecode);
 
+            // loop over the rows in the html and add corresponding sections.
             int i = 0;
-            // rows
             while(i <= 100){
                 String section = doc.select("span#u245_line"+ i).text();
                 String prof = doc.select("span#u263_line"+ i).text();
@@ -66,17 +64,17 @@ public class WebScraper extends DataGetter{
                     break;
                 }
 
-                // remove css
-                section = RemoveCss(section);
-                prof = RemoveCss(prof);
-                delmethod = RemoveCss(delmethod);
+                // clean up the string.
+                section = removeCss(section);
+                prof = removeCss(prof);
+                delmethod = removeCss(delmethod);
                 if (prof.isEmpty()){
                     prof = Constants.TBA;
                 }
-                ArrayList<Object[]> times = splitDateTime(RemoveCss(time));
-                ArrayList<String> locations = splitLocations(RemoveCss(location));
+                ArrayList<Object[]> times = splitDateTime(removeCss(time));
+                ArrayList<String> locations = splitLocations(removeCss(location));
 
-                // create and put course objects
+                // create the location time map.
                 HashMap<Object[], String> locationTimeMap = new HashMap<>();
                 int j = 0;
                 while (j < locations.size()){
@@ -112,6 +110,7 @@ public class WebScraper extends DataGetter{
      *                         HashMap of the Time -> Location
      * @param theInstructor the instructor of the course section
      * @param theDeliveryMethod the delivery method of the course.
+     * @param theWaitlist whether the course is waitlisted or not.
      */
     private void addTermedCourseToData(String term,
                                        String sectionName,
@@ -135,6 +134,7 @@ public class WebScraper extends DataGetter{
      *                         HashMap of the Time -> Location
      * @param theInstructor the instructor of the course section
      * @param theDeliveryMethod the delivery method of the course.
+     * @param theWaitlist whether the course is waitlisted or not.
      */
     private void addYearCourseToData(String sectionName,
                                      String faculty,
@@ -148,11 +148,12 @@ public class WebScraper extends DataGetter{
     }
 
     /**
-     * Clean up the Css tags in html
+     * Clean up the strings with Css tags.
      *
      * @param dirty the string being cleaned.
+     * @return a string without css tags
      */
-    private String RemoveCss(String dirty){
+    private String removeCss(String dirty){
         String cleaned;
         cleaned = dirty.replaceAll("(?is)<style.*?>.*?</style>", "");
         return cleaned;
@@ -162,8 +163,7 @@ public class WebScraper extends DataGetter{
      * Splits the formattedTimeString into the date, start time, end time in
      * that order
      *
-     * If the time is TBA, assign the time to be 00:00:00.
-     * WE WILL RESOLVE THIS IN PHASE 1.
+     * If the time is TBA, assign the time to be 00:00:00
      *
      * @param formattedTimeString the formattedTimeString of the date, start,
      *                           and end times
@@ -176,12 +176,14 @@ public class WebScraper extends DataGetter{
             for (String element : times) {
                 element = element.trim();
                 String[]elementl = element.split(" ");
-                Object[] l = {formatDate(elementl[0]), elementl[1].split("-")[0] + ":00", elementl[1].split("-")[1] + ":00"};
+                Object[] l = {formatDate(elementl[0]), elementl[1].split("-")[0] + ":00",
+                        elementl[1].split("-")[1] + ":00"};
                 retList.add(l);
             }
         }
         else{
-            Object[] l = {Constants.TBA, LocalTime.of(0, 0, 0), LocalTime.of(0, 0, 0)};
+            Object[] l = {Constants.TBA, LocalTime.of(0, 0, 0),
+                    LocalTime.of(0, 0, 0)};
             retList.add(l);
         }
         return retList;
@@ -212,7 +214,7 @@ public class WebScraper extends DataGetter{
     /**
      * Change the letter case of the given date.
      *
-     * @param date  a string of date of with all upper case letter.
+     * @param date a string of date with all upper case letter.
      * @return new string of date with the upper case at the front and lower case follows.
      */
     private String formatDate(String date){
@@ -228,15 +230,12 @@ public class WebScraper extends DataGetter{
      * @param args arguments
      */
     public static void main(String[] args) {
+        WebScraper a = new WebScraper();
         try {
-            WebScraper a = new WebScraper();
-            LinkedHashMap<String, Course> data = a.getData("CSC110Y1", "a", "2021");
-            for (String key : data.keySet()) {
-                System.out.println(data.get(key));
-            }
-        }
-        catch (FileNotFoundException e){
-            System.out.println("file not found");
+            HashMap<String, Course> got = a.getData("CSC207H1", "all", "2021");
+            System.out.println(got);
+        } catch (FileNotFoundException e){
+            System.out.println("File Not Found");
         }
     }
 }
