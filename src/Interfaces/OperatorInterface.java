@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 public class OperatorInterface {
     private final DatabaseController control;
+    private String datasource;
 
     /**
      * Constructor.
@@ -24,6 +25,7 @@ public class OperatorInterface {
      */
     public OperatorInterface(DatabaseController controller) {
         this.control = controller;
+        this.datasource = "CSVScraper";
     }
 
 
@@ -47,6 +49,14 @@ public class OperatorInterface {
     }
 
     /**
+     * Get the chosen data source.
+     *
+     */
+    public String getDatasource(){
+        return this.datasource;
+    }
+
+    /**
      * Runs the OperatorInterface
      */
     public void run() {
@@ -57,6 +67,7 @@ public class OperatorInterface {
             System.out.println("Which datasource do you want to set (CSVScraper/WebScraper): ");
             Scanner objectScanner = new Scanner(System.in);
             String type = objectScanner.nextLine();
+            this.datasource = type;
             CommandFactory theFactory = new CommandFactory(control);
             this.SetDatasource(theFactory, type);
             Scanner continueQuestion = new Scanner(System.in);

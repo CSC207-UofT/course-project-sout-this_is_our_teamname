@@ -31,6 +31,17 @@ public class InterfaceFacade {
                 System.out.print("Please type (User/Operator).");
             }
 
+            // Check if the user want to exit the program.
+            Scanner continueQuestion = new Scanner(System.in);
+            System.out.println("Do you want to exit? " +
+                    "(true/false):");
+            String continueResponse = continueQuestion.nextLine();
+
+            // Checks if the user wants to add any more courses.
+            if (continueResponse.equals("true")){
+                running = false;
+            }
+
         }
 
     }

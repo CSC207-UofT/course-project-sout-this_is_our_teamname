@@ -94,6 +94,7 @@ public class UserInterface {
 
 
         while(running) {
+            System.out.println("\nCurrent datasource: " + this.operator.getDatasource());
             System.out.println("\nUsable Objects: " + this.getUsableClasses());
             Scanner objectScanner = new Scanner(System.in);
             System.out.println("Please enter what type of object: ");
