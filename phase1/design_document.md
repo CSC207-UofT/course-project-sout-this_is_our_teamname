@@ -5,6 +5,10 @@
 * `TimetableObject` -> `Event`
 * TODO
 
+## UML Diagram
+[The Diagram](https://docs.google.com/presentation/d/1Y4G68pZL0exLt_WOKD81JUoqP-viaEZpGGOaLyKMd6M/edit#slide=id.p)
+[Alternate](https://docs.google.com/presentation/d/1WdHyNQxlsQ0VAOPu0ujWFXbWTQDfYz4l92REhfZY83A/edit?usp=sharing)
+
 ## Walk Through 2.0
 (Please see Phase 0 Walk Through for more details regarding phase 0 
 components. This section will only elaborate on new features, while briefly 

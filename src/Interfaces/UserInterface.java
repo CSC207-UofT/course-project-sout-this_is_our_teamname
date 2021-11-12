@@ -1,10 +1,13 @@
 package Interfaces;
 
 
+
 import GlobalHelpers.Constants;
 import DatabaseController.DatabaseController;
 import DatabaseController.CommandFactory;
 import GlobalHelpers.InvalidInputException;
+import GlobalHelpers.Search;
+import TimeTableStuff.TimeTableManager;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -12,18 +15,23 @@ import java.util.Scanner;
 public class UserInterface {
     private final HashMap<String, String[]> usableClasses;
     private final DatabaseController control;
+    private final OperatorInterface operator;
 
     /**
      * Constructor.
      *
      * === Private Attributes ===
      * usableClasses: This is a hashmap of all the usable classes in the
-     * program. TODO Please attach Operator interface to make this more
-     * TODO compact, and obsolete
+     * program.
+     * control: This is a DatabaseController
+     * operator: This is an OperatorInterface
      */
     public UserInterface(){
         this.control = new DatabaseController();
-        this.control.addFactory(new CommandFactory(control));
+        CommandFactory theFactory = new CommandFactory(control);
+        theFactory.setManager(new TimeTableManager());
+        this.control.setFactory(theFactory);
+        this.operator = new OperatorInterface(this.control);
 
         // Will be replaced with something by OperatorInterface in later Phases.
         usableClasses = new HashMap<>();
@@ -31,22 +39,6 @@ public class UserInterface {
         usableClasses.put(Constants.NON_COURSE_OBJECT,
                 new String[]{Constants.ACTIVITY,
                         Constants.TASK});
-    }
-
-    /**
-     * A Quick Binary Search helper method to find queries in an array.
-     *
-     * @param query The item that you are trying to see if it is in the array
-     * @param array The array to search
-     * @return true iff the item is in the array
-     */
-    private boolean BinarySearch(String query, String[] array){
-        for (String item : array){
-            if (query.equals(item)){
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
@@ -61,7 +53,7 @@ public class UserInterface {
      */
     private String checkInputValue(String input){
         for (String key : usableClasses.keySet()){
-            if (BinarySearch(input, usableClasses.get(key))){
+            if (Search.BinarySearch(input, usableClasses.get(key))){
                 return key;
             }
         }
@@ -84,12 +76,22 @@ public class UserInterface {
     }
 
     /**
-     * Runs the UserInterface. TODO Make method more User Friendly!
+     * Gets the OperatorInterface
+     *
+     * @return A object of the OperatorInterface.
+     */
+    public OperatorInterface getOperator(){
+        return this.operator;
+    }
+
+    /**
+     * Runs the UserInterface.
      *
      */
     public void run(){
         // As long as the program is running
         boolean running = true;
+
 
         while(running) {
             System.out.println("\nUsable Objects: " + this.getUsableClasses());
@@ -100,7 +102,7 @@ public class UserInterface {
             String dataCategory = checkInputValue(schedulingObject);
 
             try {
-                control.addToCommandHistory(dataCategory);
+                control.runCommand(dataCategory);
             } catch (InvalidInputException e){
                 ; // TODO FIXME
             }
@@ -118,23 +120,10 @@ public class UserInterface {
 
         // Gets all the timetables.
         try {
-            control.addToCommandHistory("Get All TimeTables");
+            control.runCommand("Get All TimeTables");
         } catch (InvalidInputException e){
             System.out.println("Oh No! I can't get the TimeTables");
         }
     }
 
-    /**
-     * A UserInterface. The main method of the program and the one that the
-     * user interacts with.
-     *
-     * @param args The arguments
-     */
-    public static void main(String[] args) {
-        UserInterface user = new UserInterface();
-
-        user.run();
-
-        System.out.println("Here are your TimeTable!");
-    }
 }

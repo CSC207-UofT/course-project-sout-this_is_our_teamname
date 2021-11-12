@@ -15,10 +15,8 @@ import java.util.*;
 
 public class TimeTableManager{
     private final HashMap<String, TimeTable> timetables;
-
     /**
      * Creates a new TimeTableManager with two default TimeTables for Fall and Winter.
-     *
      */
     public TimeTableManager() {
         this.timetables = new HashMap<>(){{

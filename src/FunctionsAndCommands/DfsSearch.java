@@ -63,11 +63,14 @@ public class DfsSearch extends Solver{
         }
 
         for (Puzzle possible_move : configs){
+            if (possible_move.is_solved()){
+                return possible_move;
+            }
             // If the puzzle:
             // - is not in seen
             // - the puzzle is possible
             // - is not in the path
-            if (!seen.contains(puzzle.toString()) && !possible_move.fail_fast()
+            else if (!seen.contains(possible_move.toString()) && !possible_move.fail_fast()
                     && !SearchPath(possible_move)){
                 return possible_move;
             }
