@@ -26,7 +26,7 @@ public class DataLoader {
      * Upload a properly formatted csv file to a timetable manager object
      *
      * @param filepath the path of the csv file that needs to be uploaded
-     * @param term     the term of the input timetable file
+     * @param term the term of the input timetable file
      */
     public TimeTableManager upload(String filepath, String term) throws IOException {
         TimeTableManager ttbmanager = new TimeTableManager();
@@ -48,6 +48,36 @@ public class DataLoader {
             }
         }
         return ttbmanager;
+    }
+
+    /**
+     * Upload a properly formatted csv file to a timetable manager object
+     * with a timetable manager object created already
+     *
+     * @param filepath the path of the csv file that needs to be uploaded
+     * @param term the term of the input timetable file
+     * @param oldttbmanager the timetable manager object that is created already
+     */
+    public TimeTableManager upload(String filepath, String term,
+                                   TimeTableManager oldttbmanager) throws IOException {
+        String[][] data = read(filepath);
+        String[][] meaningfuldata = new String[1][data.length - 1];
+        for (int i = 0; i + 1 < data.length; i++) {
+            meaningfuldata[i] = data[i + 1];
+        }
+        for (int timeindex = 0; timeindex <= 23; timeindex++) {
+            for (int dateindex = 1; dateindex <= 7; dateindex++) {
+                String[] days = {Constants.MONDAY, Constants.TUESDAY, Constants.WEDNESDAY,
+                        Constants.THURSDAY, Constants.FRIDAY, Constants.SATURDAY, Constants.SUNDAY};
+                if (!Objects.equals(meaningfuldata[timeindex][dateindex], " ")) {
+                    Events activity = new Activity(LocalTime.of(timeindex, 0, 0, 0),
+                            LocalTime.of(timeindex + 1, 0, 0, 0),
+                            days[dateindex - 1], term, meaningfuldata[timeindex][dateindex]);
+                    oldttbmanager.getTimetable(term).schedule(activity);
+                }
+            }
+        }
+        return oldttbmanager;
     }
 
     /**
