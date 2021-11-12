@@ -78,6 +78,7 @@ public class Course implements Sliceable<CourseSection> {
      */
     public String toString() {
         StringBuilder CourseString = new StringBuilder();
+        CourseString.append(this.code).append(" on ");
         for (ArrayList<Object> loc : this.timeLocation.keySet()){
             CourseString.append(loc.get(THE_DATE)).append(" ");
             CourseString.append(loc.get(THE_START)).append(" - ");

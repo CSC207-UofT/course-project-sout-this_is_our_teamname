@@ -9,10 +9,11 @@ import EntitiesAndObjects.TimeTableObjects.Events;
 import EntitiesAndObjects.TimeTableObjects.Activity;
 import EntitiesAndObjects.TimeTableObjects.Task;
 
+
 // Importing HashMap class
 import java.util.*;
 
-public class TimeTableManager {
+public class TimeTableManager{
     private final HashMap<String, TimeTable> timetables;
 
     /**
@@ -173,4 +174,39 @@ public class TimeTableManager {
         }
         return times.toString();
     }
+//
+//    /**
+//     * Check if a course from the given courses can be added to the TimeTable
+//     * without conflicts.
+//     *
+//     * @param courses The courses to be added to the TimeTable
+//     * @return true if one of the courses can be added, false otherwise
+//     */
+//    public boolean fail_fast(Course[] courses) {
+//        for (Course course : courses) {
+//            ArrayList<CourseSection> courseSections = course.split();
+//            for (CourseSection section : courseSections) {
+//                String term = section.getTerm();
+//                if (this.timetables.get(term).checkConflicts(section)) {
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
+//
+//    public boolean is_solved(Course[] courses){
+//        for (Course course : courses) {
+//            String term = course.getTerm();
+//            String code = course.getCode();
+//            if (this.timetables.get(term);
+//
+//        }
+//        return true;
+//    }
+//
+//    public Puzzle[] extensions(Course[] courses){
+//        Puzzle[] p = new Puzzle[2];
+//        return p;
+//    }
 }

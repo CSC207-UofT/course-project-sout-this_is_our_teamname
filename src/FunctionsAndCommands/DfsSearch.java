@@ -1,5 +1,8 @@
 package FunctionsAndCommands;
 
+import EntitiesAndObjects.Course;
+import EntitiesAndObjects.TimeTableObjects.Events;
+
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -81,6 +84,7 @@ public class DfsSearch extends Solver{
      */
     @Override
     public ArrayList<Puzzle> solve(Puzzle puzzle, Set<String> seen) {
+
         // If the puzzle is not possible
         if (puzzle.fail_fast()) {
             seen.add(puzzle.toString());
@@ -97,6 +101,7 @@ public class DfsSearch extends Solver{
         else {
             Puzzle next_item = puzzle;
             path.add(next_item);
+
 
             // While the puzzle is not solved.
             while (!next_item.is_solved()){

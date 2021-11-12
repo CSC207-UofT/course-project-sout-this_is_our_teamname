@@ -33,6 +33,10 @@ public class NonCourseObject {
         this.type = type;
     }
 
+    /**
+     * Get the type of the activity
+     * @return the type
+     */
     public String getType() {
         return type;
     }
