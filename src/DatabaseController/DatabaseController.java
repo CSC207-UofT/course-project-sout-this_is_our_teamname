@@ -1,7 +1,11 @@
 package DatabaseController;
 import FunctionsAndCommands.Commands.Command;
+import GlobalHelpers.InputCheckers.InputChecker;
+import GlobalHelpers.InputCheckers.Predicate;
 import GlobalHelpers.InvalidInputException;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Stack;
 
 /**
@@ -39,6 +43,32 @@ public class DatabaseController {
         executeCommand(theCommand);
     }
 
+    /**
+     * Runs and Prompts the user with what they want to do
+     */
+    public void run(){
+        boolean running = true;
+        while (running){
+            LinkedHashMap<String, String> allowed =
+                    hashMapit(this.Factory.getAllowedFunctions());
+
+            for (String key : allowed.keySet()){
+                System.out.println(key + ": " + allowed.get(key));
+            }
+
+            InputChecker requestCommand = new InputChecker("Please select a " +
+                    "command to execute", new isValidCommand(allowed));
+            String requested = requestCommand.checkCorrectness();
+
+            try {
+                runCommand(allowed.get(requested));
+                running = false;
+            } catch (InvalidInputException e){
+                System.out.println("Command not allowed. Please try again!");
+            }
+        }
+    }
+
     // ============================== Helpers ==================================
     /**
      * Sends the command into the commandHistory and executes the command.
@@ -51,6 +81,22 @@ public class DatabaseController {
     private void executeCommand(Command theCommand){
         this.CommandHistory.push(theCommand);
         theCommand.execute();
+    }
+
+    /**
+     * Returns a hashmap of the entries in the string array strings with
+     * corresponding integer values from least to greatest.
+     *
+     * @param strings the array of strings
+     * @return a hashmap of items from strings as values and ascending
+     * integers as keys
+     */
+    private LinkedHashMap<String, String> hashMapit(String[] strings){
+        LinkedHashMap<String, String> theMap = new LinkedHashMap<>();
+        for (int i = 0; i < strings.length; i++){
+            theMap.put(String.valueOf(i), strings[i]);
+        }
+        return theMap;
     }
 
     // ============================ Setters and Getters ========================
@@ -69,5 +115,18 @@ public class DatabaseController {
      */
     public Stack<Command> getCommandHistory() {
         return CommandHistory;
+    }
+
+    // ============================ Predicates =================================
+    private static class isValidCommand extends Predicate{
+        private final HashMap<String, String> allowed;
+        public isValidCommand(HashMap<String, String> values){
+            this.allowed = values;
+        }
+
+        @Override
+        public boolean run(String prompt) {
+            return this.allowed.containsKey(prompt);
+        }
     }
 }

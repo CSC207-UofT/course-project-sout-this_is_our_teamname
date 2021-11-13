@@ -1,7 +1,5 @@
 package Interfaces;
 
-
-
 import GlobalHelpers.Constants;
 import DatabaseController.DatabaseController;
 import DatabaseController.CommandFactory;
@@ -94,18 +92,20 @@ public class UserInterface {
 
 
         while(running) {
-            System.out.println("\nUsable Objects: " + this.getUsableClasses());
-            Scanner objectScanner = new Scanner(System.in);
-            System.out.println("Please enter what type of object: ");
-            String schedulingObject = objectScanner.nextLine();
+//            System.out.println("\nUsable Objects: " + this.getUsableClasses());
+//            Scanner objectScanner = new Scanner(System.in);
+//            System.out.println("Please enter what type of object: ");
+//            String schedulingObject = objectScanner.nextLine();
+//
+//            String dataCategory = checkInputValue(schedulingObject);
 
-            String dataCategory = checkInputValue(schedulingObject);
+            control.run();
 
-            try {
-                control.runCommand(dataCategory);
-            } catch (InvalidInputException e){
-                ; // TODO FIXME
-            }
+//            try {
+//                control.runCommand(dataCategory);
+//            } catch (InvalidInputException e){
+//                ; // TODO FIXME
+//            }
             // User types in the section they want to search
             Scanner continueQuestion = new Scanner(System.in);
             System.out.println("Do you want to add another object? " +
