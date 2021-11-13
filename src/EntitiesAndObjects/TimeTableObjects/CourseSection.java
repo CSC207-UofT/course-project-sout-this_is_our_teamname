@@ -31,6 +31,13 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
                 this.getDescription();
     }
 
+    public CourseSection(LocalTime startTime, LocalTime endTime,
+                         String theDate, String term, String description, boolean waitlist) {
+        super(startTime, endTime, theDate, term);
+        this.waitlist = waitlist;
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return this.getStartTime() + " - " + this.getEndTime() + ": " +
