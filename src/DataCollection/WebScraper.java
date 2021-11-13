@@ -179,8 +179,8 @@ public class WebScraper extends DataGetter{
             for (String element : times) {
                 element = element.trim();
                 String[]elementl = element.split(" ");
-                Object[] l = {formatDate(elementl[0]), elementl[1].split("-")[0] + ":00",
-                        elementl[1].split("-")[1] + ":00"};
+                Object[] l = {formatDate(elementl[0]), elementl[1].split("-")[0],
+                        elementl[1].split("-")[1]};
                 retList.add(l);
             }
         }
