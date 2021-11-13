@@ -36,7 +36,7 @@ public class TimeTable {
             int end = activity.getEndTime().getHour();
 
             //Add activity to interval between startTime and endTime
-            for (int i=start; i<end; i++) {
+            for (int i = start; i < end; i++) {
                 this.calender.get(activity.getDate())[i] = activity;
             }
             return true;
@@ -60,19 +60,24 @@ public class TimeTable {
 
     /**
      * Generate the String representation of the calender.
-     * @return the string of calender
+     * @return the string of calendar
      */
     public String toString() {
-        LinkedHashMap<String, ArrayList<String>> times = new LinkedHashMap<>();
+        StringBuilder timeStrings = new StringBuilder();
         for (String day : this.calender.keySet()) {
-            ArrayList<String> sections = new ArrayList<>();
-            for (Events activity : this.calender.get(day)) {
-                if (activity != null) {
-                    sections.add(activity.toString());
+            StringBuilder times = new StringBuilder(day + ":\n");
+
+            Events[] events = this.calender.get(day);
+            for (int i = 0; i < events.length; i++) {
+                times.append("\t").append(i).append(":00 ");
+                if (events[i] != null) {
+                    times.append(events[i]).append("\n");
+                } else {
+                    times.append("\n");
                 }
             }
-            times.put(day, sections);
+            timeStrings.append(times);
         }
-        return times.toString();
+        return timeStrings.toString();
     }
 }

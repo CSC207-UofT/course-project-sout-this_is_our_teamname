@@ -27,10 +27,10 @@ public class CommandFactory {
     private final DatabaseController controller;
     private final String[] allowedFunctions;
 
-    final String SCHEDULE_COURSE = Constants.COURSE;
-    final String SCHEDULE_EVENT = Constants.NON_COURSE_OBJECT;
-    final String GET_ALL_TIMETABLE = "Get All TimeTables";
-    final String PRINT_HISTORY = "Get History";
+    static final String SCHEDULE_COURSE = "Schedule Course";
+    static final String SCHEDULE_EVENT = "Schedule Event";
+    static final String GET_ALL_TIMETABLE = "Get All TimeTables";
+    static final String PRINT_HISTORY = "Get History";
 
     /**
      * Constructor. Sets the TimeTable Manager and DataSource of the file
@@ -41,9 +41,12 @@ public class CommandFactory {
         this.courseManager = null;
         this.dataSource = new CSVScraper();
         this.controller = theController;
-        // TODO @Caules please modify as needed
-        this.allowedFunctions = new String[]{SCHEDULE_COURSE, SCHEDULE_EVENT,
-                GET_ALL_TIMETABLE, PRINT_HISTORY};
+        this.allowedFunctions = new String[]{
+                SCHEDULE_COURSE,
+                SCHEDULE_EVENT,
+                GET_ALL_TIMETABLE,
+                PRINT_HISTORY
+        };
     }
 
     /**

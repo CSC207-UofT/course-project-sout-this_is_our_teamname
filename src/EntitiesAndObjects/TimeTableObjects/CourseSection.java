@@ -62,8 +62,7 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
 
     @Override
     public String toString() {
-        return this.getStartTime() + " - " + this.getEndTime() + ": " +
-                this.description;
+        return this.description;
     }
 
     /**
