@@ -235,7 +235,7 @@ public class WebScraper extends DataGetter{
     public static void main(String[] args) {
         WebScraper a = new WebScraper();
         try {
-            HashMap<String, Course> got = a.getData("CSC207H1", "Fall", "2021");
+            LinkedHashMap<String, ArrayList<Course>> got = a.getData("CSC207H1", "Fall", "2021");
             System.out.println(got);
         } catch (FileNotFoundException e){
             System.out.println("File Not Found");

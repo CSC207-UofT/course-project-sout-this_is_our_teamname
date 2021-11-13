@@ -40,10 +40,10 @@ public class Task extends Events {
     @Override
     public String toString() {
         if (this.getDescription() == null) {
-            return this.getStartTime() + " - " + this.getEndTime() + ": " + "N/A";
+            return "N/A";
         }
         else{
-            return this.getStartTime() + " - " + this.getEndTime() + ": " + this.getDescription();
+            return this.getDescription();
         }
     }
 }

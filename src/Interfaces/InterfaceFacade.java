@@ -30,9 +30,7 @@ public class InterfaceFacade {
             } else {
                 System.out.print("Please type (User/Operator).");
             }
-
         }
-
     }
 
     /**
