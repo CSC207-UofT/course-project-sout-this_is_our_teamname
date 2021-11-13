@@ -54,7 +54,8 @@ public class TimeTable {
         Events[] weekday = calender.get(activity.getDate());
         //find the index/starting-hour for the event
         int index = activity.getStartTime().getHour();
-        return weekday[index] == null;
+        if (weekday == null){return false;}
+        else{return weekday[index] == null;}
     }
 
     /**
