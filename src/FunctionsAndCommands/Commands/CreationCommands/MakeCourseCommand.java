@@ -46,26 +46,34 @@ public class MakeCourseCommand implements Command {
         // Clears the dataSource so it doesn't build up.
         dataSource.clearData();
 
-        HashMap<String, Course> course_data = new HashMap<>();
+        LinkedHashMap<String, ArrayList<Course>> course_data =
+                new LinkedHashMap<>();
 
         boolean validCourseChecker = true;
         while (validCourseChecker){
             // The user enters the section they want to search
-            Scanner userChoice = new Scanner(System.in);
-            System.out.println("Please Enter the course Name (eg CSC207H1. " +
-                    "Don't forget the 'H1'!!!): ");
-            String course = userChoice.nextLine();
+            String[] questions = {"Please Enter the course Name (eg CSC207H1. " +
+                    "Don't forget the 'H1'!!!): ", "Enter the term of the " +
+                    "course (Fall/Winter):", "Enter the year of the course " +
+                    "(2020/2021): "};
+            String[] responses = new String[3];
+            for (int i = 0; i < questions.length; i++) {
+                Scanner userChoice = new Scanner(System.in);
+                System.out.println(questions[i]);
+                responses[i] = userChoice.nextLine();
+            }
 
             try {
                 // Gets the data from the datasource
-                course_data = dataSource.getData(course);
+                course_data = dataSource.getData(responses[0], responses[1],
+                        responses[2]);
                 validCourseChecker = false;
             } catch (FileNotFoundException e) {
                 System.out.println("Course not found. Please try again!");
             }
         }
 
-        promptUser(course_data, splitByType(course_data));
+        promptUser(course_data);
 
         // Pass this to the TimeTableManager
         for (Course item : this.scheduledCourse){
@@ -79,12 +87,10 @@ public class MakeCourseCommand implements Command {
     // ============================= Helpers ===================================
     /**
      * Prompts the user
-     * @param courseNameToCourseMap the HashMap of course data
-     * @param courseTypeToCourseMap HashMap of each courseTypeToCourseMap
+     * @param courseTypeToCourseMap HashMap of each type of course object to
+     *                              the course object
      */
-    private void promptUser(HashMap<String, Course> courseNameToCourseMap,
-                            LinkedHashMap<String, ArrayList<Course>>
-                                    courseTypeToCourseMap) {
+    private void promptUser(LinkedHashMap<String, ArrayList<Course>> courseTypeToCourseMap) {
         // For each type of course object
         for (String typeOfCourse : courseTypeToCourseMap.keySet()) {
 
@@ -101,36 +107,26 @@ public class MakeCourseCommand implements Command {
                     "choose the section that you want (eg; LEC 0101. Only " +
                     "enter the section code). Enter 'Null' if you do not want to " +
                     "schedule any section: ",
-                    new isValidCourse(courseNameToCourseMap));
+                    new isValidCourse(courseTypeToCourseMap.get(typeOfCourse)));
             String selected = sectionChoice.checkCorrectness();
 
             if (!selected.equals("Null")){
                 // Get the course to schedule
-                Course toSchedule = courseNameToCourseMap.get(selected);
+                ArrayList<Course> section =
+                        courseTypeToCourseMap.get(typeOfCourse);
+                Course toSchedule = findAssociatedCourse(selected, section);
                 this.scheduledCourse.add(toSchedule);
             }
         }
     }
 
-    /**
-     * Split the HashMap of Courses by types
-     *
-     * @param nameToCourse the hashmap of the name of the course to the
-     *                     Course object
-     * @return a LinkedHashMap of the Course type to an ArrayList of Courses
-     */
-    private LinkedHashMap<String, ArrayList<Course>> splitByType(
-            HashMap<String, Course> nameToCourse){
-        LinkedHashMap<String, ArrayList<Course>> typeToItems =
-                new LinkedHashMap<>();
-        for (String sectionName : nameToCourse.keySet()){
-            String typeOfObject = sectionName.substring(0, 3);
-            if (!typeToItems.containsKey(typeOfObject)){
-                typeToItems.put(typeOfObject, new ArrayList<>());
+    private Course findAssociatedCourse(String prompt, ArrayList<Course> list){
+        for (Course course : list){
+            if (course.getSectionName().equals(prompt)){
+                return course;
             }
-            typeToItems.get(typeOfObject).add(nameToCourse.get(sectionName));
         }
-        return typeToItems;
+        return null;
     }
 
     // ============================= Predicates ================================
@@ -141,14 +137,14 @@ public class MakeCourseCommand implements Command {
      * courseNameToCourseMap: A map of the course name to the course object
      */
     private static class isValidCourse extends Predicate{
-        private final HashMap<String, Course> courseNameToCourseMap;
+        private final ArrayList<Course> courseNameToCourseMap;
 
         /**
          * Constructor.
          *
          * @param theMap the map to connect to. See above for description
          */
-        private isValidCourse(HashMap<String, Course> theMap){
+        private isValidCourse(ArrayList<Course> theMap){
             this.courseNameToCourseMap = theMap;
         }
 
@@ -160,7 +156,16 @@ public class MakeCourseCommand implements Command {
          */
         @Override
         public boolean run(String prompt) {
-            return courseNameToCourseMap.containsKey(prompt) || prompt.equals("Null");
+            if (prompt.equals("Null")){
+                return true;
+            } else {
+                for (Course course : courseNameToCourseMap){
+                    if (course.getSectionName().equals(prompt)){
+                        return true;
+                    }
+                }
+                return false;
+            }
         }
     }
 

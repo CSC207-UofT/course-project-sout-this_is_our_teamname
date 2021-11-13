@@ -1,5 +1,6 @@
 package DatabaseController;
 
+import DataCollection.CSVScraper;
 import DataCollection.DataGetter;
 import FunctionsAndCommands.Commands.Command;
 import FunctionsAndCommands.Commands.CreationCommands.GetAllTimeTablesCommand;
@@ -38,7 +39,7 @@ public class CommandFactory {
      */
     public CommandFactory(DatabaseController theController){
         this.courseManager = null;
-        this.dataSource = null;
+        this.dataSource = new CSVScraper();
         this.controller = theController;
         // TODO @Caules please modify as needed
         this.allowedFunctions = new String[]{SCHEDULE_COURSE, SCHEDULE_EVENT,

@@ -1,7 +1,7 @@
 package Interfaces;
 
 
-import DataCollection.CSVScraper;
+
 import GlobalHelpers.Constants;
 import DatabaseController.DatabaseController;
 import DatabaseController.CommandFactory;
@@ -15,21 +15,23 @@ import java.util.Scanner;
 public class UserInterface {
     private final HashMap<String, String[]> usableClasses;
     private final DatabaseController control;
+    private final OperatorInterface operator;
 
     /**
      * Constructor.
      *
      * === Private Attributes ===
      * usableClasses: This is a hashmap of all the usable classes in the
-     * program. TODO Please attach Operator interface to make this more
-     * TODO compact, and obsolete
+     * program.
+     * control: This is a DatabaseController
+     * operator: This is an OperatorInterface
      */
     public UserInterface(){
         this.control = new DatabaseController();
         CommandFactory theFactory = new CommandFactory(control);
-        theFactory.setDataSource(new CSVScraper());
         theFactory.setManager(new TimeTableManager());
         this.control.setFactory(theFactory);
+        this.operator = new OperatorInterface(this.control);
 
         // Will be replaced with something by OperatorInterface in later Phases.
         usableClasses = new HashMap<>();
@@ -74,12 +76,22 @@ public class UserInterface {
     }
 
     /**
-     * Runs the UserInterface. TODO Make method more User Friendly!
+     * Gets the OperatorInterface
+     *
+     * @return A object of the OperatorInterface.
+     */
+    public OperatorInterface getOperator(){
+        return this.operator;
+    }
+
+    /**
+     * Runs the UserInterface.
      *
      */
     public void run(){
         // As long as the program is running
         boolean running = true;
+
 
         while(running) {
             System.out.println("\nUsable Objects: " + this.getUsableClasses());
@@ -114,17 +126,4 @@ public class UserInterface {
         }
     }
 
-    /**
-     * A UserInterface. The main method of the program and the one that the
-     * user interacts with.
-     *
-     * @param args The arguments
-     */
-    public static void main(String[] args) {
-        UserInterface user = new UserInterface();
-
-        user.run();
-
-        System.out.println("Here are your TimeTable!");
-    }
 }
