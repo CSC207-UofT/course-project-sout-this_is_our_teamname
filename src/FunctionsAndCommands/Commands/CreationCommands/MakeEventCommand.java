@@ -1,6 +1,9 @@
 package FunctionsAndCommands.Commands.CreationCommands;
 
 import EntitiesAndObjects.NonCourseObject;
+import EntitiesAndObjects.TimeTableObjects.Activity;
+import EntitiesAndObjects.TimeTableObjects.Events;
+import EntitiesAndObjects.TimeTableObjects.Task;
 import FunctionsAndCommands.Commands.Command;
 import GlobalHelpers.Constants;
 import GlobalHelpers.InputCheckers.Predicate;
@@ -9,8 +12,10 @@ import GlobalHelpers.Search;
 import GlobalHelpers.StringToTime;
 import TimeTableStuff.TimeTableManager;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
@@ -30,7 +35,7 @@ public class MakeEventCommand implements Command {
     final String TYPE = "Type";
 
     private final TimeTableManager manager;
-    private NonCourseObject scheduledObject;
+    private Events scheduledObject;
 
     /**
      * A constructor to set the command
@@ -70,7 +75,7 @@ public class MakeEventCommand implements Command {
             responses.put(prompt, prompts.get(prompt).checkCorrectness());
         }
 
-        NonCourseObject toSchedule = new NonCourseObject(
+        Events toSchedule = getCorrectTimeTableObject(
                 StringToTime.makeTime(responses.get(START_TIME)),
                 StringToTime.makeTime(responses.get(END_TIME)),
                 responses.get(LOCATION),
@@ -99,6 +104,37 @@ public class MakeEventCommand implements Command {
      */
     protected boolean hasScheduled(){
         return scheduledObject != null;
+    }
+
+    /**
+     * A helper method for schedule (Events). Returns event to the
+     * correct type.
+     *
+     * @param event The TimetableObject that needs to be scheduled.
+     * @return event "cast" to the correct type.
+     */
+    private Events getCorrectTimeTableObject(LocalTime startTime,
+                                             LocalTime endTime,
+                                             String theLocation,
+                                             String theDate,
+                                             String term,
+                                             String type) {
+        if (type.equals(Constants.LIFE)){
+            Scanner descriptionScanner = new Scanner(System.in);
+            System.out.println("Please provide a description of your life " +
+                    "activity: ");
+            return new Activity(startTime, endTime,
+                    theLocation, theDate, term,
+                    descriptionScanner.nextLine());
+        }
+        else if (type.equals(Constants.DESCRIPTION_LESS_LIFE)){
+            return new Task(startTime,
+                    endTime, theLocation, theDate,
+                    term);
+        } else {
+            // TODO More types of events.
+            return null;
+        }
     }
 
     // ====================== Predicates =======================================

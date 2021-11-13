@@ -106,45 +106,16 @@ public class TimeTableManager {
      * @param event a Events passed from user interface
      *
      */
-    public void schedule(NonCourseObject event) {
-        Events life = getCorrectTimeTableObject(event);
+    public void schedule(Events life) {
 
         // Add to corresponding timetable(s).
-        if (event.getTerm().equals(Constants.FALL)){
+        if (life.getTerm().equals(Constants.FALL)) {
             timetables.get(Constants.FALL).schedule(life);
-        }
-        else if (event.getTerm().equals(Constants.WINTER)){
+        } else if (life.getTerm().equals(Constants.WINTER)) {
             timetables.get(Constants.WINTER).schedule(life);
-        }
-        else{
-            timetables.get(Constants.FALL).schedule(life);
-            timetables.get(Constants.WINTER).schedule(life);
-        }
-    }
-
-    /**
-     * A helper method for schedule (Events). Returns event to the
-     * correct type.
-     *
-     * @param event The TimetableObject that needs to be scheduled.
-     * @return event "cast" to the correct type.
-     */
-    private Events getCorrectTimeTableObject(NonCourseObject event) {
-        if (event.getType().equals(Constants.LIFE)){
-            Scanner descriptionScanner = new Scanner(System.in);
-            System.out.println("Please provide a description of your life " +
-                    "activity: ");
-            return new Activity(event.getStartTime(), event.getEndTime(),
-                    event.getLocation(), event.getDate(), event.getTerm(),
-                    descriptionScanner.nextLine());
-        }
-        else if (event.getType().equals(Constants.DESCRIPTION_LESS_LIFE)){
-            return new Task(event.getStartTime(),
-                    event.getEndTime(), event.getLocation(), event.getDate(),
-                    event.getTerm());
         } else {
-            // TODO More types of events.
-            return null;
+            timetables.get(Constants.FALL).schedule(life);
+            timetables.get(Constants.WINTER).schedule(life);
         }
     }
 
