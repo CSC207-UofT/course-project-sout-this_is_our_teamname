@@ -37,8 +37,9 @@ public abstract class DataGetter {
      * An abstract class to calibrate the data HashMap!
      *
      * TODO @Sonny NOTICE CHANGE HERE. I added the throw exceptions
-     *
-     * @param courseName the Course Name
+     * @param courseName the name of the course.
+     * @param theTerm the term of the course
+     * @param theYear the course starts.
      */
     abstract void CalibrateData(String courseName, String theTerm,
                                 String theYear) throws FileNotFoundException;
