@@ -9,7 +9,6 @@ public abstract class Events {
     private final LocalTime endTime;
     private final String date;
     private final String term;
-    private String description;
 
     //TODO FIX constructor parameters(and subclasses) after everything works.
     /**
@@ -27,7 +26,6 @@ public abstract class Events {
         this.endTime = endTime;
         this.date = theDate;
         this.term = term;
-        this.description = "";
     }
 
     /**
@@ -48,7 +46,6 @@ public abstract class Events {
         this.endTime = endTime;
         this.date = theDate;
         this.term = term;
-        this.description = "at " + theLocation;
     }
 
     /**
@@ -75,13 +72,6 @@ public abstract class Events {
         return date;
     }
 
-    /**
-     * Get the description for the event
-     * @return  description
-     */
-    public String getDescription() {
-        return description;
-    }
 
     /**
      * Get the term for this event
@@ -97,14 +87,4 @@ public abstract class Events {
      * @return the string representation of the event.
      */
     public abstract String toString();
-
-
-    //TODO need to rethink about how to add to description. since we should be able to change it anytime.
-    /**
-     * Change description for the event. (Currently an one time deal)
-     */
-    public void addDescription(String info) {
-        this.description = info;
-    }
-
 }
