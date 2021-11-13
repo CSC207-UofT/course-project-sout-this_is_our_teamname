@@ -5,6 +5,7 @@ import GlobalHelpers.Constants;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 /**
  * TimeTable class stores all the activities from Monday to Sunday. If there is a conflict when storing a new activity,
@@ -25,6 +26,15 @@ public class TimeTable {
             put(Constants.SUNDAY, new Events[24]);
         }};
     }
+
+    /**
+     * Get the calender of the timetable
+     * @return the calender contained in the timetable
+     */
+    public LinkedHashMap<String, Events[]> getCalender() {
+        return this.calender;
+    }
+
     /**
      * Schedules the given activity into the appropriate weekday.
      * @param activity the given activity
