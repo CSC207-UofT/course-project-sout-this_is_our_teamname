@@ -50,16 +50,11 @@ public class TimeTable {
      * @return true if there is no conflict, false otherwise
      */
     public boolean checkConflicts(Events activity) {
-        int start = activity.getStartTime().getHour();
-        int end = activity.getEndTime().getHour();
-
-        //Check whether there is another activity between startTime and endTime
-        for (int i=start; i<end; i++) {
-            if (this.calender.get(activity.getDate())[i] != null) {
-                return false;
-            }
-        }
-        return true;
+        //find the correct key value from linked hashmap
+        Events[] weekday = calender.get(activity.getDate());
+        //find the index/starting-hour for the event
+        int index = activity.getStartTime().getHour();
+        return weekday[index] == null;
     }
 
     /**

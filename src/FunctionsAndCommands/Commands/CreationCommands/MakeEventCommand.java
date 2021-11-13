@@ -1,6 +1,7 @@
 package FunctionsAndCommands.Commands.CreationCommands;
 
-import EntitiesAndObjects.NonCourseObject;
+import EntitiesAndObjects.TimeTableObjects.Activity;
+import EntitiesAndObjects.TimeTableObjects.Events;
 import FunctionsAndCommands.Commands.Command;
 import GlobalHelpers.Constants;
 import GlobalHelpers.InputCheckers.Predicate;
@@ -9,8 +10,10 @@ import GlobalHelpers.Search;
 import GlobalHelpers.StringToTime;
 import TimeTableStuff.TimeTableManager;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
@@ -18,6 +21,7 @@ import java.util.regex.Pattern;
  *
  * === Private Attributes ===
  * manager: The manager that will eventually schedule the object
+ * scheduledObject: An non course Event waiting to be scheduled
  */
 public class MakeEventCommand implements Command {
     // Some Constants:
@@ -30,7 +34,7 @@ public class MakeEventCommand implements Command {
     final String TYPE = "Type";
 
     private final TimeTableManager manager;
-    private NonCourseObject scheduledObject;
+    private Events scheduledObject;
 
     /**
      * A constructor to set the command
@@ -69,18 +73,32 @@ public class MakeEventCommand implements Command {
         for (String prompt : prompts.keySet()) {
             responses.put(prompt, prompts.get(prompt).checkCorrectness());
         }
+        //TODO need to rework the if-else part.
 
-        NonCourseObject toSchedule = new NonCourseObject(
-                StringToTime.makeTime(responses.get(START_TIME)),
-                StringToTime.makeTime(responses.get(END_TIME)),
-                responses.get(LOCATION),
-                responses.get(DATE),
-                responses.get(TERM),
-                responses.get(TYPE));
+        // if type is the all day task event then set time to 4am - 5am first before using getEvent
+        if (responses.get(TYPE).equals(Constants.TASK)){
 
-        this.scheduledObject = toSchedule;
-
-        manager.schedule(toSchedule);
+            Events toSchedule = this.getEvent(
+                    StringToTime.makeTime("04:00AM"),
+                    StringToTime.makeTime("05:00AM"),
+                    responses.get(LOCATION),
+                    responses.get(DATE),
+                    responses.get(TERM),
+                    responses.get(TYPE));
+            this.scheduledObject = toSchedule;
+            manager.schedule(toSchedule);
+        }
+        else {
+            Events toSchedule = this.getEvent(
+                    StringToTime.makeTime(responses.get(START_TIME)),
+                    StringToTime.makeTime(responses.get(END_TIME)),
+                    responses.get(LOCATION),
+                    responses.get(DATE),
+                    responses.get(TERM),
+                    responses.get(TYPE));
+            this.scheduledObject = toSchedule;
+            manager.schedule(toSchedule);
+        } //TODO toSchedule might be null
     }
 
     // ============================= Helper Methods ============================
@@ -124,6 +142,22 @@ public class MakeEventCommand implements Command {
                     Constants.WEDNESDAY, Constants.THURSDAY, Constants.FRIDAY
                     , Constants.SATURDAY, Constants.SUNDAY};
             return Search.BinarySearch(prompt, validDates);
+        }
+    }
+
+    private Events getEvent(LocalTime startTime, LocalTime endTime, String location,
+                            String date, String term, String type) {
+        if (type.equals(Constants.LIFE)){
+            Scanner descriptionScanner = new Scanner(System.in);
+            System.out.println("Please provide a description of your life " +
+                    "activity: ");
+            return new Activity(startTime, endTime, location, date, term, descriptionScanner.nextLine());
+        }
+        else if (type.equals(Constants.TASK)){
+            return new Activity(startTime, endTime, location, date, term);
+        } else {
+            // TODO More types of events.
+            return null;
         }
     }
 }
