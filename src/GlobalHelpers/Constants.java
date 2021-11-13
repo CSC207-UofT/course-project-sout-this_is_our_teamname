@@ -13,11 +13,10 @@ public class Constants {
     public static final String SUMMER = "Summer";
     public static final String YEAR = "Year";
     public static final String TBA = "TBA";
-    public static final String LIFE = "Activity";
-    public static final String DESCRIPTION_LESS_LIFE = "Descriptionless Activity";
+    public static final String ACTIVITY = "Activity";
+    public static final String TASK = "Task";
     public static final String TIMETABLE_OBJECT = "Events";
     public static final String COURSE = "Course";
-    public static final String NON_COURSE_OBJECT = "Non Course Object";
     public static final String TIMETABLEMANAGER = "Time Table Manager";
     public static final String FUNCTION = "Function";
 }
