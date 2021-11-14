@@ -2,11 +2,13 @@ package DataCollection;
 
 import EntitiesAndObjects.Course;
 import GlobalHelpers.Constants;
+import GlobalHelpers.StringToTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 //import org.jsoup.select.Elements;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -24,83 +26,83 @@ public class WebScraper extends DataGetter{
     @Override
     public void CalibrateData(String courseName, String theTerm,
                               String theYear) throws FileNotFoundException{
+        // format the url and connect to the coursefinder
+        if (Integer.parseInt(theYear) == 2021){
+            theYear = theYear + "9";
+        }
+        else{
+            theYear = theYear + "1";
+        }
+
+        Document doc = null;
         try {
-            // format the url and connect to the coursefinder
-            if (Integer.parseInt(theYear) == 2021){
-                theYear = theYear + "9";
-            }
-            else{
-                theYear = theYear + "1";
-            }
-
-            Document doc = Jsoup.connect(
-                    "https://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId="+ courseName + theTerm.charAt(0)+ theYear)
+             doc = Jsoup.connect(
+                            "https://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId=" + courseName + theTerm.charAt(0) + theYear)
                     .get();
-
-            // If the html has no infomation about term. i.e. files not found.
-            if (doc.select("span#u158").text().isEmpty()){
-                throw new FileNotFoundException();
-            }
-
-            // find element by combination of elements with id.
-            String term = doc.select("span#u158").text();
-            String faculty = doc.select("span#u13").text();
-            String coursecode = doc.select("div#u19").text();
-
-            // clean up the string
-            term = removeCss(term);
-            faculty = removeCss(faculty);
-            coursecode = removeCss(coursecode);
-
-            // loop over the rows in the html and add corresponding sections.
-            int i = 0;
-            while(i <= 100){
-                String section = doc.select("span#u245_line"+ i).text();
-                String prof = doc.select("span#u263_line"+ i).text();
-                String time = doc.select("span#u254_line"+ i).text();
-                String location = doc.select("span#u272_line"+ i).text();
-                String delmethod = doc.select("span#u314_line"+ i).text();
-                if (section.equals("")){
-                    break;
-                }
-
-                // clean up the string.
-                section = removeCss(section);
-                prof = removeCss(prof);
-                delmethod = removeCss(delmethod);
-                if (prof.isEmpty()){
-                    prof = Constants.TBA;
-                }
-                ArrayList<Object[]> times = splitDateTime(removeCss(time));
-                ArrayList<String> locations = splitLocations(removeCss(location));
-
-                // create the location time map.
-                HashMap<Object[], String> locationTimeMap = new HashMap<>();
-                int j = 0;
-                while (j < locations.size()){
-                    locationTimeMap.put(times.get(j), locations.get(j));
-                    j++;
-                }
-
-                //TODO Waitlist and summer course?
-                if (coursecode.contains("Y1")){
-                    addYearCourseToData(section, faculty, locationTimeMap, prof, delmethod, false);
-                }
-                else if (term.contains("Fall")){
-                    addTermedCourseToData("Fall", section, faculty, locationTimeMap, prof, delmethod, false);
-                }
-                else if (term.contains("Winter")){
-                    addTermedCourseToData("Winter", section, faculty, locationTimeMap, prof, delmethod, false);
-                }
-                i++;
-            }
-        }
-        catch (FileNotFoundException e){
-            System.out.println("File Not Found");
-            System.exit(1);
-        }
-        catch (Exception e){
+        } catch (IOException e){
             e.printStackTrace();
+        }
+
+        assert doc != null;
+        // If the html has no information about term. i.e. files not found.
+        if (doc.select("span#u158").text().isEmpty()){
+            throw new FileNotFoundException();
+        }
+
+        // find element by combination of elements with id.
+        String term = doc.select("span#u158").text();
+        String faculty = doc.select("span#u13").text();
+        String coursecode = doc.select("div#u19").text();
+
+        // clean up the string
+        term = removeCss(term);
+        faculty = removeCss(faculty);
+        coursecode = removeCss(coursecode);
+
+        String a = doc.select("span#u254_line1").text();
+        System.out.println(a.length() == 0 );
+
+        // loop over the rows in the html and add corresponding sections.
+        int i = 0;
+        while(i <= 100){
+            String section = doc.select("span#u245_line"+ i).text();
+            String prof = doc.select("span#u263_line"+ i).text();
+            String time = doc.select("span#u254_line"+ i).text();
+            String location = doc.select("span#u272_line"+ i).text();
+            String delmethod = doc.select("span#u314_line"+ i).text();
+            if (section.equals("")){
+                break;
+            }
+
+            // clean up the string.
+            section = removeCss(section);
+            prof = removeCss(prof);
+            delmethod = removeCss(delmethod);
+            if (prof.isEmpty()){
+                prof = Constants.TBA;
+            }
+            ArrayList<Object[]> times = splitDateTime(removeCss(time));
+            ArrayList<String> locations = splitLocations(removeCss(location));
+
+            // create the location time map.
+            HashMap<Object[], String> locationTimeMap = new HashMap<>();
+            int j = 0;
+            while (j < locations.size()){
+                locationTimeMap.put(times.get(j), locations.get(j));
+                j++;
+            }
+
+            // TODO Waitlist and summer course?
+            if (coursecode.contains("Y1")){
+                addYearCourseToData(section, faculty, locationTimeMap, prof, delmethod, false);
+            }
+            else if (term.contains("Fall")){
+                addTermedCourseToData("Fall", section, faculty, locationTimeMap, prof, delmethod, false);
+            }
+            else if (term.contains("Winter")){
+                addTermedCourseToData("Winter", section, faculty, locationTimeMap, prof, delmethod, false);
+            }
+            i++;
         }
     }
     //TODO Waitlist always false
@@ -175,16 +177,17 @@ public class WebScraper extends DataGetter{
     private ArrayList<Object[]> splitDateTime(String formattedTimeString){
         String[] times = formattedTimeString.split("(?=\\s[A-Z])");
         ArrayList<Object[]> retList = new ArrayList<>();
-        if (times.length != 0){
+        if (formattedTimeString.length() != 0){
             for (String element : times) {
                 element = element.trim();
-                String[]elementl = element.split(" ");
-                Object[] l = {formatDate(elementl[0]), elementl[1].split("-")[0] + ":00",
-                        elementl[1].split("-")[1] + ":00"};
+                String[] elementl = element.split(" ");
+                LocalTime formattedStart = formatTime(elementl[1].split("-")[0]);
+                LocalTime formattedEnd = formatTime(elementl[1].split("-")[1]);
+                Object[] l = {formatDate(elementl[0]), formattedStart,
+                        formattedEnd};
                 retList.add(l);
             }
-        }
-        else{
+        } else {
             Object[] l = {Constants.TBA, LocalTime.of(0, 0, 0),
                     LocalTime.of(0, 0, 0)};
             retList.add(l);
@@ -215,6 +218,17 @@ public class WebScraper extends DataGetter{
     }
 
     /**
+     * Returns a time object that
+     * @param time the time as a string
+     * @return the time as a Local time
+     */
+    private LocalTime formatTime(String time){
+        String[] spliced = time.split(":");
+        return LocalTime.of(Integer.parseInt(spliced[0]),
+                Integer.parseInt(spliced[1]), 0, 0);
+    }
+
+    /**
      * Change the letter case of the given date.
      *
      * @param date a string of date with all upper case letter.
@@ -235,7 +249,7 @@ public class WebScraper extends DataGetter{
     public static void main(String[] args) {
         WebScraper a = new WebScraper();
         try {
-            LinkedHashMap<String, ArrayList<Course>> got = a.getData("CSC207H1", "Fall", "2021");
+            LinkedHashMap<String, ArrayList<Course>> got = a.getData("CIV100H1", "Fall", "2021");
             System.out.println(got);
         } catch (FileNotFoundException e){
             System.out.println("File Not Found");

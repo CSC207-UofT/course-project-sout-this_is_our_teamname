@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
  *
  * === Private Attributes ===
  * manager: The manager that will eventually schedule the object
+ * scheduledObject: An non course Event waiting to be scheduled
  */
 public class MakeEventCommand implements Command {
     // Some Constants:
@@ -84,6 +85,7 @@ public class MakeEventCommand implements Command {
 
         this.scheduledObject = toSchedule;
 
+        assert toSchedule != null;
         manager.schedule(toSchedule);
     }
 
@@ -106,15 +108,15 @@ public class MakeEventCommand implements Command {
     }
 
     /**
-     * A helper method for schedule (Events). Returns event to the
-     * correct type.
+     * A helper method for schedule (Events). A Factory to return the event in
+     * the correct type.
      *
-     * @param startTime of the event
-     * @param endTime of the event
-     * @param theLocation of the event
-     * @param theDate weekday of the event
-     * @param term of the school year
-     * @param type of event
+     * @param startTime the start time
+     * @param endTime the end time
+     * @param theLocation the location
+     * @param theDate the date
+     * @param term the term
+     * @param type the type of object
      * @return event "cast" to the correct type.
      */
     private Events getCorrectTimeTableObject(LocalTime startTime,
@@ -123,20 +125,24 @@ public class MakeEventCommand implements Command {
                                              String theDate,
                                              String term,
                                              String type) {
-        if (type.equals(Constants.LIFE)){
+        // Creates the Activity
+        if (type.equals(Constants.ACTIVITY)){
+            // Asks the user for the description of the object
             Scanner descriptionScanner = new Scanner(System.in);
             System.out.println("Please provide a description of your life " +
                     "activity: ");
-            return new Activity(startTime, endTime,
-                    theLocation, theDate, term,
-                    descriptionScanner.nextLine());
+
+            return new Activity(startTime, endTime, theLocation, theDate,
+                    term, descriptionScanner.nextLine());
+        // Creates the task
+        } else if (type.equals(Constants.TASK)){
+            return new Task(startTime, endTime, theLocation, theDate, term);
         }
-        else if (type.equals(Constants.TASK)){
-            return new Task(startTime,
-                    endTime, theLocation, theDate,
-                    term);
-        } else {
-            // TODO More types of events.
+
+        // ...
+        // Add more types of events here!
+
+        else {
             return null;
         }
     }
@@ -164,6 +170,22 @@ public class MakeEventCommand implements Command {
                     Constants.WEDNESDAY, Constants.THURSDAY, Constants.FRIDAY
                     , Constants.SATURDAY, Constants.SUNDAY};
             return Search.BinarySearch(prompt, validDates);
+        }
+    }
+
+    private Events getEvent(LocalTime startTime, LocalTime endTime, String location,
+                            String date, String term, String type) {
+        if (type.equals(Constants.ACTIVITY)){
+            Scanner descriptionScanner = new Scanner(System.in);
+            System.out.println("Please provide a description of your life " +
+                    "activity: ");
+            return new Activity(startTime, endTime, location, date, term, descriptionScanner.nextLine());
+        }
+        else if (type.equals(Constants.TASK)){
+            return new Activity(startTime, endTime, location, date, term);
+        } else {
+            // TODO More types of events.
+            return null;
         }
     }
 }

@@ -33,8 +33,7 @@ public class DataLoader {
      * @param filepath the path of the csv file that needs to be uploaded
      * @param term the term of the input timetable file
      */
-    public TimeTableManager upload(String filepath, String term) throws IOException {
-        TimeTableManager ttbmanager = new TimeTableManager();
+    public void upload(String filepath, String term, TimeTableManager ttbmanager) throws IOException {
         String[][] data = read(filepath);
         if (!Objects.equals(data[0][0], "(Reloadable)")) {
             throw new RuntimeException("File uploaded is not reloadable!");
@@ -95,7 +94,6 @@ public class DataLoader {
                     }
                 }
             }
-            return ttbmanager;
         }
     }
 

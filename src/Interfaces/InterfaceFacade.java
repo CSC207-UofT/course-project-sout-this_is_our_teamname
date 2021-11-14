@@ -1,5 +1,6 @@
 package Interfaces;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class InterfaceFacade {
@@ -14,7 +15,7 @@ public class InterfaceFacade {
     /**
      * Runs the InterfaceFacade
      */
-    public void run() {
+    public void run() throws IOException {
         // As long as the program is running
         boolean running = true;
 
@@ -30,6 +31,19 @@ public class InterfaceFacade {
             } else {
                 System.out.print("Please type (User/Operator).");
             }
+
+            // Check if the user want to exit the program.
+            Scanner continueQuestion = new Scanner(System.in);
+            System.out.println("Do you want to exit? " +
+                    "(true/false):");
+            String continueResponse = continueQuestion.nextLine();
+
+            // Checks if the user wants to add any more courses.
+            if (continueResponse.equals("true")){
+                running = false;
+            }
+
+
         }
     }
 
@@ -39,7 +53,7 @@ public class InterfaceFacade {
      *
      * @param args The arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         UserInterface user = new UserInterface();
 
         InterfaceFacade facade = new InterfaceFacade(user, user.getOperator());

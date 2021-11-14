@@ -59,6 +59,7 @@ public class TimeTable {
      * @param activity the given activity
      * @return true if there is no conflict, false otherwise
      */
+  //TODO rework method, doesn't cover all cases.
     public boolean checkConflicts(Events activity) {
         //find the correct key value from linked hashmap
         Events[] weekday = calender.get(activity.getDate());

@@ -34,8 +34,6 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
         this.description = "";
     }
 
-
-
     /**
      * Construct a TimeTable section for the given time, location, section, professor,
      * faculty and delivery method
@@ -58,24 +56,6 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
         this.waitlist = waitlist;
         this.code = code;
         this.description = "";
-    }
-
-    /**
-     * Construct a TimeTable section for the given time and description
-     *  @param startTime The start time of this section.
-     * @param endTime The end time of the section
-     * @param theDate The date of the section
-     * @param term The term for this course
-     * @param description The description of this section
-     * @param waitlist Whether the course is waitlisted
-     * @param code
-     */
-    public CourseSection(LocalTime startTime, LocalTime endTime,
-                         String theDate, String term, String description, boolean waitlist, String code) {
-        super(startTime, endTime, theDate, term);
-        this.waitlist = waitlist;
-        this.description = description;
-        this.code = code;
     }
 
     @Override
