@@ -64,9 +64,12 @@ public class TimeTable {
         //find the correct key value from linked hashmap
         Events[] weekday = calender.get(activity.getDate());
         //find the index/starting-hour for the event
-        int index = activity.getStartTime().getHour();
-        if (weekday == null){return false;}
-        else{return weekday[index] == null;}
+        int start = activity.getStartTime().getHour();
+        int end = activity.getEndTime().getHour();
+        for (int i = start; i < end; i++ ){
+            if (weekday[i] != null){return false;}
+        }
+        return true;
     }
 
     /**
