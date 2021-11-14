@@ -175,7 +175,7 @@ public class MakeEventCommand implements Command {
 
     private Events getEvent(LocalTime startTime, LocalTime endTime, String location,
                             String date, String term, String type) {
-        if (type.equals(Constants.LIFE)){
+        if (type.equals(Constants.ACTIVITY)){
             Scanner descriptionScanner = new Scanner(System.in);
             System.out.println("Please provide a description of your life " +
                     "activity: ");
