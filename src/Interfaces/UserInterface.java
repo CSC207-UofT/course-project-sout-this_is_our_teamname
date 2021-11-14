@@ -34,6 +34,7 @@ public class UserInterface {
         this.operator = new OperatorInterface(this.control);
     }
 
+
     /**
      * Gets the OperatorInterface
      *
@@ -57,6 +58,7 @@ public class UserInterface {
             buffer.append(s.trim());
         }
 
+
         return buffer.toString();
     }
 
@@ -71,6 +73,7 @@ public class UserInterface {
 
         while(running) {
 
+
             if (this.read() != null) {
                 CommandFactory theFactory = new CommandFactory(control);
                 this.operator.SetDatasource(theFactory, this.read());
@@ -79,6 +82,7 @@ public class UserInterface {
 
             System.out.println("\nCurrent datasource: " + this.operator.getDatasource());
             control.run();
+
 
 
             // User types in the section they want to search

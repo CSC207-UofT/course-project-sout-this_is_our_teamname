@@ -32,12 +32,16 @@ public class CSVScraper extends DataGetter {
      * into the data hashmap.
      *
      * @param courseName the name of the course
+     * @param theTerm the term of the course
+     * @param theYear the course starts.
      */
     @Override
-    public void CalibrateData(String courseName) throws FileNotFoundException {
+    public void CalibrateData(String courseName, String theTerm,
+                              String theYear) throws FileNotFoundException {
         // Opens the file and gets an arraylist of all the lines of the file.
-        String fileName = "src\\DataCollection\\SampleDirectory\\"
-                + courseName + ".csv";
+        String fileName =
+                "src\\DataCollection\\SampleDirectory\\" + theTerm + theYear
+                        + "\\" + courseName + ".csv";
         ArrayList<String> fileData = readFile(fileName);
 
         // Gets the admin things from the Header. The header is formatted in
@@ -207,11 +211,11 @@ public class CSVScraper extends DataGetter {
     public static void main(String[] args) {
         CSVScraper a = new CSVScraper();
         try {
-            HashMap<String, Course> got = a.getData("CSC207H1");
+            HashMap<String, ArrayList<Course>> got = a.getData("CSC207H1", "Fall",
+                    "2021");
             System.out.println(got);
         } catch (FileNotFoundException e){
             System.out.println("File Not Found");
         }
-
     }
 }

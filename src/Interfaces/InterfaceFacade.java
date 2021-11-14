@@ -31,6 +31,7 @@ public class InterfaceFacade {
             } else {
                 System.out.print("Please type (User/Operator).");
             }
+
             // Check if the user want to exit the program.
             Scanner continueQuestion = new Scanner(System.in);
             System.out.println("Do you want to exit? " +
@@ -41,6 +42,7 @@ public class InterfaceFacade {
             if (continueResponse.equals("true")){
                 running = false;
             }
+
 
         }
     }

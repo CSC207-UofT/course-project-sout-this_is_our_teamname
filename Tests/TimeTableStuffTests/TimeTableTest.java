@@ -1,5 +1,7 @@
 package TimeTableStuffTests;
 
+import EntitiesAndObjects.TimeTableObjects.Activity;
+import EntitiesAndObjects.TimeTableObjects.Task;
 import GlobalHelpers.Constants;
 
 import EntitiesAndObjects.TimeTableObjects.CourseSection;
@@ -16,21 +18,26 @@ class TimeTableTest {
 
     @Test
     public void schedule() {
-        LocalTime startTime1 =  LocalTime.of(9,0,0);
-        LocalTime startTime2 = LocalTime.of(10, 0,0);
-        LocalTime endTime1 = LocalTime.of(10,0,0);
-        LocalTime endTime2 = LocalTime.of(11,0,0);
+        LocalTime time5 =  LocalTime.of(5,0,0);
+        LocalTime time6 =  LocalTime.of(6,0,0);
+        LocalTime time9 =  LocalTime.of(9,0,0);
+        LocalTime time10 = LocalTime.of(10, 0,0);
+        LocalTime time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture1 = new CourseSection(startTime1,endTime1,"SS100",Constants.MONDAY,Constants.YEAR,
+        CourseSection lecture1 = new CourseSection(time9,time10,"SS100",Constants.MONDAY,Constants.YEAR,
                 "MAT257","Gauss","Arts and Science","In Person", false);
-        CourseSection lecture2 = new CourseSection(startTime1,endTime2,"SS101",Constants.MONDAY,Constants.FALL,
+        CourseSection lecture2 = new CourseSection(time9,time11,"SS101",Constants.MONDAY,Constants.FALL,
                 "MAT157", "Descartes","Arts and Science","Online", false);
-        CourseSection lecture3 = new CourseSection(startTime2,endTime2,"SS100",Constants.MONDAY,Constants.FALL,
+        CourseSection lecture3 = new CourseSection(time10,time11,"SS100",Constants.MONDAY,Constants.FALL,
                 "MAT137", "Alphonso","Arts and Science","Online", false);
+        Activity activity = new Activity(time6,time9,"home",Constants.MONDAY,Constants.FALL);
+        Task task= new Task(time5,time6,"home",Constants.MONDAY,Constants.FALL);
         TimeTable table = new TimeTable();
         assertTrue(table.schedule(lecture1));
         assertFalse(table.schedule(lecture2));
         assertTrue(table.schedule(lecture3));
+        assertTrue(table.schedule(activity));
+        assertTrue(table.schedule(task));
     }
 
     @Test
