@@ -4,10 +4,7 @@ import EntitiesAndObjects.Course;
 import EntitiesAndObjects.TimeTableObjects.CourseSection;
 
 import GlobalHelpers.Constants;
-import EntitiesAndObjects.NonCourseObject;
 import EntitiesAndObjects.TimeTableObjects.Events;
-import EntitiesAndObjects.TimeTableObjects.Activity;
-import EntitiesAndObjects.TimeTableObjects.Task;
 
 // Importing HashMap class
 import java.util.*;
@@ -103,7 +100,7 @@ public class TimeTableManager {
     /**
      * Get an event from the user interface and schedule it to the corresponding timetable(s).
      *
-     * @param event a Events passed from user interface
+     * @param life a Events passed from user interface
      *
      */
     public void schedule(Events life) {
