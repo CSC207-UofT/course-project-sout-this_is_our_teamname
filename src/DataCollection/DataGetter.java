@@ -3,6 +3,8 @@ package DataCollection;
 import EntitiesAndObjects.Course;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -35,8 +37,9 @@ public abstract class DataGetter {
      * An abstract class to calibrate the data HashMap!
      *
      * TODO @Sonny NOTICE CHANGE HERE. I added the throw exceptions
-     *
-     * @param courseName the Course Name
+     * @param courseName the name of the course.
+     * @param theTerm the term of the course
+     * @param theYear the course starts.
      */
     abstract void CalibrateData(String courseName, String theTerm,
                                 String theYear) throws FileNotFoundException;
@@ -45,13 +48,36 @@ public abstract class DataGetter {
         this.data.clear();
     }
 
+
+    /**
+     * Split the HashMap of Courses by types
+     *
+     * @param nameToCourse the hashmap of the name of the course to the
+     *                     Course object
+     * @return a LinkedHashMap of the Course type to an ArrayList of Courses
+     */
+    private LinkedHashMap<String, ArrayList<Course>> splitByType(
+            HashMap<String, Course> nameToCourse){
+        LinkedHashMap<String, ArrayList<Course>> typeToItems =
+                new LinkedHashMap<>();
+        for (String sectionName : nameToCourse.keySet()){
+            String typeOfObject = sectionName.substring(0, 3);
+            if (!typeToItems.containsKey(typeOfObject)){
+                typeToItems.put(typeOfObject, new ArrayList<>());
+            }
+            typeToItems.get(typeOfObject).add(nameToCourse.get(sectionName));
+        }
+        return typeToItems;
+    }
+
     /**
      * A Getter class for the Data HashMap
      * @param courseName the name of the Course
      * @return the Data HashMap
      */
-    public LinkedHashMap<String, Course> getData(String courseName, String term, String year) throws FileNotFoundException {
+    public LinkedHashMap<String, ArrayList<Course>> getData(String courseName,
+                                                  String term, String year) throws FileNotFoundException {
         CalibrateData(courseName, term, year);
-        return this.data;
+        return splitByType(this.data);
     }
 }

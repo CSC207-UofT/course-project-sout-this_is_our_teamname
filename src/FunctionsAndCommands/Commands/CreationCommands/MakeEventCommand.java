@@ -1,6 +1,8 @@
 package FunctionsAndCommands.Commands.CreationCommands;
 
-import EntitiesAndObjects.NonCourseObject;
+import EntitiesAndObjects.TimeTableObjects.Activity;
+import EntitiesAndObjects.TimeTableObjects.Events;
+import EntitiesAndObjects.TimeTableObjects.Task;
 import FunctionsAndCommands.Commands.Command;
 import GlobalHelpers.Constants;
 import GlobalHelpers.InputCheckers.Predicate;
@@ -9,8 +11,10 @@ import GlobalHelpers.Search;
 import GlobalHelpers.StringToTime;
 import TimeTableStuff.TimeTableManager;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
@@ -18,6 +22,7 @@ import java.util.regex.Pattern;
  *
  * === Private Attributes ===
  * manager: The manager that will eventually schedule the object
+ * scheduledObject: An non course Event waiting to be scheduled
  */
 public class MakeEventCommand implements Command {
     // Some Constants:
@@ -30,7 +35,7 @@ public class MakeEventCommand implements Command {
     final String TYPE = "Type";
 
     private final TimeTableManager manager;
-    private NonCourseObject scheduledObject;
+    private Events scheduledObject;
 
     /**
      * A constructor to set the command
@@ -70,7 +75,7 @@ public class MakeEventCommand implements Command {
             responses.put(prompt, prompts.get(prompt).checkCorrectness());
         }
 
-        NonCourseObject toSchedule = new NonCourseObject(
+        Events toSchedule = getCorrectTimeTableObject(
                 StringToTime.makeTime(responses.get(START_TIME)),
                 StringToTime.makeTime(responses.get(END_TIME)),
                 responses.get(LOCATION),
@@ -80,6 +85,7 @@ public class MakeEventCommand implements Command {
 
         this.scheduledObject = toSchedule;
 
+        assert toSchedule != null;
         manager.schedule(toSchedule);
     }
 
@@ -99,6 +105,46 @@ public class MakeEventCommand implements Command {
      */
     protected boolean hasScheduled(){
         return scheduledObject != null;
+    }
+
+    /**
+     * A helper method for schedule (Events). A Factory to return the event in
+     * the correct type.
+     *
+     * @param startTime the start time
+     * @param endTime the end time
+     * @param theLocation the location
+     * @param theDate the date
+     * @param term the term
+     * @param type the type of object
+     * @return event "cast" to the correct type.
+     */
+    private Events getCorrectTimeTableObject(LocalTime startTime,
+                                             LocalTime endTime,
+                                             String theLocation,
+                                             String theDate,
+                                             String term,
+                                             String type) {
+        // Creates the Activity
+        if (type.equals(Constants.ACTIVITY)){
+            // Asks the user for the description of the object
+            Scanner descriptionScanner = new Scanner(System.in);
+            System.out.println("Please provide a description of your life " +
+                    "activity: ");
+
+            return new Activity(startTime, endTime, theLocation, theDate,
+                    term, descriptionScanner.nextLine());
+        // Creates the task
+        } else if (type.equals(Constants.TASK)){
+            return new Task(startTime, endTime, theLocation, theDate, term);
+        }
+
+        // ...
+        // Add more types of events here!
+
+        else {
+            return null;
+        }
     }
 
     // ====================== Predicates =======================================
@@ -124,6 +170,22 @@ public class MakeEventCommand implements Command {
                     Constants.WEDNESDAY, Constants.THURSDAY, Constants.FRIDAY
                     , Constants.SATURDAY, Constants.SUNDAY};
             return Search.BinarySearch(prompt, validDates);
+        }
+    }
+
+    private Events getEvent(LocalTime startTime, LocalTime endTime, String location,
+                            String date, String term, String type) {
+        if (type.equals(Constants.ACTIVITY)){
+            Scanner descriptionScanner = new Scanner(System.in);
+            System.out.println("Please provide a description of your life " +
+                    "activity: ");
+            return new Activity(startTime, endTime, location, date, term, descriptionScanner.nextLine());
+        }
+        else if (type.equals(Constants.TASK)){
+            return new Activity(startTime, endTime, location, date, term);
+        } else {
+            // TODO More types of events.
+            return null;
         }
     }
 }

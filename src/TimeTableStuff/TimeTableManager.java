@@ -4,16 +4,12 @@ import EntitiesAndObjects.Course;
 import EntitiesAndObjects.TimeTableObjects.CourseSection;
 
 import GlobalHelpers.Constants;
-import EntitiesAndObjects.NonCourseObject;
 import EntitiesAndObjects.TimeTableObjects.Events;
-import EntitiesAndObjects.TimeTableObjects.Activity;
-import EntitiesAndObjects.TimeTableObjects.Task;
-
 
 // Importing HashMap class
 import java.util.*;
 
-public class TimeTableManager{
+public class TimeTableManager {
     private final HashMap<String, TimeTable> timetables;
     /**
      * Creates a new TimeTableManager with two default TimeTables for Fall and Winter.
@@ -79,72 +75,21 @@ public class TimeTableManager{
     }
 
     /**
-     * Get the course from interface and schedule it to the corresponding timetable(s).
-     *
-     * @param c a Course object passed from user interface
-     */
-    public void schedule(Course c) {
-        ArrayList<CourseSection> list = c.split();
-        if (c.getTerm().equals(Constants.FALL)) {
-            for (CourseSection x : list) {
-                timetables.get(Constants.FALL).schedule(x);
-            }
-        } else if (c.getTerm().equals(Constants.WINTER)) {
-            for (CourseSection x : list) {
-                timetables.get(Constants.FALL).schedule(x);
-            }
-        } else {
-            for (CourseSection x : list) {
-                timetables.get(Constants.FALL).schedule(x);
-                timetables.get(Constants.WINTER).schedule(x);
-            }
-        }
-    }
-
-    /**
      * Get an event from the user interface and schedule it to the corresponding timetable(s).
      *
-     * @param event a Events passed from user interface
+     * @param event an Events passed from user interface
      *
      */
-    public void schedule(NonCourseObject event) {
-        Events life = getCorrectTimeTableObject(event);
-
-        // Add to corresponding timetable(s).
+    public void schedule(Events event) {
         if (event.getTerm().equals(Constants.FALL)){
-            timetables.get(Constants.FALL).schedule(life);
+            timetables.get(Constants.FALL).schedule(event);
         }
         else if (event.getTerm().equals(Constants.WINTER)){
-            timetables.get(Constants.WINTER).schedule(life);
+            timetables.get(Constants.WINTER).schedule(event);
         }
         else{
-            timetables.get(Constants.FALL).schedule(life);
-            timetables.get(Constants.WINTER).schedule(life);
-        }
-    }
-
-    /**
-     * A helper method for schedule (Events). Returns event to the
-     * correct type.
-     *
-     * @param event The TimetableObject that needs to be scheduled.
-     * @return event "cast" to the correct type.
-     */
-    private Events getCorrectTimeTableObject(NonCourseObject event) {
-        if (event.getType().equals(Constants.ACTIVITY)){
-            Scanner descriptionScanner = new Scanner(System.in);
-            System.out.println("Please provide a description of your life " +
-                    "activity: ");
-            return new Activity(event.getStartTime(), event.getEndTime(),
-                    descriptionScanner.nextLine(), event.getDate(), event.getTerm());
-        }
-        else if (event.getType().equals(Constants.TASK)){
-            return new Task(event.getStartTime(),
-                    event.getEndTime(), event.getDescription(), event.getDate(),
-                    event.getTerm());
-        } else {
-            // TODO More types of events.
-            return null;
+            timetables.get(Constants.FALL).schedule(event);
+            timetables.get(Constants.WINTER).schedule(event);
         }
     }
 
@@ -172,39 +117,4 @@ public class TimeTableManager{
         }
         return times.toString();
     }
-//
-//    /**
-//     * Check if a course from the given courses can be added to the TimeTable
-//     * without conflicts.
-//     *
-//     * @param courses The courses to be added to the TimeTable
-//     * @return true if one of the courses can be added, false otherwise
-//     */
-//    public boolean fail_fast(Course[] courses) {
-//        for (Course course : courses) {
-//            ArrayList<CourseSection> courseSections = course.split();
-//            for (CourseSection section : courseSections) {
-//                String term = section.getTerm();
-//                if (this.timetables.get(term).checkConflicts(section)) {
-//                    return false;
-//                }
-//            }
-//        }
-//        return true;
-//    }
-//
-//    public boolean is_solved(Course[] courses){
-//        for (Course course : courses) {
-//            String term = course.getTerm();
-//            String code = course.getCode();
-//            if (this.timetables.get(term);
-//
-//        }
-//        return true;
-//    }
-//
-//    public Puzzle[] extensions(Course[] courses){
-//        Puzzle[] p = new Puzzle[2];
-//        return p;
-//    }
 }

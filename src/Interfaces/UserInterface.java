@@ -1,7 +1,5 @@
 package Interfaces;
 
-
-
 import GlobalHelpers.Constants;
 import DatabaseController.DatabaseController;
 import DatabaseController.CommandFactory;
@@ -9,11 +7,13 @@ import GlobalHelpers.InvalidInputException;
 import GlobalHelpers.Search;
 import TimeTableStuff.TimeTableManager;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class UserInterface {
-    private final HashMap<String, String[]> usableClasses;
     private final DatabaseController control;
     private final OperatorInterface operator;
 
@@ -32,48 +32,8 @@ public class UserInterface {
         theFactory.setManager(new TimeTableManager());
         this.control.setFactory(theFactory);
         this.operator = new OperatorInterface(this.control);
-
-        // Will be replaced with something by OperatorInterface in later Phases.
-        usableClasses = new HashMap<>();
-        usableClasses.put(Constants.COURSE, new String[]{Constants.COURSE});
-        usableClasses.put(Constants.NON_COURSE_OBJECT,
-                new String[]{Constants.ACTIVITY,
-                        Constants.TASK});
     }
 
-    /**
-     * A helper method to help get the correct value key for the given
-     * function. For instance, if the user wants to schedule an event, it
-     * will correct the input so that it will return the 'Non Course Object'
-     * Constant.
-     *
-     * @param input The input that the uper gave
-     * @return The corresponding constant based on the input of the user.
-     * Returns null if the input in invalid.
-     */
-    private String checkInputValue(String input){
-        for (String key : usableClasses.keySet()){
-            if (Search.BinarySearch(input, usableClasses.get(key))){
-                return key;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Gets a printable string representation of the usable classes
-     *
-     * @return A string representation of all the usable classes.
-     */
-    private String getUsableClasses(){
-        StringBuilder usableClassesString = new StringBuilder();
-        for (String[] item : usableClasses.values()){
-            for (String usableItem : item){
-                usableClassesString.append(usableItem).append(", ");
-            }
-        }
-        return usableClassesString.toString();
-    }
 
     /**
      * Gets the OperatorInterface
@@ -85,27 +45,46 @@ public class UserInterface {
     }
 
     /**
+     * Read  the datasource.txt
+     *
+     * @return A string in datasource.txt.
+     */
+    private String read() throws IOException {
+
+        StringBuilder buffer = new StringBuilder();
+        BufferedReader bf= new BufferedReader(new FileReader("src/Interfaces/datasource.txt"));
+        String s;
+        while((s = bf.readLine())!=null){
+            buffer.append(s.trim());
+        }
+
+
+        return buffer.toString();
+    }
+
+    /**
      * Runs the UserInterface.
      *
      */
-    public void run(){
+    public void run() throws IOException {
         // As long as the program is running
         boolean running = true;
 
 
         while(running) {
-            System.out.println("\nUsable Objects: " + this.getUsableClasses());
-            Scanner objectScanner = new Scanner(System.in);
-            System.out.println("Please enter what type of object: ");
-            String schedulingObject = objectScanner.nextLine();
 
-            String dataCategory = checkInputValue(schedulingObject);
 
-            try {
-                control.runCommand(dataCategory);
-            } catch (InvalidInputException e){
-                ; // TODO FIXME
+            if (this.read() != null) {
+                CommandFactory theFactory = new CommandFactory(control);
+                this.operator.SetDatasource(theFactory, this.read());
+
             }
+
+            System.out.println("\nCurrent datasource: " + this.operator.getDatasource());
+            control.run();
+
+
+
             // User types in the section they want to search
             Scanner continueQuestion = new Scanner(System.in);
             System.out.println("Do you want to add another object? " +
