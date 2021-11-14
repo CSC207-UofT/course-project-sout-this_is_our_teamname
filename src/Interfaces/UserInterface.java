@@ -9,6 +9,7 @@ import GlobalHelpers.InvalidInputException;
 import GlobalHelpers.Search;
 import TimeTableStuff.TimeTableManager;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -75,6 +76,17 @@ public class UserInterface {
         return usableClassesString.toString();
     }
 
+    private String read() throws IOException {
+
+        StringBuilder buffer = new StringBuilder();
+        BufferedReader bf= new BufferedReader(new FileReader("src/Interfaces/datasource.txt"));
+        String s;
+        while((s = bf.readLine())!=null){//使用readLine方法，一次读一行
+            buffer.append(s.trim());
+        }
+
+        return buffer.toString();
+    }
     /**
      * Gets the OperatorInterface
      *
@@ -88,12 +100,20 @@ public class UserInterface {
      * Runs the UserInterface.
      *
      */
-    public void run(){
+    public void run() throws IOException {
         // As long as the program is running
         boolean running = true;
 
 
         while(running) {
+
+            if (this.read() != null) {
+                CommandFactory theFactory = new CommandFactory(control);
+                this.operator.SetDatasource(theFactory, this.read());
+
+            }
+
+
             System.out.println("\nCurrent datasource: " + this.operator.getDatasource());
             System.out.println("\nUsable Objects: " + this.getUsableClasses());
             Scanner objectScanner = new Scanner(System.in);

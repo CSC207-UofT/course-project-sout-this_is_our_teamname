@@ -1,6 +1,10 @@
 package Interfaces;
 
+
+
+import java.io.IOException;
 import java.util.Scanner;
+
 
 public class InterfaceFacade {
     private final UserInterface userInterface;
@@ -11,14 +15,16 @@ public class InterfaceFacade {
         this.operatorInterface = operatorInterface;
     }
 
+
     /**
      * Runs the InterfaceFacade
      */
-    public void run() {
+    public void run() throws IOException, ClassNotFoundException {
         // As long as the program is running
         boolean running = true;
 
         while (running) {
+
             System.out.println("Who are you (User/Operator): ");
             Scanner objectScanner = new Scanner(System.in);
             String type = objectScanner.nextLine();
@@ -52,9 +58,8 @@ public class InterfaceFacade {
      *
      * @param args The arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         UserInterface user = new UserInterface();
-
         InterfaceFacade facade = new InterfaceFacade(user, user.getOperator());
 
         facade.run();
