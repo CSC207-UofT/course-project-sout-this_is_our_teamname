@@ -5,7 +5,6 @@ import EntitiesAndObjects.TimeTableObjects.CourseSection;
 import TimeTableStuff.TimeTableManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class TimeTablePuzzle {

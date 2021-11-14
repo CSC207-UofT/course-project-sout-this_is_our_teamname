@@ -6,6 +6,7 @@ import EntitiesAndObjects.Course;
 import GlobalHelpers.Constants;
 
 import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -126,7 +127,7 @@ public class TimeTable {
      * @return true if the course is present, false otherwise
      */
     public boolean checkCourseSection(Course course) {
-        String courseCode = course.getCode();
+        String courseCode = course.getSectionName();
         for (Events[] day : this.calender.values()) {
             for (Events hour : day) {
                 if (hour instanceof CourseSection) {
