@@ -5,8 +5,6 @@ import EntitiesAndObjects.TimeTableObjects.CourseSection;
 
 import GlobalHelpers.Constants;
 import EntitiesAndObjects.TimeTableObjects.Events;
-import EntitiesAndObjects.TimeTableObjects.Activity;
-import EntitiesAndObjects.TimeTableObjects.Task;
 
 // Importing HashMap class
 import java.util.*;

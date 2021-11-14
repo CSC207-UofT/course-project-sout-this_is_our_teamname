@@ -2,6 +2,7 @@ package FunctionsAndCommands.Commands.CreationCommands;
 
 import EntitiesAndObjects.TimeTableObjects.Activity;
 import EntitiesAndObjects.TimeTableObjects.Events;
+import EntitiesAndObjects.TimeTableObjects.Task;
 import FunctionsAndCommands.Commands.Command;
 import GlobalHelpers.Constants;
 import GlobalHelpers.InputCheckers.Predicate;
@@ -73,32 +74,19 @@ public class MakeEventCommand implements Command {
         for (String prompt : prompts.keySet()) {
             responses.put(prompt, prompts.get(prompt).checkCorrectness());
         }
-        //TODO need to rework the if-else part.
 
-        // if type is the all day task event then set time to 4am - 5am first before using getEvent
-        if (responses.get(TYPE).equals(Constants.TASK)){
+        Events toSchedule = getCorrectTimeTableObject(
+                StringToTime.makeTime(responses.get(START_TIME)),
+                StringToTime.makeTime(responses.get(END_TIME)),
+                responses.get(LOCATION),
+                responses.get(DATE),
+                responses.get(TERM),
+                responses.get(TYPE));
 
-            Events toSchedule = this.getEvent(
-                    StringToTime.makeTime("04:00AM"),
-                    StringToTime.makeTime("05:00AM"),
-                    responses.get(LOCATION),
-                    responses.get(DATE),
-                    responses.get(TERM),
-                    responses.get(TYPE));
-            this.scheduledObject = toSchedule;
-            manager.schedule(toSchedule);
-        }
-        else {
-            Events toSchedule = this.getEvent(
-                    StringToTime.makeTime(responses.get(START_TIME)),
-                    StringToTime.makeTime(responses.get(END_TIME)),
-                    responses.get(LOCATION),
-                    responses.get(DATE),
-                    responses.get(TERM),
-                    responses.get(TYPE));
-            this.scheduledObject = toSchedule;
-            manager.schedule(toSchedule);
-        } //TODO toSchedule might be null
+        this.scheduledObject = toSchedule;
+
+        assert toSchedule != null;
+        manager.schedule(toSchedule);
     }
 
     // ============================= Helper Methods ============================
@@ -117,6 +105,46 @@ public class MakeEventCommand implements Command {
      */
     protected boolean hasScheduled(){
         return scheduledObject != null;
+    }
+
+    /**
+     * A helper method for schedule (Events). A Factory to return the event in
+     * the correct type.
+     *
+     * @param startTime the start time
+     * @param endTime the end time
+     * @param theLocation the location
+     * @param theDate the date
+     * @param term the term
+     * @param type the type of object
+     * @return event "cast" to the correct type.
+     */
+    private Events getCorrectTimeTableObject(LocalTime startTime,
+                                             LocalTime endTime,
+                                             String theLocation,
+                                             String theDate,
+                                             String term,
+                                             String type) {
+        // Creates the Activity
+        if (type.equals(Constants.ACTIVITY)){
+            // Asks the user for the description of the object
+            Scanner descriptionScanner = new Scanner(System.in);
+            System.out.println("Please provide a description of your life " +
+                    "activity: ");
+
+            return new Activity(startTime, endTime, theLocation, theDate,
+                    term, descriptionScanner.nextLine());
+        // Creates the task
+        } else if (type.equals(Constants.TASK)){
+            return new Task(startTime, endTime, theLocation, theDate, term);
+        }
+
+        // ...
+        // Add more types of events here!
+
+        else {
+            return null;
+        }
     }
 
     // ====================== Predicates =======================================

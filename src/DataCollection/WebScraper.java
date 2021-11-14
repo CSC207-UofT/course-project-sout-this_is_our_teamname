@@ -52,6 +52,9 @@ public class WebScraper extends DataGetter{
             faculty = removeCss(faculty);
             coursecode = removeCss(coursecode);
 
+            String a = doc.select("span#u254_line1").text();
+            System.out.println(a.length() == 0 );
+
             // loop over the rows in the html and add corresponding sections.
             int i = 0;
             while(i <= 100){
@@ -175,12 +178,12 @@ public class WebScraper extends DataGetter{
     private ArrayList<Object[]> splitDateTime(String formattedTimeString){
         String[] times = formattedTimeString.split("(?=\\s[A-Z])");
         ArrayList<Object[]> retList = new ArrayList<>();
-        if (times.length != 0){
+        if (formattedTimeString.length() != 0){
             for (String element : times) {
                 element = element.trim();
                 String[]elementl = element.split(" ");
-                Object[] l = {formatDate(elementl[0]), elementl[1].split("-")[0] + ":00",
-                        elementl[1].split("-")[1] + ":00"};
+                Object[] l = {formatDate(elementl[0]), elementl[1].split("-")[0],
+                        elementl[1].split("-")[1]};
                 retList.add(l);
             }
         }
@@ -235,7 +238,7 @@ public class WebScraper extends DataGetter{
     public static void main(String[] args) {
         WebScraper a = new WebScraper();
         try {
-            HashMap<String, Course> got = a.getData("CSC207H1", "Fall", "2021");
+            LinkedHashMap<String, ArrayList<Course>> got = a.getData("CIV100H1", "Fall", "2021");
             System.out.println(got);
         } catch (FileNotFoundException e){
             System.out.println("File Not Found");

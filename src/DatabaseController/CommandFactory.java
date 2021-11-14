@@ -7,6 +7,9 @@ import FunctionsAndCommands.Commands.CreationCommands.GetAllTimeTablesCommand;
 import FunctionsAndCommands.Commands.CreationCommands.MakeCourseCommand;
 import FunctionsAndCommands.Commands.CreationCommands.MakeEventCommand;
 import FunctionsAndCommands.Commands.CreationCommands.PrintHistoryCommand;
+import FunctionsAndCommands.Commands.FunctionCommands.DownloadDataCommand;
+import FunctionsAndCommands.Commands.FunctionCommands.LoadDataCommand;
+import FunctionsAndCommands.Commands.FunctionCommands.SaveDataCommand;
 import GlobalHelpers.Constants;
 import GlobalHelpers.InvalidInputException;
 import TimeTableStuff.TimeTableManager;
@@ -27,23 +30,30 @@ public class CommandFactory {
     private final DatabaseController controller;
     private final String[] allowedFunctions;
 
-    final String SCHEDULE_COURSE = Constants.COURSE;
-    final String SCHEDULE_EVENT = Constants.NON_COURSE_OBJECT;
-    final String GET_ALL_TIMETABLE = "Get All TimeTables";
-    final String PRINT_HISTORY = "Get History";
+    static final String SCHEDULE_COURSE = "Schedule Course";
+    static final String SCHEDULE_EVENT = "Schedule Event";
+    static final String GET_ALL_TIMETABLE = "Get All TimeTables";
+    static final String PRINT_HISTORY = "Get History";
+    static final String LOAD_DATA = "Load Data";
+    static final String SAVE_DATA = "Save";
+    static final String DOWNLOAD_TIMETABLE = "Download Timetable";
 
     /**
      * Constructor. Sets the TimeTable Manager and DataSource of the file
-     * TODO @Caules Use OperatorInterface
-     * TODO @Aiden Add DataLoaders here too!
      */
     public CommandFactory(DatabaseController theController){
         this.courseManager = null;
         this.dataSource = new CSVScraper();
         this.controller = theController;
-        // TODO @Caules please modify as needed
-        this.allowedFunctions = new String[]{SCHEDULE_COURSE, SCHEDULE_EVENT,
-                GET_ALL_TIMETABLE, PRINT_HISTORY};
+        this.allowedFunctions = new String[]{
+                SCHEDULE_COURSE,
+                SCHEDULE_EVENT,
+                LOAD_DATA,
+                SAVE_DATA,
+                DOWNLOAD_TIMETABLE,
+                GET_ALL_TIMETABLE,
+                PRINT_HISTORY
+        };
     }
 
     /**
@@ -73,7 +83,12 @@ public class CommandFactory {
                 return new GetAllTimeTablesCommand(courseManager);
             case PRINT_HISTORY:
                 return new PrintHistoryCommand(controller);
-
+            case LOAD_DATA:
+                return new LoadDataCommand(courseManager);
+            case SAVE_DATA:
+                return new SaveDataCommand(courseManager);
+            case DOWNLOAD_TIMETABLE:
+                return new DownloadDataCommand(courseManager);
 
             // ... ADD YOUR NEW OBJECTS HERE!
 
