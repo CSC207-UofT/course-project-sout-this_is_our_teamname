@@ -9,8 +9,8 @@ public abstract class Events {
     private final LocalTime endTime;
     private final String date;
     private final String term;
+    private final String description;
 
-    //TODO FIX constructor parameters(and subclasses) after everything works.
     /**
      * Construct an event with time and a description.
      * @param startTime is the start time of the event.
@@ -26,7 +26,9 @@ public abstract class Events {
         this.endTime = endTime;
         this.date = theDate;
         this.term = term;
+        this.description = null;
     }
+
 
     /**
      * Construct an event with time, location and a description.
@@ -46,6 +48,7 @@ public abstract class Events {
         this.endTime = endTime;
         this.date = theDate;
         this.term = term;
+        this.description = "at " + theLocation;
     }
 
     /**
@@ -72,6 +75,13 @@ public abstract class Events {
         return date;
     }
 
+    /**
+     * Get the description for the event
+     * @return  description
+     */
+    public String getDescription() {
+        return description;
+    }
 
     /**
      * Get the term for this event

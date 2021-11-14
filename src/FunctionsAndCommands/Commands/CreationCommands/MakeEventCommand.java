@@ -1,6 +1,5 @@
 package FunctionsAndCommands.Commands.CreationCommands;
 
-import EntitiesAndObjects.NonCourseObject;
 import EntitiesAndObjects.TimeTableObjects.Activity;
 import EntitiesAndObjects.TimeTableObjects.Events;
 import EntitiesAndObjects.TimeTableObjects.Task;
@@ -110,7 +109,12 @@ public class MakeEventCommand implements Command {
      * A helper method for schedule (Events). Returns event to the
      * correct type.
      *
-     * @param event The TimetableObject that needs to be scheduled.
+     * @param startTime of the event
+     * @param endTime of the event
+     * @param theLocation of the event
+     * @param theDate weekday of the event
+     * @param term of the school year
+     * @param type of event
      * @return event "cast" to the correct type.
      */
     private Events getCorrectTimeTableObject(LocalTime startTime,
@@ -127,7 +131,7 @@ public class MakeEventCommand implements Command {
                     theLocation, theDate, term,
                     descriptionScanner.nextLine());
         }
-        else if (type.equals(Constants.DESCRIPTION_LESS_LIFE)){
+        else if (type.equals(Constants.TASK)){
             return new Task(startTime,
                     endTime, theLocation, theDate,
                     term);
