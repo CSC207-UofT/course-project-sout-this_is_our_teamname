@@ -75,44 +75,21 @@ public class TimeTableManager {
     }
 
     /**
-     * Get the course from interface and schedule it to the corresponding timetable(s).
-     *
-     * @param c a Course object passed from user interface
-     */
-    public void schedule(Course c) {
-        ArrayList<CourseSection> list = c.split();
-        if (c.getTerm().equals(Constants.FALL)) {
-            for (CourseSection x : list) {
-                timetables.get(Constants.FALL).schedule(x);
-            }
-        } else if (c.getTerm().equals(Constants.WINTER)) {
-            for (CourseSection x : list) {
-                timetables.get(Constants.FALL).schedule(x);
-            }
-        } else {
-            for (CourseSection x : list) {
-                timetables.get(Constants.FALL).schedule(x);
-                timetables.get(Constants.WINTER).schedule(x);
-            }
-        }
-    }
-
-    /**
      * Get an event from the user interface and schedule it to the corresponding timetable(s).
      *
-     * @param life a Events passed from user interface
+     * @param event an Events passed from user interface
      *
      */
-    public void schedule(Events life) {
-
-        // Add to corresponding timetable(s).
-        if (life.getTerm().equals(Constants.FALL)) {
-            timetables.get(Constants.FALL).schedule(life);
-        } else if (life.getTerm().equals(Constants.WINTER)) {
-            timetables.get(Constants.WINTER).schedule(life);
-        } else {
-            timetables.get(Constants.FALL).schedule(life);
-            timetables.get(Constants.WINTER).schedule(life);
+    public void schedule(Events event) {
+        if (event.getTerm().equals(Constants.FALL)){
+            timetables.get(Constants.FALL).schedule(event);
+        }
+        else if (event.getTerm().equals(Constants.WINTER)){
+            timetables.get(Constants.WINTER).schedule(event);
+        }
+        else{
+            timetables.get(Constants.FALL).schedule(event);
+            timetables.get(Constants.WINTER).schedule(event);
         }
     }
 

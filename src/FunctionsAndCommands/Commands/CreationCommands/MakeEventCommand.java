@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
  *
  * === Private Attributes ===
  * manager: The manager that will eventually schedule the object
+ * scheduledObject: An non course Event waiting to be scheduled
  */
 public class MakeEventCommand implements Command {
     // Some Constants:
@@ -169,6 +170,22 @@ public class MakeEventCommand implements Command {
                     Constants.WEDNESDAY, Constants.THURSDAY, Constants.FRIDAY
                     , Constants.SATURDAY, Constants.SUNDAY};
             return Search.BinarySearch(prompt, validDates);
+        }
+    }
+
+    private Events getEvent(LocalTime startTime, LocalTime endTime, String location,
+                            String date, String term, String type) {
+        if (type.equals(Constants.LIFE)){
+            Scanner descriptionScanner = new Scanner(System.in);
+            System.out.println("Please provide a description of your life " +
+                    "activity: ");
+            return new Activity(startTime, endTime, location, date, term, descriptionScanner.nextLine());
+        }
+        else if (type.equals(Constants.TASK)){
+            return new Activity(startTime, endTime, location, date, term);
+        } else {
+            // TODO More types of events.
+            return null;
         }
     }
 }

@@ -2,10 +2,39 @@ package EntitiesAndObjects.TimeTableObjects;
 
 import java.time.LocalTime;
 
-
+/**
+ * This is a specific time interval of a specific section for a course.
+ *
+ * === Private Attributes ===
+ * Description contains all the minor info of the course
+ * code is the code of the course and the section
+ * waitlist is whether this course is waitlisted or not.
+ */
 public class CourseSection extends Events implements java.lang.Comparable<CourseSection> {
-    private final String description;
     private final boolean waitlist;
+    private final String code;
+    private final String description;
+
+    /**
+     * Construct a TimeTable section for the given time, location, section, professor,
+     * faculty and delivery method
+     *
+     * @param startTime The start time of this section.
+     * @param endTime The end time of the section
+     * @param theDate The date of the section
+     * @param term The term for this course
+     * @param code The code for this course
+     * @param waitlist Whether the course is waitlisted
+     */
+    public CourseSection(LocalTime startTime, LocalTime endTime,
+                         String theDate, String term, String code, boolean waitlist) {
+        super(startTime, endTime, theDate, term);
+        this.code = code;
+        this.waitlist = waitlist;
+        this.description = "";
+    }
+
+
 
     /**
      * Construct a TimeTable section for the given time, location, section, professor,
@@ -27,8 +56,8 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
                          String faculty, String deliveryMethod, boolean waitlist) {
         super(startTime, endTime, location, theDate, term);
         this.waitlist = waitlist;
-        this.description = code + " of " + faculty + " with " + professor + " by " + deliveryMethod + " " +
-                this.getDescription();
+        this.code = code;
+        this.description = "";
     }
 
     /**
@@ -97,14 +126,4 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
             return 1;
         }
     }
-
-//    public static void main(String[] args) {
-//        LocalTime time = LocalTime.of(6,30);
-//        LocalTime time2 = LocalTime.of(6,30);
-//        LocalTime time3 = LocalTime.of(7,30);
-//        LocalTime time4 = LocalTime.of(5,30);
-//        System.out.println(time);
-//        System.out.println(time.compareTo(time4
-//        ));
-//    }
 }

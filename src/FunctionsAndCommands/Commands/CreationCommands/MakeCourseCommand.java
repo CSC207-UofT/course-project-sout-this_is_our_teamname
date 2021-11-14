@@ -2,6 +2,7 @@ package FunctionsAndCommands.Commands.CreationCommands;
 
 import DataCollection.DataGetter;
 import EntitiesAndObjects.Course;
+import EntitiesAndObjects.TimeTableObjects.CourseSection;
 import FunctionsAndCommands.Commands.Command;
 import GlobalHelpers.InputCheckers.Predicate;
 import GlobalHelpers.InputCheckers.InputChecker;
@@ -76,7 +77,10 @@ public class MakeCourseCommand implements Command {
 
         // Pass this to the TimeTableManager
         for (Course item : this.scheduledCourse){
-            manager.schedule(item);
+            ArrayList<CourseSection> sections = item.split();
+            for (CourseSection section: sections){
+            manager.schedule(section);
+            }
         }
     }
 
