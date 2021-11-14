@@ -1,10 +1,7 @@
 package Interfaces;
 
-
-
 import java.io.IOException;
 import java.util.Scanner;
-
 
 public class InterfaceFacade {
     private final UserInterface userInterface;
@@ -15,16 +12,14 @@ public class InterfaceFacade {
         this.operatorInterface = operatorInterface;
     }
 
-
     /**
      * Runs the InterfaceFacade
      */
-    public void run() throws IOException, ClassNotFoundException {
+    public void run() throws IOException {
         // As long as the program is running
         boolean running = true;
 
         while (running) {
-
             System.out.println("Who are you (User/Operator): ");
             Scanner objectScanner = new Scanner(System.in);
             String type = objectScanner.nextLine();
@@ -36,7 +31,6 @@ public class InterfaceFacade {
             } else {
                 System.out.print("Please type (User/Operator).");
             }
-
             // Check if the user want to exit the program.
             Scanner continueQuestion = new Scanner(System.in);
             System.out.println("Do you want to exit? " +
@@ -49,7 +43,6 @@ public class InterfaceFacade {
             }
 
         }
-
     }
 
     /**
@@ -58,8 +51,9 @@ public class InterfaceFacade {
      *
      * @param args The arguments
      */
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException {
         UserInterface user = new UserInterface();
+
         InterfaceFacade facade = new InterfaceFacade(user, user.getOperator());
 
         facade.run();
