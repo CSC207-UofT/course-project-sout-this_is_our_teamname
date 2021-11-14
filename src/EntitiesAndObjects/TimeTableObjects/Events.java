@@ -38,7 +38,7 @@ public abstract class Events {
      * @param theDate is the weekday of the event.
      * @param term is the term of the event.
      */
-
+    
     public Events(LocalTime startTime,
                   LocalTime endTime,
                   String theLocation,
@@ -50,7 +50,7 @@ public abstract class Events {
         this.term = term;
         this.description = "at " + theLocation;
     }
-
+    
     /**
      * Get the start time for the event
      * @return  startTime
@@ -58,7 +58,7 @@ public abstract class Events {
     public LocalTime getStartTime(){
         return this.startTime;
     }
-
+    
     /**
      * Get the end time for the event
      * @return  endTime
@@ -66,7 +66,7 @@ public abstract class Events {
     public LocalTime getEndTime() {
         return endTime;
     }
-
+    
     /**
      * Get the date for the event
      * @return  date
@@ -74,7 +74,7 @@ public abstract class Events {
     public String getDate() {
         return date;
     }
-
+    
     /**
      * Get the description for the event
      * @return  description
@@ -82,7 +82,7 @@ public abstract class Events {
     public String getDescription() {
         return description;
     }
-
+    
     /**
      * Get the term for this event
      *
@@ -91,7 +91,7 @@ public abstract class Events {
     public String getTerm() {
         return term;
     }
-
+    
     /**
      * Generate the String representation of the event.
      * @return the string representation of the event.
@@ -106,5 +106,4 @@ public abstract class Events {
     public void addDescription(String info) {
         this.description = info;
     }
-
 }

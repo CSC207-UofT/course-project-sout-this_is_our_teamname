@@ -70,6 +70,8 @@ public class WebScraper extends DataGetter{
             String time = doc.select("span#u254_line"+ i).text();
             String location = doc.select("span#u272_line"+ i).text();
             String delmethod = doc.select("span#u314_line"+ i).text();
+
+            // end looping when reach an empty row
             if (section.equals("")){
                 break;
             }
@@ -93,12 +95,15 @@ public class WebScraper extends DataGetter{
             }
 
             // TODO Waitlist and summer course?
+            // year course
             if (coursecode.contains("Y1")){
                 addYearCourseToData(section, faculty, locationTimeMap, prof, delmethod, false);
             }
+            // fall course
             else if (term.contains("Fall")){
                 addTermedCourseToData("Fall", section, faculty, locationTimeMap, prof, delmethod, false);
             }
+            // winter course
             else if (term.contains("Winter")){
                 addTermedCourseToData("Winter", section, faculty, locationTimeMap, prof, delmethod, false);
             }

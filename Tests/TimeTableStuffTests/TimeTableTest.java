@@ -32,7 +32,7 @@ class TimeTableTest {
                 "MAT157", "Descartes","Arts and Science","Online", false);
         CourseSection lecture3 = new CourseSection(time10,time11,"SS100",Constants.MONDAY,Constants.FALL,
                 "MAT137", "Alphonso","Arts and Science","Online", false);
-        Activity activity = new Activity(time6,time9,"home",Constants.MONDAY,Constants.FALL);
+        Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
         Task task= new Task(time5,time6,"home",Constants.MONDAY,Constants.FALL);
         TimeTable table = new TimeTable();
         assertTrue(table.schedule(lecture1));
@@ -43,7 +43,7 @@ class TimeTableTest {
     }
 
     @Test
-    public void testToString() {
+    public void testToString() {    //TODO needs to be reworked on
         LocalTime Time9 =  LocalTime.of(9,0,0);
         LocalTime Time10 = LocalTime.of(10, 0,0);
         LocalTime endTime1 = LocalTime.of(10,0,0);
