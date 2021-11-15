@@ -87,6 +87,8 @@ public class MakeEventCommand implements Command {
 
         assert toSchedule != null;
         manager.schedule(toSchedule);
+
+        System.out.println("Event Scheduled");
     }
 
     // ============================= Helper Methods ============================

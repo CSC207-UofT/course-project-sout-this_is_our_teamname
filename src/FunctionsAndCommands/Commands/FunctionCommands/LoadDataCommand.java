@@ -38,5 +38,6 @@ public class LoadDataCommand implements Command {
                 System.out.println("Invalid Input. Try again!");
             }
         }
+        System.out.println("Loaded");
     }
 }

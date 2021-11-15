@@ -37,16 +37,22 @@ public class DatabaseController {
      * The command history will act as a history of all the commands in order
      * they were added. The setCommands will also execute the command.
      */
-    public void runCommand(String requestedCommand) throws InvalidInputException {
+    public boolean runCommand(String requestedCommand) throws InvalidInputException {
         assert this.Factory != null;
         Command theCommand = this.Factory.getCommand(requestedCommand);
-        executeCommand(theCommand);
+        if (theCommand != null){
+            executeCommand(theCommand);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
      * Runs and Prompts the user with what they want to do
      */
-    public void run(){
+    public boolean run(){
+        boolean hasExecuted = true;
         boolean running = true;
         while (running){
             LinkedHashMap<String, String> allowed =
@@ -61,12 +67,13 @@ public class DatabaseController {
             String requested = requestCommand.checkCorrectness();
 
             try {
-                runCommand(allowed.get(requested));
+                hasExecuted = runCommand(allowed.get(requested));
                 running = false;
             } catch (InvalidInputException e){
                 System.out.println("Command not allowed. Please try again!");
             }
         }
+        return hasExecuted;
     }
 
     // ============================== Helpers ==================================

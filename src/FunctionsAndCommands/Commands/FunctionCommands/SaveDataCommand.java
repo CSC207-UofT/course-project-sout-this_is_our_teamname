@@ -31,5 +31,6 @@ public class SaveDataCommand implements Command {
                 System.out.println("Cannot find timetable. Try again!");
             }
         }
+        System.out.println("Saved");
     }
 }

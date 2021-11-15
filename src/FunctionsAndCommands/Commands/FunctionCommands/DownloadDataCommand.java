@@ -31,5 +31,7 @@ public class DownloadDataCommand implements Command {
                 System.out.println("Cannot find timetable. Try again!");
             }
         }
+
+        System.out.println("Downloaded");
     }
 }

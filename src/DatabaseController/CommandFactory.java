@@ -37,6 +37,7 @@ public class CommandFactory {
     static final String LOAD_DATA = "Load Data";
     static final String SAVE_DATA = "Save";
     static final String DOWNLOAD_TIMETABLE = "Download Timetable";
+    static final String EXIT = "Log Out";
 
     /**
      * Constructor. Sets the TimeTable Manager and DataSource of the file
@@ -52,7 +53,8 @@ public class CommandFactory {
                 SAVE_DATA,
                 DOWNLOAD_TIMETABLE,
                 GET_ALL_TIMETABLE,
-                PRINT_HISTORY
+                PRINT_HISTORY,
+                EXIT
         };
     }
 
@@ -89,7 +91,8 @@ public class CommandFactory {
                 return new SaveDataCommand(courseManager);
             case DOWNLOAD_TIMETABLE:
                 return new DownloadDataCommand(courseManager);
-
+            case EXIT:
+                return null;
             // ... ADD YOUR NEW OBJECTS HERE!
 
             // The command is invalid

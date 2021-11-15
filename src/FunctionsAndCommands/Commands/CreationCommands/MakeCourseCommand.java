@@ -82,6 +82,7 @@ public class MakeCourseCommand implements Command {
                 manager.schedule(section);
             }
         }
+        System.out.println("Course Secheduled");
     }
 
     // ============================= Helpers ===================================
