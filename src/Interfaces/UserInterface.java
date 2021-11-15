@@ -70,18 +70,13 @@ public class UserInterface {
         // As long as the program is running
         boolean running = true;
 
+        this.read();
+        CommandFactory theFactory = new CommandFactory(control);
+        this.operator.SetDatasource(theFactory, this.read());
 
         while(running) {
-
-
-            this.read();
-            CommandFactory theFactory = new CommandFactory(control);
-            this.operator.SetDatasource(theFactory, this.read());
-
             System.out.println("\nCurrent datasource: " + this.operator.getDatasource());
             control.run();
-
-
 
             // User types in the section they want to search
             Scanner continueQuestion = new Scanner(System.in);
