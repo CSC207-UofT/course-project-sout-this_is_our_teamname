@@ -21,7 +21,7 @@ public class SaveDataCommand implements Command {
         boolean running = true;
         while (running){
             Scanner ask = new Scanner(System.in);
-            System.out.println("Enter the TimeTable to Save");
+            System.out.println("Enter the TimeTable to Save (Fall/Winter)");
             String chosen = ask.nextLine();
 
             try {

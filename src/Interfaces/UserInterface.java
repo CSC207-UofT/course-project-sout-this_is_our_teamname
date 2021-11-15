@@ -80,7 +80,7 @@ public class UserInterface {
 
             // User types in the section they want to search
             Scanner continueQuestion = new Scanner(System.in);
-            System.out.println("Do you want to add another object? " +
+            System.out.println("Continue? " +
                     "(true/false):");
             String continueResponse = continueQuestion.nextLine();
 
