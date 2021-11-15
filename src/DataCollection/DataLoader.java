@@ -26,6 +26,9 @@ import java.util.Objects;
  */
 public class DataLoader {
 
+    private static String[] days = {Constants.MONDAY, Constants.TUESDAY, Constants.WEDNESDAY,
+            Constants.THURSDAY, Constants.FRIDAY, Constants.SATURDAY, Constants.SUNDAY};
+
     /**
      * Upload a properly formatted reloadable csv file to a timetable
      * manager object
@@ -106,18 +109,21 @@ public class DataLoader {
      */
     public void DownloadToUnreloadable(TimeTableManager ttbmanager, String filename) throws IOException {
         for (String term : ttbmanager.getTerms()) {
+            // Get the data
             TimeTable timetable = ttbmanager.getTimetable(term);
             List<List<String>> datalists = TimetableToListUnreloadable(timetable);
-            FileWriter csvWriter = new FileWriter(filename + "_" + term + ".csv");
-            csvWriter.append(" " + ",");
-            csvWriter.append(Constants.MONDAY + ",");
-            csvWriter.append(Constants.TUESDAY + ",");
-            csvWriter.append(Constants.WEDNESDAY + ",");
-            csvWriter.append(Constants.THURSDAY + ",");
-            csvWriter.append(Constants.FRIDAY + ",");
-            csvWriter.append(Constants.SATURDAY + ",");
-            csvWriter.append(Constants.SUNDAY);
-            csvWriter.append("\n");
+
+            // Open the file to read
+            FileWriter csvWriter =
+                    new FileWriter("src\\OutputFiles\\" + filename + "_" + term + ".csv");
+
+            StringBuilder heading = new StringBuilder(",");
+            for (String day : days){
+                heading.append(day).append(",");
+            }
+
+            csvWriter.append(heading.append("\n"));
+
             for (List<String> datalist : datalists) {
                 csvWriter.append(String.join(",", datalist));
                 csvWriter.append("\n");
@@ -136,24 +142,24 @@ public class DataLoader {
      */
     public void DownloadToReloadable(TimeTableManager ttbmanager, String filename) throws IOException {
         for (String term : ttbmanager.getTerms()) {
+
             TimeTable timetable = ttbmanager.getTimetable(term);
             List<List<String>> datalists = TimetableToListReloadable(timetable);
+
             FileWriter csvWriter = new FileWriter(filename + "_" + term + ".csv");
-            csvWriter.append("(Reloadable)");
-            csvWriter.append("\n");
-            csvWriter.append(" " + ",");
-            csvWriter.append(Constants.MONDAY + ",");
-            csvWriter.append(Constants.TUESDAY + ",");
-            csvWriter.append(Constants.WEDNESDAY + ",");
-            csvWriter.append(Constants.THURSDAY + ",");
-            csvWriter.append(Constants.FRIDAY + ",");
-            csvWriter.append(Constants.SATURDAY + ",");
-            csvWriter.append(Constants.SUNDAY);
-            csvWriter.append("\n");
+
+            StringBuilder heading = new StringBuilder(",");
+            for (String day : days){
+                heading.append(day).append(",");
+            }
+
+            csvWriter.append(heading.append("\n"));
+
             for (List<String> datalist : datalists) {
                 csvWriter.append(String.join(",", datalist));
                 csvWriter.append("\n");
             }
+
             csvWriter.flush();
             csvWriter.close();
         }
@@ -184,10 +190,10 @@ public class DataLoader {
      * @param object the object that needs to be added
      */
     private Object[] add(Object[] objects, Object object) {
-        Object[] newlist = new Object[objects.length + 1];
-        System.arraycopy(objects, 0, newlist, 0, objects.length);
-        newlist[objects.length] = object;
-        return newlist;
+        Object[] newList = new Object[objects.length + 1];
+        System.arraycopy(objects, 0, newList, 0, objects.length);
+        newList[objects.length] = object;
+        return newList;
     }
 
     /**
@@ -197,30 +203,21 @@ public class DataLoader {
      * @param timetable the timetable that needs to be converted
      */
     private List<List<String>> TimetableToListUnreloadable(TimeTable timetable) {
-        List<List<String>> datalists = new ArrayList<>(24);
-        int i = 0;
-        while (i <= 23) {
-            String time = i + ":00 ~ " + (i + 1) + ":00";
-            List<String> datalist = new ArrayList<>();
-            datalist.add(time);
-            datalists.add(datalist);
-            i ++;
-        }
-        String[] days = {Constants.MONDAY, Constants.TUESDAY, Constants.WEDNESDAY,
-                Constants.THURSDAY, Constants.FRIDAY, Constants.SATURDAY, Constants.SUNDAY};
+        List<List<String>> allDataLines = setUpDates();
+
         for (String day : days) {
-            int n = 0;
-            while (n <= 23) {
+            for (int n = 0; n <= 23; n ++) {
+                // If the calendar at the date has an item
                 if (timetable.getCalender().get(day)[n] != null) {
-                    datalists.get(n).add(timetable.getCalender().get(day)[n].getDescription());
+                    String desription =
+                            timetable.getCalender().get(day)[n].getDescription();
+                    allDataLines.get(n).add(desription);
+                } else {
+                    allDataLines.get(n).add(" ");
                 }
-                else {
-                    datalists.get(n).add(" ");
-                }
-                n ++;
             }
         }
-        return datalists;
+        return allDataLines;
     }
 
     /**
@@ -230,48 +227,58 @@ public class DataLoader {
      * @param timetable the timetable that needs to be converted
      */
     private List<List<String>> TimetableToListReloadable(TimeTable timetable) {
-        List<List<String>> datalists = new ArrayList<>(24);
-        int i = 0;
-        while (i <= 23) {
-            String time = i + ":00 ~ " + (i + 1) + ":00";
-            List<String> datalist = new ArrayList<>();
-            datalist.add(time);
-            datalists.add(datalist);
-            i ++;
-        }
-        String[] days = {Constants.MONDAY, Constants.TUESDAY, Constants.WEDNESDAY,
-                Constants.THURSDAY, Constants.FRIDAY, Constants.SATURDAY, Constants.SUNDAY};
+        List<List<String>> datalists = setUpDates();
+
         for (String day : days) {
-            int n = 0;
-            while (n <= 23) {
+            for (int n = 0; n <= 23; n ++) {
                 if (timetable.getCalender().get(day)[n] != null) {
-                    if (timetable.getCalender().get(day)[n] instanceof Activity) {
-                        datalists.get(n).add("Activity: " + timetable.getCalender().get(day)[n].getDescription());
-                    }
-                    else if (timetable.getCalender().get(day)[n] instanceof CourseSection) {
-                        if (((CourseSection) timetable.getCalender().get(day)[n]).getWaitlist()) {
-                            datalists.get(n).add("Course Section: " +
-                                    timetable.getCalender().get(day)[n].getDescription() + " (Waitlisted)");
-                        }
-                        else {
-                            datalists.get(n).add("Course Section: " +
-                                    timetable.getCalender().get(day)[n].getDescription());
-                        }
-                    }
-                    else if (timetable.getCalender().get(day)[n] instanceof Task) {
-                        if (timetable.getCalender().get(day)[n].getDescription() == null) {
-                            datalists.get(n).add("Task: " + "N/A");
-                        }
-                        else {
-                            datalists.get(n).add("Task: " + timetable.getCalender().get(day)[n].getDescription());
-                        }
-                    }
+                    sortEventType(timetable, datalists, day, n);
                 }
                 else {
                     datalists.get(n).add(" ");
                 }
-                n ++;
             }
+        }
+        return datalists;
+    }
+
+    private void sortEventType(TimeTable timetable, List<List<String>> datalists, String day, int n) {
+        if (timetable.getCalender().get(day)[n] instanceof Activity) {
+            String toWrite =
+                    "Activity: " + timetable.getCalender().get(day)[n].getDescription();
+            datalists.get(n).add(toWrite);
+        } else if (timetable.getCalender().get(day)[n] instanceof CourseSection) {
+            sortCourseSection(timetable, datalists, day, n);
+        } else if (timetable.getCalender().get(day)[n] instanceof Task) {
+            sortTask(timetable, datalists, day, n);
+        }
+    }
+
+    private void sortTask(TimeTable timetable, List<List<String>> datalists, String day, int n) {
+        if (timetable.getCalender().get(day)[n].getDescription() == null) {
+            datalists.get(n).add("Task: " + "N/A");
+        } else {
+            datalists.get(n).add("Task: " + timetable.getCalender().get(day)[n].getDescription());
+        }
+    }
+
+    private void sortCourseSection(TimeTable timetable, List<List<String>> datalists, String day, int n) {
+        if (((CourseSection) timetable.getCalender().get(day)[n]).getWaitlist()) {
+            datalists.get(n).add("Course Section: " +
+                    timetable.getCalender().get(day)[n].getDescription() + " (Waitlisted)");
+        } else {
+            datalists.get(n).add("Course Section: " +
+                    timetable.getCalender().get(day)[n].getDescription());
+        }
+    }
+
+    private List<List<String>> setUpDates() {
+        List<List<String>> datalists = new ArrayList<>();
+        for (int i = 0; i <= 23; i++) {
+            String time = i + ":00 ~ " + (i + 1) + ":00";
+            List<String> datalist = new ArrayList<>();
+            datalist.add(time);
+            datalists.add(datalist);
         }
         return datalists;
     }
