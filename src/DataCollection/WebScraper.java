@@ -25,10 +25,6 @@ public class WebScraper extends DataGetter{
     public void CalibrateData(String courseName, String theTerm,
                               String theYear) throws FileNotFoundException {
 
-        // invalid input
-        if (courseName.isEmpty() || theTerm.isEmpty() || theYear.isEmpty()){
-            throw new FileNotFoundException();
-        }
         String termKey = "";
         String termId = "";
 
