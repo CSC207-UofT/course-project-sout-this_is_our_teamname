@@ -86,7 +86,7 @@ public class CommandFactory {
                 return new MakeCourseCommand(courseManager, dataSource, originator, caretaker);
             // To schedule an event
             case SCHEDULE_EVENT:
-                return new MakeEventCommand(courseManager);
+                return new MakeEventCommand(courseManager, originator, caretaker);
             // To get all the timetables in the TimeTableManager
             case GET_ALL_TIMETABLE:
                 return new GetAllTimeTablesCommand(courseManager);
@@ -130,7 +130,6 @@ public class CommandFactory {
         this.originator.setCalender(theManager);
         this.caretaker.addMemento(this.originator.storeInMemento());
         currentManager++;
-        System.out.println(currentManager);
     }
 
     /**

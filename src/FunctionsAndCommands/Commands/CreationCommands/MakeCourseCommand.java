@@ -36,6 +36,8 @@ public class MakeCourseCommand implements Command {
      *
      * @param sendTo the Manager to send to
      * @param dataSource the Source of the data of the course
+     * @param originator stores the current TimeTableManager
+     * @param caretaker where all TimeTableManager states are stored
      */
     public MakeCourseCommand(TimeTableManager sendTo, DataGetter dataSource, Originator originator, Caretaker caretaker){
         this.manager = sendTo;

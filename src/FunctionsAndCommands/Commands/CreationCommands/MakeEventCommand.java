@@ -1,5 +1,6 @@
 package FunctionsAndCommands.Commands.CreationCommands;
 
+import DatabaseController.CommandFactory;
 import EntitiesAndObjects.TimeTableObjects.Activity;
 import EntitiesAndObjects.TimeTableObjects.Events;
 import EntitiesAndObjects.TimeTableObjects.Task;
@@ -9,6 +10,8 @@ import GlobalHelpers.InputCheckers.Predicate;
 import GlobalHelpers.InputCheckers.InputChecker;
 import GlobalHelpers.Search;
 import GlobalHelpers.StringToTime;
+import TimeTableStuff.Caretaker;
+import TimeTableStuff.Originator;
 import TimeTableStuff.TimeTableManager;
 
 import java.time.LocalTime;
@@ -36,14 +39,20 @@ public class MakeEventCommand implements Command {
 
     private final TimeTableManager manager;
     private Events scheduledObject;
+    private final Caretaker caretaker;
+    private final Originator originator;
 
     /**
      * A constructor to set the command
      * @param theManager The manager to connect to
+     * @param originator stores the current TimeTableManager
+     * @param caretaker where all TimeTableManager states are stored
      */
-    public MakeEventCommand(TimeTableManager theManager){
+    public MakeEventCommand(TimeTableManager theManager, Originator originator, Caretaker caretaker){
         this.manager = theManager;
         this.scheduledObject = null;
+        this.originator = originator;
+        this.caretaker = caretaker;
     }
 
     /**
@@ -87,6 +96,10 @@ public class MakeEventCommand implements Command {
 
         assert toSchedule != null;
         manager.schedule(toSchedule);
+
+        originator.setCalender(manager);
+        caretaker.addMemento(originator.storeInMemento());
+        CommandFactory.addCurrentManager();
     }
 
     // ============================= Helper Methods ============================

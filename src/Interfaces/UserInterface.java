@@ -18,9 +18,6 @@ import java.util.Scanner;
 public class UserInterface {
     private final DatabaseController control;
     private final OperatorInterface operator;
-    private Caretaker caretaker;
-    private Originator originator;
-    private int currentManager;
 
     /**
      * Constructor.
