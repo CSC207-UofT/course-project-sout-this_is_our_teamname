@@ -209,7 +209,7 @@ public class DataLoader {
             TimeTable timetable = ttbmanager.getTimetable(term);
             List<List<String>> datalists = TimetableToListReloadable(timetable);
 
-            FileWriter csvWriter = new FileWriter(filename + "_" + term + ".csv");
+            FileWriter csvWriter = new FileWriter("src\\OutputFiles\\" + filename + "_" + term + ".csv");
 
             StringBuilder heading = new StringBuilder(",");
             for (String day : days){
