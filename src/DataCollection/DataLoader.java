@@ -109,13 +109,13 @@ public class DataLoader {
             TimeTable timetable = ttbmanager.getTimetable(term);
             List<List<String>> datalists = TimetableToListUnreloadable(timetable);
             FileWriter csvWriter = new FileWriter(filename + "_" + term + ".csv");
-            csvWriter.append(" ");
-            csvWriter.append(Constants.MONDAY);
-            csvWriter.append(Constants.TUESDAY);
-            csvWriter.append(Constants.WEDNESDAY);
-            csvWriter.append(Constants.THURSDAY);
-            csvWriter.append(Constants.FRIDAY);
-            csvWriter.append(Constants.SATURDAY);
+            csvWriter.append(" " + ",");
+            csvWriter.append(Constants.MONDAY + ",");
+            csvWriter.append(Constants.TUESDAY + ",");
+            csvWriter.append(Constants.WEDNESDAY + ",");
+            csvWriter.append(Constants.THURSDAY + ",");
+            csvWriter.append(Constants.FRIDAY + ",");
+            csvWriter.append(Constants.SATURDAY + ",");
             csvWriter.append(Constants.SUNDAY);
             csvWriter.append("\n");
             for (List<String> datalist : datalists) {
@@ -141,13 +141,13 @@ public class DataLoader {
             FileWriter csvWriter = new FileWriter(filename + "_" + term + ".csv");
             csvWriter.append("(Reloadable)");
             csvWriter.append("\n");
-            csvWriter.append(" ");
-            csvWriter.append(Constants.MONDAY);
-            csvWriter.append(Constants.TUESDAY);
-            csvWriter.append(Constants.WEDNESDAY);
-            csvWriter.append(Constants.THURSDAY);
-            csvWriter.append(Constants.FRIDAY);
-            csvWriter.append(Constants.SATURDAY);
+            csvWriter.append(" " + ",");
+            csvWriter.append(Constants.MONDAY + ",");
+            csvWriter.append(Constants.TUESDAY + ",");
+            csvWriter.append(Constants.WEDNESDAY + ",");
+            csvWriter.append(Constants.THURSDAY + ",");
+            csvWriter.append(Constants.FRIDAY + ",");
+            csvWriter.append(Constants.SATURDAY + ",");
             csvWriter.append(Constants.SUNDAY);
             csvWriter.append("\n");
             for (List<String> datalist : datalists) {
