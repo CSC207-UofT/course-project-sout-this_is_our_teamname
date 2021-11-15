@@ -4,6 +4,7 @@ import FunctionsAndCommands.Commands.Command;
 import FunctionsAndCommands.DfsSearch;
 import FunctionsAndCommands.Puzzle;
 import FunctionsAndCommands.Solver;
+import FunctionsAndCommands.TimeTablePuzzle;
 import TimeTableStuff.TimeTableManager;
 
 import java.util.ArrayList;
@@ -16,6 +17,15 @@ import java.util.function.Function;
  * TODO YOU MARK THIS, DO NOT MARK THIS!!!
  */
 public class SolverCommand implements Command {
+    private final DfsSearch dfsSolver;
+    private final TimeTablePuzzle puzzle;
+
+    public SolverCommand(DfsSearch dfsSolver, TimeTablePuzzle puzzle) {
+        this.dfsSolver = dfsSolver;
+        this.puzzle = puzzle;
+    }
+
+
 
     /**
      * Treat this method as like the "main" (psvm method, or if __name__ ==

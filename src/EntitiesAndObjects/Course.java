@@ -107,7 +107,7 @@ public class Course implements Sliceable<CourseSection> {
         this.timeLocation.put(dateTimeArray, location);
     }
 
-     /** Split the course into section objects
+    /** Split the course into section objects
      *
      * @return A list of section objects
      */
