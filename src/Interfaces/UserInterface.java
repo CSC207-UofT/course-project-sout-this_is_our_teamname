@@ -1,16 +1,13 @@
 package Interfaces;
 
-import GlobalHelpers.Constants;
 import DatabaseController.DatabaseController;
 import DatabaseController.CommandFactory;
 import GlobalHelpers.InvalidInputException;
-import GlobalHelpers.Search;
 import TimeTableStuff.TimeTableManager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class UserInterface {

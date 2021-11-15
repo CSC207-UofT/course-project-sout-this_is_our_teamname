@@ -118,7 +118,7 @@ public class DatabaseController {
     }
 
     // ============================ Predicates =================================
-    private static class isValidCommand extends Predicate{
+    private static class isValidCommand extends Predicate {
         private final HashMap<String, String> allowed;
         public isValidCommand(HashMap<String, String> values){
             this.allowed = values;
