@@ -24,23 +24,38 @@ public class WebScraper extends DataGetter{
     @Override
     public void CalibrateData(String courseName, String theTerm,
                               String theYear) throws FileNotFoundException {
-        String termKey;
+
+        // invalid input
+        if (courseName.isEmpty() || theTerm.isEmpty() || theYear.isEmpty()){
+            throw new FileNotFoundException();
+        }
+        String termKey = "";
+        String termId = "";
+
         if (theTerm.equals(Constants.FALL)){
             termKey = "9";
-        } else {
+            char c = courseName.charAt(courseName.length() - 2);
+            if (c == 'Y'){
+                termId = "Y";
+            }
+            else if (c == 'H'){
+                termId = "F";
+            }
+
+        } else if (theTerm.equals(Constants.WINTER)){
             termKey = "1";
+            termId = "S";
         }
-
         // format the url and connect to the coursefinder
-        String searchQuery = theYear + termKey;
-
+        String searchQuery = termId + theYear + termKey;
+        //System.out.println(searchQuery);
         Document doc;
         try {
              doc = Jsoup.connect(
                      "https://coursefinder.utoronto.ca/course-search/" +
                              "search/courseInquiry?methodToCall=start&viewId=" +
                              "CourseDetails-InquiryView&courseId="
-                             + courseName + theTerm.charAt(0) + searchQuery)
+                             + courseName + searchQuery)
                     .get();
         } catch (IOException e){
             throw new FileNotFoundException();
@@ -195,7 +210,7 @@ public class WebScraper extends DataGetter{
 
         if (!formattedLocationString.equals("")){
             // If there are multiple locations, get all the locations
-            String[] locations = formattedLocationString.split("(?=\\s[A-Z])");
+            String[] locations = formattedLocationString.split("(?=\\s[A-Z][A-Z])");
             for (String element : locations) {
                 element = element.trim();
                 retList.add(element);
