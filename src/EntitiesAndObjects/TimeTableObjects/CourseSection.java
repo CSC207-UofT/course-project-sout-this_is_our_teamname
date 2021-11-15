@@ -55,8 +55,8 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
         super(startTime, endTime, location, theDate, term);
         this.waitlist = waitlist;
         this.code = code;
-        this.description = startTime + " - " + endTime + ": " +
-                code + " of " + faculty + " with " + professor + " by " + deliveryMethod + " at " + location;
+        this.description = code + " of " + faculty + " with " + professor + " by " + deliveryMethod + " " +
+                this.getDescription();;
     }
 
     @Override
@@ -70,8 +70,7 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
      * @return the course code
      */
     public String getCode() {
-        String[] splitStr = this.description.trim().split(" ");
-        return splitStr[0];
+        return code;
     }
 
     /**

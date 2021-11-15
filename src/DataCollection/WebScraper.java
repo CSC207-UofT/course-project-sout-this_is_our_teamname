@@ -2,7 +2,6 @@ package DataCollection;
 
 import EntitiesAndObjects.Course;
 import GlobalHelpers.Constants;
-import GlobalHelpers.StringToTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 //import org.jsoup.select.Elements;
@@ -22,148 +21,133 @@ public class WebScraper extends DataGetter{
      * @param theTerm the term of the course
      * @param theYear the course starts.
      */
-    //TODO FileNotOFoundException
     @Override
     public void CalibrateData(String courseName, String theTerm,
-                              String theYear) throws FileNotFoundException{
-        // format the url and connect to the coursefinder
-        if (Integer.parseInt(theYear) == 2021){
-            theYear = theYear + "9";
-        }
-        else{
-            theYear = theYear + "1";
+                              String theYear) throws FileNotFoundException {
+        String termKey;
+        if (theTerm.equals(Constants.FALL)){
+            termKey = "9";
+        } else {
+            termKey = "1";
         }
 
-        Document doc = null;
+        // format the url and connect to the coursefinder
+        String searchQuery = theYear + termKey;
+
+        Document doc;
         try {
              doc = Jsoup.connect(
-                            "https://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId=" + courseName + theTerm.charAt(0) + theYear)
+                     "https://coursefinder.utoronto.ca/course-search/" +
+                             "search/courseInquiry?methodToCall=start&viewId=" +
+                             "CourseDetails-InquiryView&courseId="
+                             + courseName + theTerm.charAt(0) + searchQuery)
                     .get();
         } catch (IOException e){
-            e.printStackTrace();
+            throw new FileNotFoundException();
         }
 
-        assert doc != null;
         // If the html has no information about term. i.e. files not found.
         if (doc.select("span#u158").text().isEmpty()){
             throw new FileNotFoundException();
         }
 
-        // find element by combination of elements with id.
-        String term = doc.select("span#u158").text();
-        String faculty = doc.select("span#u13").text();
-        String coursecode = doc.select("div#u19").text();
+        filterData(doc);
+    }
 
-        // clean up the string
-        term = removeCss(term);
-        faculty = removeCss(faculty);
-        coursecode = removeCss(coursecode);
+    // ============================== Helpers ==================================
+
+    private void filterData(Document doc) {
+        // find element by combination of elements with id.
+        String term = removeCss(doc.select("span#u158").text());
+        String faculty = removeCss(doc.select("span#u13").text());
+        String courseCode = removeCss(doc.select("div#u19").text());
 
         String a = doc.select("span#u254_line1").text();
-        System.out.println(a.length() == 0 );
+        System.out.println(a.length() == 0);
 
         // loop over the rows in the html and add corresponding sections.
+        String section = removeCss(doc.select("span#u245_line" + 0).text());
+        String professor = removeCss(doc.select("span#u263_line" + 0).text());
+        String time = removeCss(doc.select("span#u254_line" + 0).text());
+        String location = removeCss(doc.select("span#u272_line" + 0).text());
+        String deliveryMethod =
+                removeCss(doc.select("span#u314_line" + 0).text());
+
         int i = 0;
-        while(i <= 100){
-            String section = doc.select("span#u245_line"+ i).text();
-            String prof = doc.select("span#u263_line"+ i).text();
-            String time = doc.select("span#u254_line"+ i).text();
-            String location = doc.select("span#u272_line"+ i).text();
-            String delmethod = doc.select("span#u314_line"+ i).text();
-            if (section.equals("")){
-                break;
+        while (!section.equals("")){
+            if (professor.isEmpty()){
+                professor = Constants.TBA;
             }
 
-            // clean up the string.
-            section = removeCss(section);
-            prof = removeCss(prof);
-            delmethod = removeCss(delmethod);
-            if (prof.isEmpty()){
-                prof = Constants.TBA;
-            }
-            ArrayList<Object[]> times = splitDateTime(removeCss(time));
-            ArrayList<String> locations = splitLocations(removeCss(location));
+            ArrayList<Object[]> times = splitDateTime(time);
+            ArrayList<String> locations = splitLocations(location);
 
             // create the location time map.
             HashMap<Object[], String> locationTimeMap = new HashMap<>();
-            int j = 0;
-            while (j < locations.size()){
+
+            for (int j = 0; j < locations.size(); j++){
                 locationTimeMap.put(times.get(j), locations.get(j));
-                j++;
             }
 
-            // TODO Waitlist and summer course?
-            if (coursecode.contains("Y1")){
-                addYearCourseToData(section, faculty, locationTimeMap, prof, delmethod, false);
+            String theTerm;
+            if (courseCode.contains("Y1")){
+                theTerm = Constants.YEAR;
+            } else if (term.contains("Fall")){
+                theTerm = Constants.FALL;
+            } else if (term.contains("Winter")){
+                theTerm = Constants.WINTER;
+            } else {
+                theTerm = "";
             }
-            else if (term.contains("Fall")){
-                addTermedCourseToData("Fall", section, faculty, locationTimeMap, prof, delmethod, false);
-            }
-            else if (term.contains("Winter")){
-                addTermedCourseToData("Winter", section, faculty, locationTimeMap, prof, delmethod, false);
-            }
+            addCourseToData(theTerm, section, faculty, locationTimeMap,
+                    professor, deliveryMethod);
+
             i++;
+
+            section = removeCss(doc.select("span#u245_line"+ i).text());
+            professor = removeCss(doc.select("span#u263_line"+ i).text());
+            time = removeCss(doc.select("span#u254_line"+ i).text());
+            location = removeCss(doc.select("span#u272_line"+ i).text());
+            deliveryMethod = removeCss(doc.select("span#u314_line"+ i).text());
         }
     }
-    //TODO Waitlist always false
+
     /**
      * Add the given data to self.data
      * @param term the term of course
      * @param sectionName the name of the section
      * @param faculty the associated faculty
      * @param timeToLocationMap the current time and location. Given as a
-     *                         HashMap of the Time -> Location
+*                         HashMap of the Time -> Location
      * @param theInstructor the instructor of the course section
      * @param theDeliveryMethod the delivery method of the course.
-     * @param theWaitlist whether the course is waitlisted or not.
      */
-    private void addTermedCourseToData(String term,
-                                       String sectionName,
-                                       String faculty,
-                                       HashMap<Object[],
-                                               String> timeToLocationMap,
-                                       String theInstructor,
-                                       String theDeliveryMethod,
-                                       boolean theWaitlist){
+    private void addCourseToData(String term,
+                                 String sectionName,
+                                 String faculty,
+                                 HashMap<Object[], String> timeToLocationMap,
+                                 String theInstructor,
+                                 String theDeliveryMethod){
+
+        // We will fix this in phase 2. Wait list current can only be set to
+        // false.
         Course theCourse = new Course(sectionName, theInstructor, faculty,
-                theDeliveryMethod, timeToLocationMap, term, theWaitlist);
+                theDeliveryMethod, timeToLocationMap, term, false);
         placeToData(sectionName, theCourse);
     }
 
-    /**
-     * Add the given data to super.data.
-     *
-     * @param sectionName the name of the section
-     * @param faculty the associated faculty
-     * @param timeToLocationMap the current time and location. Given as a
-     *                         HashMap of the Time -> Location
-     * @param theInstructor the instructor of the course section
-     * @param theDeliveryMethod the delivery method of the course.
-     * @param theWaitlist whether the course is waitlisted or not.
-     */
-    private void addYearCourseToData(String sectionName,
-                                     String faculty,
-                                     HashMap<Object[], String> timeToLocationMap,
-                                     String theInstructor,
-                                     String theDeliveryMethod,
-                                     boolean theWaitlist){
-        Course theCourse = new Course(sectionName, theInstructor, faculty,
-                theDeliveryMethod, timeToLocationMap, Constants.YEAR, theWaitlist);
-        placeToData(sectionName, theCourse);
-    }
-
+    // ============================== CSS Filters ==============================
     /**
      * Clean up the strings with Css tags.
      *
-     * @param dirty the string being cleaned.
+     * @param dirtyString the string being cleaned.
      * @return a string without css tags
      */
-    private String removeCss(String dirty){
-        String cleaned;
-        cleaned = dirty.replaceAll("(?is)<style.*?>.*?</style>", "");
-        return cleaned;
+    private String removeCss(String dirtyString){
+        return dirtyString.replaceAll("(?is)<style.*?>.*?</style>", "");
     }
 
+    // ================================ Formatters =============================
     /**
      * Splits the formattedTimeString into the date, start time, end time in
      * that order
@@ -175,22 +159,26 @@ public class WebScraper extends DataGetter{
      * @return nested arraylist with the form [{date, start time, end time}, {date, start time, end time}]
      */
     private ArrayList<Object[]> splitDateTime(String formattedTimeString){
+        // If each section has multiple times, split into an array of those
+        // times.
         String[] times = formattedTimeString.split("(?=\\s[A-Z])");
+
         ArrayList<Object[]> retList = new ArrayList<>();
         if (formattedTimeString.length() != 0){
-            for (String element : times) {
-                element = element.trim();
-                String[] elementl = element.split(" ");
-                LocalTime formattedStart = formatTime(elementl[1].split("-")[0]);
-                LocalTime formattedEnd = formatTime(elementl[1].split("-")[1]);
-                Object[] l = {formatDate(elementl[0]), formattedStart,
-                        formattedEnd};
-                retList.add(l);
+            for (String timeEntry : times) {
+                // Remove white space
+                timeEntry = timeEntry.trim();
+                String[] dateAndTime = timeEntry.split(" ");
+
+                LocalTime formattedStart = formatTime(dateAndTime[1].split("-")[0]);
+                LocalTime formattedEnd = formatTime(dateAndTime[1].split("-")[1]);
+
+                retList.add(new Object[]{formatDate(dateAndTime[0]), formattedStart,
+                        formattedEnd});
             }
         } else {
-            Object[] l = {Constants.TBA, LocalTime.of(0, 0, 0),
-                    LocalTime.of(0, 0, 0)};
-            retList.add(l);
+            retList.add(new Object[]{Constants.TBA, LocalTime.of(0, 0, 0),
+                    LocalTime.of(0, 0, 0)});
         }
         return retList;
     }
@@ -204,14 +192,16 @@ public class WebScraper extends DataGetter{
      */
     private ArrayList<String> splitLocations(String formattedLocationString){
         ArrayList<String> retList = new ArrayList<>();
-        if (!formattedLocationString.isEmpty()){
+
+        if (!formattedLocationString.equals("")){
+            // If there are multiple locations, get all the locations
             String[] locations = formattedLocationString.split("(?=\\s[A-Z])");
             for (String element : locations) {
                 element = element.trim();
                 retList.add(element);
             }
-        }
-        else{
+        } else {
+            // If no locations
             retList.add(Constants.TBA);
         }
         return retList;
@@ -235,10 +225,9 @@ public class WebScraper extends DataGetter{
      * @return new string of date with the upper case at the front and lower case follows.
      */
     private String formatDate(String date){
-        String firstLet = date.substring(0, 1);
-        String remLet = date.substring(1);
-        remLet = remLet.toLowerCase();
-        return firstLet + remLet;
+        String firstLetter = date.substring(0, 1);
+        String remainingLetters = date.substring(1).toLowerCase();
+        return firstLetter + remainingLetters;
     }
 
     /**
@@ -247,12 +236,17 @@ public class WebScraper extends DataGetter{
      * @param args arguments
      */
     public static void main(String[] args) {
+        String [] courses = {"CSC207H1", "APS110H1", "CIV100H1", "MAT137Y1"};
         WebScraper a = new WebScraper();
-        try {
-            LinkedHashMap<String, ArrayList<Course>> got = a.getData("CIV100H1", "Fall", "2021");
-            System.out.println(got);
-        } catch (FileNotFoundException e){
-            System.out.println("File Not Found");
+        for (String course : courses){
+            try {
+                LinkedHashMap<String,
+                        ArrayList<Course>> got = a.getData(course, "Fall",
+                        "2021");
+                System.out.println(got);
+            } catch (FileNotFoundException e){
+                System.out.println("File Not Found");
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ public class DownloadDataCommand implements Command {
         boolean running = true;
         while (running){
             Scanner ask = new Scanner(System.in);
-            System.out.println("Enter the TimeTable to Save");
+            System.out.println("Enter the name for the timetables to save with");
             String chosen = ask.nextLine();
 
             try {

@@ -7,6 +7,9 @@ import GlobalHelpers.InvalidInputException;
 import GlobalHelpers.Search;
 import TimeTableStuff.TimeTableManager;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -31,6 +34,7 @@ public class UserInterface {
         this.operator = new OperatorInterface(this.control);
     }
 
+
     /**
      * Gets the OperatorInterface
      *
@@ -41,32 +45,42 @@ public class UserInterface {
     }
 
     /**
+     * Read  the datasource.txt
+     *
+     * @return A string in datasource.txt.
+     */
+    private String read() throws IOException {
+
+        StringBuilder buffer = new StringBuilder();
+        BufferedReader bf= new BufferedReader(new FileReader("src/Interfaces/datasource.txt"));
+        String s;
+        while((s = bf.readLine()) != null){
+            buffer.append(s.trim());
+        }
+
+
+        return buffer.toString();
+    }
+
+    /**
      * Runs the UserInterface.
      *
      */
-    public void run(){
+    public void run() throws IOException {
         // As long as the program is running
         boolean running = true;
 
+        this.read();
+        CommandFactory theFactory = new CommandFactory(control);
+        this.operator.SetDatasource(theFactory, this.read());
 
         while(running) {
-//            System.out.println("\nUsable Objects: " + this.getUsableClasses());
-//            Scanner objectScanner = new Scanner(System.in);
-//            System.out.println("Please enter what type of object: ");
-//            String schedulingObject = objectScanner.nextLine();
-//
-//            String dataCategory = checkInputValue(schedulingObject);
-
+            System.out.println("\nCurrent datasource: " + this.operator.getDatasource());
             control.run();
 
-//            try {
-//                control.runCommand(dataCategory);
-//            } catch (InvalidInputException e){
-//                ; // TODO FIXME
-//            }
             // User types in the section they want to search
             Scanner continueQuestion = new Scanner(System.in);
-            System.out.println("Do you want to add another object? " +
+            System.out.println("Continue? " +
                     "(true/false):");
             String continueResponse = continueQuestion.nextLine();
 

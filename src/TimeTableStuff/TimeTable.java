@@ -1,8 +1,11 @@
 package TimeTableStuff;
 
+import EntitiesAndObjects.Course;
+import EntitiesAndObjects.TimeTableObjects.CourseSection;
 import EntitiesAndObjects.TimeTableObjects.Events;
 import GlobalHelpers.Constants;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
@@ -10,7 +13,6 @@ import java.util.LinkedHashMap;
  * it will still be stored, and a conflict warning will be sent back prompting user to take action or ignore it.
  */
 public class TimeTable {
-    //TODO leave the warning for now, check after reformatted TimeTable.
     private final LinkedHashMap<String, Events[]> calender;
 
     public TimeTable() {
@@ -82,14 +84,14 @@ public class TimeTable {
      * @param activity the given activity
      * @return true if there is no conflict, false otherwise
      */
-  //TODO rework method, doesn't cover all cases.
     public boolean checkConflicts(Events activity) {
-        //find the correct key value from linked hashmap
         Events[] weekday = calender.get(activity.getDate());
-        //find the index/starting-hour for the event
-        int index = activity.getStartTime().getHour();
-        if (weekday == null){return false;}
-        else{return weekday[index] == null;}
+        int start = activity.getStartTime().getHour();
+        int end = activity.getEndTime().getHour();
+        for (int i = start; i < end; i++ ){
+            if (weekday[i] != null){return false;}
+        }
+        return true;
     }
 
     /**
@@ -113,5 +115,53 @@ public class TimeTable {
             timeStrings.append(times);
         }
         return timeStrings.toString();
+    }
+
+
+    /**
+     * Check if any CourseSections that reside under the given course code are present
+     * in this TimeTable
+     *
+     * @param courseCode The course code to be checked
+     * @return An ArrayList of all the CourseSections correlating to courseCode that are
+     * present in this TimeTable
+     * e.g. If courseCode is "CSC207", checkCourse will return [CourseSection(CSC207LEC0101),
+     * CourseSection(CSC207TUT0101), ... ,]
+     */
+    public ArrayList<Events> checkCourse(String courseCode) {
+        ArrayList<Events> matchingCourses = new ArrayList<>();
+        for (Events[] day : this.calender.values()) {
+            for (Events hour : day) {
+                if (hour instanceof CourseSection){
+                    String sectionCode = ((CourseSection) hour).getCode();
+                    if (sectionCode.contains(courseCode)) {
+                        matchingCourses.add(hour);
+                    }
+
+                }
+            }
+        }
+        return matchingCourses;
+    }
+
+    /**
+     * Check if the given course is present in this TimeTable
+     *
+     * @param course The course to be checked
+     * @return true if the course is present, false otherwise
+     */
+    public boolean checkCourseSection(Course course) {
+        String courseCode = course.getSectionName();
+        for (Events[] day : this.calender.values()) {
+            for (Events hour : day) {
+                if (hour instanceof CourseSection) {
+                    String sectionCode = ((CourseSection) hour).getCode();
+                    if (sectionCode.equals(courseCode)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
