@@ -1,8 +1,5 @@
 package TimeTableStuff;
 
-import EntitiesAndObjects.Course;
-import EntitiesAndObjects.TimeTableObjects.CourseSection;
-
 import GlobalHelpers.Constants;
 import EntitiesAndObjects.TimeTableObjects.Events;
 
@@ -99,7 +96,6 @@ public class TimeTableManager {
      * @return an array of timetables with all the timetables
      */
     public TimeTable[] getAllTimeTables(){
-        //TODO No terms/names returned with the timetables
         TimeTable[] theTimes =
                 new TimeTable[this.timetables.keySet().size()];
         int i = 0;

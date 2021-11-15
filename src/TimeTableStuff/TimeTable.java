@@ -12,7 +12,6 @@ import java.util.Set;
  * it will still be stored, and a conflict warning will be sent back prompting user to take action or ignore it.
  */
 public class TimeTable {
-    //TODO leave the warning for now, check after reformatted TimeTable.
     private final LinkedHashMap<String, Events[]> calender;
 
     public TimeTable() {
@@ -59,11 +58,8 @@ public class TimeTable {
      * @param activity the given activity
      * @return true if there is no conflict, false otherwise
      */
-  //TODO rework method, doesn't cover all cases.
     public boolean checkConflicts(Events activity) {
-        //find the correct key value from linked hashmap
         Events[] weekday = calender.get(activity.getDate());
-        //find the index/starting-hour for the event
         int start = activity.getStartTime().getHour();
         int end = activity.getEndTime().getHour();
         for (int i = start; i < end; i++ ){

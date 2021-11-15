@@ -172,20 +172,4 @@ public class MakeEventCommand implements Command {
             return Search.BinarySearch(prompt, validDates);
         }
     }
-
-    private Events getEvent(LocalTime startTime, LocalTime endTime, String location,
-                            String date, String term, String type) {
-        if (type.equals(Constants.ACTIVITY)){
-            Scanner descriptionScanner = new Scanner(System.in);
-            System.out.println("Please provide a description of your life " +
-                    "activity: ");
-            return new Activity(startTime, endTime, location, date, term, descriptionScanner.nextLine());
-        }
-        else if (type.equals(Constants.TASK)){
-            return new Activity(startTime, endTime, location, date, term);
-        } else {
-            // TODO More types of events.
-            return null;
-        }
-    }
 }
