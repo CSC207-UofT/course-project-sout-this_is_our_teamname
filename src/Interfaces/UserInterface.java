@@ -54,7 +54,7 @@ public class UserInterface {
         StringBuilder buffer = new StringBuilder();
         BufferedReader bf= new BufferedReader(new FileReader("src/Interfaces/datasource.txt"));
         String s;
-        while((s = bf.readLine())!=null){
+        while((s = bf.readLine()) != null){
             buffer.append(s.trim());
         }
 
@@ -74,11 +74,9 @@ public class UserInterface {
         while(running) {
 
 
-            if (this.read() != null) {
-                CommandFactory theFactory = new CommandFactory(control);
-                this.operator.SetDatasource(theFactory, this.read());
-
-            }
+            this.read();
+            CommandFactory theFactory = new CommandFactory(control);
+            this.operator.SetDatasource(theFactory, this.read());
 
             System.out.println("\nCurrent datasource: " + this.operator.getDatasource());
             control.run();

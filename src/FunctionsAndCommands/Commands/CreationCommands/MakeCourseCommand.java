@@ -79,7 +79,7 @@ public class MakeCourseCommand implements Command {
         for (Course item : this.scheduledCourse){
             ArrayList<CourseSection> sections = item.split();
             for (CourseSection section: sections){
-            manager.schedule(section);
+                manager.schedule(section);
             }
         }
     }
@@ -120,6 +120,14 @@ public class MakeCourseCommand implements Command {
         }
     }
 
+    /**
+     * A helper method to find the course object of a name from a list of
+     * course objects.
+     *
+     * @param prompt the Course name
+     * @param list the list of courses
+     * @return the Course with the name prompt
+     */
     private Course findAssociatedCourse(String prompt, ArrayList<Course> list){
         for (Course course : list){
             if (course.getSectionName().equals(prompt)){
