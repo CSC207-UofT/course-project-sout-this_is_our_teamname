@@ -3,7 +3,6 @@ package DataCollection;
 
 import EntitiesAndObjects.TimeTableObjects.Activity;
 import EntitiesAndObjects.TimeTableObjects.CourseSection;
-import EntitiesAndObjects.TimeTableObjects.Events;
 import EntitiesAndObjects.TimeTableObjects.Task;
 import GlobalHelpers.Constants;
 import TimeTableStuff.TimeTable;
@@ -39,62 +38,126 @@ public class DataLoader {
             throw new RuntimeException("File uploaded is not reloadable!");
         }
         else {
-            String[][] meaningfuldata = new String[1][data.length - 2];
-            for (int i = 0; i + 2 < data.length; i++) {
-                meaningfuldata[i] = data[i + 2];
-            }
+            String[][] meaningfuldata = MeaningfulDataHelper(data);
             for (int timeindex = 0; timeindex <= 23; timeindex++) {
                 for (int dateindex = 1; dateindex <= 7; dateindex++) {
                     String[] days = {Constants.MONDAY, Constants.TUESDAY, Constants.WEDNESDAY,
                             Constants.THURSDAY, Constants.FRIDAY, Constants.SATURDAY, Constants.SUNDAY};
                     if (!Objects.equals(meaningfuldata[timeindex][dateindex], " ")) {
                         String[] olddescriptionwords = meaningfuldata[timeindex][dateindex].split(" ");
-                        String[] newdescriptionwords = new String[olddescriptionwords.length - 1];
-                        for (int n = 0; n + 1 < olddescriptionwords.length; n ++) {
-                            newdescriptionwords[n] = olddescriptionwords[n + 1];
-                        }
-                        String newdescription = String.join(" ", newdescriptionwords);
+                        String newdescription = DescriptionHelper(olddescriptionwords);
                         if (Objects.equals(olddescriptionwords[0], "Activity:")) {
-                            Events activity = new Activity(LocalTime.of(timeindex, 0, 0, 0),
+                            ActivityHelper(ttbmanager, LocalTime.of(timeindex, 0, 0, 0),
                                     LocalTime.of(timeindex + 1, 0, 0, 0),
                                     days[dateindex - 1], term, newdescription);
-                            ttbmanager.getTimetable(term).schedule(activity);
                         }
                         else if (Objects.equals(olddescriptionwords[0], "Course Section:")) {
-                            Events activity;
-                            if (newdescription.contains("(Waitlisted)")) {
-                                activity = new
-                                        CourseSection(LocalTime.of(timeindex, 0, 0, 0),
-                                        LocalTime.of(timeindex + 1, 0, 0, 0),
-                                        days[dateindex - 1], term, newdescription.substring(0,
-                                        newdescription.length() - " (Waitlisted)".length()), true);
-                            }
-                            else {
-                                activity = new
-                                        CourseSection(LocalTime.of(timeindex, 0, 0, 0),
-                                        LocalTime.of(timeindex + 1, 0, 0, 0),
-                                        days[dateindex - 1], term, newdescription, false);
-                            }
-                            ttbmanager.getTimetable(term).schedule(activity);
+                            CourseSectionHelper(ttbmanager,
+                                    LocalTime.of(timeindex, 0, 0, 0),
+                                    LocalTime.of(timeindex + 1, 0, 0, 0),
+                                    days[dateindex - 1], term, newdescription);
                         }
                         else {
-                            Events activity;
-                            if (newdescription.contains("N/A")) {
-                                activity = new Task(LocalTime.of(timeindex, 0, 0, 0),
-                                        LocalTime.of(timeindex + 1, 0, 0, 0),
-                                        days[dateindex - 1], term);
-                            }
-                            else {
-                                activity = new Task(LocalTime.of(timeindex, 0, 0, 0),
-                                        LocalTime.of(timeindex + 1, 0, 0, 0),
-                                        newdescription.substring("at ".length()), days[dateindex - 1], term);
-                            }
-                            ttbmanager.getTimetable(term).schedule(activity);
+                            TaskHelper(ttbmanager, LocalTime.of(timeindex, 0, 0, 0),
+                                    LocalTime.of(timeindex + 1, 0, 0, 0),
+                                    days[dateindex - 1], term, newdescription);
                         }
                     }
                 }
             }
         }
+    }
+
+    /**
+     * Process an array of arrays of strings to one which
+     * contains only meaningful data
+     *
+     * @param data the array needs to be processed
+     */
+    private String[][] MeaningfulDataHelper(String[][] data) {
+        String[][] meaningfuldata = new String[1][data.length - 2];
+        for (int i = 0; i + 2 < data.length; i++) {
+            meaningfuldata[i] = data[i + 2];
+        }
+        return meaningfuldata;
+    }
+
+    /**
+     * Process an array of strings to one single string which
+     * contains only important description
+     *
+     * @param olddescriptionwords the array needs to be processed
+     */
+    private String DescriptionHelper(String[] olddescriptionwords) {
+        String[] newdescriptionwords = new String[olddescriptionwords.length - 1];
+        for (int n = 0; n + 1 < olddescriptionwords.length; n ++) {
+            newdescriptionwords[n] = olddescriptionwords[n + 1];
+        }
+        return String.join(" ", newdescriptionwords);
+    }
+
+    /**
+     * Generate and schedule an activity object to a specific timetable manager
+     *
+     * @param ttbmanager the timetable manager that needs to contain the object
+     * @param time1 the start time of the activity
+     * @param time2 the end time of the activity
+     * @param day the date of the activity
+     * @param term the term of the activity
+     * @param newdescription the information of the activity
+     */
+    private void ActivityHelper(TimeTableManager ttbmanager,
+                                LocalTime time1, LocalTime time2,
+                                String day, String term, String newdescription) {
+        Activity activity = new Activity(time1, time2, day, term, newdescription);
+        ttbmanager.getTimetable(term).schedule(activity);
+    }
+
+    /**
+     * Generate and schedule a course section object to a specific timetable manager
+     *
+     * @param ttbmanager the timetable manager that needs to contain the object
+     * @param time1 the start time of the course section
+     * @param time2 the end time of the course section
+     * @param day the date of the course section
+     * @param term the term of the course section
+     * @param newdescription the information of the course section
+     */
+    private void CourseSectionHelper(TimeTableManager ttbmanager,
+                                     LocalTime time1, LocalTime time2,
+                                     String day, String term, String newdescription) {
+        CourseSection activity;
+        if (newdescription.contains("(Waitlisted)")) {
+            activity = new CourseSection(time1, time2, day, term,
+                    newdescription.substring(0, newdescription.length() - " (Waitlisted)".length()), true);
+        }
+        else {
+            activity = new CourseSection(time1, time2, day, term, newdescription, false);
+        }
+        ttbmanager.getTimetable(term).schedule(activity);
+    }
+
+    /**
+     * Generate and schedule a task object to a specific timetable manager
+     *
+     * @param ttbmanager the timetable manager that needs to contain the object
+     * @param time1 the start time of the task
+     * @param time2 the end time of the task
+     * @param day the date of the task
+     * @param term the term of the task
+     * @param newdescription the information of the task
+     */
+    private void TaskHelper(TimeTableManager ttbmanager,
+                            LocalTime time1, LocalTime time2,
+                            String day, String term, String newdescription) {
+        Task activity;
+        if (newdescription.contains("N/A")) {
+            activity = new Task(time1, time2, day, term);
+        }
+        else {
+            activity = new Task(time1, time2, newdescription.substring("at ".length()), day, term);
+        }
+        ttbmanager.getTimetable(term).schedule(activity);
     }
 
     /**
