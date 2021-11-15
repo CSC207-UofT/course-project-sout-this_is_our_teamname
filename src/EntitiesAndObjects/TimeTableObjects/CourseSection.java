@@ -70,8 +70,7 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
      * @return the course code
      */
     public String getCode() {
-        String[] splitStr = this.description.trim().split(" ");
-        return splitStr[0];
+        return code;
     }
 
     /**

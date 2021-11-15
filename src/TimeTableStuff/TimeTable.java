@@ -1,5 +1,7 @@
 package TimeTableStuff;
 
+import EntitiesAndObjects.Course;
+import EntitiesAndObjects.TimeTableObjects.CourseSection;
 import EntitiesAndObjects.TimeTableObjects.Events;
 import GlobalHelpers.Constants;
 
@@ -89,5 +91,53 @@ public class TimeTable {
             timeStrings.append(times);
         }
         return timeStrings.toString();
+    }
+
+
+    /**
+     * Check if any CourseSections that reside under the given course code are present
+     * in this TimeTable
+     *
+     * @param courseCode The course code to be checked
+     * @return An ArrayList of all the CourseSections correlating to courseCode that are
+     * present in this TimeTable
+     * e.g. If courseCode is "CSC207", checkCourse will return [CourseSection(CSC207LEC0101),
+     * CourseSection(CSC207TUT0101), ... ,]
+     */
+    public ArrayList<Events> checkCourse(String courseCode) {
+        ArrayList<Events> matchingCourses = new ArrayList<>();
+        for (Events[] day : this.calender.values()) {
+            for (Events hour : day) {
+                if (hour instanceof CourseSection){
+                    String sectionCode = ((CourseSection) hour).getCode();
+                    if (sectionCode.contains(courseCode)) {
+                        matchingCourses.add(hour);
+                    }
+
+                }
+            }
+        }
+        return matchingCourses;
+    }
+
+    /**
+     * Check if the given course is present in this TimeTable
+     *
+     * @param course The course to be checked
+     * @return true if the course is present, false otherwise
+     */
+    public boolean checkCourseSection(Course course) {
+        String courseCode = course.getSectionName();
+        for (Events[] day : this.calender.values()) {
+            for (Events hour : day) {
+                if (hour instanceof CourseSection) {
+                    String sectionCode = ((CourseSection) hour).getCode();
+                    if (sectionCode.equals(courseCode)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
