@@ -1,11 +1,14 @@
 package FunctionsAndCommands.Commands.CreationCommands;
 
 import DataCollection.DataGetter;
+import DatabaseController.CommandFactory;
 import EntitiesAndObjects.Course;
 import EntitiesAndObjects.TimeTableObjects.CourseSection;
 import FunctionsAndCommands.Commands.Command;
 import GlobalHelpers.InputCheckers.Predicate;
 import GlobalHelpers.InputCheckers.InputChecker;
+import TimeTableStuff.Caretaker;
+import TimeTableStuff.Originator;
 import TimeTableStuff.TimeTableManager;
 
 import java.io.FileNotFoundException;
@@ -25,6 +28,8 @@ public class MakeCourseCommand implements Command {
     private final DataGetter dataSource;
     private final TimeTableManager manager;
     private final ArrayList<Course> scheduledCourse;
+    private final Caretaker caretaker;
+    private final Originator originator;
 
     /**
      * A constructor to initialize what this command is connected to
@@ -32,10 +37,12 @@ public class MakeCourseCommand implements Command {
      * @param sendTo the Manager to send to
      * @param dataSource the Source of the data of the course
      */
-    public MakeCourseCommand(TimeTableManager sendTo, DataGetter dataSource){
+    public MakeCourseCommand(TimeTableManager sendTo, DataGetter dataSource, Originator originator, Caretaker caretaker){
         this.manager = sendTo;
         this.dataSource = dataSource;
         this.scheduledCourse = new ArrayList<>();
+        this.originator = originator;
+        this.caretaker = caretaker;
     }
 
     /**
@@ -82,6 +89,9 @@ public class MakeCourseCommand implements Command {
                 manager.schedule(section);
             }
         }
+        originator.setCalender(manager);
+        caretaker.addMemento(originator.storeInMemento());
+        CommandFactory.addCurrentManager();
     }
 
     // ============================= Helpers ===================================

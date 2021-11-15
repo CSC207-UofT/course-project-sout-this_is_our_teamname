@@ -6,7 +6,7 @@ import EntitiesAndObjects.TimeTableObjects.Events;
 import java.util.*;
 
 public class TimeTableManager {
-    private final HashMap<String, TimeTable> timetables;
+    private HashMap<String, TimeTable> timetables;
     /**
      * Creates a new TimeTableManager with two default TimeTables for Fall and Winter.
      */
@@ -128,6 +128,14 @@ public class TimeTableManager {
             copy.put(term, this.timetables.get(term).getCopy());
         }
         return copy;
+    }
+
+    /**
+     * Sets the TimeTableManager with given TimeTableManager
+     * @param manager the given TimeTableManger
+     */
+    public void setTimetables(TimeTableManager manager) {
+        this.timetables = manager.timetables;
     }
 
     public String toString() {

@@ -30,6 +30,10 @@ public class MementoTest {
         int currentTimetable = 0;
 
         TimeTableManager manager = new TimeTableManager();
+        originator.setCalender(manager);
+        caretaker.addMemento(originator.storeInMemento());
+        saveFiles++;
+        currentTimetable++;
 
         //add lecture0 to timetable
         manager.schedule(lecture0);
@@ -66,8 +70,8 @@ public class MementoTest {
                       "Saturday=[], " +
                       "Sunday=[]}}";
 //        assertEquals(expectedUndo, actualUndo);
-        assertEquals(2, saveFiles);
-        assertEquals(1, currentTimetable);
+        assertEquals(3, saveFiles);
+        assertEquals(2, currentTimetable);
 
         //redo
         currentTimetable++;
@@ -89,7 +93,7 @@ public class MementoTest {
                 "Saturday=[], " +
                 "Sunday=[]}}";
 //        assertEquals(expectedRedo, actualRedo);
-        assertEquals(2, saveFiles);
-        assertEquals(2, currentTimetable);
+        assertEquals(3, saveFiles);
+        assertEquals(3, currentTimetable);
         }
 }

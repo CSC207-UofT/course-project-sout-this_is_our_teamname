@@ -18,5 +18,10 @@ public class Caretaker {
      */
     public TimeTableManager getMemento(int index) { return savedCalenders.get(index); }
 
+    /**
+     * Gets the size of the savedCalenders
+     * @return the size of savedCalenders
+     */
+    public int size() { return savedCalenders.size(); }
 }
 
