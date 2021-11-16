@@ -9,6 +9,6 @@
 * General cleanup of all classes
 
 ### Caules Ge (CaulesGe - caules.ge@mail.utoronto.ca)
-* Implemented InterfaceFacade
-* Implemented OperatorInterface
+* Created InterfaceFacade
+* Created OperatorInterface
 * Modified the UserInterface
