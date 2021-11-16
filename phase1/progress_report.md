@@ -17,3 +17,8 @@
 * Created DataLoader
 * Added methods to TimeTable
 * Modified some of the Events subclasses
+
+### Jennie Fang (fangjenn - jennie.fang@mail.utoronto.ca)
+* Created TimeTablePuzzle 
+* Looked for and cleaned Code Smells and Dependencies
+* Cleaned up Events and Events subclasses
