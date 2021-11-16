@@ -4,13 +4,17 @@ import TimeTableObjects.Course;
 import Helpers.Constants;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-//import org.jsoup.select.Elements;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.*;
 
+/**
+ * A WebScraper class. It is a DataGetter class that gets the data from a the course finder
+ * website.
+ *
+ */
 public class WebScraper extends DataGetter{
 
     /**
@@ -24,23 +28,17 @@ public class WebScraper extends DataGetter{
     @Override
     public void CalibrateData(String courseName, String theTerm,
                               String theYear) throws FileNotFoundException {
-        String termKey;
-        if (theTerm.equals(Constants.FALL)){
-            termKey = "9";
-        } else {
-            termKey = "1";
-        }
 
-        // format the url and connect to the coursefinder
-        String searchQuery = theYear + termKey;
+        String searchQuery = buildSearchQuery(theTerm, courseName, theYear);
 
+        // format the url and connect to the coursefinder.
         Document doc;
         try {
              doc = Jsoup.connect(
                      "https://coursefinder.utoronto.ca/course-search/" +
                              "search/courseInquiry?methodToCall=start&viewId=" +
                              "CourseDetails-InquiryView&courseId="
-                             + courseName + theTerm.charAt(0) + searchQuery)
+                             + courseName + searchQuery)
                     .get();
         } catch (IOException e){
             throw new FileNotFoundException();
@@ -56,6 +54,39 @@ public class WebScraper extends DataGetter{
 
     // ============================== Helpers ==================================
 
+    /**
+     * Build a formatted string for url with given term, course name and year.
+     *
+     * @param courseName the name of the course
+     * @param theTerm the term of the course
+     * @param theYear the course starts
+     */
+    private String buildSearchQuery(String theTerm, String courseName, String theYear) {
+        String termKey = "";
+        String termId = "";
+
+        if (theTerm.equals(Constants.FALL)){
+            termKey = "9";
+            char c = courseName.charAt(courseName.length() - 2);
+            if (c == 'Y'){
+                termId = "Y";
+            }
+            else if (c == 'H'){
+                termId = "F";
+            }
+
+        } else if (theTerm.equals(Constants.WINTER)){
+            termKey = "1";
+            termId = "S";
+        }
+        return termId + theYear + termKey;
+    }
+
+    /**
+     * Scrapes down and filters raw data from html.
+     *
+     * @param doc a document object associated with corresponding html.
+     */
     private void filterData(Document doc) {
         // find element by combination of elements with id.
         String term = removeCss(doc.select("span#u158").text());
@@ -114,6 +145,7 @@ public class WebScraper extends DataGetter{
 
     /**
      * Add the given data to self.data
+     *
      * @param term the term of course
      * @param sectionName the name of the section
      * @param faculty the associated faculty
@@ -195,7 +227,7 @@ public class WebScraper extends DataGetter{
 
         if (!formattedLocationString.equals("")){
             // If there are multiple locations, get all the locations
-            String[] locations = formattedLocationString.split("(?=\\s[A-Z])");
+            String[] locations = formattedLocationString.split("(?=\\s[A-Z][A-Z])");
             for (String element : locations) {
                 element = element.trim();
                 retList.add(element);
