@@ -43,9 +43,43 @@ public class MakeCourseCommand implements Command {
      */
     @Override
     public void execute() {
-        // Clears the dataSource so it doesn't build up.
-        dataSource.clearData();
+        boolean running = true;
 
+        while (running){
+            // Clears the dataSource so it doesn't build up.
+            dataSource.clearData();
+
+            LinkedHashMap<String, ArrayList<Course>> course_data = userInputs();
+
+            // Pass this to the TimeTableManager
+            for (Course item : this.scheduledCourse){
+                ArrayList<CourseSection> sections = item.split();
+                for (CourseSection section: sections){
+                    try {
+                        manager.schedule(section);
+                    }
+                    catch (ConflictException e) {
+                        InputChecker repeat = new InputChecker(
+                                "An conflict has occurred! Course" +
+                                        " scheduled Unsuccessfully. Would you" +
+                                        " like to try again? (true/false)",
+                                new isBoolean());
+
+                        String repeatInput = repeat.checkCorrectness();
+                        if (repeatInput.equals("false")){
+                            running = false;
+                        }
+                    }
+                }
+            }
+            System.out.println("Course Scheduled");
+        }
+    }
+
+    /**
+     * Prompts the user for inputs
+     */
+    private LinkedHashMap<String, ArrayList<Course>> userInputs() {
         LinkedHashMap<String, ArrayList<Course>> course_data =
                 new LinkedHashMap<>();
 
@@ -74,17 +108,7 @@ public class MakeCourseCommand implements Command {
         }
 
         promptUser(course_data);
-
-        // Pass this to the TimeTableManager
-        for (Course item : this.scheduledCourse){
-            ArrayList<CourseSection> sections = item.split();
-            for (CourseSection section: sections){
-                try{manager.schedule(section);}
-                catch (ConflictException e) {
-                    e.printStackTrace();}
-            }
-        }
-        System.out.println("Course Secheduled");
+        return course_data;
     }
 
     // ============================= Helpers ===================================
@@ -177,6 +201,17 @@ public class MakeCourseCommand implements Command {
                 }
                 return false;
             }
+        }
+    }
+
+    /**
+     * A predicate to check if an input is a boolean
+     */
+    private static class isBoolean extends Predicate{
+
+        @Override
+        public boolean run(String prompt) {
+            return prompt.equals("true") || prompt.equals("false");
         }
     }
 
