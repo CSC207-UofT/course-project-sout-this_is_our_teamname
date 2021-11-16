@@ -35,3 +35,8 @@
 ### Sonny Chen (sonnyffff - sonnyzijia.chen@mail.utoronto.ca)
 * Created Webscraper
 * Created WebscraperTest
+
+### Liyu Feng (Liquid- liyu.feng@mail.utoronto.ca)
+* Decoupled Events and DatabaseController
+* Testing for bugs
+* Design Document

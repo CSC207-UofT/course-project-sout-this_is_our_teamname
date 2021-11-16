@@ -1,6 +1,7 @@
 package Commands.CreationCommands;
 
 import Commands.Command;
+import Helpers.ConflictException;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.Events;
 import TimeTableObjects.EventObjects.Task;
@@ -86,7 +87,10 @@ public class MakeEventCommand implements Command {
         this.scheduledObject = toSchedule;
 
         assert toSchedule != null;
-        manager.schedule(toSchedule);
+        try{manager.schedule(toSchedule);}
+        catch (ConflictException e) {
+            e.printStackTrace();
+        }
 
         System.out.println("Event Scheduled");
     }
