@@ -1,63 +1,65 @@
 # Design Document
 
-## Major Changes Log
-### Object Name Changes
-* `TimetableObject` -> `Event`
-* TODO
-
 ## UML Diagram
-[The Diagram](https://docs.google.com/presentation/d/1Y4G68pZL0exLt_WOKD81JUoqP-viaEZpGGOaLyKMd6M/edit#slide=id.p)
-
-[Alternate](https://docs.google.com/presentation/d/1WdHyNQxlsQ0VAOPu0ujWFXbWTQDfYz4l92REhfZY83A/edit?usp=sharing)
-
-## Walk Through 2.0
-(Please see Phase 0 Walk Through for more details regarding phase 0 
-components. This section will only elaborate on new features, while briefly 
-mentioning features of old features)
-
-### Scenario
-For this Walk Though, consider a user named GeorgeJohnSmith. He is a super 
-powerful student at UofT who is in 5 different programs at the same time and 
-is planning to enroll in 5 courses.
-* `CSC207H1` (Software Design - Faculty of Arts and Science)
-* `APS111H1` (Engineering Strategies and Practice I - Faculty of Applied 
-  Science and Engineering)
-* `TMU131H1` (Music Theory I - Faculty of Music)
-* `ARC100H1` (Drawing and Representation I - John H. Daniels Faculty of 
-  Landscape Design and Architecture)
-* `ANA126Y1` (Elementary Human Anatomy - Faculty of Kinesiology and Physical 
-  Education)
-
-But he has a problem (No it's not how he will survive; that is a separate 
-problem). He wants to schedule these courses, but there are no tools that he 
-can use at UofT that can schedule across all 5 faculties (NB: At least in 
-the faculty of engineering, ACORN doesn't let you enroll in core courses; 
-that's up to the Registrar/Department to do, so that's not an option). So he 
-uses our fancy tool to do so.
-
-### Steps
-1. **TODO ADD UI AND OI DETAILS**
-2. The user now will be prompted by `Controllers` to select an action 
-   from a list of commands we have implemented.
-   For our example, the GeorgeJohnSmith will choose the `GenerateTimeTable` 
-   function. He will then be prompted to enter the course names of each of 
-   his courses. So he enters the following:
-   1. `CSC207H1`
-   2. `APS111H1`
-   3. `TMU131H1`
-   4. `ARC100H1`
-   5. `ANA126Y1`  
-   
-   `Controllers` will then search using `DataGetter` class to get the 
-   correct information into a HashMap. Then, `Controllers` will create 
-   the command object `SolverCommand` using (@Sonny TODO Perhaps Builder 
-   here?). It will then invoke the command by using the `execute()` method, 
-   as per the description for the command design pattern.
-
-3. TODO
+* [The Diagram](https://docs.google.com/presentation/d/1Y4G68pZL0exLt_WOKD81JUoqP-viaEZpGGOaLyKMd6M/edit#slide=id.p)
+* [Presentation](https://docs.google.com/presentation/d/1WdHyNQxlsQ0VAOPu0ujWFXbWTQDfYz4l92REhfZY83A/edit?usp=sharing)
 
 ## Design Patterns
 Here is a list of where we used Design Patterns in our project
 * `Command`: This is a use of a Command Pattern (obviously)
 
+## SOLID
+### How we adhered to the SOLID principles
+Here are some examples of how we adhered to the SOLID principles!
+* **Single Responsibility Principle**: Our UserInterface and Operator 
+  Interfaces only interact with one type of users only, and is only responsible for 
+  that type. In fact, we are using a Facade! Therefore, it is adhering to SDP
+* **Open/Closed Principle:** Our Command Factory is an example of the 
+  Open/Closed Principle. It is closed, as everything is private and cannot be modified, 
+  but it can be open for extension of new commands
+* **Listov Substitution Principle:** For our Event classes, each one of them 
+  can be substituted for one of their child classes.
+* **Interface Segregation Principle:** The DatabaseController is an example of 
+  the ISP. The controller is an barrier between the user and the command 
+  factory, and purpose is to make sure that each command is doing one task 
+  and one task only
+* **Dependency Inversion Principle:** An example of the Dependency Inversion 
+  Principle is the Events Class. The event class acts as a barrier for the 
+  upper and lower classes.
+
+### Weaknesses
+We openly admit the following design flaws in our program. We will fix these in phase 2 
+* Dependency Principle not adhered to in DataLoader 
+* Unclear relations between each two of UserInterface, DatabaseController, 
+  Command Factory and Operator Interface
+
+## Code Organization
+* We decided to organize our code using a hybrid of Dependency layers and 
+  Components.
+  * For instance, we grouped classes like CommandFactory and DatabaseController 
+    in one package, but we grouped all the commands in another!
+
+## Design Patterns
+* Command and Factory Pattern hybrid for creating command objects
+* InterfaceFacade class created using facade pattern to encapsulate  
+  UserInterface and OperatorInterface
+* Memento Pattern for undo user action
+* Strategy Pattern for Solver
+
+## Refactoring
+* Code Smells: Fixed the long parameter lists for Events classes 
+  * Easier to read and understand
+* Created more meaningful class names for Events classes 
+  * TimeTableObject -> Events 
+  * Section -> CourseSection 
+  * Life -> Activity 
+  * DescriptionlessLife -> Task
+
+## Difficulties we are facing
+* As the project size grew, it is getting more difficult to maintain a clean 
+  architecture. We are facing problems with packaging, code smell, SOLID 
+  principles. Even what was we thought was a good idea became ill thought 
+  out once the project grew. 
+* Not enough test cases proved to be nearly disastrous for pinpointing the 
+  bug. Using the debugger through half the program was not fun.
 
