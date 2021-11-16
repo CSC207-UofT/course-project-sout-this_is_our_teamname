@@ -8,7 +8,7 @@
 * `CSVScraper`
 
 ## Collaborators
-* `DatabaseController`
+* `Controllers`
 
 ## Responsibilities
 * Should have a `getData` method that returns the data in a neat HashMap

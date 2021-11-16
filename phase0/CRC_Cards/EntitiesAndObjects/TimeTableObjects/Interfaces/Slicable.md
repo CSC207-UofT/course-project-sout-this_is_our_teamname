@@ -2,7 +2,7 @@
 
 ## Class
 * An Interface
-* Can be implemented by Course or EntitiesAndObjects; any entity and some Data 
+* Can be implemented by Course or TimeTableObjects; any entity and some Data 
   Structures
 
 ## Collaborators

@@ -1,12 +1,12 @@
 package Interfaces;
 
-import DataCollection.CSVScraper;
-import DataCollection.WebScraper;
+import DataGetting.CSVScraper;
+import DataGetting.WebScraper;
 
-import DatabaseController.DatabaseController;
-import DatabaseController.CommandFactory;
+import Controllers.DatabaseController;
+import Controllers.CommandFactory;
 
-import TimeTableStuff.TimeTableManager;
+import TimeTableContainers.TimeTableManager;
 
 
 import java.io.IOException;

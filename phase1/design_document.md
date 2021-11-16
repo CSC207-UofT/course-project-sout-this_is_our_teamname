@@ -37,7 +37,7 @@ uses our fancy tool to do so.
 
 ### Steps
 1. **TODO ADD UI AND OI DETAILS**
-2. The user now will be prompted by `DatabaseController` to select an action 
+2. The user now will be prompted by `Controllers` to select an action 
    from a list of commands we have implemented.
    For our example, the GeorgeJohnSmith will choose the `GenerateTimeTable` 
    function. He will then be prompted to enter the course names of each of 
@@ -48,8 +48,8 @@ uses our fancy tool to do so.
    4. `ARC100H1`
    5. `ANA126Y1`  
    
-   `DatabaseController` will then search using `DataGetter` class to get the 
-   correct information into a HashMap. Then, `DatabaseController` will create 
+   `Controllers` will then search using `DataGetter` class to get the 
+   correct information into a HashMap. Then, `Controllers` will create 
    the command object `SolverCommand` using (@Sonny TODO Perhaps Builder 
    here?). It will then invoke the command by using the `execute()` method, 
    as per the description for the command design pattern.
