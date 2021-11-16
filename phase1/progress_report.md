@@ -35,3 +35,8 @@
 ### Sonny Chen (sonnyffff - sonnyzijia.chen@mail.utoronto.ca)
 * Created Webscraper
 * Created WebscraperTest
+
+### Hubert Gu (HubertGu - hubert.gu@mail.utoronto.ca)
+* Implemented memento pattern
+* Modified parameters of Events subclasses
+* Created UndoCommand and RedoCommand
