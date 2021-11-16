@@ -13,7 +13,7 @@ Here are some examples of how we adhered to the SOLID principles!
 * **Open/Closed Principle:** Our Command Factory is an example of the 
   Open/Closed Principle. It is closed, as everything is private and cannot be modified, 
   but it can be open for extension of new commands
-* **Listov Substitution Principle:** For our Event classes, each one of them 
+* **Liskov Substitution Principle:** For our Event classes, each one of them 
   can be substituted for one of their child classes.
 * **Interface Segregation Principle:** The DatabaseController is an example of 
   the ISP. The controller is an barrier between the user and the command 
