@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * EXAMPLE PUZZLE
+ */
 public class Graph extends Puzzle {
     private final char item;
     private final ArrayList<Graph> connections;
