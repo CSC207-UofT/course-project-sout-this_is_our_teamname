@@ -5,7 +5,7 @@
 * Interface Adaptor (Database)
 
 ## Collaborators
-* `DatabaseController` (calls on class to find data)
+* `Controllers` (calls on class to find data)
 * `OperatorInterface` (sets the correct `DataGetter` Class)
 
 ## Responsibilities

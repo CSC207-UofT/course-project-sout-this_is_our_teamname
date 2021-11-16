@@ -1,13 +1,13 @@
 package TimeTableStuffTests;
 
-import EntitiesAndObjects.TimeTableObjects.Activity;
-import EntitiesAndObjects.TimeTableObjects.Events;
-import EntitiesAndObjects.TimeTableObjects.Task;
-import GlobalHelpers.Constants;
+import TimeTableObjects.EventObjects.Activity;
+import TimeTableObjects.Events;
+import TimeTableObjects.EventObjects.Task;
+import Helpers.Constants;
 
-import EntitiesAndObjects.TimeTableObjects.CourseSection;
+import TimeTableObjects.EventObjects.CourseSection;
 
-import TimeTableStuff.TimeTable;
+import TimeTableContainers.TimeTable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

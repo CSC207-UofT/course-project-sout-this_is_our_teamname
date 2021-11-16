@@ -5,7 +5,7 @@
 * A Data Structure
 
 ## Collaborators
-* `DatabaseController` Requests the information and sends the object to 
+* `Controllers` Requests the information and sends the object to 
   `TimeTableManager`
 * `DataGathering` Creates the object
 * `TimeTableManager` Splits the course into sections to place into `TimeTable`

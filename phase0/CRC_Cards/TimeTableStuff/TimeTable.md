@@ -4,7 +4,7 @@
 * A **Data Structure**
 
 ## Collaborators
-* `EntitiesAndObjects` + its children (what it should store)
+* `TimeTableObjects` + its children (what it should store)
 * `TimeTableManager` (calls the schedules' method on this class)
 * `Interfaces` (Prints this object so the user can see what they have made)
 
@@ -16,6 +16,6 @@
   * The values are the section classes in `Arraylist`
 * Schedule the sections to different keys in the `LinkedHashMap` using a 
   `schedule` method (this method would behave like `put` for HashMap)
-  * Check for conflicts in each `EntitiesAndObjects` when scheduling. 
+  * Check for conflicts in each `TimeTableObjects` when scheduling. 
   * Does not resolve conflict, sends conflicts to `TimeTableManager` to pass 
     to user decides what to do with conflicts

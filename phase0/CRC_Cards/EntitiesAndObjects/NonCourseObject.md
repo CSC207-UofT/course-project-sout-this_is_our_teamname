@@ -5,8 +5,8 @@
 
 ## Collaborators
 * `TimeTableManger`
-* `DatabaseController`
+* `Controllers`
 
 ## Responsibilities
 * Responsible for holding the information from the user and passing it to 
-  `TimeTableManager` to create individual EntitiesAndObjects. 
+  `TimeTableManager` to create individual TimeTableObjects. 
