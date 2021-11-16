@@ -1,5 +1,14 @@
 # Progress Report
 
+## New (Non-Helper) Classes
+* `Command Factory`
+* `WebScraper`
+* `InterfaceFacade` (Facade)
+* `DataLoader`
+* `DfsSolver`
+* `TimeTablePuzzle`
+* All the commands (there are a lot of them)
+
 ## Individual Contributions
 
 ### Matthew Du (dumatthe - matthew.du@mail.utoronto.ca)

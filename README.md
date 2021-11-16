@@ -6,7 +6,6 @@ CSC207H1 F, Fall 2021 at the University of Toronto St.George.
 ## Phase 1
 * [Design Documents](phase1/design_document.md)
 * [Progress Report](phase1/progress_report.md)
-* [Specifications](phase1/specifications.md)
 * [Updated Program](phase1/Phase_1_README.md)
 
 ## Phase 0
