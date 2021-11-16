@@ -1,0 +1,5 @@
+package DataGettingTests;
+
+class WebScraperTest {
+
+}

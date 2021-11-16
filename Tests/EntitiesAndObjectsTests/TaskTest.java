@@ -1,7 +1,7 @@
 package EntitiesAndObjectsTests;
 
-import EntitiesAndObjects.TimeTableObjects.Task;
-import GlobalHelpers.Constants;
+import TimeTableObjects.EventObjects.Task;
+import Helpers.Constants;
 import org.junit.Before;
 import org.junit.Test;
 

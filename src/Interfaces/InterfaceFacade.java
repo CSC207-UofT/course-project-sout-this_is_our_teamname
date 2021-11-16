@@ -13,7 +13,7 @@ public class InterfaceFacade {
     }
 
     /**
-     * Runs the InterfaceFacade
+     * Runs the InterfaceFacade.
      */
     public void run() throws IOException {
         // As long as the program is running
@@ -25,7 +25,6 @@ public class InterfaceFacade {
             String type = objectScanner.nextLine();
             if (type.equals("User")) {
                 this.userInterface.run();
-                System.out.println("Here are your TimeTable!");
             } else if (type.equals("Operator")) {
                 this.operatorInterface.run();
             } else {
@@ -42,8 +41,6 @@ public class InterfaceFacade {
             if (continueResponse.equals("true")){
                 running = false;
             }
-
-
         }
     }
 
