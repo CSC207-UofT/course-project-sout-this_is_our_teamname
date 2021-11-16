@@ -4,10 +4,6 @@
 * [The Diagram](https://docs.google.com/presentation/d/1Y4G68pZL0exLt_WOKD81JUoqP-viaEZpGGOaLyKMd6M/edit#slide=id.p)
 * [Presentation](https://docs.google.com/presentation/d/1WdHyNQxlsQ0VAOPu0ujWFXbWTQDfYz4l92REhfZY83A/edit?usp=sharing)
 
-## Design Patterns
-Here is a list of where we used Design Patterns in our project
-* `Command`: This is a use of a Command Pattern (obviously)
-
 ## SOLID
 ### How we adhered to the SOLID principles
 Here are some examples of how we adhered to the SOLID principles!
