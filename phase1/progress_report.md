@@ -12,3 +12,8 @@
 * Created InterfaceFacade
 * Created OperatorInterface
 * Modified the UserInterface
+
+### Aiden Lin (aiden-linhaoze - aiden.lin@mail.utoronto.ca)
+* Created DataLoader
+* Added methods to TimeTable
+* Modified some of the Events subclasses
