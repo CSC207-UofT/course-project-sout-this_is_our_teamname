@@ -31,3 +31,7 @@
 * Created TimeTablePuzzle 
 * Looked for and cleaned Code Smells and Dependencies
 * Cleaned up Events and Events subclasses
+
+### Sonny Chen (sonnyffff - sonnyzijia.chen@mail.utoronto.ca)
+* Created Webscraper
+* Created WebscraperTest
