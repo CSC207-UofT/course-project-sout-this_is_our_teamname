@@ -36,6 +36,12 @@
 * Created Webscraper
 * Created WebscraperTest
 
+
+### Liyu Feng (Liquid- liyu.feng@mail.utoronto.ca)
+* Decoupled Events and DatabaseController
+* Testing for bugs
+* Design Document
+
 ### Hubert Gu (HubertGu - hubert.gu@mail.utoronto.ca)
 * Implemented memento pattern
 * Modified parameters of Events subclasses

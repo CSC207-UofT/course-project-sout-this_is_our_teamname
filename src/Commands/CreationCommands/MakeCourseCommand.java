@@ -2,6 +2,7 @@ package Commands.CreationCommands;
 
 import Commands.Command;
 import DataGetting.DataGetter;
+import Helpers.ConflictException;
 import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
 import Helpers.InputCheckers.Predicate;
@@ -78,7 +79,9 @@ public class MakeCourseCommand implements Command {
         for (Course item : this.scheduledCourse){
             ArrayList<CourseSection> sections = item.split();
             for (CourseSection section: sections){
-                manager.schedule(section);
+                try{manager.schedule(section);}
+                catch (ConflictException e) {
+                    e.printStackTrace();}
             }
         }
         System.out.println("Course Secheduled");

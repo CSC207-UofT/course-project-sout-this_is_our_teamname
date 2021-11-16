@@ -1,6 +1,8 @@
 package TimeTableContainers;
 
+import Helpers.ConflictException;
 import Helpers.Constants;
+import Helpers.InvalidInputException;
 import TimeTableObjects.Events;
 
 // Importing HashMap class
@@ -73,20 +75,22 @@ public class TimeTableManager {
 
     /**
      * Get an event from the user interface and schedule it to the corresponding timetable(s).
-     *
      * @param event an Events passed from user interface
-     *
      */
-    public void schedule(Events event) {
+    public void schedule(Events event) throws ConflictException {
         if (event.getTerm().equals(Constants.FALL)){
-            timetables.get(Constants.FALL).schedule(event);
+           boolean conflict = timetables.get(Constants.FALL).schedule(event);
+           if (!conflict){throw new ConflictException();}
+
         }
         else if (event.getTerm().equals(Constants.WINTER)){
-            timetables.get(Constants.WINTER).schedule(event);
+            boolean conflict = timetables.get(Constants.WINTER).schedule(event);
+            if (!conflict){throw new ConflictException();}
         }
         else{
-            timetables.get(Constants.FALL).schedule(event);
-            timetables.get(Constants.WINTER).schedule(event);
+            boolean conflict1 = timetables.get(Constants.FALL).schedule(event);
+            boolean conflict2 = timetables.get(Constants.WINTER).schedule(event);
+            if (!conflict1 && !conflict2){throw new ConflictException();}
         }
     }
 
