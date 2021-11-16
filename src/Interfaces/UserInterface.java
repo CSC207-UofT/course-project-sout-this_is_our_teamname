@@ -1,14 +1,12 @@
 package Interfaces;
 
-import DatabaseController.DatabaseController;
-import DatabaseController.CommandFactory;
-import GlobalHelpers.InvalidInputException;
-import TimeTableStuff.TimeTableManager;
+import Controllers.DatabaseController;
+import Controllers.CommandFactory;
+import TimeTableContainers.TimeTableManager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class UserInterface {
     private final DatabaseController control;

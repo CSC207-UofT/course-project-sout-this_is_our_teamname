@@ -1,4 +1,4 @@
-# DatabaseController
+# Controllers
 
 ## Class
 * Interface Adapters (Controller)

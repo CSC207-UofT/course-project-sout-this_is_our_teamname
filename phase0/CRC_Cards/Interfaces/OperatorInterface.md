@@ -4,8 +4,8 @@
 ## Collaborators
 * `DataGetter` + its children (Configures which one the user can use)
 * `Interfaces` (Configures it)
-* `DatabaseController` (Configures it)
+* `Controllers` (Configures it)
 
 ## Functions
 * Operator interacts with this. 
-* Configures `DatabaseController` and `DataGetter` 
+* Configures `Controllers` and `DataGetter` 

@@ -1,7 +1,7 @@
 package EntitiesAndObjectsTests;
 
-import EntitiesAndObjects.TimeTableObjects.CourseSection;
-import GlobalHelpers.Constants;
+import TimeTableObjects.EventObjects.CourseSection;
+import Helpers.Constants;
 import org.junit.Before;
 import org.junit.Test;
 

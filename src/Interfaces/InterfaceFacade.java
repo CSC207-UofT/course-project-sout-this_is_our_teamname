@@ -13,7 +13,7 @@ public class InterfaceFacade {
     }
 
     /**
-     * Runs the InterfaceFacade
+     * Runs the InterfaceFacade.
      */
     public void run() throws IOException {
         // As long as the program is running

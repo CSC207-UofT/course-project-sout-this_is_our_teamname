@@ -1,7 +1,7 @@
 package TimeTableStuffTests;
 
-import GlobalHelpers.Constants;
-import TimeTableStuff.TimeTableManager;
+import Helpers.Constants;
+import TimeTableContainers.TimeTableManager;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
