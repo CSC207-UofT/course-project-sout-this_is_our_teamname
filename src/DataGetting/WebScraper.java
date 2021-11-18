@@ -130,8 +130,8 @@ public class WebScraper extends DataGetter{
             } else {
                 theTerm = "";
             }
-            addCourseToData(theTerm, section, faculty, locationTimeMap,
-                    professor, deliveryMethod);
+            addCourseToData(courseCode, theTerm, section, faculty,
+                    locationTimeMap, professor, deliveryMethod);
 
             i++;
 
@@ -154,7 +154,8 @@ public class WebScraper extends DataGetter{
      * @param theInstructor the instructor of the course section
      * @param theDeliveryMethod the delivery method of the course.
      */
-    private void addCourseToData(String term,
+    private void addCourseToData(String courseName,
+                                 String term,
                                  String sectionName,
                                  String faculty,
                                  HashMap<Object[], String> timeToLocationMap,
@@ -163,8 +164,8 @@ public class WebScraper extends DataGetter{
 
         // We will fix this in phase 2. Wait list current can only be set to
         // false.
-        Course theCourse = new Course(sectionName, theInstructor, faculty,
-                theDeliveryMethod, timeToLocationMap, term, false);
+        Course theCourse = new Course(courseName, sectionName, theInstructor,
+                faculty, theDeliveryMethod, timeToLocationMap, term, false);
         placeToData(sectionName, theCourse);
     }
 
