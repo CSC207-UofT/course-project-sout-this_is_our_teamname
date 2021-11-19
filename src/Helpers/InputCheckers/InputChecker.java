@@ -56,4 +56,14 @@ public class InputChecker {
         }
         return userResponse;
     }
+
+    public static String[] getQuestionsAnswers(String[] questions) {
+        String[] responses = new String[questions.length];
+        for (int i = 0; i < questions.length; i++) {
+            Scanner userChoice = new Scanner(System.in);
+            System.out.println(questions[i]);
+            responses[i] = userChoice.nextLine();
+        }
+        return responses;
+    }
 }
