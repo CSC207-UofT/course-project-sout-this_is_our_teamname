@@ -11,7 +11,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 /**
- * A WebScraper class. It is a DataGetter class that gets the data from a the course finder
+ * A WebScraper class. It is a DataGetter class that gets the data from the course finder
  * website.
  *
  */
@@ -93,8 +93,6 @@ public class WebScraper extends DataGetter{
         String faculty = removeCss(doc.select("span#u13").text());
         String courseCode = removeCss(doc.select("div#u19").text());
 
-//        String a = doc.select("span#u254_line1").text();
-//        System.out.println(a.length() == 0);
 
         // loop over the rows in the html and add corresponding sections.
         String section = removeCss(doc.select("span#u245_line" + 0).text());
