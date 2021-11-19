@@ -5,9 +5,14 @@ import Functions.DfsSearch;
 import Functions.Puzzle;
 import Functions.Solver;
 import Functions.TimeTablePuzzle;
+import TimeTableContainers.TimeTableManager;
+import TimeTableObjects.Course;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Scanner;
 
 /**
  * THIS IS AN EXAMPLE OF A COMMAND OBJECT. IT IS POORLY DESIGNED ON PURPOSE.
@@ -15,12 +20,11 @@ import java.util.HashSet;
  * TODO YOU MARK THIS, DO NOT MARK THIS!!!
  */
 public class SolverCommand implements Command {
-    private final DfsSearch dfsSolver;
-    private final TimeTablePuzzle puzzle;
+    private final TimeTableManager manager;
+//    private final TimeTablePuzzle puzzle;
 
-    public SolverCommand(DfsSearch dfsSolver, TimeTablePuzzle puzzle) {
-        this.dfsSolver = dfsSolver;
-        this.puzzle = puzzle;
+    public SolverCommand(TimeTableManager manager) {
+        this.manager = manager;
     }
 
 
@@ -31,37 +35,30 @@ public class SolverCommand implements Command {
      */
     @Override
     public void execute(){
-        // TODO Add your main like Method here. The following code is just a
-        //  placeholder to show you how everything works.
-        Puzzle APuzzleToDemonstrateWhatThisClassDoes = new examplePuzzle();
-        Solver ASolverToSolveTheAformentionedPuzzle = new DfsSearch();
-        ArrayList<Puzzle> TheSolutionsToTheAforementionedPuzzleAsAnArrayListOfTheStepsItTookToGetFromThePuzzleStateToTheCurrentState = ASolverToSolveTheAformentionedPuzzle.solve(APuzzleToDemonstrateWhatThisClassDoes, new HashSet<>());
-        // Do something...
+        HashMap<String, HashMap<String, ArrayList<Course>>> courses = new HashMap<>();
+        boolean courseCounter = true;
+        while (courseCounter) {
+            Scanner userCourse = new Scanner(System.in);
+            System.out.println("Which course would you like to automatically schedule? " +
+                            "Enter the course Name (eg CSC207H1. " + "Don't forget the 'H1'");
+//            courses.add(userCourse.nextLine());
+            System.out.println("Would you like to schedule another?");
+            if (!Boolean.parseBoolean(userCourse.nextLine())) {
+                courseCounter = false;
+            }
+        }
+
+        TimeTablePuzzle puzzle = new TimeTablePuzzle(courses, this.manager);
+
+
+
     }
 
-    /**
-     * Just an example. TODO Please delete!!!
-     *
-     */
-    private static class examplePuzzle extends Puzzle{
-        @Override
-        public boolean fail_fast() {
-            return false;
-        }
-
-        @Override
-        public boolean is_solved() {
-            return false;
-        }
-
-        @Override
-        public Puzzle[] extensions() {
-            return new Puzzle[0];
-        }
-    }
 
     @Override
     public String toString() {
         return "Used the Solver Function";
     }
+
+
 }

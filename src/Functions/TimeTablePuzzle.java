@@ -122,5 +122,8 @@ public class TimeTablePuzzle {
         }
         return extensions;
     }
+    public static void main(String args[]) {
+
+    }
 }
 
