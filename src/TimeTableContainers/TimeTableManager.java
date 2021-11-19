@@ -2,12 +2,16 @@ package TimeTableContainers;
 
 import Helpers.ConflictException;
 import Helpers.Constants;
-import Helpers.InvalidInputException;
 import TimeTableObjects.Events;
 
 // Importing HashMap class
 import java.util.*;
 
+/**
+ * A manager that manages and holds different timetables.
+ * === Private Attributes ===
+ * timetables contains different timetables as values and their corresponding names as keys.
+ */
 public class TimeTableManager {
     private final HashMap<String, TimeTable> timetables;
     /**

@@ -4,6 +4,12 @@ import TimeTableObjects.Events;
 
 import java.time.LocalTime;
 
+ /**
+  * Activity is an extracurricular or social Events object.
+  *
+  * === Private Attributes ===
+  * description contains all the other info about the activity
+  */
 public class Activity extends Events {
     private final String description;
 

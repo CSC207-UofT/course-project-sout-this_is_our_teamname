@@ -275,9 +275,9 @@ public class DataLoader {
         for (String day : days) {
             for (int n = 0; n <= 23; n ++) {
                 // If the calendar at the date has an item
-                if (timetable.getCalender().get(day)[n] != null) {
+                if (timetable.getCalendar().get(day)[n] != null) {
                     String desription =
-                            timetable.getCalender().get(day)[n].getDescription();
+                            timetable.getCalendar().get(day)[n].getDescription();
                     allDataLines.get(n).add(desription);
                 } else {
                     allDataLines.get(n).add(" ");
@@ -298,7 +298,7 @@ public class DataLoader {
 
         for (String day : days) {
             for (int n = 0; n <= 23; n ++) {
-                if (timetable.getCalender().get(day)[n] != null) {
+                if (timetable.getCalendar().get(day)[n] != null) {
                     sortEventType(timetable, datalists, day, n);
                 }
                 else {
@@ -310,32 +310,32 @@ public class DataLoader {
     }
 
     private void sortEventType(TimeTable timetable, List<List<String>> datalists, String day, int n) {
-        if (timetable.getCalender().get(day)[n] instanceof Activity) {
+        if (timetable.getCalendar().get(day)[n] instanceof Activity) {
             String toWrite =
-                    "Activity: " + timetable.getCalender().get(day)[n].getDescription();
+                    "Activity: " + timetable.getCalendar().get(day)[n].getDescription();
             datalists.get(n).add(toWrite);
-        } else if (timetable.getCalender().get(day)[n] instanceof CourseSection) {
+        } else if (timetable.getCalendar().get(day)[n] instanceof CourseSection) {
             sortCourseSection(timetable, datalists, day, n);
-        } else if (timetable.getCalender().get(day)[n] instanceof Task) {
+        } else if (timetable.getCalendar().get(day)[n] instanceof Task) {
             sortTask(timetable, datalists, day, n);
         }
     }
 
     private void sortTask(TimeTable timetable, List<List<String>> datalists, String day, int n) {
-        if (timetable.getCalender().get(day)[n].getDescription() == null) {
+        if (timetable.getCalendar().get(day)[n].getDescription() == null) {
             datalists.get(n).add("Task: " + "N/A");
         } else {
-            datalists.get(n).add("Task: " + timetable.getCalender().get(day)[n].getDescription());
+            datalists.get(n).add("Task: " + timetable.getCalendar().get(day)[n].getDescription());
         }
     }
 
     private void sortCourseSection(TimeTable timetable, List<List<String>> datalists, String day, int n) {
-        if (((CourseSection) timetable.getCalender().get(day)[n]).getWaitlist()) {
+        if (((CourseSection) timetable.getCalendar().get(day)[n]).getWaitlist()) {
             datalists.get(n).add("Course Section: " +
-                    timetable.getCalender().get(day)[n].getDescription() + " (Waitlisted)");
+                    timetable.getCalendar().get(day)[n].getDescription() + " (Waitlisted)");
         } else {
             datalists.get(n).add("Course Section: " +
-                    timetable.getCalender().get(day)[n].getDescription());
+                    timetable.getCalendar().get(day)[n].getDescription());
         }
     }
 

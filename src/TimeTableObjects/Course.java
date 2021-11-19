@@ -7,7 +7,19 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/**
+ * This is a course section (LEC/TUT/PRA) chosen by the user
+ *
+ * === Private Attributes ===
+ * sectionName is the section code of the course section
+ * professor The professor teaching this course section
+ * faculty The faculty this course belongs to
+ * deliveryMethod The delivery method for this course section
+ * timeLocation The time and corresponding location for this course
+ * term The term for this course
+ * wait_list Whether the course is waitlisted
+ * courseName is the course code
+ */
 public class Course implements Sliceable<CourseSection> {
     private final String sectionName;
     private final String professor;

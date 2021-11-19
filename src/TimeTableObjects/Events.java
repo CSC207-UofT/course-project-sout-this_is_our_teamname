@@ -3,6 +3,12 @@ import java.time.LocalTime;
 
 /**
  * Events class is a class that can be stored in a TimeTable class.
+ * === Private Attributes ===
+ * startTime is the starting time of the event
+ * endTime is the ending time of the event
+ * date is the weekday of the event
+ * term is which school term the timetable belongs to
+ * description contains all the other information about the event
  */
 public abstract class Events {
     private final LocalTime startTime;
@@ -85,7 +91,6 @@ public abstract class Events {
 
     /**
      * Get the term for this event
-     *
      * @return term
      */
     public String getTerm() {
