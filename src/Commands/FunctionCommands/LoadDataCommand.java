@@ -1,7 +1,9 @@
 package Commands.FunctionCommands;
 
 import Commands.Command;
+import Commands.CreationCommands.MakeCourseCommand;
 import DataLoading.DataLoader;
+import Helpers.InputCheckers.InputChecker;
 import TimeTableContainers.TimeTableManager;
 
 import java.io.IOException;
@@ -22,13 +24,7 @@ public class LoadDataCommand implements Command {
                 "the term"};
         boolean running = true;
         while (running){
-            String[] responses = new String[prompts.length];
-
-            for (int i = 0; i < prompts.length; i++){
-                Scanner ask = new Scanner(System.in);
-                System.out.println(prompts[i]);
-                responses[i] = ask.nextLine();
-            }
+            String[] responses = InputChecker.getQuestionsAnswers(prompts);
 
             try {
                 this.loader.upload(responses[0], responses[1] + responses[2],

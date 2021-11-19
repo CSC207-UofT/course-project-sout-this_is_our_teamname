@@ -56,7 +56,7 @@ public class CSVScraper extends DataGetter {
         String[][] splicedFileData = splitData(fileData);
 
         ArrayList<Course> courseList = new ArrayList<>();
-        filterData(courseList, term, faculty, splicedFileData);
+        filterData(courseName, courseList, term, faculty, splicedFileData);
         for (Course item: courseList){
             placeToData(item.getSectionName(), item);
         }
@@ -75,8 +75,9 @@ public class CSVScraper extends DataGetter {
      * @param theFaculty The Faculty offering the course
      * @param theFileData the Arraylist of all the lines of the file.
      */
-    private void filterData(ArrayList<Course> courseData, String theTerm,
-                            String theFaculty, String[][] theFileData){
+    private void filterData(String courseName, ArrayList<Course> courseData,
+                            String theTerm, String theFaculty,
+                            String[][] theFileData){
         // Base Case 1: Size 1 and this is a header.
         if (theFileData.length == 1 && headingCondition(theFileData[0])){
             // Some Parameters
@@ -85,9 +86,9 @@ public class CSVScraper extends DataGetter {
                     theFileData[0][LOCATION]);
             boolean hasWaitList = theFileData[0][WAITLIST].equals("0");
 
-            courseData.add(new Course(theFileData[0][SECTION],
-                            theFileData[0][INSTRUCTOR], theFaculty,
-                            theFileData[0][DELIVERY], TimeLocation, theTerm, hasWaitList
+            courseData.add(new Course(courseName, theFileData[0][SECTION],
+                    theFileData[0][INSTRUCTOR], theFaculty,
+                    theFileData[0][DELIVERY], TimeLocation, theTerm, hasWaitList
                     )
             );
 
@@ -99,7 +100,7 @@ public class CSVScraper extends DataGetter {
         // Inductive Step: All other list sizes
         } else if (theFileData.length != 1){
             for (String[] item: theFileData){
-                filterData(courseData, theTerm, theFaculty,
+                filterData(courseName, courseData, theTerm, theFaculty,
                         new String[][]{item});
             }
         }

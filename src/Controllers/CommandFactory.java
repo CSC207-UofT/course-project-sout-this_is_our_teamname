@@ -1,6 +1,5 @@
 package Controllers;
 
-import DataGetting.CSVScraper;
 import DataGetting.DataGetter;
 import Commands.Command;
 import Commands.CreationCommands.GetAllTimeTablesCommand;
@@ -43,7 +42,7 @@ public class CommandFactory {
      */
     public CommandFactory(DatabaseController theController){
         this.courseManager = null;
-        this.dataSource = new CSVScraper();
+        this.dataSource = null;
         this.controller = theController;
         this.allowedFunctions = new String[]{
                 SCHEDULE_COURSE,
@@ -72,14 +71,12 @@ public class CommandFactory {
      */
     public Command getCommand(String inputCommand) throws InvalidInputException {
         assert this.dataSource != null && this.courseManager != null;
-        // To schedule a course
+
         switch (inputCommand) {
             case SCHEDULE_COURSE:
                 return new MakeCourseCommand(courseManager, dataSource);
-            // To schedule an event
             case SCHEDULE_EVENT:
                 return new MakeEventCommand(courseManager);
-            // To get all the timetables in the TimeTableManager
             case GET_ALL_TIMETABLE:
                 return new GetAllTimeTablesCommand(courseManager);
             case PRINT_HISTORY:
@@ -91,6 +88,7 @@ public class CommandFactory {
             case DOWNLOAD_TIMETABLE:
                 return new DownloadDataCommand(courseManager);
             case EXIT:
+                // Signals DatabaseController to exit the Program
                 return null;
             // ... ADD YOUR NEW OBJECTS HERE!
 

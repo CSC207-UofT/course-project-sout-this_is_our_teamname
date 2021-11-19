@@ -1,5 +1,14 @@
 # Progress Report
 
+## New (Non-Helper) Classes
+* `Command Factory`
+* `WebScraper`
+* `InterfaceFacade` (Facade)
+* `DataLoader`
+* `DfsSolver`
+* `TimeTablePuzzle`
+* All the commands (there are a lot of them)
+
 ## Individual Contributions
 
 ### Matthew Du (dumatthe - matthew.du@mail.utoronto.ca)
@@ -22,3 +31,18 @@
 * Created TimeTablePuzzle 
 * Looked for and cleaned Code Smells and Dependencies
 * Cleaned up Events and Events subclasses
+
+### Sonny Chen (sonnyffff - sonnyzijia.chen@mail.utoronto.ca)
+* Created Webscraper
+* Created WebscraperTest
+
+
+### Liyu Feng (Liquid- liyu.feng@mail.utoronto.ca)
+* Decoupled Events and DatabaseController
+* Testing for bugs
+* Design Document
+
+### Hubert Gu (HubertGu - hubert.gu@mail.utoronto.ca)
+* Implemented memento pattern
+* Modified parameters of Events subclasses
+* Created UndoCommand and RedoCommand

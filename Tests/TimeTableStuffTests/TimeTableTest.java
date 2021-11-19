@@ -26,12 +26,12 @@ class TimeTableTest {
         LocalTime time10 = LocalTime.of(10, 0,0);
         LocalTime time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture1 = new CourseSection(time9,time10,"SS100",Constants.MONDAY,Constants.YEAR,
-                "MAT257","Gauss","Arts and Science","In Person", false);
-        CourseSection lecture2 = new CourseSection(time9,time11,"SS101",Constants.MONDAY,Constants.FALL,
-                "MAT157", "Descartes","Arts and Science","Online", false);
-        CourseSection lecture3 = new CourseSection(time10,time11,"SS100",Constants.MONDAY,Constants.FALL,
-                "MAT137", "Alphonso","Arts and Science","Online", false);
+        CourseSection lecture1 = new CourseSection("MAT257", time9,time10,
+                "SS100",Constants.MONDAY,Constants.YEAR,"LEC 0101","Gauss","Arts and Science","In Person", false);
+        CourseSection lecture2 = new CourseSection("MAT157", time9,time11,
+                "SS101",Constants.MONDAY,Constants.FALL,"LEC 0101", "Descartes","Arts and Science","Online", false);
+        CourseSection lecture3 = new CourseSection("MAT137", time10,time11,
+                "SS100",Constants.MONDAY,Constants.FALL,"LEC 0101", "Alphonso","Arts and Science","Online", false);
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
         Task task= new Task(time5,time6,"home",Constants.MONDAY,Constants.FALL);
         TimeTable table = new TimeTable();
@@ -44,31 +44,37 @@ class TimeTableTest {
 
     @Test
     public void testToString() {    //TODO needs to be reworked on
-        LocalTime Time9 =  LocalTime.of(9,0,0);
-        LocalTime Time10 = LocalTime.of(10, 0,0);
-        LocalTime endTime1 = LocalTime.of(10,0,0);
-        LocalTime Time11 = LocalTime.of(11,0,0);
+        LocalTime time5 =  LocalTime.of(5,0,0);
+        LocalTime time6 =  LocalTime.of(6,0,0);
+        LocalTime time9 =  LocalTime.of(9,0,0);
+        LocalTime time10 = LocalTime.of(10, 0,0);
+        LocalTime time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture0 = new CourseSection(Time9,Time10,"SS100", Constants.MONDAY,Constants.YEAR,
-                "MAT257","Gauss","Arts and Science","In Person", false);
-        CourseSection lecture1 = new CourseSection(Time10,Time11,"SS100",Constants.THURSDAY,Constants.FALL,
-                "MAT137", "Alphonso","Arts and Science","Online", false);
+        CourseSection lecture0 = new CourseSection("MAT257", time9,time10,
+                "SS100", Constants.MONDAY,Constants.YEAR,"LEC 0101","Gauss","Arts and Science","In Person", false);
+        CourseSection lecture1 = new CourseSection("MAT137", time10,time11,
+                "SS100",Constants.THURSDAY,Constants.FALL,"LEC 0101", "Alphonso","Arts and Science","Online", false);
+        Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
+        Task task= new Task(time5,time6,"home",Constants.MONDAY,Constants.FALL);
 
         TimeTable table = new TimeTable();
         table.schedule(lecture0);
         table.schedule(lecture1);
-
+        table.schedule(activity);
+        table.schedule(task);
         String actual = table.toString();
 
-        String expected = "{Monday=[09:00 - 10:00: MAT257 of Arts and Science with Gauss by In Person at SS100], " +
-                           "Tuesday=[], " +
-                           "Wednesday=[], " +
-                           "Thursday=[10:00 - 11:00: MAT137 of Arts and Science with Alphonso by Online at SS100], " +
-                           "Friday=[], " +
-                           "Saturday=[], " +
-                           "Sunday=[]}";
-
-        Assertions.assertEquals(expected, actual);
+        String expectedCourse0 = "9:00 MAT257 of Arts and Science with Gauss by In Person at SS100";
+        String expectedCourse1 = "10:00 MAT137 of Arts and Science with Alphonso by Online at SS100";
+        String expectedActivity1 = "6:00 nap";
+        String expectedActivity2 = "7:00 nap";
+        String expectedActivity3 = "8:00 nap";
+        String expectedTask= "5:00 ";
+        assertTrue(actual.contains(expectedCourse0));
+        assertTrue(actual.contains(expectedCourse1));
+        assertTrue(actual.contains(expectedActivity1)
+                && actual.contains(expectedActivity2) &&actual.contains(expectedActivity3));
+        assertTrue(actual.contains(expectedTask));
     }
 
     @Test
@@ -78,18 +84,28 @@ class TimeTableTest {
         LocalTime endTime1 = LocalTime.of(10, 0, 0);
         LocalTime endTime2 = LocalTime.of(11, 0, 0);
 
-        CourseSection lecture1 = new CourseSection(startTime1, endTime1, "SS100", Constants.MONDAY, Constants.YEAR,
-                "MAT257LEC0101", "Gauss", "Arts and Science", "In Person", false);
-        CourseSection lecture2 = new CourseSection(startTime2, endTime2, "SS101", Constants.MONDAY, Constants.FALL,
-                "MAT257LEC0201", "Descartes", "Arts and Science", "Online", false);
-        CourseSection lecture3 = new CourseSection(startTime2, endTime2, "SS100", Constants.TUESDAY, Constants.FALL,
-                "MAT257PRA0101", "Alphonso", "Arts and Science", "Online", false);
-        CourseSection lecture4 = new CourseSection(startTime2, endTime2, "BA1160", Constants.WEDNESDAY, Constants.FALL,
-                "CSC207LEC0101", "Calver", "Arts and Science", "In Person", false);
-        CourseSection lecture5 = new CourseSection(startTime1, endTime1, "BA1160", Constants.WEDNESDAY, Constants.FALL,
-                "CSC207TUT0101", "TA", "Arts and Science", "Online", false);
-        CourseSection lecture6 = new CourseSection(startTime1, endTime1, "BA1160", Constants.THURSDAY, Constants.FALL,
-                "CSC236TUT0101", "TA", "Arts and Science", "Online", false);
+        CourseSection lecture1 =
+                new CourseSection("MAT257", startTime1, endTime1, "SS100",
+                        Constants.MONDAY, Constants.YEAR,
+                "LEC0101", "Gauss", "Arts and Science", "In Person", false);
+        CourseSection lecture2 =
+                new CourseSection("MAT257", startTime2, endTime2, "SS101",
+                        Constants.MONDAY, Constants.FALL, "LEC0201", "Descartes", "Arts and Science", "Online", false);
+        CourseSection lecture3 =
+                new CourseSection("MAT257", startTime2, endTime2, "SS100",
+                        Constants.TUESDAY, Constants.FALL, "PRA0101", "Alphonso", "Arts and Science", "Online", false);
+        CourseSection lecture4 =
+                new CourseSection("CSC207", startTime2, endTime2, "BA1160",
+                        Constants.WEDNESDAY, Constants.FALL,
+                "LEC0101", "Calver", "Arts and Science", "In Person", false);
+        CourseSection lecture5 =
+                new CourseSection("CSC207", startTime1, endTime1, "BA1160",
+                        Constants.WEDNESDAY, Constants.FALL,
+                "TUT0101", "TA", "Arts and Science", "Online", false);
+        CourseSection lecture6 =
+                new CourseSection("CSC236", startTime1, endTime1, "BA1160",
+                        Constants.THURSDAY, Constants.FALL,
+                "TUT0101", "TA", "Arts and Science", "Online", false);
 
         TimeTable table = new TimeTable();
         table.schedule(lecture1);

@@ -1,2 +1,0 @@
-# Specifications (Phase 1)
-
