@@ -25,7 +25,7 @@ import java.util.Objects;
  */
 public class DataLoader {
 
-    private static String[] days = {Constants.MONDAY, Constants.TUESDAY, Constants.WEDNESDAY,
+    private static final String[] days = {Constants.MONDAY, Constants.TUESDAY, Constants.WEDNESDAY,
             Constants.THURSDAY, Constants.FRIDAY, Constants.SATURDAY, Constants.SUNDAY};
 
     /**
@@ -44,8 +44,6 @@ public class DataLoader {
             String[][] meaningfuldata = MeaningfulDataHelper(data);
             for (int timeindex = 0; timeindex <= 23; timeindex++) {
                 for (int dateindex = 1; dateindex <= 7; dateindex++) {
-                    String[] days = {Constants.MONDAY, Constants.TUESDAY, Constants.WEDNESDAY,
-                            Constants.THURSDAY, Constants.FRIDAY, Constants.SATURDAY, Constants.SUNDAY};
                     if (!Objects.equals(meaningfuldata[timeindex][dateindex], " ")) {
                         String[] olddescriptionwords = meaningfuldata[timeindex][dateindex].split(" ");
                         String newdescription = DescriptionHelper(olddescriptionwords);
@@ -55,7 +53,11 @@ public class DataLoader {
                                     days[dateindex - 1], term, newdescription);
                         }
                         else if (Objects.equals(olddescriptionwords[0], "Course Section:")) {
-                            CourseSectionHelper(ttbmanager,
+
+                            // TODO FIX THIS! I put filepath in here in place
+                            //  of course name, but that is not correct.
+                            //  Please fix
+                            CourseSectionHelper(filepath, ttbmanager,
                                     LocalTime.of(timeindex, 0, 0, 0),
                                     LocalTime.of(timeindex + 1, 0, 0, 0),
                                     days[dateindex - 1], term, newdescription);
@@ -126,16 +128,18 @@ public class DataLoader {
      * @param term the term of the course section
      * @param newdescription the information of the course section
      */
-    private void CourseSectionHelper(TimeTableManager ttbmanager,
+    private void CourseSectionHelper(String CourseName,
+                                     TimeTableManager ttbmanager,
                                      LocalTime time1, LocalTime time2,
                                      String day, String term, String newdescription) {
         CourseSection activity;
         if (newdescription.contains("(Waitlisted)")) {
-            activity = new CourseSection(time1, time2, day, term,
+            activity = new CourseSection(CourseName, time1, time2, day, term,
                     newdescription.substring(0, newdescription.length() - " (Waitlisted)".length()), true);
         }
         else {
-            activity = new CourseSection(time1, time2, day, term, newdescription, false);
+            activity = new CourseSection(CourseName, time1, time2, day, term,
+                    newdescription, false);
         }
         ttbmanager.getTimetable(term).schedule(activity);
     }

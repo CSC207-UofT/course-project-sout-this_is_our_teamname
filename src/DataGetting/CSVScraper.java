@@ -56,7 +56,7 @@ public class CSVScraper extends DataGetter {
         String[][] splicedFileData = splitData(fileData);
 
         ArrayList<Course> courseList = new ArrayList<>();
-        filterData(courseList, term, faculty, splicedFileData);
+        filterData(courseName, courseList, term, faculty, splicedFileData);
         for (Course item: courseList){
             placeToData(item.getSectionName(), item);
         }
@@ -64,7 +64,7 @@ public class CSVScraper extends DataGetter {
 
     /**
      * Filters the data and searches for the required information. Then, adds
-     * the data into the data structure.
+     * the data into the data parameter in DataGetter parent class.
      *
      * This is a recursive method.
      *
@@ -75,8 +75,9 @@ public class CSVScraper extends DataGetter {
      * @param theFaculty The Faculty offering the course
      * @param theFileData the Arraylist of all the lines of the file.
      */
-    private void filterData(ArrayList<Course> courseData, String theTerm,
-                            String theFaculty, String[][] theFileData){
+    private void filterData(String courseName, ArrayList<Course> courseData,
+                            String theTerm, String theFaculty,
+                            String[][] theFileData){
         // Base Case 1: Size 1 and this is a header.
         if (theFileData.length == 1 && headingCondition(theFileData[0])){
             // Some Parameters
@@ -85,9 +86,9 @@ public class CSVScraper extends DataGetter {
                     theFileData[0][LOCATION]);
             boolean hasWaitList = theFileData[0][WAITLIST].equals("0");
 
-            courseData.add(new Course(theFileData[0][SECTION],
-                            theFileData[0][INSTRUCTOR], theFaculty,
-                            theFileData[0][DELIVERY], TimeLocation, theTerm, hasWaitList
+            courseData.add(new Course(courseName, theFileData[0][SECTION],
+                    theFileData[0][INSTRUCTOR], theFaculty,
+                    theFileData[0][DELIVERY], TimeLocation, theTerm, hasWaitList
                     )
             );
 
@@ -99,7 +100,7 @@ public class CSVScraper extends DataGetter {
         // Inductive Step: All other list sizes
         } else if (theFileData.length != 1){
             for (String[] item: theFileData){
-                filterData(courseData, theTerm, theFaculty,
+                filterData(courseName, courseData, theTerm, theFaculty,
                         new String[][]{item});
             }
         }
@@ -118,12 +119,17 @@ public class CSVScraper extends DataGetter {
      * @param filename the name of the file
      */
     private ArrayList<String> readFile(String filename) throws FileNotFoundException {
+        // The objects used to read a txt file
         ArrayList<String> readData = new ArrayList<>();
         File myObj = new File(filename);
         Scanner myReader = new Scanner(myObj);
+
+        // Parse through the file adding each line to readData
         while (myReader.hasNextLine()) {
             readData.add(myReader.nextLine());
         }
+
+        // Close file
         myReader.close();
 
         return readData;
@@ -153,21 +159,29 @@ public class CSVScraper extends DataGetter {
      *
      * @param formattedTimeString the formattedTimeString of the date, start,
      *                           and end times
-     * @return the string array of length 3 of the date, start time, and end
-     * time
+     * @return the object array of length 3 of the date, start time, and end
+     * time: {Date (string), Start time (LocalTIme), End time (LocalTime)}
      */
     private Object[] splitDateTime(String formattedTimeString){
+        // Constants
+        int DATE = 0;
+        int START_TIME = 1;
+        int END_TIME = 3;
+
         String[] splicedInfo = formattedTimeString.split(" ");
 
-        Object[] retList;
+        // If the splicedInfo contains a time.
         if (hasTime(splicedInfo)) {
-            retList = new Object[]{splicedInfo[0], StringToTime.makeTime(splicedInfo[1]),
-                    StringToTime.makeTime(splicedInfo[3])};
-        } else {
-            retList = new Object[]{Constants.TBA, LocalTime.of(0, 0, 0),
+            return new Object[]{splicedInfo[DATE],
+                    StringToTime.makeTime(splicedInfo[START_TIME]),
+                    StringToTime.makeTime(splicedInfo[END_TIME])};
+        }
+        // If the info contains TBA as time, or does not contain date or time
+        else {
+            return new Object[]{Constants.TBA,
+                    LocalTime.of(0, 0, 0),
                     LocalTime.of(0, 0, 0)};
         }
-        return retList;
     }
 
     // ============================== Predicates ===============================
@@ -180,21 +194,30 @@ public class CSVScraper extends DataGetter {
      * formatted as a time
      */
     private boolean hasTime(String[] input){
+        // If there are 4 items in the array (Date, StartTime, "-"
+        // character, EndTime)
         return input.length == 4 && input[2].equals("-");
     }
 
     /**
      * Returns true iff the line is a header line
      *
+     * A header line is any line that begins with the section name and has
+     * the first line of information
+     *
      * @param line the line that needs to be checked
      * @return true iff the line is a header line
      */
     private boolean headingCondition(String[] line){
+        // If there are 5 items or more in that line
         return line.length >= 5 && !line[SECTION].equals("");
     }
 
     /**
      * Returns true iff the line is a subheader line
+     *
+     * A line is a subheader line if it only contains the time and Location.
+     * It is a continuation of the previous section information
      *
      * @param line the line that needs to be checked
      * @return true iff the line is a subheader line

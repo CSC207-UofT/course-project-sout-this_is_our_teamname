@@ -33,7 +33,7 @@ public class TimeTablePuzzleTest {
         HashMap<Object[], String> testDateTimeMap1 = new HashMap<>();
         testDateTimeMap1.put(testDateTime1, "LM161");
         testDateTimeMap1.put(testDateTime2, "LM161");
-        Course A = new Course("CSC207LEC0101", "Gries", "A&S", "In-Person",
+        Course A = new Course("CSC207","LEC0101", "Gries", "A&S", "In-Person",
                 testDateTimeMap1, Constants.FALL, false);
         ArrayList<CourseSection> split = A.split();
         for (CourseSection section : split) {
@@ -44,14 +44,14 @@ public class TimeTablePuzzleTest {
         Object[] testDateTime3 = {Constants.WEDNESDAY, startTime2, endTime2};
         HashMap<Object[], String> testDateTimeMap2 = new HashMap<>();
         testDateTimeMap2.put(testDateTime3, "LM161");
-        Course B = new Course("CSC207LEC0201", "Calver", "A&S", "In-Person",
+        Course B = new Course("CSC207", "LEC0201", "Calver", "A&S", "In-Person",
                 testDateTimeMap2, Constants.FALL, false);
 
 
         Object[] testDateTime4 = {Constants.TUESDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap3 = new HashMap<>();
         testDateTimeMap3.put(testDateTime4, "LM161");
-        Course C = new Course("CSC207TUT0101", "TA", "A&S", "In-Person",
+        Course C = new Course("CSC207", "TUT0101", "TA", "A&S", "In-Person",
                 testDateTimeMap3, Constants.FALL, false);
         for (CourseSection section : C.split()) {
             manager.getTimetable(Constants.FALL).schedule(section);
@@ -61,14 +61,14 @@ public class TimeTablePuzzleTest {
         Object[] testDateTime5 = {Constants.FRIDAY, startTime2, endTime2};
         HashMap<Object[], String> testDateTimeMap4 = new HashMap<>();
         testDateTimeMap4.put(testDateTime5, "LM161");
-        Course D = new Course("CSC207TUT0201", "TA", "A&S", "In-Person",
+        Course D = new Course("CSC207", "TUT0201", "TA", "A&S", "In-Person",
                 testDateTimeMap4, Constants.FALL, false);
 
 
         Object[] testDateTime6 = {Constants.FRIDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap5 = new HashMap<>();
         testDateTimeMap5.put(testDateTime6, "LM161");
-        Course E = new Course("MAT157LEC0101", "Prof", "A&S", "In-Person",
+        Course E = new Course("MAT157", "LEC0101", "Prof", "A&S", "In-Person",
                 testDateTimeMap5, Constants.FALL, false);
         for (CourseSection section : E.split()) {
             manager.getTimetable(Constants.FALL).schedule(section);
@@ -78,7 +78,7 @@ public class TimeTablePuzzleTest {
         Object[] testDateTime7 = {Constants.WEDNESDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap6 = new HashMap<>();
         testDateTimeMap6.put(testDateTime7, "LM161");
-        Course F = new Course("MAT157LEC0201", "Prof", "A&S", "In-Person",
+        Course F = new Course("MAT157", "LEC0201", "Prof", "A&S", "In-Person",
                 testDateTimeMap6, Constants.FALL, false);
 
 
@@ -117,7 +117,7 @@ public class TimeTablePuzzleTest {
         HashMap<Object[], String> testDateTimeMap1 = new HashMap<>();
         testDateTimeMap1.put(testDateTime1, "LM161");
         testDateTimeMap1.put(testDateTime2, "LM161");
-        Course A = new Course("CSC207LEC0101", "Gries", "A&S", "In-Person",
+        Course A = new Course("CSC207", "LEC0101", "Gries", "A&S", "In-Person",
                 testDateTimeMap1, Constants.FALL, false);
         ArrayList<CourseSection> split = A.split();
         for (CourseSection section : split) {
@@ -128,28 +128,28 @@ public class TimeTablePuzzleTest {
         Object[] testDateTime3 = {Constants.WEDNESDAY, startTime2, endTime2};
         HashMap<Object[], String> testDateTimeMap2 = new HashMap<>();
         testDateTimeMap2.put(testDateTime3, "LM161");
-        Course B = new Course("CSC207LEC0201", "Calver", "A&S", "In-Person",
+        Course B = new Course("CSC207", "LEC0201", "Calver", "A&S", "In-Person",
                 testDateTimeMap2, Constants.FALL, false);
 
 
         Object[] testDateTime4 = {Constants.TUESDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap3 = new HashMap<>();
         testDateTimeMap3.put(testDateTime4, "LM161");
-        Course C = new Course("CSC207TUT0101", "TA", "A&S", "In-Person",
+        Course C = new Course("CSC207", "TUT0101", "TA", "A&S", "In-Person",
                 testDateTimeMap3, Constants.FALL, false);
 
 
         Object[] testDateTime5 = {Constants.FRIDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap4 = new HashMap<>();
         testDateTimeMap4.put(testDateTime5, "LM161");
-        Course D = new Course("CSC207TUT0201", "TA", "A&S", "In-Person",
+        Course D = new Course("CSC207", "TUT0201", "TA", "A&S", "In-Person",
                 testDateTimeMap4, Constants.FALL, false);
 
 
         Object[] testDateTime6 = {Constants.FRIDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap5 = new HashMap<>();
         testDateTimeMap5.put(testDateTime6, "LM161");
-        Course E = new Course("MAT157LEC0101", "Prof", "A&S", "In-Person",
+        Course E = new Course("MAT157", "LEC0101", "Prof", "A&S", "In-Person",
                 testDateTimeMap5, Constants.FALL, false);
         for (CourseSection section : E.split()) {
             manager.getTimetable(Constants.FALL).schedule(section);
@@ -159,7 +159,7 @@ public class TimeTablePuzzleTest {
         Object[] testDateTime7 = {Constants.WEDNESDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap6 = new HashMap<>();
         testDateTimeMap6.put(testDateTime7, "LM161");
-        Course F = new Course("MAT157LEC0201", "Prof", "A&S", "In-Person",
+        Course F = new Course("MAT157", "LEC0201", "Prof", "A&S", "In-Person",
                 testDateTimeMap6, Constants.FALL, false);
 
         HashMap<String, HashMap<String, ArrayList<Course>>> courses = new HashMap<>();
@@ -202,7 +202,7 @@ public class TimeTablePuzzleTest {
         HashMap<Object[], String> testDateTimeMap1 = new HashMap<>();
         testDateTimeMap1.put(testDateTime1, "LM161");
         testDateTimeMap1.put(testDateTime2, "LM161");
-        Course A = new Course("CSC207LEC0101", "Gries", "A&S", "In-Person",
+        Course A = new Course("CSC207", "LEC0101", "Gries", "A&S", "In-Person",
                 testDateTimeMap1, Constants.FALL, false);
         ArrayList<CourseSection> split = A.split();
         for (CourseSection section : split) {
@@ -213,35 +213,35 @@ public class TimeTablePuzzleTest {
         Object[] testDateTime3 = {Constants.WEDNESDAY, startTime2, endTime2};
         HashMap<Object[], String> testDateTimeMap2 = new HashMap<>();
         testDateTimeMap2.put(testDateTime3, "LM161");
-        Course B = new Course("CSC207LEC0201", "Calver", "A&S", "In-Person",
+        Course B = new Course("CSC207", "LEC0201", "Calver", "A&S", "In-Person",
                 testDateTimeMap2, Constants.FALL, false);
 
 
         Object[] testDateTime4 = {Constants.TUESDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap3 = new HashMap<>();
         testDateTimeMap3.put(testDateTime4, "LM161");
-        Course C = new Course("CSC207TUT0101", "TA", "A&S", "In-Person",
+        Course C = new Course("CSC207", "TUT0101", "TA", "A&S", "In-Person",
                 testDateTimeMap3, Constants.FALL, false);
 
 
         Object[] testDateTime5 = {Constants.FRIDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap4 = new HashMap<>();
         testDateTimeMap4.put(testDateTime5, "LM161");
-        Course D = new Course("CSC207TUT0201", "TA", "A&S", "In-Person",
+        Course D = new Course("CSC207", "TUT0201", "TA", "A&S", "In-Person",
                 testDateTimeMap4, Constants.FALL, false);
 
 
         Object[] testDateTime6 = {Constants.FRIDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap5 = new HashMap<>();
         testDateTimeMap5.put(testDateTime6, "LM161");
-        Course E = new Course("MAT157LEC0101", "Prof", "A&S", "In-Person",
+        Course E = new Course("MAT157", "LEC0101", "Prof", "A&S", "In-Person",
                 testDateTimeMap5, Constants.FALL, false);
 
 
         Object[] testDateTime7 = {Constants.WEDNESDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap6 = new HashMap<>();
         testDateTimeMap6.put(testDateTime7, "LM161");
-        Course F = new Course("MAT157LEC0201", "Prof", "A&S", "In-Person",
+        Course F = new Course("MAT157", "LEC0201", "Prof", "A&S", "In-Person",
                 testDateTimeMap6, Constants.FALL, false);
 
         HashMap<String, HashMap<String, ArrayList<Course>>> courses = new HashMap<>();

@@ -52,44 +52,57 @@ public class MakeEventCommand implements Command {
      */
     @Override
     public void execute() {
-        LinkedHashMap<String, InputChecker> prompts = new LinkedHashMap<>();
-        prompts.put(NAME, new InputChecker("Enter a name for an object " +
-                "(eg; Dinner with Prof Gries and Friends)", new isTrivial()));
-        prompts.put(START_TIME, new InputChecker("Enter the Start Time (in" +
-                " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
-                "No space between time and AM/PM)", new isTime()));
-        prompts.put(END_TIME, new InputChecker("Enter the End Time (in " +
-                " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
-                "No space between time and AM/PM)", new isTime()));
-        prompts.put(LOCATION, new InputChecker("Enter the Location (eg; " +
-                "MY150, Home, Middle of Nowhere)", new isTrivial()));
-        prompts.put(DATE, new InputChecker("Enter the Day of the week (eg;" +
-                " Monday, Tuesday, Wednesday, etc.)", new isDate()));
-        prompts.put(TERM, new InputChecker("Enter the Term (Fall/Winter)",
-                new isTerm()));
-        prompts.put(TYPE, new InputChecker("Enter the Type of the Object " +
-                "(Activity/Task)", new isTrivial()));
+        boolean running = true;
 
-        HashMap<String, String> responses = new HashMap<>();
+        while (running){
+            LinkedHashMap<String, InputChecker> prompts = new LinkedHashMap<>();
+            prompts.put(NAME, new InputChecker("Enter a name for an object " +
+                    "(eg; Dinner with Prof Gries and Friends)", new isTrivial()));
+            prompts.put(START_TIME, new InputChecker("Enter the Start Time (in" +
+                    " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
+                    "No space between time and AM/PM)", new isTime()));
+            prompts.put(END_TIME, new InputChecker("Enter the End Time (in " +
+                    " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
+                    "No space between time and AM/PM)", new isTime()));
+            prompts.put(LOCATION, new InputChecker("Enter the Location (eg; " +
+                    "MY150, Home, Middle of Nowhere)", new isTrivial()));
+            prompts.put(DATE, new InputChecker("Enter the Day of the week (eg;" +
+                    " Monday, Tuesday, Wednesday, etc.)", new isDate()));
+            prompts.put(TERM, new InputChecker("Enter the Term (Fall/Winter)",
+                    new isTerm()));
+            prompts.put(TYPE, new InputChecker("Enter the Type of the Object " +
+                    "(Activity/Task)", new isTrivial()));
 
-        for (String prompt : prompts.keySet()) {
-            responses.put(prompt, prompts.get(prompt).checkCorrectness());
-        }
+            HashMap<String, String> responses = new HashMap<>();
 
-        Events toSchedule = getCorrectTimeTableObject(
-                StringToTime.makeTime(responses.get(START_TIME)),
-                StringToTime.makeTime(responses.get(END_TIME)),
-                responses.get(LOCATION),
-                responses.get(DATE),
-                responses.get(TERM),
-                responses.get(TYPE));
+            for (String prompt : prompts.keySet()) {
+                responses.put(prompt, prompts.get(prompt).checkCorrectness());
+            }
 
-        this.scheduledObject = toSchedule;
+            Events toSchedule = getCorrectTimeTableObject(
+                    StringToTime.makeTime(responses.get(START_TIME)),
+                    StringToTime.makeTime(responses.get(END_TIME)),
+                    responses.get(LOCATION),
+                    responses.get(DATE),
+                    responses.get(TERM),
+                    responses.get(TYPE));
 
-        assert toSchedule != null;
-        try{manager.schedule(toSchedule);}
-        catch (ConflictException e) {
-            e.printStackTrace();
+            this.scheduledObject = toSchedule;
+
+            assert toSchedule != null;
+            try {
+                manager.schedule(toSchedule);
+                running = false;
+            } catch (ConflictException e) {
+                InputChecker repeat = new InputChecker("An conflict has occurred! " +
+                        "Event scheduled Unsuccessfully. Would you like to " +
+                        "try again? (true/false)", new isBoolean());
+
+                String repeatInput = repeat.checkCorrectness();
+                if (repeatInput.equals("false")){
+                    running = false;
+                }
+            }
         }
 
         System.out.println("Event Scheduled");
@@ -153,6 +166,9 @@ public class MakeEventCommand implements Command {
     }
 
     // ====================== Predicates =======================================
+    /**
+     * A predicate to check if an input is a time
+     */
     private static class isTime extends Predicate {
         @Override
         public boolean run(String prompt) {
@@ -161,6 +177,9 @@ public class MakeEventCommand implements Command {
         }
     }
 
+    /**
+     * A predicate to check if an input is anything
+     */
     private static class isTrivial extends Predicate {
         @Override
         public boolean run(String prompt) {
@@ -168,6 +187,9 @@ public class MakeEventCommand implements Command {
         }
     }
 
+    /**
+     * A predicate to check if an input is a date
+     */
     private static class isDate extends Predicate {
         @Override
         public boolean run(String prompt) {
@@ -178,11 +200,25 @@ public class MakeEventCommand implements Command {
         }
     }
 
+    /**
+     * A predicate to check if an input is a term
+     */
     private static class isTerm extends Predicate {
         @Override
         public boolean run(String prompt) {
             return prompt.equals(Constants.FALL) ||
                     prompt.equals(Constants.WINTER);
+        }
+    }
+
+    /**
+     * A predicate to check if an input is a boolean
+     */
+    private static class isBoolean extends Predicate{
+
+        @Override
+        public boolean run(String prompt) {
+            return prompt.equals("true") || prompt.equals("false");
         }
     }
 }

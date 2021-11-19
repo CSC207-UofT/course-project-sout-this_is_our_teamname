@@ -108,7 +108,7 @@ public class TimeTable {
         for (Events[] day : this.calender.values()) {
             for (Events hour : day) {
                 if (hour instanceof CourseSection){
-                    String sectionCode = ((CourseSection) hour).getCode();
+                    String sectionCode = ((CourseSection) hour).getSectionCode();
                     if (sectionCode.contains(courseCode)) {
                         matchingCourses.add(hour);
                     }
@@ -130,7 +130,7 @@ public class TimeTable {
         for (Events[] day : this.calender.values()) {
             for (Events hour : day) {
                 if (hour instanceof CourseSection) {
-                    String sectionCode = ((CourseSection) hour).getCode();
+                    String sectionCode = ((CourseSection) hour).getSectionCode();
                     if (sectionCode.equals(courseCode)) {
                         return true;
                     }
