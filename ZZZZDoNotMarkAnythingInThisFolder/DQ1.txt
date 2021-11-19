@@ -1,0 +1,29 @@
+    The builder design pattern is trying to separate the construction of a complex object and the representations of it.
+So that we could reuse same construction procedure to produce different representations.
+    For example, we could use the builder design pattern in a production line of smartphones, different smartphones would have different
+screens, CPUs, cameras, etc. However, the way to assemble them is the same. An abstract builder class can be created to formulate
+this procedure. And a director class to call different children classes of builder classes, in this case we may want to
+build an iPhone use an iPhoneBuilder. Finally, we got a new iPhone product/representation. In this way we can use different parts
+(screens CPUs) to build different representations(phones) using same method(assemble).
+    So more generally, the "director" receives and interpret external information (probably from a client) and
+calls "builder" services. The "builder" will create a part of the complex object each time it is called. When the product
+is finished, the client get the product from the "builder".
+    In conclusion, the purposes for builder design are: creating target objects with various algorithms but same parts and construction
+procedure.
+    Since we are doing a timetable and planning tool. We need to have different representations for different events, e.g
+course, life... And the events shares many similar traits, such as they all have their time period, description, name, etc.
+So it may be possible for us to use the buider design pattern, since we could reuse the contruction procedure to produce
+different events.
+   First, we can define a new EventBuilder abstract class, and that class will implement abstract methods like set_time,
+set_name, set_descriptions, etc. However, the way to build those events are pretty the same. So each type of event will
+have an unique *eventname*Builder concrete class where we actually implement those method, so different builders may implement
+their method differently. Lastly, there will be an eventDirector coordinates the construction of the events. It catches
+the user information input and passes the parameters to the builder class.
+    In this way, we allows different representations for different event objects, for example, what if we want types of events
+in different color? We will implement a set_color abstract method and implement them differently in the concrete builder
+classes.
+
+
+
+
+

@@ -6,7 +6,7 @@
 ## Collaborators
 * `TimeTableObjects` + its children (what it should store)
 * `TimeTableManager` (calls the schedules' method on this class)
-* `UserInterface` (Prints this object so the user can see what they have made)
+* `Interfaces` (Prints this object so the user can see what they have made)
 
 ## Responsibilities
 * Holds the `TimeTableObject` (if they exist). 
