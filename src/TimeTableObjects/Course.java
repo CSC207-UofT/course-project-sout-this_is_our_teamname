@@ -7,7 +7,19 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/**
+ * This is a course section (LEC/TUT/PRA) chosen by the user
+ *
+ * === Private Attributes ===
+ * sectionName is the section code of the course section
+ * professor The professor teaching this course section
+ * faculty The faculty this course belongs to
+ * deliveryMethod The delivery method for this course section
+ * timeLocation The time and corresponding location for this course
+ * term The term for this course
+ * wait_list Whether the course is waitlisted
+ * courseName is the course code
+ */
 public class Course implements Sliceable<CourseSection> {
     private final String sectionName;
     private final String professor;
@@ -16,6 +28,7 @@ public class Course implements Sliceable<CourseSection> {
     private final String term;
     private final HashMap<Object[], String> timeLocation;
     private final boolean wait_list;
+    private final String courseName;
 
     // Constants for TimeLocation key
     final int THE_DATE = 0;
@@ -37,13 +50,16 @@ public class Course implements Sliceable<CourseSection> {
      * @param term The term for this course
      * @param wait_list Whether the course is waitlisted
      */
-    public Course(String section,
+    public Course(String CourseName,
+                  String section,
                   String professor,
                   String faculty,
                   String deliveryMethod,
                   HashMap<Object[], String> timeLocation,
                   String term,
-                  boolean wait_list) {
+                  boolean wait_list
+                  ) {
+        this.courseName = CourseName;
         this.sectionName = section;
         this.professor = professor;
         this.faculty = faculty;
@@ -119,9 +135,10 @@ public class Course implements Sliceable<CourseSection> {
             LocalTime start = ((LocalTime) time[1]);
             LocalTime end = ((LocalTime) time[2]);
             String date = ((String) time[0]);
-            CourseSection s = new CourseSection(start, end, this.timeLocation.get(time),
-                    date, this.term, this.sectionName, this.professor,
-                    this.faculty, this.deliveryMethod, this.wait_list);
+            CourseSection s = new CourseSection(this.courseName, start, end,
+                    this.timeLocation.get(time), date, this.term,
+                    this.sectionName, this.professor, this.faculty,
+                    this.deliveryMethod, this.wait_list);
             courseSectionList.add(s);
         }
         return courseSectionList;
@@ -140,8 +157,8 @@ public class Course implements Sliceable<CourseSection> {
         testDateTimeMap.put(testDateTime1, "LM161");
         testDateTimeMap.put(testDateTime2, "LM161");
 
-        Course A = new Course("LEC 0101", "Paul Gries", "A&S", "In-Person",
-                testDateTimeMap, "Fall", false);
+        Course A = new Course("CSC207H1", "LEC 0101", "Paul Gries", "A&S",
+                "In-Person", testDateTimeMap, "Fall", false);
         System.out.println(A);
     }
 }

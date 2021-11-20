@@ -11,12 +11,14 @@ import java.util.LinkedHashMap;
 /**
  * TimeTable class stores all the activities from Monday to Sunday. If there is a conflict when storing a new activity,
  * it will still be stored, and a conflict warning will be sent back prompting user to take action or ignore it.
+ * === Private Attributes ===
+ * calendar is a single timetable from Monday to Friday, and 24 intervals per day that can be filled with an event.
  */
 public class TimeTable {
-    private final LinkedHashMap<String, Events[]> calender;
+    private final LinkedHashMap<String, Events[]> calendar;
 
     public TimeTable() {
-        this.calender = new LinkedHashMap<>() {{
+        this.calendar = new LinkedHashMap<>() {{
             put(Constants.MONDAY, new Events[24]);
             put(Constants.TUESDAY, new Events[24]);
             put(Constants.WEDNESDAY, new Events[24]);
@@ -31,8 +33,8 @@ public class TimeTable {
      * Get the calender of the timetable
      * @return the calender contained in the timetable
      */
-    public LinkedHashMap<String, Events[]> getCalender() {
-        return this.calender;
+    public LinkedHashMap<String, Events[]> getCalendar() {
+        return this.calendar;
     }
 
     /**
@@ -47,7 +49,7 @@ public class TimeTable {
 
             //Add activity to interval between startTime and endTime
             for (int i = start; i < end; i++) {
-                this.calender.get(activity.getDate())[i] = activity;
+                this.calendar.get(activity.getDate())[i] = activity;
             }
             return true;
         }
@@ -60,7 +62,7 @@ public class TimeTable {
      * @return true if there is no conflict, false otherwise
      */
     public boolean checkConflicts(Events activity) {
-        Events[] weekday = calender.get(activity.getDate());
+        Events[] weekday = calendar.get(activity.getDate());
         int start = activity.getStartTime().getHour();
         int end = activity.getEndTime().getHour();
         for (int i = start; i < end; i++ ){
@@ -75,10 +77,10 @@ public class TimeTable {
      */
     public String toString() {
         StringBuilder timeStrings = new StringBuilder();
-        for (String day : this.calender.keySet()) {
+        for (String day : this.calendar.keySet()) {
             StringBuilder times = new StringBuilder(day + ":\n");
 
-            Events[] events = this.calender.get(day);
+            Events[] events = this.calendar.get(day);
             for (int i = 0; i < events.length; i++) {
                 times.append("\t").append(i).append(":00 ");
                 if (events[i] != null) {
@@ -105,10 +107,10 @@ public class TimeTable {
      */
     public ArrayList<Events> checkCourse(String courseCode) {
         ArrayList<Events> matchingCourses = new ArrayList<>();
-        for (Events[] day : this.calender.values()) {
+        for (Events[] day : this.calendar.values()) {
             for (Events hour : day) {
                 if (hour instanceof CourseSection){
-                    String sectionCode = ((CourseSection) hour).getCode();
+                    String sectionCode = ((CourseSection) hour).getSectionCode();
                     if (sectionCode.contains(courseCode)) {
                         matchingCourses.add(hour);
                     }
@@ -127,10 +129,10 @@ public class TimeTable {
      */
     public boolean checkCourseSection(Course course) {
         String courseCode = course.getSectionName();
-        for (Events[] day : this.calender.values()) {
+        for (Events[] day : this.calendar.values()) {
             for (Events hour : day) {
                 if (hour instanceof CourseSection) {
-                    String sectionCode = ((CourseSection) hour).getCode();
+                    String sectionCode = ((CourseSection) hour).getSectionCode();
                     if (sectionCode.equals(courseCode)) {
                         return true;
                     }

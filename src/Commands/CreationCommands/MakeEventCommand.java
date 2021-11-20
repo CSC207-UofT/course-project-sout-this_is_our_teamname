@@ -127,8 +127,7 @@ public class MakeEventCommand implements Command {
     }
 
     /**
-     * A helper method for schedule (Events). A Factory to return the event in
-     * the correct type.
+     * A helper method for scheduling events.
      *
      * @param startTime the start time
      * @param endTime the end time

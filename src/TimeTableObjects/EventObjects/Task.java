@@ -4,6 +4,9 @@ import TimeTableObjects.Events;
 
 import java.time.LocalTime;
 
+/**
+ * Task is a reminder Events object.
+ */
 public class Task extends Events {
     /**
      * Construct a task with time and a description.
