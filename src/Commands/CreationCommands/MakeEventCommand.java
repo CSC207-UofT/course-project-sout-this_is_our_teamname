@@ -1,7 +1,10 @@
 package Commands.CreationCommands;
 
 import Commands.Command;
+import Controllers.CommandFactory;
 import Helpers.ConflictException;
+import TimeTableContainers.Caretaker;
+import TimeTableContainers.Originator;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.Events;
 import TimeTableObjects.EventObjects.Task;
@@ -37,14 +40,23 @@ public class MakeEventCommand implements Command {
 
     private final TimeTableManager manager;
     private Events scheduledObject;
+    private final int currentManager;
+    private final Originator originator;
+    private final Caretaker caretaker;
 
     /**
      * A constructor to set the command
      * @param theManager The manager to connect to
+     * @param currentManager the index of the TimeTableManager stored
+     * @param originator stores the current TimeTableManager
+     * @param caretaker where all TimeTableManager states are stored
      */
-    public MakeEventCommand(TimeTableManager theManager){
+    public MakeEventCommand(TimeTableManager theManager, int currentManager, Originator originator, Caretaker caretaker){
         this.manager = theManager;
         this.scheduledObject = null;
+        this.currentManager = currentManager;
+        this.originator = originator;
+        this.caretaker = caretaker;
     }
 
     /**
@@ -92,6 +104,9 @@ public class MakeEventCommand implements Command {
             assert toSchedule != null;
             try {
                 manager.schedule(toSchedule);
+                originator.setCalender(manager);
+                caretaker.addMemento(currentManager, originator.storeInMemento());
+                CommandFactory.addCurrentManager();
                 running = false;
             } catch (ConflictException e) {
                 InputChecker repeat = new InputChecker("An conflict has occurred! " +

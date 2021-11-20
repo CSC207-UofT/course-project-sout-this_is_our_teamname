@@ -2,8 +2,11 @@ package Commands.CreationCommands;
 
 import Commands.Command;
 import Commands.NeedsCourses;
+import Controllers.CommandFactory;
 import DataGetting.DataGetter;
 import Helpers.ConflictException;
+import TimeTableContainers.Caretaker;
+import TimeTableContainers.Originator;
 import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
 import Helpers.InputCheckers.Predicate;
@@ -24,17 +27,26 @@ public class MakeCourseCommand implements Command, NeedsCourses {
     private final DataGetter dataSource;
     private final TimeTableManager manager;
     private final ArrayList<Course> scheduledCourse;
+    private final int currentManager;
+    private final Originator originator;
+    private final Caretaker caretaker;
 
     /**
      * A constructor to initialize what this command is connected to
      *
      * @param sendTo the Manager to send to
      * @param dataSource the Source of the data of the course
+     * @param currentManager the index of the TimeTableManager stored
+     * @param originator stores the current TimeTableManager
+     * @param caretaker where all TimeTableManager states are stored
      */
-    public MakeCourseCommand(TimeTableManager sendTo, DataGetter dataSource){
+    public MakeCourseCommand(TimeTableManager sendTo, DataGetter dataSource, int currentManager, Originator originator, Caretaker caretaker){
         this.manager = sendTo;
         this.dataSource = dataSource;
         this.scheduledCourse = new ArrayList<>();
+        this.currentManager = currentManager;
+        this.originator = originator;
+        this.caretaker = caretaker;
     }
 
     /**
@@ -73,6 +85,10 @@ public class MakeCourseCommand implements Command, NeedsCourses {
                     break;
                 }
             }
+            //Add to memento
+            originator.setCalender(manager);
+            caretaker.addMemento(currentManager, originator.storeInMemento());
+            CommandFactory.addCurrentManager();
 
             // If there is a conflict
             if (isConflicted){

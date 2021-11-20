@@ -9,7 +9,7 @@ import TimeTableObjects.Events;
 import java.util.*;
 
 public class TimeTableManager {
-    private final HashMap<String, TimeTable> timetables;
+    private HashMap<String, TimeTable> timetables;
     /**
      * Creates a new TimeTableManager with two default TimeTables for Fall and Winter.
      */
@@ -18,6 +18,19 @@ public class TimeTableManager {
             put(Constants.FALL, new TimeTable());
             put(Constants.WINTER, new TimeTable());
         }};
+    }
+
+    /**
+     * Construct a TimeTableManager with given timetablesSave
+     * @param timetablesSave is the saved calendar
+     */
+    public TimeTableManager(HashMap<String, LinkedHashMap<String, Events[]>> timetablesSave) {
+        HashMap<String, TimeTable> tempCalender = new HashMap<>();
+        for (String term : timetablesSave.keySet()) {
+            TimeTable calender = new TimeTable(timetablesSave.get(term));
+            tempCalender.put(term, calender);
+        }
+        this.timetables = tempCalender;
     }
 
     /**
@@ -71,6 +84,26 @@ public class TimeTableManager {
             //TODO exceptions later
             return null;
         }
+    }
+
+    /**
+     * Returns a copy of TimeTableManager (not alias)
+     * @return the copy of the TimeTableManager
+     */
+    public HashMap<String, LinkedHashMap<String, Events[]>> getCopy() {
+        HashMap<String, LinkedHashMap<String, Events[]>> copy = new LinkedHashMap<>();
+        for (String term : this.timetables.keySet()) {
+            copy.put(term, this.timetables.get(term).getCopy());
+        }
+        return copy;
+    }
+
+    /**
+     * Sets the TimeTableManager with given TimeTableManager
+     * @param manager the given TimeTableManger
+     */
+    public void setTimetables(TimeTableManager manager) {
+        this.timetables = manager.timetables;
     }
 
     /**

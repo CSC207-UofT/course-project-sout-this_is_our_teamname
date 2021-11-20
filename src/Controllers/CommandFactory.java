@@ -1,15 +1,15 @@
 package Controllers;
 
+import Commands.FunctionCommands.*;
 import DataGetting.DataGetter;
 import Commands.Command;
 import Commands.CreationCommands.GetAllTimeTablesCommand;
 import Commands.CreationCommands.MakeCourseCommand;
 import Commands.CreationCommands.MakeEventCommand;
 import Commands.CreationCommands.PrintHistoryCommand;
-import Commands.FunctionCommands.DownloadDataCommand;
-import Commands.FunctionCommands.LoadDataCommand;
-import Commands.FunctionCommands.SaveDataCommand;
 import Helpers.InvalidInputException;
+import TimeTableContainers.Caretaker;
+import TimeTableContainers.Originator;
 import TimeTableContainers.TimeTableManager;
 
 /**
@@ -27,6 +27,9 @@ public class CommandFactory {
     private DataGetter dataSource;
     private final DatabaseController controller;
     private final String[] allowedFunctions;
+    private static int currentManager;
+    private final Caretaker caretaker;
+    private final Originator originator;
 
     static final String SCHEDULE_COURSE = "Schedule Course";
     static final String SCHEDULE_EVENT = "Schedule Event";
@@ -35,6 +38,8 @@ public class CommandFactory {
     static final String LOAD_DATA = "Load Data";
     static final String SAVE_DATA = "Save";
     static final String DOWNLOAD_TIMETABLE = "Download Timetable";
+    static final String UNDO = "Undo";
+    static final String REDO = "Redo";
     static final String EXIT = "Log Out";
 
     /**
@@ -52,8 +57,13 @@ public class CommandFactory {
                 DOWNLOAD_TIMETABLE,
                 GET_ALL_TIMETABLE,
                 PRINT_HISTORY,
+                UNDO,
+                REDO,
                 EXIT
         };
+        currentManager = 0;
+        this.caretaker = new Caretaker();
+        this.originator = new Originator();
     }
 
     /**
@@ -74,9 +84,9 @@ public class CommandFactory {
 
         switch (inputCommand) {
             case SCHEDULE_COURSE:
-                return new MakeCourseCommand(courseManager, dataSource);
+                return new MakeCourseCommand(courseManager, dataSource, currentManager, originator, caretaker);
             case SCHEDULE_EVENT:
-                return new MakeEventCommand(courseManager);
+                return new MakeEventCommand(courseManager, currentManager, originator, caretaker);
             case GET_ALL_TIMETABLE:
                 return new GetAllTimeTablesCommand(courseManager);
             case PRINT_HISTORY:
@@ -87,6 +97,10 @@ public class CommandFactory {
                 return new SaveDataCommand(courseManager);
             case DOWNLOAD_TIMETABLE:
                 return new DownloadDataCommand(courseManager);
+            case UNDO:
+                return new UndoCommand(courseManager, currentManager, caretaker, originator);
+            case REDO:
+                return new RedoCommand(courseManager, currentManager, caretaker, originator);
             case EXIT:
                 // Signals DatabaseController to exit the Program
                 return null;
@@ -114,6 +128,9 @@ public class CommandFactory {
      */
     public void setManager(TimeTableManager theManager){
         this.courseManager = theManager;
+        this.originator.setCalender(theManager);
+        this.caretaker.addMemento(currentManager, this.originator.storeInMemento());
+        currentManager++;
     }
 
     /**
@@ -122,5 +139,19 @@ public class CommandFactory {
      */
     public void setDataSource(DataGetter theDataSource){
         this.dataSource = theDataSource;
+    }
+
+    /**
+     * Add 1 to currentManager
+     */
+    public static void addCurrentManager() {
+        currentManager++;
+    }
+
+    /**
+     * Remove 1 from currentManager
+     */
+    public static void removeCurrentManager() {
+        currentManager--;
     }
 }

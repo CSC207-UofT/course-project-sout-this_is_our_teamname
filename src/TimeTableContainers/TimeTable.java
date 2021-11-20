@@ -28,11 +28,35 @@ public class TimeTable {
     }
 
     /**
+     * Construct a timetable with given calenderSave
+     * @param calenderSave is the saved calendar
+     */
+    public TimeTable(LinkedHashMap<String, Events[]> calenderSave) {
+        this.calender = calenderSave;
+    }
+
+    /**
      * Get the calender of the timetable
      * @return the calender contained in the timetable
      */
     public LinkedHashMap<String, Events[]> getCalender() {
         return this.calender;
+    }
+
+    /**
+     * Returns a copy of the timetable (not alias)
+     * @return the copy of the timetable
+     */
+    public LinkedHashMap<String, Events[]> getCopy() {
+        LinkedHashMap<String, Events[]> copy = new LinkedHashMap<>();
+        for (String day : this.calender.keySet()) {
+            Events[] events = new Events[24];
+            for (int i=0; i < 24; i++){
+                events[i] = this.calender.get(day)[i];
+            }
+            copy.put(day, events);
+        }
+        return copy;
     }
 
     /**
