@@ -19,8 +19,10 @@ import TimeTableContainers.TimeTableManager;
  * courseManager: The TimetableManager to connect to
  * dataSource: The Data Getter to get the data from
  * controller: The controller that this is connected to
- * allowedFunctions: The list of allowed functions for the program as set out
- *  by the OperatorInterface
+ * allowedFunctions: The list of allowed functions for the program as set out by the OperatorInterface
+ * currentManager: The index of the TimeTableManager stored in memento
+ * caretaker: Stores all memento of TimeTableManager
+ * originator: Sets and gets TimeTableManager from memento
  */
 public class CommandFactory {
     private TimeTableManager courseManager;

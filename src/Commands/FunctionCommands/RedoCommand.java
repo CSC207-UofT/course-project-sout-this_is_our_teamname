@@ -10,6 +10,15 @@ import TimeTableObjects.Events;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+/**
+ * A command to redo an undone action.
+ *
+ * === Private Attributes ===
+ * manager: The TimeTableManager that will be changed
+ * currentManager: The index of the TimeTableManager stored in memento
+ * caretaker: Stores all memento of TimeTableManager
+ * originator: Sets and gets TimeTableManager from memento
+ */
 public class RedoCommand implements Command {
     private final TimeTableManager manager;
     private int currentManager;

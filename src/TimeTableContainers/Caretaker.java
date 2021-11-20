@@ -2,6 +2,12 @@ package TimeTableContainers;
 
 import java.util.ArrayList;
 
+/**
+ * Stores all TimeTableManagers in memento.
+ *
+ * === Attributes ===
+ * savedCalenders: The list of stored TimeTableManager
+ */
 public class Caretaker {
     ArrayList<TimeTableManager> savedCalenders = new ArrayList<TimeTableManager>();
 

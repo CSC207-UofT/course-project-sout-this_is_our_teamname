@@ -8,6 +8,12 @@ import TimeTableObjects.Events;
 // Importing HashMap class
 import java.util.*;
 
+/**
+ * Stores all TimeTables for each term.
+ *
+ * === Private Attributes ===
+ * timetables: The map of each term mapped to its corresponding TimeTable
+ */
 public class TimeTableManager {
     private HashMap<String, TimeTable> timetables;
     /**

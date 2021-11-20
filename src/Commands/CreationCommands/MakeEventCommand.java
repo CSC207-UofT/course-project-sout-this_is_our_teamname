@@ -27,6 +27,9 @@ import java.util.regex.Pattern;
  * === Private Attributes ===
  * manager: The manager that will eventually schedule the object
  * scheduledObject: An non course Event waiting to be scheduled
+ * currentManager: The index of the TimeTableManager stored in memento
+ * caretaker: Stores all memento of TimeTableManager
+ * originator: Sets and gets TimeTableManager from memento
  */
 public class MakeEventCommand implements Command {
     // Some Constants:

@@ -5,6 +5,12 @@ import TimeTableObjects.Events;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+/**
+ * Sets and gets TimeTableManager in memento.
+ *
+ * === Private Attributes ===
+ * timetables: The stored TimeTableManager
+ */
 public class Originator {
     private HashMap<String, LinkedHashMap<String, Events[]>> timetables;
 

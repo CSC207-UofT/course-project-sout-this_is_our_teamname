@@ -22,6 +22,9 @@ import java.util.LinkedHashMap;
  * === Private Attributes ===
  * dataSource: The source where the data is from.
  * manager: The manager that will eventually schedule the object
+ * currentManager: The index of the TimeTableManager stored in memento
+ * caretaker: Stores all memento of TimeTableManager
+ * originator: Sets and gets TimeTableManager from memento
  */
 public class MakeCourseCommand implements Command, NeedsCourses {
     private final DataGetter dataSource;
