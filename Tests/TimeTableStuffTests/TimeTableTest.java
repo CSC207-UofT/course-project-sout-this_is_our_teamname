@@ -26,12 +26,24 @@ class TimeTableTest {
         LocalTime time10 = LocalTime.of(10, 0,0);
         LocalTime time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture1 = new CourseSection("MAT257", time9,time10,
-                "SS100",Constants.MONDAY,Constants.YEAR,"LEC 0101","Gauss","Arts and Science","In Person", false);
-        CourseSection lecture2 = new CourseSection("MAT157", time9,time11,
-                "SS101",Constants.MONDAY,Constants.FALL,"LEC 0101", "Descartes","Arts and Science","Online", false);
-        CourseSection lecture3 = new CourseSection("MAT137", time10,time11,
-                "SS100",Constants.MONDAY,Constants.FALL,"LEC 0101", "Alphonso","Arts and Science","Online", false);
+        CourseSection lecture1 = new CourseSection("MAT257", time9, time10, Constants.MONDAY, Constants.YEAR,
+                "LEC 0101", false);
+        String description = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
+                + " session " + " at " + "SS100";
+        lecture1.setDescription(description);
+
+        CourseSection lecture2 = new CourseSection("MAT157", time9,time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
+                + " session " + " at " + "SS101";
+        lecture2.setDescription(description2);
+
+        CourseSection lecture3 = new CourseSection("MAT137", time10,time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description3 = "LEC 0303" + " of " + "Arts and Science" + " with " + "Professor.C" + " by " + "in-person"
+                + " session " + " at " + "SS102";
+        lecture3.setDescription(description3);
+
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
         Task task= new Task(time5,time6,"home",Constants.MONDAY,Constants.FALL);
         TimeTable table = new TimeTable();
@@ -50,16 +62,24 @@ class TimeTableTest {
         LocalTime time10 = LocalTime.of(10, 0,0);
         LocalTime time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture0 = new CourseSection("MAT257", time9,time10,
-                "SS100", Constants.MONDAY,Constants.YEAR,"LEC 0101","Gauss","Arts and Science","In Person", false);
-        CourseSection lecture1 = new CourseSection("MAT137", time10,time11,
-                "SS100",Constants.THURSDAY,Constants.FALL,"LEC 0101", "Alphonso","Arts and Science","Online", false);
+        CourseSection lecture1 = new CourseSection("MAT257", time9, time10, Constants.MONDAY, Constants.YEAR,
+                "LEC 0101", false);
+        String description = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
+                + " session " + " at " + "SS100";
+        lecture1.setDescription(description);
+
+        CourseSection lecture2 = new CourseSection("MAT157", time9,time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
+                + " session " + " at " + "SS101";
+        lecture2.setDescription(description2);
+
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
         Task task= new Task(time5,time6,"home",Constants.MONDAY,Constants.FALL);
 
         TimeTable table = new TimeTable();
-        table.schedule(lecture0);
         table.schedule(lecture1);
+        table.schedule(lecture2);
         table.schedule(activity);
         table.schedule(task);
         String actual = table.toString();
@@ -85,27 +105,46 @@ class TimeTableTest {
         LocalTime endTime2 = LocalTime.of(11, 0, 0);
 
         CourseSection lecture1 =
-                new CourseSection("MAT257", startTime1, endTime1, "SS100",
-                        Constants.MONDAY, Constants.YEAR,
-                "LEC0101", "Gauss", "Arts and Science", "In Person", false);
+                new CourseSection("MAT257", startTime1, endTime1, Constants.MONDAY, Constants.YEAR,
+                "LEC0101", false);
+        String description1 = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
+                + " session " + " at " + "SS101";
+        lecture1.setDescription(description1);
+
         CourseSection lecture2 =
-                new CourseSection("MAT257", startTime2, endTime2, "SS101",
-                        Constants.MONDAY, Constants.FALL, "LEC0201", "Descartes", "Arts and Science", "Online", false);
+                new CourseSection("MAT257", startTime2, endTime2, Constants.MONDAY, Constants.FALL,
+                        "LEC0201", false);
+        String description2 = "LEC 0102" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in person"
+                + " session " + " at " + "SS102";
+        lecture2.setDescription(description2);
+
         CourseSection lecture3 =
-                new CourseSection("MAT257", startTime2, endTime2, "SS100",
-                        Constants.TUESDAY, Constants.FALL, "PRA0101", "Alphonso", "Arts and Science", "Online", false);
+                new CourseSection("MAT257", startTime2, endTime2, Constants.TUESDAY, Constants.FALL,
+                        "PRA0101", false);
+        String description3 = "LEC 0103" + " of " + "Arts and Science" + " with " + "Professor.C" + " by " + "in person"
+                + " session " + " at " + "SS103";
+        lecture3.setDescription(description3);
+
         CourseSection lecture4 =
-                new CourseSection("CSC207", startTime2, endTime2, "BA1160",
-                        Constants.WEDNESDAY, Constants.FALL,
-                "LEC0101", "Calver", "Arts and Science", "In Person", false);
+                new CourseSection("CSC207", startTime2, endTime2, Constants.WEDNESDAY, Constants.FALL,
+                        "LEC0101", false);
+        String description4 = "LEC 0104" + " of " + "Arts and Science" + " with " + "Professor.D" + " by " + "in person"
+                + " session " + " at " + "SS104";
+        lecture4.setDescription(description4);
+
         CourseSection lecture5 =
-                new CourseSection("CSC207", startTime1, endTime1, "BA1160",
-                        Constants.WEDNESDAY, Constants.FALL,
-                "TUT0101", "TA", "Arts and Science", "Online", false);
+                new CourseSection("CSC207", startTime1, endTime1, Constants.WEDNESDAY, Constants.FALL,
+                        "TUT0101", false);
+        String description5 = "LEC 0105" + " of " + "Arts and Science" + " with " + "Professor.E" + " by " + "in person"
+                + " session " + " at " + "SS105";
+        lecture5.setDescription(description5);
+
         CourseSection lecture6 =
-                new CourseSection("CSC236", startTime1, endTime1, "BA1160",
-                        Constants.THURSDAY, Constants.FALL,
-                "TUT0101", "TA", "Arts and Science", "Online", false);
+                new CourseSection("CSC236", startTime1, endTime1, Constants.THURSDAY, Constants.FALL,
+                        "TUT0101", false);
+        String description6 = "LEC 0106" + " of " + "Arts and Science" + " with " + "Professor.F" + " by " + "in person"
+                + " session " + " at " + "SS106";
+        lecture6.setDescription(description6);
 
         TimeTable table = new TimeTable();
         table.schedule(lecture1);

@@ -149,7 +149,7 @@ public class MakeEventCommand implements Command {
             Scanner descriptionScanner = new Scanner(System.in);
             System.out.println("Please provide a description of your activity: ");
 
-            return new Activity(startTime, endTime, theLocation, theDate,
+            return new Activity(startTime, endTime, theDate,
                     term, descriptionScanner.nextLine());
         // Creates the task
         } else if (type.equals(Constants.TASK)){

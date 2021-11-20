@@ -108,7 +108,7 @@ public abstract class Events {
     /**
      * Change description for the event. (Currently an one time deal)
      */
-    public void addDescription(String info) {
+    public void setDescription(String info) {
         this.description = info;
     }
 }

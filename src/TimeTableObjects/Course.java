@@ -135,10 +135,11 @@ public class Course implements Sliceable<CourseSection> {
             LocalTime start = ((LocalTime) time[1]);
             LocalTime end = ((LocalTime) time[2]);
             String date = ((String) time[0]);
-            CourseSection s = new CourseSection(this.courseName, start, end,
-                    this.timeLocation.get(time), date, this.term,
-                    this.sectionName, this.professor, this.faculty,
-                    this.deliveryMethod, this.wait_list);
+            String description = sectionName + " of " + faculty + " with " + professor + " by " + deliveryMethod
+                    + " session " + " at " + this.timeLocation.get(time);
+            CourseSection s = new CourseSection(this.courseName, start, end, date, this.term,
+                    this.sectionName, this.wait_list);
+            s.setDescription(description);
             courseSectionList.add(s);
         }
         return courseSectionList;

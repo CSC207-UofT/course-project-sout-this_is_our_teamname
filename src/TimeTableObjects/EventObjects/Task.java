@@ -8,19 +8,7 @@ import java.time.LocalTime;
  * Task is a reminder Events object.
  */
 public class Task extends Events {
-    /**
-     * Construct a task with time and a description.
-     * @param theStartTime is the start time of the task.
-     * @param theEndTime is the end time of the task.
-     * @param theDate is the weekday of the task.
-     * @param term is the term of the task
-     */
-    public Task(LocalTime theStartTime,
-                LocalTime theEndTime,
-                String theDate,
-                String term) {
-        super(theStartTime, theEndTime, theDate, term);
-    }
+
 
     /**
      * Construct a task with time, location and a description.

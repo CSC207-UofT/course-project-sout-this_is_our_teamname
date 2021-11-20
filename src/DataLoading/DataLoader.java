@@ -158,12 +158,13 @@ public class DataLoader {
                             LocalTime time1, LocalTime time2,
                             String day, String term, String newdescription) {
         Task activity;
-        if (newdescription.contains("N/A")) {
-            activity = new Task(time1, time2, day, term);
-        }
-        else {
-            activity = new Task(time1, time2, newdescription.substring("at ".length()), day, term);
-        }
+//        if (newdescription.contains("N/A")) {
+//            activity = new Task(time1, time2, day, term);
+//        }
+//        else {
+//            activity = new Task(time1, time2, newdescription.substring("at ".length()), day, term);
+//        }
+        activity = new Task(time1, time2, newdescription.substring("at ".length()), day, term);
         ttbmanager.getTimetable(term).schedule(activity);
     }
 

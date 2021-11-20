@@ -21,12 +21,17 @@ public class SectionTest {
         LocalTime Time10 = LocalTime.of(10, 0,0);
         LocalTime Time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture0 = new CourseSection("MAT257", Time9,Time10,
-                "SS100", Constants.MONDAY,Constants.YEAR, "LEC 0101",
-                "Gauss","Arts and Science","In Person", false);
-        CourseSection lecture1 = new CourseSection("MAT137", Time10,Time11,
-                "SS100",Constants.MONDAY,Constants.FALL,"LEC 0101",
-                "Alphonso","Arts and Science","Online", false);
+        CourseSection lecture0 = new CourseSection("MAT257", Time9,Time10, Constants.MONDAY,Constants.YEAR,
+                "LEC 0101", false);
+        String description0 = "LEC 0100" + " of " + "Arts and Science" + " with " + "Professor.0" + " by " + "Online"
+                + " session " + " at " + "SS100";
+        lecture0.setDescription(description0);
+
+        CourseSection lecture1 = new CourseSection("MAT137", Time10,Time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description1 = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
+                + " session " + " at " + "SS101";
+        lecture1.setDescription(description1);
 
 
         assertEquals(lecture0.toString(),
@@ -47,27 +52,47 @@ public class SectionTest {
         LocalTime Time1030 = LocalTime.of(10,30,0);
         LocalTime Time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture0 = new CourseSection("MAT257", Time9,Time10,
-                "SS100", Constants.MONDAY,Constants.YEAR, "LEC 0101","Gauss",
-                "Arts and Science","In Person", false);
-        CourseSection lecture1 = new CourseSection("MAT257", Time9,Time10,
-                "SS100", Constants.MONDAY,Constants.YEAR, "LEC 0101","Gauss",
-                "Arts and Science","In Person", false);
-        CourseSection lecture2 = new CourseSection("MAT157", Time9,Time11,
-                "SS101",Constants.MONDAY,Constants.FALL, "LEC 0101",
-                "Descartes","Arts and Science","Online", false);
-        CourseSection lecture3 = new CourseSection("MAT137", Time10,Time11,
-                "SS100",Constants.MONDAY,Constants.FALL, "LEC 0101",
-                "Alphonso","Arts and Science","Online", false);
-        CourseSection lecture4 = new CourseSection("MAT137", Time1030,Time11,
-                "SS100",Constants.MONDAY,Constants.FALL, "LEC 0101",
-                "Alphonso","Arts and Science","Online", false);
-        CourseSection lecture5 = new CourseSection("MAT137", Time8,Time10,
-                "SS100",Constants.MONDAY,Constants.FALL, "LEC 0101",
-                "Alphonso","Arts and Science","Online", false);
-        CourseSection lecture6 = new CourseSection("MAT137", Time8,Time11,
-                "SS100",Constants.MONDAY,Constants.FALL, "LEC 0101",
-                "Alphonso","Arts and Science","Online", false);
+        CourseSection lecture0 = new CourseSection("MAT257", Time9,Time10,Constants.MONDAY,Constants.YEAR,
+                "LEC 0101", false);
+        String description0 = "LEC 0100" + " of " + "Arts and Science" + " with " + "Professor.0" + " by " + "Online"
+                + " session " + " at " + "SS100";
+        lecture0.setDescription(description0);
+
+        CourseSection lecture1 = new CourseSection("MAT257", Time9,Time10, Constants.MONDAY,Constants.YEAR,
+                "LEC 0101", false);
+        String description1 = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
+                + " session " + " at " + "SS101";
+        lecture1.setDescription(description1);
+
+        CourseSection lecture2 = new CourseSection("MAT157", Time9,Time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description2 = "LEC 0102" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in person"
+                + " session " + " at " + "SS102";
+        lecture2.setDescription(description2);
+
+        CourseSection lecture3 = new CourseSection("MAT137", Time10,Time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description3 = "LEC 0103" + " of " + "Arts and Science" + " with " + "Professor.C" + " by " + "in person"
+                + " session " + " at " + "SS103";
+        lecture3.setDescription(description3);
+
+        CourseSection lecture4 = new CourseSection("MAT137", Time1030,Time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description4 = "LEC 0104" + " of " + "Arts and Science" + " with " + "Professor.D" + " by " + "in person"
+                + " session " + " at " + "SS104";
+        lecture4.setDescription(description4);
+
+        CourseSection lecture5 = new CourseSection("MAT137", Time8,Time10,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description5 = "LEC 0105" + " of " + "Arts and Science" + " with " + "Professor.E" + " by " + "in person"
+                + " session " + " at " + "SS105";
+        lecture5.setDescription(description5);
+
+        CourseSection lecture6 = new CourseSection("MAT137", Time8,Time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description6 = "LEC 0106" + " of " + "Arts and Science" + " with " + "Professor.E" + " by " + "in person"
+                + " session " + " at " + "SS106";
+        lecture6.setDescription(description6);
 
         assertEquals(lecture1.compareTo(lecture0), -1);
         assertEquals(lecture1.compareTo(lecture2), -1);

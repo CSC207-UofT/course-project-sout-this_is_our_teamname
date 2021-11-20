@@ -40,34 +40,34 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
         this.waitlist = waitlist;
         this.description = "";
     }
-
-    /**
-     * Construct a TimeTable section for the given time, location, section, professor,
-     * faculty and delivery method
-     *
-     * @param CourseName The CourseName
-     * @param startTime The start time of this section.
-     * @param endTime The end time of the section
-     * @param location The location of this section
-     * @param theDate The date of the section
-     * @param term The term for this course
-     * @param sectionCode The code for this course
-     * @param professor The professor teaching this course section
-     * @param faculty The faculty this course belongs to
-     * @param deliveryMethod The delivery method for this course section
-     * @param waitlist Whether the course is waitlisted
-     */
-    public CourseSection(String CourseName, LocalTime startTime,
-                         LocalTime endTime, String location, String theDate,
-                         String term, String sectionCode, String professor,
-                         String faculty, String deliveryMethod, boolean waitlist) {
-        super(startTime, endTime, location, theDate, term);
-        this.courseName = CourseName;
-        this.waitlist = waitlist;
-        this.sectionCode = sectionCode;
-        this.description = sectionCode + " of " + faculty + " with " +
-                professor + " by " + deliveryMethod + " " + this.getDescription();
-    }
+//
+//    /**
+//     * Construct a TimeTable section for the given time, location, section, professor,
+//     * faculty and delivery method
+//     *
+//     * @param CourseName The CourseName
+//     * @param startTime The start time of this section.
+//     * @param endTime The end time of the section
+//     * @param location The location of this section
+//     * @param theDate The date of the section
+//     * @param term The term for this course
+//     * @param sectionCode The code for this course
+//     * @param professor The professor teaching this course section
+//     * @param faculty The faculty this course belongs to
+//     * @param deliveryMethod The delivery method for this course section
+//     * @param waitlist Whether the course is waitlisted
+//     */
+//    public CourseSection(String CourseName, LocalTime startTime,
+//                         LocalTime endTime, String location, String theDate,
+//                         String term, String sectionCode, String professor,
+//                         String faculty, String deliveryMethod, boolean waitlist) {
+//        super(startTime, endTime, location, theDate, term);
+//        this.courseName = CourseName;
+//        this.waitlist = waitlist;
+//        this.sectionCode = sectionCode;
+//        this.description = sectionCode + " of " + faculty + " with " +
+//                professor + " by " + deliveryMethod + " " + this.getDescription();
+//    }
 
     @Override
     public String toString() {
