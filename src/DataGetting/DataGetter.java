@@ -57,13 +57,23 @@ public abstract class DataGetter {
      */
     private LinkedHashMap<String, ArrayList<Course>> splitByType(
             HashMap<String, Course> nameToCourse){
+
+        // A hashMap of type of item (LEC, TUT, PRA) to the course object
         LinkedHashMap<String, ArrayList<Course>> typeToItems =
                 new LinkedHashMap<>();
+
         for (String sectionName : nameToCourse.keySet()){
+            // The type of the object is always the first three letters of a
+            // section code
             String typeOfObject = sectionName.substring(0, 3);
+
+            // If there is no objects of that type currently in typesToItems,
+            // create empty list
             if (!typeToItems.containsKey(typeOfObject)){
                 typeToItems.put(typeOfObject, new ArrayList<>());
             }
+
+            // Add the item to the list in the hashMap
             typeToItems.get(typeOfObject).add(nameToCourse.get(sectionName));
         }
         return typeToItems;
