@@ -1,9 +1,11 @@
 package FunctionsTests;
 
 import Functions.TimeTablePuzzle;
+import TimeTableContainers.TimeTable;
 import TimeTableObjects.Course;
 import Helpers.Constants;
 
+import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.CourseSection;
 
 import TimeTableContainers.TimeTableManager;
@@ -191,6 +193,11 @@ public class TimeTablePuzzleTest {
     public void extensions() {
         TimeTableManager manager = new TimeTableManager();
 
+        TimeTableManager managerC = new TimeTableManager();
+        TimeTableManager managerD = new TimeTableManager();
+        TimeTableManager managerE = new TimeTableManager();
+        TimeTableManager managerF = new TimeTableManager();
+
         LocalTime startTime1 = LocalTime.of(9, 0, 0);
         LocalTime startTime2 = LocalTime.of(10, 0, 0);
         LocalTime endTime1 = LocalTime.of(10, 0, 0);
@@ -207,6 +214,10 @@ public class TimeTablePuzzleTest {
         ArrayList<CourseSection> split = A.split();
         for (CourseSection section : split) {
             manager.getTimetable(Constants.FALL).schedule(section);
+            managerC.getTimetable(Constants.FALL).schedule(section);
+            managerD.getTimetable(Constants.FALL).schedule(section);
+            managerE.getTimetable(Constants.FALL).schedule(section);
+            managerF.getTimetable(Constants.FALL).schedule(section);
         }
 
 
@@ -259,11 +270,73 @@ public class TimeTablePuzzleTest {
         courses.put("MAT157", mat);
         TimeTablePuzzle ttPuzzle = new TimeTablePuzzle(courses, manager);
 
-        ArrayList<Course> expected = new ArrayList<>(
-            Arrays.asList(C, D, E, F));
+        TimeTablePuzzle ttPuzzleC = new TimeTablePuzzle(courses, managerC);
+        ArrayList<CourseSection> splitC = C.split();
+        for (CourseSection section : splitC) {
+            String term = section.getTerm();
+            ttPuzzleC.getManager().getTimetable(term).schedule(section);
+        }
 
-        ArrayList<Course> actual = ttPuzzle.extensions();
+        TimeTablePuzzle ttPuzzleD = new TimeTablePuzzle(courses, managerD);
+        ArrayList<CourseSection> splitD = D.split();
+        for (CourseSection section : splitD) {
+            String term = section.getTerm();
+            ttPuzzleD.getManager().getTimetable(term).schedule(section);
+        }
 
-        Assertions.assertEquals(expected, actual);
+        TimeTablePuzzle ttPuzzleE = new TimeTablePuzzle(courses, managerE);
+        ArrayList<CourseSection> splitE = E.split();
+        for (CourseSection section : splitE) {
+            String term = section.getTerm();
+            ttPuzzleE.getManager().getTimetable(term).schedule(section);
+        }
+
+        TimeTablePuzzle ttPuzzleF = new TimeTablePuzzle(courses, managerF);
+        ArrayList<CourseSection> splitF = F.split();
+        for (CourseSection section : splitF) {
+            String term = section.getTerm();
+            ttPuzzleF.getManager().getTimetable(term).schedule(section);
+        }
+
+        TimeTablePuzzle[] expected = {ttPuzzleC, ttPuzzleD, ttPuzzleE, ttPuzzleF};
+
+        TimeTablePuzzle[] actual = ttPuzzle.extensions();
+
+        System.out.println("hi");
+
+        Assertions.assertEquals(actual, expected);
+    }
+
+    @Test
+    public void schedulePuzzle() {
+
+        LocalTime startTime1 = LocalTime.of(9, 0, 0);
+        LocalTime startTime2 = LocalTime.of(10, 0, 0);
+        LocalTime endTime1 = LocalTime.of(10, 0, 0);
+        LocalTime endTime2 = LocalTime.of(11, 0, 0);
+
+        CourseSection lecture1 = new CourseSection("MAT257", startTime1,endTime1,
+                "SS100",Constants.MONDAY,Constants.YEAR,"LEC 0101","Gauss","Arts and Science","In Person", false);
+        CourseSection lecture2 = new CourseSection("MAT157", startTime1,endTime2,
+                "SS101",Constants.TUESDAY,Constants.FALL,"LEC 0101", "Descartes","Arts and Science","Online", false);
+        CourseSection lecture3 = new CourseSection("MAT137", startTime1,endTime1,
+                "SS100",Constants.WEDNESDAY,Constants.FALL,"LEC 0101", "Alphonso","Arts and Science","Online", false);
+
+        TimeTableManager manager1 = new TimeTableManager();
+        manager1.getTimetable(Constants.FALL).schedule(lecture1);
+        manager1.getTimetable(Constants.FALL).schedule(lecture2);
+        manager1.getTimetable(Constants.FALL).schedule(lecture3);
+
+        TimeTableManager manager2 = new TimeTableManager();
+        manager2.getTimetable(Constants.FALL).schedule(lecture1);
+
+        HashMap<String, HashMap<String, ArrayList<Course>>> courses = new HashMap<>();
+
+        TimeTablePuzzle puzzle1 = new TimeTablePuzzle(courses, manager1);
+        TimeTablePuzzle puzzle2 = new TimeTablePuzzle(courses, manager2);
+        puzzle2.schedulePuzzle(puzzle1);
+
+        Assertions.assertEquals(puzzle1, puzzle2);
+
     }
 }

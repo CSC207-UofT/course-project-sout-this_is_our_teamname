@@ -4,6 +4,7 @@ import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableContainers.TimeTableManager;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,7 +12,7 @@ import java.util.HashMap;
  * A Puzzle class for TimeTable Manager, schedules the given courses in the appropriate timetables
  * without any conflicts
  */
-public class TimeTablePuzzle {
+public class TimeTablePuzzle extends Puzzle {
     private final HashMap<String, HashMap<String, ArrayList<Course>>> courses;
     private final TimeTableManager manager;
 
@@ -27,10 +28,29 @@ public class TimeTablePuzzle {
     }
 
     /**
+     * Get the courses this TimeTablePuzzle is supposed to schedule.
+     *
+     * @return the courses this TimeTablePuzzle is supposed to schedule.
+     */
+    public HashMap<String, HashMap<String, ArrayList<Course>>> getCourses() {
+        return courses;
+    }
+
+    /**
+     * Get the TimeTableManager of this TimeTablePuzzle.
+     *
+     * @return the TimeTablemanager of this TimeTablePuzzle
+     */
+    public TimeTableManager getManager() {
+        return manager;
+    }
+
+    /**
      * Determine whether all the courses have been scheduled, if the "puzzle" has been solved
      *
      * @return true if the courses have been scheduled, false otherwise
      */
+    @Override
     public boolean isSolved() {
         // Iterate through the courses
         for (HashMap<String, ArrayList<Course>> course : this.courses.values()) {
@@ -59,6 +79,7 @@ public class TimeTablePuzzle {
      *
      * @return true if the courses cannot be scheduled, false otherwise
      */
+    @Override
     public boolean failFast() {
         // Iterate through courses
         for (HashMap<String, ArrayList<Course>> course : this.courses.values()) {
@@ -94,8 +115,11 @@ public class TimeTablePuzzle {
      *
      * @return An ArrayList of all courses that can be scheduled
      */
-    public ArrayList<Course> extensions() {
-        ArrayList<Course> extensions = new ArrayList<>();
+    @Override
+    public TimeTablePuzzle[] extensions() {
+        ArrayList<TimeTablePuzzle> extensions = new ArrayList<>();
+        ArrayList<CourseSection> presentCourseSections = this.manager.returnCourses();
+
         // Iterate through courses
         for (HashMap<String, ArrayList<Course>> course : this.courses.values()) {
             // Iterate through course components(LEC/TUT/PRA)
@@ -114,16 +138,44 @@ public class TimeTablePuzzle {
                             break;
                         }
                     }
-                    // If no conflicts for all split sections, add to ArrayList
-                    extensions.add(courseComponent);
+                    // If no conflicts for all split sections, create extension with course added
+                    // First make copy of TimeTable Manager
+                    TimeTableManager managerCopy = new TimeTableManager();
+                    for (CourseSection courseSection : presentCourseSections) {
+                        String term2 = courseSection.getTerm();
+                        managerCopy.getTimetable(term2).schedule(courseSection);
+                    }
+                    TimeTablePuzzle puzzleExtension = new TimeTablePuzzle(this.courses, managerCopy);
+                    for (CourseSection splitSection : split) {
+                        puzzleExtension.getManager().getTimetable(term).schedule(splitSection);
+                    }
+                    // Add extension to course
+                    extensions.add(puzzleExtension);
                 }
             }
 
         }
-        return extensions;
+        // Convert ArrayList to Array
+        TimeTablePuzzle[] extensionResult = new TimeTablePuzzle[extensions.size()];
+        if (extensions.size() >= 1) {
+            for (int i = 0; i < extensions.size(); i++) {
+                extensionResult[i] = extensions.get(i);
+            }
+        }
+        return extensionResult;
     }
-    public static void main(String args[]) {
 
+    public void schedulePuzzle(TimeTablePuzzle solved) {
+        ArrayList<CourseSection> thisCourses = this.manager.returnCourses();
+        ArrayList<CourseSection> otherCourses = solved.getManager().returnCourses();
+
+        ArrayList<CourseSection> difference = new ArrayList<>(otherCourses);
+        difference.removeAll(thisCourses);
+
+        for (CourseSection courseSection : difference) {
+            String term = courseSection.getTerm();
+            this.getManager().getTimetable(term).schedule(courseSection);
+        }
     }
 }
 

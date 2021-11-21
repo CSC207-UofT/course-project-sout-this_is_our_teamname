@@ -1,7 +1,7 @@
 package TimeTableStuffTests;
 
 import TimeTableObjects.EventObjects.Activity;
-import TimeTableObjects.Events;
+import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.Task;
 import Helpers.Constants;
 
@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -78,50 +79,39 @@ class TimeTableTest {
     }
 
     @Test
-    public void checkCourse() {
+    public void checkCourseSection() {
         LocalTime startTime1 = LocalTime.of(9, 0, 0);
         LocalTime startTime2 = LocalTime.of(10, 0, 0);
         LocalTime endTime1 = LocalTime.of(10, 0, 0);
         LocalTime endTime2 = LocalTime.of(11, 0, 0);
 
-        CourseSection lecture1 =
-                new CourseSection("MAT257", startTime1, endTime1, "SS100",
-                        Constants.MONDAY, Constants.YEAR,
-                "LEC0101", "Gauss", "Arts and Science", "In Person", false);
-        CourseSection lecture2 =
-                new CourseSection("MAT257", startTime2, endTime2, "SS101",
-                        Constants.MONDAY, Constants.FALL, "LEC0201", "Descartes", "Arts and Science", "Online", false);
-        CourseSection lecture3 =
-                new CourseSection("MAT257", startTime2, endTime2, "SS100",
-                        Constants.TUESDAY, Constants.FALL, "PRA0101", "Alphonso", "Arts and Science", "Online", false);
-        CourseSection lecture4 =
-                new CourseSection("CSC207", startTime2, endTime2, "BA1160",
-                        Constants.WEDNESDAY, Constants.FALL,
-                "LEC0101", "Calver", "Arts and Science", "In Person", false);
-        CourseSection lecture5 =
-                new CourseSection("CSC207", startTime1, endTime1, "BA1160",
-                        Constants.WEDNESDAY, Constants.FALL,
-                "TUT0101", "TA", "Arts and Science", "Online", false);
-        CourseSection lecture6 =
-                new CourseSection("CSC236", startTime1, endTime1, "BA1160",
-                        Constants.THURSDAY, Constants.FALL,
-                "TUT0101", "TA", "Arts and Science", "Online", false);
+        Object[] date1 = {Constants.MONDAY, startTime1, endTime1};
+        Object[] date2 = {Constants.THURSDAY, startTime1, endTime1};
+        HashMap<Object[], String> testDateTimeMap1 = new HashMap<>();
+        testDateTimeMap1.put(date1, "LM161");
+        testDateTimeMap1.put(date2, "LM161");
+
+        Course course1 = new Course("MAT257", "LEC0101", "Gausss", "A&S",
+                "In Person", testDateTimeMap1, Constants.FALL, true);
+
+        Object[] date3 = {Constants.TUESDAY, startTime2, endTime2};
+        Object[] date4 = {Constants.THURSDAY, startTime2, endTime2};
+        HashMap<Object[], String> testDateTimeMap2 = new HashMap<>();
+        testDateTimeMap1.put(date3, "LM161");
+        testDateTimeMap1.put(date4, "LM161");
+
+        Course course2 = new Course("MAT257", "LEC0201", "Descartes", "A&S",
+                "Online", testDateTimeMap2, Constants.FALL, false);
 
         TimeTable table = new TimeTable();
-        table.schedule(lecture1);
-        table.schedule(lecture2);
-        table.schedule(lecture3);
-        table.schedule(lecture4);
-        table.schedule(lecture5);
-        table.schedule(lecture6);
 
-        ArrayList<Events> actual = table.checkCourse("MAT257");
+        ArrayList<CourseSection> split1 = course1.split();
+        for (CourseSection splitSection1 : split1) {
+            table.schedule(splitSection1);
+        }
 
-        ArrayList<Events> expected = new ArrayList<>();
-        expected.add(lecture1);
-        expected.add(lecture2);
-        expected.add(lecture3);
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertTrue(table.checkCourseSection(course1));
+        Assertions.assertFalse(table.checkCourseSection(course2));
 
     }
 

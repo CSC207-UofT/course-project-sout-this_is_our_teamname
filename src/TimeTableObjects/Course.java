@@ -62,10 +62,16 @@ public class Course implements Sliceable<CourseSection> {
      *
      * @return the course code
      */
-    public String getSectionName() {
-        return this.sectionName;
+    public String getCourseName() {
+        return this.courseName;
     }
 
+    /**
+     * Get the section for this Course
+     *
+     * @return the section
+     */
+    public String getSectionName() {return this.sectionName; }
     /**
      * Get the times and corresponding locations for this Course
      *
@@ -123,7 +129,7 @@ public class Course implements Sliceable<CourseSection> {
             LocalTime start = ((LocalTime) time[1]);
             LocalTime end = ((LocalTime) time[2]);
             String date = ((String) time[0]);
-            CourseSection s = new CourseSection(this.courseName, start, end,
+            CourseSection s = new CourseSection((this.courseName + this.sectionName), start, end,
                     this.timeLocation.get(time), date, this.term,
                     this.sectionName, this.professor, this.faculty,
                     this.deliveryMethod, this.wait_list);

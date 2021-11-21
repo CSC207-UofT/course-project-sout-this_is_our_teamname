@@ -3,6 +3,7 @@ package TimeTableContainers;
 import Helpers.ConflictException;
 import Helpers.Constants;
 import Helpers.InvalidInputException;
+import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.Events;
 
 // Importing HashMap class
@@ -116,5 +117,23 @@ public class TimeTableManager {
             times.put(term, this.timetables.get(term).toString());
         }
         return times.toString();
+    }
+
+    /**
+     * Get all CourseSections in this TimeTable
+     *
+     * @return An ArrayList of all the CourseSections in his TimeTable
+     */
+    public ArrayList<CourseSection> returnCourses() {
+        ArrayList<CourseSection> courses = new ArrayList<>();
+        for (TimeTable timeTable : this.getAllTimeTables())
+            for (Events[] day : timeTable.getCalender().values()) {
+                for (Events hour : day) {
+                    if (hour instanceof CourseSection){
+                        courses.add((CourseSection) hour);
+                    }
+                }
+            }
+        return courses;
     }
 }

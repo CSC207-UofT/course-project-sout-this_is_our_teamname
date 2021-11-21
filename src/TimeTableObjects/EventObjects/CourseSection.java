@@ -74,13 +74,20 @@ public class CourseSection extends Events implements java.lang.Comparable<Course
     }
 
     /**
-     * Get the Course code for this Course
+     * Get the section for this Course
      *
-     * @return the course code
+     * @return the section
      */
     public String getSectionCode() {
         return sectionCode;
     }
+
+    /**
+     * Get the Course Code for this Course
+     *
+     * @return the course code
+     */
+    public String getCourseName() {return courseName; }
 
     /**
      * Get the waitlist for this Course
