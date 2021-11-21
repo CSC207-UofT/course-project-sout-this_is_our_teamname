@@ -1,6 +1,7 @@
 package Controllers;
 
 import Commands.FunctionCommands.SolverCommand;
+import Commands.FunctionCommands.ExitProgramCommand;
 import DataGetting.DataGetter;
 import Commands.Command;
 import Commands.CreationCommands.GetAllTimeTablesCommand;
@@ -29,6 +30,7 @@ public class CommandFactory {
     private final DatabaseController controller;
     private final String[] allowedFunctions;
 
+    // Commands
     static final String SCHEDULE_COURSE = "Schedule Course";
     static final String SCHEDULE_EVENT = "Schedule Event";
     static final String GET_ALL_TIMETABLE = "Show TimeTables";
@@ -41,11 +43,15 @@ public class CommandFactory {
 
     /**
      * Constructor. Sets the TimeTable Manager and DataSource of the file
+     *
+     * @param theController the database controller that this CommandFactory
+     *                      is set to.
      */
     public CommandFactory(DatabaseController theController){
         this.courseManager = null;
         this.dataSource = null;
         this.controller = theController;
+
         this.allowedFunctions = new String[]{
                 SCHEDULE_COURSE,
                 SCHEDULE_EVENT,
@@ -93,8 +99,7 @@ public class CommandFactory {
             case DOWNLOAD_TIMETABLE:
                 return new DownloadDataCommand(courseManager);
             case EXIT:
-                // Signals DatabaseController to exit the Program
-                return null;
+                return new ExitProgramCommand();
             // ... ADD YOUR NEW OBJECTS HERE!
 
             // The command is invalid
@@ -105,7 +110,7 @@ public class CommandFactory {
 
     // ========================= Setters and Getters ===========================
     /**
-     * Returns an string array of all the allowable functions of the program
+     * Returns a string array of all the allowable functions of the program
      *
      * @return a string array of all the allowed functions of the program
      */
@@ -115,6 +120,7 @@ public class CommandFactory {
 
     /**
      * Sets the TimeTableManager to connect to
+     *
      * @param theManager the TimeTableManager to connect to
      */
     public void setManager(TimeTableManager theManager){
@@ -123,6 +129,7 @@ public class CommandFactory {
 
     /**
      * Sets the DataGetter to connect to
+     *
      * @param theDataSource the DataGetter to connect to
      */
     public void setDataSource(DataGetter theDataSource){
