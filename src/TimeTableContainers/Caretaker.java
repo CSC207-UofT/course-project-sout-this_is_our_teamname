@@ -9,14 +9,23 @@ import java.util.ArrayList;
  * savedCalenders: The list of stored TimeTableManager
  */
 public class Caretaker {
-    ArrayList<TimeTableManager> savedCalenders = new ArrayList<TimeTableManager>();
+    ArrayList<TimeTableManager> savedCalenders = new ArrayList<>();
 
     /**
-     * Adds memento to the list of TimeTableManager saved at index given
+     * Adds memento to the list of TimeTableManager saved at index given and remove any TimeTableManager after
      * @param index is the index the memento is saved to
      * @param memento is the TimeTableManager to be saved
      */
-    public void addMemento(int index, TimeTableManager memento) { savedCalenders.add(index, memento); }
+    public void addMemento(int index, TimeTableManager memento) {
+        ArrayList<TimeTableManager> removeTimeTables = new ArrayList<>();
+        for (TimeTableManager savedTimeTable : savedCalenders) {
+            if (savedCalenders.indexOf(savedTimeTable) >= index) {
+                removeTimeTables.add(savedTimeTable);
+            }
+        }
+        savedCalenders.removeAll(removeTimeTables);
+        savedCalenders.add(index, memento);
+    }
 
     /**
      * Gets the memento from the list of saved TimeTableManager
