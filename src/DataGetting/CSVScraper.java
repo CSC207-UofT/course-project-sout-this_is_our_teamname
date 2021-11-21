@@ -34,6 +34,8 @@ public class CSVScraper extends DataGetter {
      * @param courseName the name of the course
      * @param theTerm the term of the course
      * @param theYear the course starts.
+     * @exception FileNotFoundException Throws file not found exception if the information for the
+     * given course is not found.
      */
     @Override
     public void CalibrateData(String courseName, String theTerm,
