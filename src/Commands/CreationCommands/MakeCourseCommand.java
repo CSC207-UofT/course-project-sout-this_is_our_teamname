@@ -59,6 +59,7 @@ public class MakeCourseCommand implements Command, NeedsCourses {
                 ArrayList<CourseSection> sections = item.split();
                 for (CourseSection section: sections){
 //                    try {
+
                         manager.schedule(section);
                         running = false;
 //                    }
@@ -97,12 +98,13 @@ public class MakeCourseCommand implements Command, NeedsCourses {
      */
     @Override
     public String toString(){
-        StringBuilder sb = new StringBuilder("Scheduled the item");
+        StringBuilder temporaryString = new StringBuilder("Scheduled the item" +
+                " ");
         if (this.hasScheduled()){
             for (Course item : this.scheduledCourse){
-                sb.append(item.getSectionName());
+                temporaryString.append(item.getSectionName()).append(" ");
             }
-            return sb.toString();
+            return temporaryString.toString();
         } else {
             return "No Course Scheduled";
         }
