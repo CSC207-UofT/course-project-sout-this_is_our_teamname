@@ -2,7 +2,7 @@ package Commands.CreationCommands;
 
 import Commands.Command;
 import Commands.NeedsCourses;
-import DataGetting.DataGetter;
+import DataGetting.CourseGetter;
 import Helpers.ConflictException;
 import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
@@ -21,7 +21,7 @@ import java.util.LinkedHashMap;
  * manager: The manager that will eventually schedule the object
  */
 public class MakeCourseCommand implements Command, NeedsCourses {
-    private final DataGetter dataSource;
+    private final CourseGetter dataSource;
     private final TimeTableManager manager;
     private final ArrayList<Course> scheduledCourse;
 
@@ -31,7 +31,7 @@ public class MakeCourseCommand implements Command, NeedsCourses {
      * @param sendTo the Manager to send to
      * @param dataSource the Source of the data of the course
      */
-    public MakeCourseCommand(TimeTableManager sendTo, DataGetter dataSource){
+    public MakeCourseCommand(TimeTableManager sendTo, CourseGetter dataSource){
         this.manager = sendTo;
         this.dataSource = dataSource;
         this.scheduledCourse = new ArrayList<>();
@@ -51,6 +51,8 @@ public class MakeCourseCommand implements Command, NeedsCourses {
             LinkedHashMap<String, ArrayList<Course>> course_data =
                     NeedsCourses.userInputs(dataSource);
             promptUser(course_data);
+
+            // Use CheckConflicts in Timetable
 
             boolean isConflicted = false;
             // Pass this to the TimeTableManager. We will fix it in Phase 2

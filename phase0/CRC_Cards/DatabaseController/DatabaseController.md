@@ -1,4 +1,4 @@
-# Controllers
+# InterfaceAdaptors
 
 ## Class
 * Interface Adapters (Controller)

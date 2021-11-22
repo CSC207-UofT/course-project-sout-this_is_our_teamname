@@ -48,7 +48,7 @@ public class MakeEventCommand implements Command {
     }
 
     /**
-     * Prompts the user to create a timetableObject
+     * Prompts the user to create an Event
      */
     @Override
     public void execute() {
@@ -89,6 +89,9 @@ public class MakeEventCommand implements Command {
 
             this.scheduledObject = toSchedule;
 
+            // Use conflict checkers
+
+            // Brute force conflict check
             assert toSchedule != null;
             try {
                 manager.schedule(toSchedule);
@@ -109,6 +112,12 @@ public class MakeEventCommand implements Command {
     }
 
     // ============================= Helper Methods ============================
+
+    /**
+     * A string representation of the command
+     *
+     * @return the string representation of the command
+     */
     @Override
     public String toString() {
         if (this.hasScheduled()){
@@ -120,6 +129,7 @@ public class MakeEventCommand implements Command {
 
     /**
      * Return if there has already been an object been scheduled
+     *
      * @return true iff there has been a course scheduled.
      */
     protected boolean hasScheduled(){

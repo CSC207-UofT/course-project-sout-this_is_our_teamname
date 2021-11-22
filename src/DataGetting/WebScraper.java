@@ -15,7 +15,7 @@ import java.util.*;
  * website.
  *
  */
-public class WebScraper extends DataGetter{
+public class WebScraper extends CourseGetter {
 
     /**
      * Constructor of the CSVScraper. Reads and filters the data correctly
@@ -92,9 +92,6 @@ public class WebScraper extends DataGetter{
         String term = removeCss(doc.select("span#u158").text());
         String faculty = removeCss(doc.select("span#u13").text());
         String courseCode = removeCss(doc.select("div#u19").text());
-
-//        String a = doc.select("span#u254_line1").text();
-//        System.out.println(a.length() == 0);
 
         // loop over the rows in the html and add corresponding sections.
         String section = removeCss(doc.select("span#u245_line" + 0).text());
@@ -274,7 +271,7 @@ public class WebScraper extends DataGetter{
         for (String course : courses){
             try {
                 LinkedHashMap<String,
-                        ArrayList<Course>> got = a.getData(course, "Fall",
+                        ArrayList<Course>> got = a.retrieveData(course, "Fall",
                         "2021");
                 System.out.println(got);
             } catch (FileNotFoundException e){
