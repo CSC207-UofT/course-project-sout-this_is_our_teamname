@@ -58,33 +58,33 @@ public class MakeCourseCommand implements Command, NeedsCourses {
             for (Course item : this.scheduledCourse){
                 ArrayList<CourseSection> sections = item.split();
                 for (CourseSection section: sections){
-                    try {
+//                    try {
                         manager.schedule(section);
                         running = false;
-                    }
-                    catch (ConflictException e) {
-                        isConflicted = true;
-                        break;
-                    }
-                }
-                // If there was a conflict, don't bother scheduling anything
-                // else!
-                if (isConflicted){
-                    break;
-                }
-            }
-
-            // If there is a conflict
-            if (isConflicted){
-                InputChecker repeat = new InputChecker(
-                        "An conflict has occurred! Course" +
-                                " scheduled Unsuccessfully. Would you" +
-                                " like to try again? (true/false)",
-                        new isBoolean());
-
-                String repeatInput = repeat.checkCorrectness();
-                if (repeatInput.equals("false")){
-                    running = false;
+//                    }
+//                    catch (ConflictException e) {
+//                        isConflicted = true;
+//                        break;
+//                    }
+//                }
+//                // If there was a conflict, don't bother scheduling anything
+//                // else!
+//                if (isConflicted){
+//                    break;
+//                }
+//            }
+//
+//            // If there is a conflict
+//            if (isConflicted){
+//                InputChecker repeat = new InputChecker(
+//                        "An conflict has occurred! Course" +
+//                                " scheduled Unsuccessfully. Would you" +
+//                                " like to try again? (true/false)",
+//                        new isBoolean());
+//
+//                String repeatInput = repeat.checkCorrectness();
+//                if (repeatInput.equals("false")){
+//                    running = false;
                 }
             }
         }

@@ -7,6 +7,7 @@ import TimeTableObjects.Events;
 // Importing HashMap class
 import java.util.*;
 
+
 /**
  * A manager that manages and holds different timetables.
  * === Private Attributes ===
@@ -22,6 +23,37 @@ public class TimeTableManager {
             put(Constants.FALL, new TimeTable());
             put(Constants.WINTER, new TimeTable());
         }};
+    }
+
+    /**
+     * Get an event from the user interface and schedule it to the corresponding timetable(s).
+     * Precondition: The event to be scheduled will not result in conflicts.
+     * @param event an Events passed from user interface
+     *
+     */
+    public void schedule(Events event) {
+        switch (event.getTerm()){
+            case Constants.FALL:
+                timetables.get(Constants.FALL).schedule(event);
+                break;
+            case Constants.WINTER:
+                timetables.get(Constants.WINTER).schedule(event);
+                break;
+            default:
+                timetables.get(Constants.FALL).schedule(event);
+                timetables.get(Constants.WINTER).schedule(event);
+        }
+//        if (event.getTerm().equals(Constants.FALL)){
+//           timetables.get(Constants.FALL).schedule(event);
+//
+//        }
+//        else if (event.getTerm().equals(Constants.WINTER)){
+//            timetables.get(Constants.WINTER).schedule(event);
+//        }
+//        else{
+//            timetables.get(Constants.FALL).schedule(event);
+//            timetables.get(Constants.WINTER).schedule(event);
+//        }
     }
 
     /**
@@ -63,42 +95,6 @@ public class TimeTableManager {
     }
 
     /**
-     * Get the timetable object for the given term.
-     *
-     * @return the corresponding TimeTable object.
-     */
-    public TimeTable getTimetable(String term) {
-        if (this.timetables.containsKey(term)) {
-            return timetables.get(term);
-        }
-        else{
-            //TODO exceptions later
-            return null;
-        }
-    }
-
-    /**
-     * Get an event from the user interface and schedule it to the corresponding timetable(s).
-     * @param event an Events passed from user interface
-     */
-    public void schedule(Events event) throws ConflictException {
-        if (event.getTerm().equals(Constants.FALL)){
-           boolean conflict = timetables.get(Constants.FALL).schedule(event);
-           if (!conflict){throw new ConflictException();}
-
-        }
-        else if (event.getTerm().equals(Constants.WINTER)){
-            boolean conflict = timetables.get(Constants.WINTER).schedule(event);
-            if (!conflict){throw new ConflictException();}
-        }
-        else{
-            boolean conflict1 = timetables.get(Constants.FALL).schedule(event);
-            boolean conflict2 = timetables.get(Constants.WINTER).schedule(event);
-            if (!conflict1 && !conflict2){throw new ConflictException();}
-        }
-    }
-
-    /**
      * Returns an array of timetables with all the timetables.
      *
      * @return an array of timetables with all the timetables
@@ -114,6 +110,25 @@ public class TimeTableManager {
         return theTimes;
     }
 
+    /**
+     * Get the timetable object for the given term.
+     *
+     * @return the corresponding TimeTable object.
+     */
+    public TimeTable getTimetable(String term) {
+        if (this.timetables.containsKey(term)) {
+            return timetables.get(term);
+        }
+        else{
+            //TODO exceptions later
+            return null;
+        }
+    }
+
+    /**
+     * Presents the TimeTableManager in string
+     * @return a string representation of the TimeTableManager
+     */
     public String toString() {
         LinkedHashMap<String, String> times = new LinkedHashMap<>();
         for (String term : this.timetables.keySet()) {

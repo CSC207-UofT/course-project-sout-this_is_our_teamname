@@ -90,19 +90,19 @@ public class MakeEventCommand implements Command {
             this.scheduledObject = toSchedule;
 
             assert toSchedule != null;
-            try {
+//            try {
                 manager.schedule(toSchedule);
                 running = false;
-            } catch (ConflictException e) {
-                InputChecker repeat = new InputChecker("An conflict has occurred! " +
-                        "Event scheduled Unsuccessfully. Would you like to " +
-                        "try again? (true/false)", new isBoolean());
-
-                String repeatInput = repeat.checkCorrectness();
-                if (repeatInput.equals("false")){
-                    running = false;
-                }
-            }
+//            } catch (ConflictException e) {
+//                InputChecker repeat = new InputChecker("An conflict has occurred! " +
+//                        "Event scheduled Unsuccessfully. Would you like to " +
+//                        "try again? (true/false)", new isBoolean());
+//
+//                String repeatInput = repeat.checkCorrectness();
+//                if (repeatInput.equals("false")){
+//                    running = false;
+//                }
+//            }
         }
 
         System.out.println("Event Scheduled");
@@ -153,7 +153,9 @@ public class MakeEventCommand implements Command {
                     term, descriptionScanner.nextLine());
         // Creates the task
         } else if (type.equals(Constants.TASK)){
-            return new Task(startTime, endTime, theLocation, theDate, term);
+            Task task = new Task(startTime, endTime, theDate, term);
+            task.addToName(theLocation);
+            return task;
         }
 
         // ...

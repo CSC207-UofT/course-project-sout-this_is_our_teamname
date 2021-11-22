@@ -152,19 +152,20 @@ public class DataLoader {
      * @param time2 the end time of the task
      * @param day the date of the task
      * @param term the term of the task
-     * @param newdescription the information of the task
+     * @param location of the task
      */
     private void TaskHelper(TimeTableManager ttbmanager,
                             LocalTime time1, LocalTime time2,
-                            String day, String term, String newdescription) {
+                            String day, String term, String location) {
         Task activity;
-//        if (newdescription.contains("N/A")) {
+//        if (location.contains("N/A")) {
 //            activity = new Task(time1, time2, day, term);
 //        }
 //        else {
-//            activity = new Task(time1, time2, newdescription.substring("at ".length()), day, term);
+//            activity = new Task(time1, time2, location.substring("at ".length()), day, term);
 //        }
-        activity = new Task(time1, time2, newdescription.substring("at ".length()), day, term);
+        activity = new Task(time1, time2, day, term);
+        activity.addToName(location);
         ttbmanager.getTimetable(term).schedule(activity);
     }
 
@@ -278,7 +279,7 @@ public class DataLoader {
                 // If the calendar at the date has an item
                 if (timetable.getCalendar().get(day)[n] != null) {
                     String desription =
-                            timetable.getCalendar().get(day)[n].getDescription();
+                            timetable.getCalendar().get(day)[n].getName();
                     allDataLines.get(n).add(desription);
                 } else {
                     allDataLines.get(n).add(" ");
@@ -313,7 +314,7 @@ public class DataLoader {
     private void sortEventType(TimeTable timetable, List<List<String>> datalists, String day, int n) {
         if (timetable.getCalendar().get(day)[n] instanceof Activity) {
             String toWrite =
-                    "Activity: " + timetable.getCalendar().get(day)[n].getDescription();
+                    "Activity: " + timetable.getCalendar().get(day)[n].getName();
             datalists.get(n).add(toWrite);
         } else if (timetable.getCalendar().get(day)[n] instanceof CourseSection) {
             sortCourseSection(timetable, datalists, day, n);
@@ -323,20 +324,20 @@ public class DataLoader {
     }
 
     private void sortTask(TimeTable timetable, List<List<String>> datalists, String day, int n) {
-        if (timetable.getCalendar().get(day)[n].getDescription() == null) {
+        if (timetable.getCalendar().get(day)[n].getName() == null) {
             datalists.get(n).add("Task: " + "N/A");
         } else {
-            datalists.get(n).add("Task: " + timetable.getCalendar().get(day)[n].getDescription());
+            datalists.get(n).add("Task: " + timetable.getCalendar().get(day)[n].getName());
         }
     }
 
     private void sortCourseSection(TimeTable timetable, List<List<String>> datalists, String day, int n) {
         if (((CourseSection) timetable.getCalendar().get(day)[n]).getWaitlist()) {
             datalists.get(n).add("Course Section: " +
-                    timetable.getCalendar().get(day)[n].getDescription() + " (Waitlisted)");
+                    timetable.getCalendar().get(day)[n].getName() + " (Waitlisted)");
         } else {
             datalists.get(n).add("Course Section: " +
-                    timetable.getCalendar().get(day)[n].getDescription());
+                    timetable.getCalendar().get(day)[n].getName());
         }
     }
 

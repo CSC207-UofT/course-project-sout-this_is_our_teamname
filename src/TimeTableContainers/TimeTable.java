@@ -2,20 +2,24 @@ package TimeTableContainers;
 
 import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
+import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
 import Helpers.Constants;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+
 /**
  * TimeTable class stores all the activities from Monday to Sunday. If there is a conflict when storing a new activity,
  * it will still be stored, and a conflict warning will be sent back prompting user to take action or ignore it.
  * === Private Attributes ===
  * calendar is a single timetable from Monday to Friday, and 24 intervals per day that can be filled with an event.
+ * tasks contain Task objects(as values) in the corresponding weekday(as keys)
  */
 public class TimeTable {
     private final LinkedHashMap<String, Events[]> calendar;
+    private final LinkedHashMap<String, ArrayList<Task>> taskCalendar;
 
     public TimeTable() {
         this.calendar = new LinkedHashMap<>() {{
@@ -27,29 +31,31 @@ public class TimeTable {
             put(Constants.SATURDAY, new Events[24]);
             put(Constants.SUNDAY, new Events[24]);
         }};
-    }
+        this.taskCalendar = new LinkedHashMap<>() {{
+            put(Constants.MONDAY, new ArrayList<>());
+            put(Constants.TUESDAY, new ArrayList<>());
+            put(Constants.WEDNESDAY, new ArrayList<>());
+            put(Constants.THURSDAY, new ArrayList<>());
+            put(Constants.FRIDAY, new ArrayList<>());
+            put(Constants.SATURDAY, new ArrayList<>());
+            put(Constants.SUNDAY, new ArrayList<>());
+        }};
 
-    /**
-     * Get the calender of the timetable
-     * @return the calender contained in the timetable
-     */
-    public LinkedHashMap<String, Events[]> getCalendar() {
-        return this.calendar;
     }
 
     /**
      * Schedules the given activity into the appropriate weekday.
-     * @param activity the given activity
+     * @param event the given activity
      * @return true if scheduling is successful, false if there is a conflict
      */
-    public boolean schedule(Events activity) {
-        if (checkConflicts(activity)) {
-            int start = activity.getStartTime().getHour();
-            int end = activity.getEndTime().getHour();
+    public boolean schedule(Events event) {
+        if (checkConflicts(event)) {
+            int start = event.getStartTime().getHour();
+            int end = event.getEndTime().getHour();
 
             //Add activity to interval between startTime and endTime
             for (int i = start; i < end; i++) {
-                this.calendar.get(activity.getDate())[i] = activity;
+                this.calendar.get(event.getDate())[i] = event;
             }
             return true;
         }
@@ -66,9 +72,54 @@ public class TimeTable {
         int start = activity.getStartTime().getHour();
         int end = activity.getEndTime().getHour();
         for (int i = start; i < end; i++ ){
-            if (weekday[i] != null){return false;}
+            if (weekday[i] != null){
+                return false;
+            }
         }
         return true;
+    }
+
+    /**
+     * Check if the given course is present in this TimeTable
+     *
+     * @param course The course to be checked
+     * @return true if the course is present, false otherwise
+     */
+    public boolean checkCourseSection(Course course) {
+        String courseCode = course.getSectionName();
+        for (Events[] day : this.calendar.values()) {
+            for (Events hour : day) {
+                if (hour instanceof CourseSection) {
+                    String sectionCode = ((CourseSection) hour).getSectionCode();
+                    if (sectionCode.equals(courseCode)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Adds a Task object to the taskCalendar
+     * @param task is a Task object
+     */
+    public void addTasks(Task task) {
+        this.taskCalendar.get(task.getDate()).add(task);
+    }
+
+    /**
+     * Get the task hashmap
+     * @return the task hashmap
+     */
+    public LinkedHashMap<String, ArrayList<Task>> getTaskCalendar() {return taskCalendar;}
+
+    /**
+     * Get the calender of the timetable
+     * @return the calender contained in the timetable
+     */
+    public LinkedHashMap<String, Events[]> getCalendar() {
+        return this.calendar;
     }
 
     /**
@@ -92,53 +143,5 @@ public class TimeTable {
             timeStrings.append(times);
         }
         return timeStrings.toString();
-    }
-
-
-    /**
-     * Check if any CourseSections that reside under the given course code are present
-     * in this TimeTable
-     *
-     * @param courseCode The course code to be checked
-     * @return An ArrayList of all the CourseSections correlating to courseCode that are
-     * present in this TimeTable
-     * e.g. If courseCode is "CSC207", checkCourse will return [CourseSection(CSC207LEC0101),
-     * CourseSection(CSC207TUT0101), ... ,]
-     */
-    public ArrayList<Events> checkCourse(String courseCode) {
-        ArrayList<Events> matchingCourses = new ArrayList<>();
-        for (Events[] day : this.calendar.values()) {
-            for (Events hour : day) {
-                if (hour instanceof CourseSection){
-                    String sectionCode = ((CourseSection) hour).getSectionCode();
-                    if (sectionCode.contains(courseCode)) {
-                        matchingCourses.add(hour);
-                    }
-
-                }
-            }
-        }
-        return matchingCourses;
-    }
-
-    /**
-     * Check if the given course is present in this TimeTable
-     *
-     * @param course The course to be checked
-     * @return true if the course is present, false otherwise
-     */
-    public boolean checkCourseSection(Course course) {
-        String courseCode = course.getSectionName();
-        for (Events[] day : this.calendar.values()) {
-            for (Events hour : day) {
-                if (hour instanceof CourseSection) {
-                    String sectionCode = ((CourseSection) hour).getSectionCode();
-                    if (sectionCode.equals(courseCode)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 }
