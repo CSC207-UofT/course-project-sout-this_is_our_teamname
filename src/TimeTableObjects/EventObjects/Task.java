@@ -24,17 +24,6 @@ public class Task extends Events {
     }
 
     /**
-     * reconstruct takes an Events object and returns an Arraylist based on the non-time/date attributes.
-     */
-    @Override
-    public ArrayList<String> reconstruct() {
-        ArrayList<String> list = new ArrayList<>(3);
-        // index 0: task name
-        list.add(0, this.getName());
-        return list;
-    }
-
-    /**
      *  Generate the string representation of the task.
      * @return the string representation of the task.
      */

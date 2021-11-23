@@ -1,6 +1,7 @@
 package TimeTableObjects.EventObjects;
 
 import TimeTableObjects.Events;
+import TimeTableObjects.Interfaces.Reconstructable;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * sectionCode is the section code of the course section
  * description contains all the other info of the course section
  */
-public class CourseSection extends Events {
+public class CourseSection extends Events  implements Reconstructable {
     private final boolean waitlist;
     private final String courseName;
     private final String sectionCode;

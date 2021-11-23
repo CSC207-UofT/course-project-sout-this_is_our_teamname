@@ -1,6 +1,7 @@
  package TimeTableObjects.EventObjects;
 
 import TimeTableObjects.Events;
+import TimeTableObjects.Interfaces.Reconstructable;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
   * === Private Attributes ===
   * description contains all the other info about the activity
   */
-public class Activity extends Events {
+public class Activity extends Events  implements Reconstructable {
     private final String description;
 
     /**
