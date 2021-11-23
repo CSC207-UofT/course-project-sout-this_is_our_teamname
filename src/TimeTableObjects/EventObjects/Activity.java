@@ -3,6 +3,7 @@
 import TimeTableObjects.Events;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 
  /**
   * Activity is an extracurricular or social Events object.
@@ -30,7 +31,20 @@ public class Activity extends Events {
         this.description = description;
     }
 
-    /**
+     /**
+      * reconstruct takes an Events object and returns an Arraylist based on the non-time/date attributes.
+      */
+     @Override
+     public ArrayList<String> reconstruct() {
+         ArrayList<String> list = new ArrayList<>(3);
+         // index 0: class name, index 1: Activity name, index 2: description
+         list.add(0, this.getClass().getSimpleName());
+         list.add(1, this.getName());
+         list.add(2, this.description);
+         return list;
+     }
+
+     /**
      *  Generate the string representation of the activity.
      * @return the string representation of the activity.
      */

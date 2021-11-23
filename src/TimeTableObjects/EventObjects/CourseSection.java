@@ -3,6 +3,7 @@ package TimeTableObjects.EventObjects;
 import TimeTableObjects.Events;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 /**
  * This is a specific time interval of a specific section for a course.
@@ -40,6 +41,21 @@ public class CourseSection extends Events {
         this.waitlist = waitlist;
         this.description = "";
     }
+
+    /**
+     * reconstruct takes an Events object and returns an Arraylist based on the non-time/date attributes.
+     */
+    @Override
+    public ArrayList<String> reconstruct() {
+        ArrayList<String> list = new ArrayList<>(3);
+        // index 0: class name, index 1: CourseSection name, index 2: section code, index 3: description
+        list.add(0, this.getClass().getSimpleName());
+        list.add(1, this.getName());
+        list.add(2, this.sectionCode);
+        list.add(3, this.description);
+        return list;
+    }
+
 
     /**
      * Get the Course code for this Course

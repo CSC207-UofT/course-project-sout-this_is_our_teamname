@@ -55,6 +55,38 @@ public class TimeTableManager {
 //            timetables.get(Constants.WINTER).schedule(event);
 //        }
     }
+        //TODO fix raw parameterized classes
+    /**
+     * Reformats a given timetable from a hashmap of Events objects to a hashmap of strings
+     * The keys are the weekdays. The value is an arraylist of arraylist of strings.
+     * The outer-layer of the arraylist contains 25 elements, index 0 to 23 corresponds to hours of the day,
+     * each hour contains an arraylist of strings representing the corresponding Event object scheduled in the timetable
+     * index 24 contains an arraylist of task objects which are all day events.
+     *
+     * @param timetable is a timetable object
+     * @return hashmap of strings representation of the  given timetable.
+     */
+    public LinkedHashMap<String, ArrayList<ArrayList<String>>> reformat(TimeTable timetable){
+        //creates the hashmap first
+        LinkedHashMap calendar = new LinkedHashMap<>() {{
+            put(Constants.MONDAY, new ArrayList<ArrayList<String>>(24));
+            put(Constants.TUESDAY, new ArrayList<ArrayList<String>>(24));
+            put(Constants.WEDNESDAY, new ArrayList<ArrayList<String>>(24));
+            put(Constants.THURSDAY, new ArrayList<ArrayList<String>>(24));
+            put(Constants.FRIDAY, new ArrayList<ArrayList<String>>(24));
+            put(Constants.SATURDAY, new ArrayList<ArrayList<String>>(24));
+            put(Constants.SUNDAY, new ArrayList<ArrayList<String>>(24));
+        }};
+        //iterate through timetable for event objects.
+        Set keys = calendar.keySet();
+        for (Object list: keys){
+
+
+        }
+
+
+        return calendar;
+    }
 
     /**
      * Add a new empty TimeTable with the given term.
