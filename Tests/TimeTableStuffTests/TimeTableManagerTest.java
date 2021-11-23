@@ -28,7 +28,7 @@ class TimeTableManagerTest {
         CourseSection lecture1 = new CourseSection("MAT257", time9, time11, Constants.MONDAY, Constants.YEAR,
                 "LEC 0101", false);
         String description1 = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
-                + " session " + " at " + "SS100";
+                + " session" + " at" + " SS100";
         lecture1.setName(description1);
 
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");

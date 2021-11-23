@@ -1,8 +1,9 @@
 package TimeTableContainers;
 
-import Helpers.ConflictException;
 import Helpers.Constants;
+import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
+import java.util.ArrayList;
 
 // Importing HashMap class
 import java.util.*;
@@ -55,7 +56,7 @@ public class TimeTableManager {
 //            timetables.get(Constants.WINTER).schedule(event);
 //        }
     }
-        //TODO fix raw parameterized classes
+
     /**
      * Reformats a given timetable from a hashmap of Events objects to a hashmap of strings
      * The keys are the weekdays. The value is an arraylist of arraylist of strings.
@@ -67,24 +68,63 @@ public class TimeTableManager {
      * @return hashmap of strings representation of the  given timetable.
      */
     public LinkedHashMap<String, ArrayList<ArrayList<String>>> reformat(TimeTable timetable){
-        //creates the hashmap first
-        LinkedHashMap calendar = new LinkedHashMap<>() {{
-            put(Constants.MONDAY, new ArrayList<ArrayList<String>>(24));
-            put(Constants.TUESDAY, new ArrayList<ArrayList<String>>(24));
-            put(Constants.WEDNESDAY, new ArrayList<ArrayList<String>>(24));
-            put(Constants.THURSDAY, new ArrayList<ArrayList<String>>(24));
-            put(Constants.FRIDAY, new ArrayList<ArrayList<String>>(24));
-            put(Constants.SATURDAY, new ArrayList<ArrayList<String>>(24));
-            put(Constants.SUNDAY, new ArrayList<ArrayList<String>>(24));
-        }};
-        //iterate through timetable for event objects.
-        Set keys = calendar.keySet();
-        for (Object list: keys){
-
-
+        //creates the hashmap first, ArrayList<>(24) does not creat 24 null elements, needs to add them.
+        ArrayList<ArrayList<String>> hoursOfDay1 = new ArrayList<>(24);
+        for (int i = 0; i < 25; i++){
+            hoursOfDay1.add(i, null);
         }
+        ArrayList<ArrayList<String>> hoursOfDay2 =  (ArrayList<ArrayList<String>>) hoursOfDay1.clone();
+        ArrayList<ArrayList<String>> hoursOfDay3 =  (ArrayList<ArrayList<String>>) hoursOfDay1.clone();
+        ArrayList<ArrayList<String>> hoursOfDay4 =  (ArrayList<ArrayList<String>>) hoursOfDay1.clone();
+        ArrayList<ArrayList<String>> hoursOfDay5 =  (ArrayList<ArrayList<String>>) hoursOfDay1.clone();
+        ArrayList<ArrayList<String>> hoursOfDay6 =  (ArrayList<ArrayList<String>>) hoursOfDay1.clone();
+        ArrayList<ArrayList<String>> hoursOfDay7 =  (ArrayList<ArrayList<String>>) hoursOfDay1.clone();
 
 
+        LinkedHashMap<String, ArrayList<ArrayList<String>>> calendar = new LinkedHashMap<>()
+        {{
+            put(Constants.MONDAY, hoursOfDay1);
+            put(Constants.TUESDAY, hoursOfDay2);
+            put(Constants.WEDNESDAY, hoursOfDay3);
+            put(Constants.THURSDAY, hoursOfDay4);
+            put(Constants.FRIDAY, hoursOfDay5);
+            put(Constants.SATURDAY, hoursOfDay6);
+            put(Constants.SUNDAY, hoursOfDay7);
+        }}
+                ;
+        //iterate through timetable for event objects.
+        LinkedHashMap<String, Events[]> schedule = timetable.getCalendar();
+        Set<String> keys = schedule.keySet();
+        //iterate through weekdays.
+        for (String key : keys) {
+            Events[] list = schedule.get(key);
+            //iterate through all time intervals in a day.
+            for (int i = 0; i < 24; i++){
+                // finds an Events obj.
+                if (list[i] != null){
+                   //reconstruct Event obj
+                   ArrayList<String> newlist = list[i].reconstruct();
+                   //add the reconstructed Event obj to an appropriate location on calendar
+                   calendar.get(list[i].getDate()).set(i, newlist);
+                }
+            }
+        }
+        //iterate through taskcalendar for Task objects.
+        LinkedHashMap<String, ArrayList<Task>> taskSchedule = timetable.getTaskCalendar();
+        Set<String> taskKeys = taskSchedule.keySet();
+        //iterate through weekdays.
+        for (String key : taskKeys) {
+            ArrayList<Task> taskList = taskSchedule.get(key);
+            // finds task objs in taskList if it's not empty
+            if (!taskList.isEmpty()){
+                for (Task task : taskList) {
+                    //reconstruct task obj into string
+                    String taskString = task.reconstruct().get(0);
+                    //add tasks to calendar
+                    calendar.get(key).get(24).add(taskString);
+                }
+            }
+        }
         return calendar;
     }
 

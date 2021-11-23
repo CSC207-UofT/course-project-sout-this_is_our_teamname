@@ -13,12 +13,13 @@ import java.util.ArrayList;
  * term is which school term the timetable belongs to
  * name is the name or a short description of the Event
  */
-public abstract class Events {
+public abstract class Events implements Reconstructable {
     private final LocalTime startTime;
     private final LocalTime endTime;
     private final String date;
     private final String term;
     private String name;
+
 
     /**
      * Construct an event with time and a description.
@@ -37,6 +38,11 @@ public abstract class Events {
         this.term = term;
         this.name = "";
     }
+
+    /**
+     * reconstruct takes an Events object and returns an Arraylist based on the non-time/date attributes.
+     */
+    public abstract ArrayList<String> reconstruct();
 
     /**
      * Set the name for the event.
