@@ -19,7 +19,7 @@ public class CourseSection extends Events  implements Reconstructable {
     private final boolean waitlist;
     private final String courseName;
     private final String sectionCode;
-    private final String description;
+    private String description;
 
     /**
      * Construct a TimeTable section for the given time, location, section, professor,
@@ -51,12 +51,20 @@ public class CourseSection extends Events  implements Reconstructable {
         ArrayList<String> list = new ArrayList<>(3);
         // index 0: class name, index 1: CourseSection name, index 2: section code, index 3: description
         list.add(0, this.getClass().getSimpleName());
-        list.add(1, this.getName());
+        list.add(1, this.courseName);
         list.add(2, this.sectionCode);
         list.add(3, this.description);
         return list;
     }
 
+    /**
+     * Set the description of the CourseSection object
+     *
+     * @param info is the description to be added to the CourseSection object
+     */
+    public void setDescription(String info) {
+        this.description = info;
+    }
 
     /**
      * Get the Course code for this Course

@@ -29,7 +29,7 @@ class TimeTableManagerTest {
                 "LEC 0101", false);
         String description1 = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
                 + " session" + " at" + " SS100";
-        lecture1.setName(description1);
+        lecture1.setDescription(description1);
 
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
         activity.addToName("naptime");
