@@ -27,14 +27,27 @@ class TimeTableTest {
         LocalTime time10 = LocalTime.of(10, 0,0);
         LocalTime time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture1 = new CourseSection("MAT257", time9,time10,
-                "SS100",Constants.MONDAY,Constants.YEAR,"LEC 0101","Gauss","Arts and Science","In Person", false);
-        CourseSection lecture2 = new CourseSection("MAT157", time9,time11,
-                "SS101",Constants.MONDAY,Constants.FALL,"LEC 0101", "Descartes","Arts and Science","Online", false);
-        CourseSection lecture3 = new CourseSection("MAT137", time10,time11,
-                "SS100",Constants.MONDAY,Constants.FALL,"LEC 0101", "Alphonso","Arts and Science","Online", false);
+        CourseSection lecture1 = new CourseSection("MAT257", time9, time10, Constants.MONDAY, Constants.YEAR,
+                "LEC 0101", false);
+        String description = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
+                + " session " + " at " + "SS100";
+        lecture1.setName(description);
+
+        CourseSection lecture2 = new CourseSection("MAT157", time9,time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
+                + " session " + " at " + "SS101";
+        lecture2.setName(description2);
+
+        CourseSection lecture3 = new CourseSection("MAT137", time10,time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description3 = "LEC 0303" + " of " + "Arts and Science" + " with " + "Professor.C" + " by " + "in-person"
+                + " session " + " at " + "SS102";
+        lecture3.setName(description3);
+
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
-        Task task= new Task(time5,time6,"home",Constants.MONDAY,Constants.FALL);
+        Task task= new Task(time5,time6,Constants.MONDAY,Constants.FALL);
+        task.addToName("home");
         TimeTable table = new TimeTable();
         assertTrue(table.schedule(lecture1));
         assertFalse(table.schedule(lecture2));
@@ -51,16 +64,24 @@ class TimeTableTest {
         LocalTime time10 = LocalTime.of(10, 0,0);
         LocalTime time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture0 = new CourseSection("MAT257", time9,time10,
-                "SS100", Constants.MONDAY,Constants.YEAR,"LEC 0101","Gauss","Arts and Science","In Person", false);
-        CourseSection lecture1 = new CourseSection("MAT137", time10,time11,
-                "SS100",Constants.THURSDAY,Constants.FALL,"LEC 0101", "Alphonso","Arts and Science","Online", false);
-        Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
-        Task task= new Task(time5,time6,"home",Constants.MONDAY,Constants.FALL);
+        CourseSection lecture1 = new CourseSection("MAT257", time9, time10, Constants.MONDAY, Constants.YEAR,
+                "LEC 0101", false);
+        String description = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
+                + " session " + " at " + "SS100";
+        lecture1.setName(description);
 
+        CourseSection lecture2 = new CourseSection("MAT157", time9,time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
+                + " session " + " at " + "SS101";
+        lecture2.setName(description2);
+
+        Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
+        Task task= new Task(time5,time6,Constants.MONDAY,Constants.FALL);
+        task.addToName("home");
         TimeTable table = new TimeTable();
-        table.schedule(lecture0);
         table.schedule(lecture1);
+        table.schedule(lecture2);
         table.schedule(activity);
         table.schedule(task);
         String actual = table.toString();
@@ -112,7 +133,5 @@ class TimeTableTest {
 
         Assertions.assertTrue(table.checkCourseSection(course1));
         Assertions.assertFalse(table.checkCourseSection(course2));
-
     }
-
 }
