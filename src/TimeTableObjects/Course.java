@@ -101,7 +101,22 @@ public class Course implements Splittable<CourseSection> {
     public void addToTimeLocation(Object[] dateTimeArray, String location){
         this.timeLocation.put(dateTimeArray, location);
     }
+  
+    /**
+     * Get the Course code for this Course
+     *
+     * @return the course code
+     */
+    public String getCourseName() {
+        return this.courseName;
+    }
 
+    /**
+     * Get the section for this Course
+     *
+     * @return the section
+     */
+    public String getSectionName() {return this.sectionName; }
     /**
      * Get the times and corresponding locations for this Course
      *

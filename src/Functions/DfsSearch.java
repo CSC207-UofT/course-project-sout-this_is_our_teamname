@@ -49,25 +49,25 @@ public class DfsSearch extends Solver{
      * @return the puzzle state of the next move. Returns null if puzzle
      * cannot be solved.
      */
-    private Puzzle getNextMove(Puzzle puzzle, Set<String> seen){
+    private Puzzle getNextMove(Puzzle puzzle, Set<String> seen) {
         Puzzle[] configs = puzzle.extensions();
 
         // If there are no extensions to the puzzle, or the puzzle cannot be
         // solved.
-        if (configs.length == 0 || puzzle.fail_fast()){
+        if (configs.length == 0 || puzzle.failFast()){
             seen.add(puzzle.toString());
             return null;
         }
 
         for (Puzzle possible_move : configs){
-            if (possible_move.is_solved()){
+            if (possible_move.isSolved()){
                 return possible_move;
             }
             // If the puzzle:
             // - is not in seen
             // - the puzzle is possible
             // - is not in the path
-            else if (!seen.contains(possible_move.toString()) && !possible_move.fail_fast()
+            else if (!seen.contains(possible_move.toString()) && !possible_move.failFast()
                     && !SearchPath(possible_move)){
                 return possible_move;
             }
@@ -86,13 +86,13 @@ public class DfsSearch extends Solver{
     public ArrayList<Puzzle> solve(Puzzle puzzle, Set<String> seen) {
 
         // If the puzzle is not possible
-        if (puzzle.fail_fast()) {
+        if (puzzle.failFast()) {
             seen.add(puzzle.toString());
             return new ArrayList<>();
         }
 
         // If the puzzle is already solved
-        else if (puzzle.is_solved()){
+        else if (puzzle.isSolved()){
             this.path.add(puzzle);
             return this.path;
         }
@@ -104,7 +104,7 @@ public class DfsSearch extends Solver{
 
 
             // While the puzzle is not solved.
-            while (!next_item.is_solved()){
+            while (!next_item.isSolved()){
                 next_item = getNextMove(next_item, seen);
 
                 // If there cannot be a next move generated and the puzzle is
