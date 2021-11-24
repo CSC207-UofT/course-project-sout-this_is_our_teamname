@@ -43,8 +43,8 @@ class TimeTableManagerTest {
         TimeTable timetable = manager.getTimetable(Constants.FALL);
         timetable.schedule(lecture1);
         timetable.schedule(activity);
-        timetable.schedule(task0);
-        timetable.schedule(task1);
+        timetable.addTasks(task0);
+        timetable.addTasks(task1);
 
         // reformat fall timetable in manager
         LinkedHashMap<String, ArrayList<ArrayList<String>>> calendar = manager.reformat(timetable);
