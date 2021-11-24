@@ -31,19 +31,19 @@ class TimeTableTest {
                 "LEC 0101", false);
         String description = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
                 + " session " + " at " + "SS100";
-        lecture1.setName(description);
+        lecture1.setDescription(description);
 
         CourseSection lecture2 = new CourseSection("MAT157", time9,time11,Constants.MONDAY,Constants.FALL,
                 "LEC 0101", false);
         String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
                 + " session " + " at " + "SS101";
-        lecture2.setName(description2);
+        lecture2.setDescription(description2);
 
         CourseSection lecture3 = new CourseSection("MAT137", time10,time11,Constants.MONDAY,Constants.FALL,
                 "LEC 0101", false);
         String description3 = "LEC 0303" + " of " + "Arts and Science" + " with " + "Professor.C" + " by " + "in-person"
                 + " session " + " at " + "SS102";
-        lecture3.setName(description3);
+        lecture3.setDescription(description3);
 
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
         Task task= new Task(time5,time6,Constants.MONDAY,Constants.FALL);
@@ -68,13 +68,13 @@ class TimeTableTest {
                 "LEC 0101", false);
         String description = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
                 + " session " + " at " + "SS100";
-        lecture1.setName(description);
+        lecture1.setDescription(description);
 
         CourseSection lecture2 = new CourseSection("MAT157", time9,time11,Constants.MONDAY,Constants.FALL,
                 "LEC 0101", false);
         String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
                 + " session " + " at " + "SS101";
-        lecture2.setName(description2);
+        lecture2.setDescription(description2);
 
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
         Task task= new Task(time5,time6,Constants.MONDAY,Constants.FALL);

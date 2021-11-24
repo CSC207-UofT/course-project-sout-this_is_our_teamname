@@ -82,11 +82,11 @@ public class Course implements Splittable<CourseSection> {
             LocalTime start = ((LocalTime) time[THE_START]);
             LocalTime end = ((LocalTime) time[THE_END]);
             String date = ((String) time[THE_DATE]);
-            String description = sectionName + " of " + faculty + " with " + professor + " by " + deliveryMethod
-                    + " session " + " at " + this.timeLocation.get(time);
+            String description = sectionName + " of" + faculty + " with " + professor + " by " + deliveryMethod
+                    + " session" + " at " + this.timeLocation.get(time);
             CourseSection s = new CourseSection(this.courseName, start, end, date, this.term,
                     this.sectionName, this.wait_list);
-            s.setName(description);
+            s.setDescription(description);
             courseSectionList.add(s);
         }
         return courseSectionList;
@@ -123,13 +123,6 @@ public class Course implements Splittable<CourseSection> {
      * @return the times and corresponding locations
      */
     public HashMap<Object[], String> getTimeLocation() {return this.timeLocation;}
-
-    /**
-     * Get the section code for this Course
-     *
-     * @return the course code
-     */
-    public String getSectionName() {return this.sectionName;}
 
     /**
      * Get the term for this course

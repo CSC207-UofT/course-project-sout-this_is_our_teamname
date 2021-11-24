@@ -1,6 +1,7 @@
 package TimeTableContainers;
 
 import Helpers.Constants;
+import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
 
@@ -61,7 +62,7 @@ public class TimeTableManager {
 
     /**
      * Reformats a given timetable from a hashmap of Events objects to a hashmap of strings
-     * The keys are the weekdays. The value is an arraylist of arraylist of strings.
+     * The keys are the weekdays. The value is an arraylist of arraylists of strings.
      * The outer-layer of the arraylist contains 25 elements, index 0 to 23 corresponds to hours of the day,
      * each hour contains an arraylist of strings representing the corresponding Event object scheduled in the timetable
      * index 24 contains an arraylist of task objects which are all day events.
@@ -244,7 +245,7 @@ public class TimeTableManager {
     public ArrayList<CourseSection> returnCourses() {
         ArrayList<CourseSection> courses = new ArrayList<>();
         for (TimeTable timeTable : this.getAllTimeTables())
-            for (Events[] day : timeTable.getCalender().values()) {
+            for (Events[] day : timeTable.getCalendar().values()) {
                 for (Events hour : day) {
                     if (hour instanceof CourseSection){
                         courses.add((CourseSection) hour);

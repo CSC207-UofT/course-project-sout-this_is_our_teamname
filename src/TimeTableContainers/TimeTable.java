@@ -144,6 +144,7 @@ public class TimeTable {
         }
         return timeStrings.toString();
     }
+}
 
 //
 //    /**
@@ -165,25 +166,3 @@ public class TimeTable {
 //        }
 //
 //    }
-
-    /**
-     * Check if the given course is present in this TimeTable
-     *
-     * @param course The course to be checked
-     * @return true if the course is present, false otherwise
-     */
-    public boolean checkCourseSection(Course course) {
-        String courseCode = course.getCourseName() + course.getSectionName();
-        for (Events[] day : this.calender.values()) {
-            for (Events hour : day) {
-                if (hour instanceof CourseSection) {
-                    String sectionCode = ((CourseSection) hour).getCourseName();
-                    if (sectionCode.equals(courseCode)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-}
