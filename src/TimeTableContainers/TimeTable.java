@@ -144,4 +144,46 @@ public class TimeTable {
         }
         return timeStrings.toString();
     }
+
+//
+//    /**
+//     *
+//     *
+//     * Precondition: otherTimeTable must have
+//     *
+//     * @param otherTimeTable
+//     */
+//    public void scheduleAll(TimeTable otherTimeTable) {
+//        ArrayList<CourseSection> thisCourses = this.returnCourses();
+//        ArrayList<CourseSection> otherCourses = otherTimeTable.returnCourses();
+//        if (thisCourses.size() > otherCourses.size()){
+//            ArrayList<CourseSection> difference = new ArrayList<>(thisCourses);
+//            difference.removeAll(otherCourses);
+//        }
+//        else if (thisCourses.size() < otherCourses.size()){
+//            ArrayList<CourseSection> difference = new ArrayList<>(otherCourses);
+//        }
+//
+//    }
+
+    /**
+     * Check if the given course is present in this TimeTable
+     *
+     * @param course The course to be checked
+     * @return true if the course is present, false otherwise
+     */
+    public boolean checkCourseSection(Course course) {
+        String courseCode = course.getCourseName() + course.getSectionName();
+        for (Events[] day : this.calender.values()) {
+            for (Events hour : day) {
+                if (hour instanceof CourseSection) {
+                    String sectionCode = ((CourseSection) hour).getCourseName();
+                    if (sectionCode.equals(courseCode)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
