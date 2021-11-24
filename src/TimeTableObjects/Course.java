@@ -125,13 +125,6 @@ public class Course implements Splittable<CourseSection> {
     public HashMap<Object[], String> getTimeLocation() {return this.timeLocation;}
 
     /**
-     * Get the section code for this Course
-     *
-     * @return the course code
-     */
-    public String getSectionName() {return this.sectionName;}
-
-    /**
      * Get the term for this course
      *
      * @return the term of this course

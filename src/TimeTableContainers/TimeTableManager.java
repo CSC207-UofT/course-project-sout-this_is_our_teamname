@@ -1,6 +1,7 @@
 package TimeTableContainers;
 
 import Helpers.Constants;
+import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
 
@@ -244,7 +245,7 @@ public class TimeTableManager {
     public ArrayList<CourseSection> returnCourses() {
         ArrayList<CourseSection> courses = new ArrayList<>();
         for (TimeTable timeTable : this.getAllTimeTables())
-            for (Events[] day : timeTable.getCalender().values()) {
+            for (Events[] day : timeTable.getCalendar().values()) {
                 for (Events hour : day) {
                     if (hour instanceof CourseSection){
                         courses.add((CourseSection) hour);
