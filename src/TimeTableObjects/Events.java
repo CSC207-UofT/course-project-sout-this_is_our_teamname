@@ -11,7 +11,7 @@ public abstract class Events {
     private final String term;
     private String description;
 
-    //TODO FIX constructor parameters(and subclasses) after everything works.
+    // TODO FIX constructor parameters(and subclasses) after everything works.
     /**
      * Construct an event with time and a description.
      * @param startTime is the start time of the event.
@@ -38,7 +38,6 @@ public abstract class Events {
      * @param theDate is the weekday of the event.
      * @param term is the term of the event.
      */
-
     public Events(LocalTime startTime,
                   LocalTime endTime,
                   String theLocation,
@@ -97,7 +96,6 @@ public abstract class Events {
      * @return the string representation of the event.
      */
     public abstract String toString();
-
 
     //TODO need to rethink about how to add to description. since we should be able to change it anytime.
     /**

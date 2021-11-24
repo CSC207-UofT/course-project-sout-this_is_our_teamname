@@ -42,54 +42,28 @@ public class MakeCourseCommand implements Command, NeedsCourses {
      */
     @Override
     public void execute() {
-        boolean running = true;
+        // Clears the dataSource so it doesn't build up.
+        dataSource.clearData();
 
-        while (running){
-            // Clears the dataSource so it doesn't build up.
-            dataSource.clearData();
+        LinkedHashMap<String, ArrayList<Course>> course_data =
+                NeedsCourses.userInputs(dataSource);
+        promptUser(course_data);
 
-            LinkedHashMap<String, ArrayList<Course>> course_data =
-                    NeedsCourses.userInputs(dataSource);
-            promptUser(course_data);
+        ArrayList<CourseSection> sections = new ArrayList<>();
 
-            // Use CheckConflicts in Timetable
+        boolean hasConflict = checkConflicts(sections);
 
-            boolean isConflicted = false;
-            // Pass this to the TimeTableManager. We will fix it in Phase 2
-            // so that there is no lingering courses scheduled!
-            for (Course item : this.scheduledCourse){
-                ArrayList<CourseSection> sections = item.split();
-                for (CourseSection section: sections){
-                    // Extremely brute forced Conflict handling
-                    try {
-                        manager.schedule(section);
-                        running = false;
-                    }
-                    catch (ConflictException e) {
-                        isConflicted = true;
-                        break;
-                    }
-                }
-                // If there was a conflict, don't bother scheduling anything
-                // else!
-                if (isConflicted){
-                    break;
+        if (!hasConflict){
+            // Pass this to the TimeTableManager.
+            for (CourseSection item : sections){
+                try {
+                    manager.schedule(item);
+                } catch (ConflictException e) {
+                    System.out.println("ERROR MakeCourseCommand");
                 }
             }
-
-            // If there is a conflict
-            if (isConflicted){
-                InputChecker repeat = new InputChecker(
-                        "An conflict has occurred! Course" +
-                                " scheduled Unsuccessfully. Would you" +
-                                " like to try again? (true/false)",
-                        new isBoolean());
-
-                String repeatInput = repeat.checkCorrectness();
-                if (repeatInput.equals("false")){
-                    running = false;
-                }
-            }
+        } else {
+            System.out.println("A Conflict has occurred. Please Try Again!");
         }
     }
 
@@ -165,6 +139,26 @@ public class MakeCourseCommand implements Command, NeedsCourses {
         return null;
     }
 
+    /**
+     * Checks if there is a conflict in scheduling a course. Add courseSection
+     * to `sections` of there are no conflicts
+     * @param sections the list of courses
+     * @return true iff there is a conflict. Returns false otherwise.
+     */
+    private boolean checkConflicts(ArrayList<CourseSection> sections) {
+        for (Course course : this.scheduledCourse){
+            ArrayList<CourseSection> conflictCheckSections = course.split();
+            for (CourseSection sectionOfCourse : conflictCheckSections){
+                if (manager.checkConflicts(sectionOfCourse)){
+                    sections.add(sectionOfCourse);
+                } else {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     // ======================== Predicates Classes =============================
     /**
      * A predicate to check if the course input is correct
@@ -202,17 +196,6 @@ public class MakeCourseCommand implements Command, NeedsCourses {
                 }
                 return false;
             }
-        }
-    }
-
-    /**
-     * A predicate to check if an input is a boolean
-     */
-    private static class isBoolean extends Predicate{
-
-        @Override
-        public boolean run(String prompt) {
-            return prompt.equals("true") || prompt.equals("false");
         }
     }
 

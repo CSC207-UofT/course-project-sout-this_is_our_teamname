@@ -95,6 +95,26 @@ public class TimeTableManager {
     }
 
     /**
+     * Get an event from the user interface and schedule it to the corresponding timetable(s).
+     *
+     * @param event an Events passed from user interface
+     */
+    public boolean checkConflicts(Events event){
+        switch (event.getTerm()){
+            case Constants.FALL:
+                return timetables.get(Constants.FALL).checkConflicts(event);
+            case Constants.WINTER:
+                return timetables.get(Constants.WINTER).checkConflicts(event);
+            case Constants.YEAR:
+                return timetables.get(Constants.FALL).checkConflicts(event) &&
+                        timetables.get(Constants.WINTER).checkConflicts(event);
+            default:
+                // If the timetable is not found, then there is a conflict
+                return false;
+        }
+    }
+
+    /**
      * Returns an array of timetables with all the timetables.
      *
      * @return an array of timetables with all the timetables
