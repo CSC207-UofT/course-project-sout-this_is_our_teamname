@@ -90,19 +90,19 @@ public class MakeEventCommand implements Command {
             this.scheduledObject = toSchedule;
 
             assert toSchedule != null;
-            try {
+//            try {
                 manager.schedule(toSchedule);
                 running = false;
-            } catch (ConflictException e) {
-                InputChecker repeat = new InputChecker("An conflict has occurred! " +
-                        "Event scheduled Unsuccessfully. Would you like to " +
-                        "try again? (true/false)", new isBoolean());
-
-                String repeatInput = repeat.checkCorrectness();
-                if (repeatInput.equals("false")){
-                    running = false;
-                }
-            }
+//            } catch (ConflictException e) {
+//                InputChecker repeat = new InputChecker("An conflict has occurred! " +
+//                        "Event scheduled Unsuccessfully. Would you like to " +
+//                        "try again? (true/false)", new isBoolean());
+//
+//                String repeatInput = repeat.checkCorrectness();
+//                if (repeatInput.equals("false")){
+//                    running = false;
+//                }
+//            }
         }
 
         System.out.println("Event Scheduled");
@@ -127,8 +127,7 @@ public class MakeEventCommand implements Command {
     }
 
     /**
-     * A helper method for schedule (Events). A Factory to return the event in
-     * the correct type.
+     * A helper method for scheduling events.
      *
      * @param startTime the start time
      * @param endTime the end time
@@ -150,11 +149,13 @@ public class MakeEventCommand implements Command {
             Scanner descriptionScanner = new Scanner(System.in);
             System.out.println("Please provide a description of your activity: ");
 
-            return new Activity(startTime, endTime, theLocation, theDate,
+            return new Activity(startTime, endTime, theDate,
                     term, descriptionScanner.nextLine());
         // Creates the task
         } else if (type.equals(Constants.TASK)){
-            return new Task(startTime, endTime, theLocation, theDate, term);
+            Task task = new Task(startTime, endTime, theDate, term);
+            task.addToName(theLocation);
+            return task;
         }
 
         // ...
