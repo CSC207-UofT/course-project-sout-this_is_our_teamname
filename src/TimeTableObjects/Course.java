@@ -82,11 +82,11 @@ public class Course implements Splittable<CourseSection> {
             LocalTime start = ((LocalTime) time[THE_START]);
             LocalTime end = ((LocalTime) time[THE_END]);
             String date = ((String) time[THE_DATE]);
-            String description = sectionName + " of " + faculty + " with " + professor + " by " + deliveryMethod
-                    + " session " + " at " + this.timeLocation.get(time);
+            String description = sectionName + " of" + faculty + " with " + professor + " by " + deliveryMethod
+                    + " session" + " at " + this.timeLocation.get(time);
             CourseSection s = new CourseSection(this.courseName, start, end, date, this.term,
                     this.sectionName, this.wait_list);
-            s.setName(description);
+            s.setDescription(description);
             courseSectionList.add(s);
         }
         return courseSectionList;
