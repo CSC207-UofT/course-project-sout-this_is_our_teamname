@@ -48,7 +48,7 @@ public class CourseSection extends Events  implements Reconstructable {
      */
     @Override
     public ArrayList<String> reconstruct() {
-        ArrayList<String> list = new ArrayList<>(3);
+        ArrayList<String> list = new ArrayList<>(4);
         // index 0: class name, index 1: CourseSection name, index 2: section code, index 3: description
         list.add(0, this.getClass().getSimpleName());
         list.add(1, this.courseName);

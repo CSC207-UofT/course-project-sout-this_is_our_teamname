@@ -28,7 +28,7 @@ public class Task extends Events {
      */
     @Override
     public ArrayList<String> reconstruct() {
-        ArrayList<String> list = new ArrayList<>(3);
+        ArrayList<String> list = new ArrayList<>(1);
         // index 0: task name
         list.add(0, this.getName());
         return list;
