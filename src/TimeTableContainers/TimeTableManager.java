@@ -70,32 +70,26 @@ public class TimeTableManager {
      * @return hashmap of strings representation of the  given timetable.
      */
     public LinkedHashMap<String, ArrayList<ArrayList<String>>> reformat(TimeTable timetable) {
-        //creates the hashmap first, ArrayList<>(24) does not creat 24 null elements, needs to add them.
-        ArrayList<ArrayList<String>> hoursOfDay1 = new ArrayList<>(24);
+        //creates the value of hashmap: hoursOfDay is an empty list with 24 null elements
+        ArrayList<ArrayList<String>> hoursOfDay = new ArrayList<>(24);
         for (int i = 0; i < 25; i++) {
-            hoursOfDay1.add(i, null);
+            hoursOfDay.add(i, null);
         }
-        ArrayList<ArrayList<String>> hoursOfDay2 = (ArrayList<ArrayList<String>>) hoursOfDay1.clone();
-        ArrayList<ArrayList<String>> hoursOfDay3 = (ArrayList<ArrayList<String>>) hoursOfDay1.clone();
-        ArrayList<ArrayList<String>> hoursOfDay4 = (ArrayList<ArrayList<String>>) hoursOfDay1.clone();
-        ArrayList<ArrayList<String>> hoursOfDay5 = (ArrayList<ArrayList<String>>) hoursOfDay1.clone();
-        ArrayList<ArrayList<String>> hoursOfDay6 = (ArrayList<ArrayList<String>>) hoursOfDay1.clone();
-        ArrayList<ArrayList<String>> hoursOfDay7 = (ArrayList<ArrayList<String>>) hoursOfDay1.clone();
-
-
-        LinkedHashMap<String, ArrayList<ArrayList<String>>> calendar = new LinkedHashMap<>() {{
-            put(Constants.MONDAY, hoursOfDay1);
-            put(Constants.TUESDAY, hoursOfDay2);
-            put(Constants.WEDNESDAY, hoursOfDay3);
-            put(Constants.THURSDAY, hoursOfDay4);
-            put(Constants.FRIDAY, hoursOfDay5);
-            put(Constants.SATURDAY, hoursOfDay6);
-            put(Constants.SUNDAY, hoursOfDay7);
+        //Creates the hashmap with hoursOfDay as values (not aliased).
+        LinkedHashMap<String, ArrayList<ArrayList<String>>> stringCalendar = new LinkedHashMap<>() {{
+            put(Constants.MONDAY, new ArrayList<>(hoursOfDay));
+            put(Constants.TUESDAY, new ArrayList<>(hoursOfDay));
+            put(Constants.WEDNESDAY, new ArrayList<>(hoursOfDay));
+            put(Constants.THURSDAY, new ArrayList<>(hoursOfDay));
+            put(Constants.FRIDAY, new ArrayList<>(hoursOfDay));
+            put(Constants.SATURDAY, new ArrayList<>(hoursOfDay));
+            put(Constants.SUNDAY, new ArrayList<>(hoursOfDay));
         }};
-        reformatNonTaskEvents(timetable, calendar);
-        //iterate through taskcalendar for Task objects.
-        reformatTaskEvents(timetable, calendar);
-        return calendar;
+        //add string representations of non-Task Events objects to stringCalendar
+        reformatNonTaskEvents(timetable, stringCalendar);
+        //add string representations of Task objects to stringCalendar
+        reformatTaskEvents(timetable, stringCalendar);
+        return stringCalendar;
     }
 
     /**
@@ -140,13 +134,14 @@ public class TimeTableManager {
     private void reformatTaskEvents(TimeTable timetable, LinkedHashMap<String, ArrayList<ArrayList<String>>> calendar) {
         LinkedHashMap<String, ArrayList<Task>> taskSchedule = timetable.getTaskCalendar();
         Set<String> taskKeys = taskSchedule.keySet();
+        //iterate through taskCalendar for Task objects.
         //iterate through weekdays.
         for (String key : taskKeys) {
             ArrayList<Task> taskList = taskSchedule.get(key);
             // finds task objs in taskList if it's not empty
             if (!taskList.isEmpty()) {
-                // initalize the arraylist in the appropriate calendar date to store task strings.
-                ArrayList<String> emptyList = new ArrayList<String>();
+                // initialize the arraylist in the appropriate calendar date to store task strings.
+                ArrayList<String> emptyList = new ArrayList<>();
                 calendar.get(key).set(24, emptyList);
                 for (Task task : taskList) {
                     //reconstruct task obj into string
