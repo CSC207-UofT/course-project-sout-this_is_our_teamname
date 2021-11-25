@@ -8,6 +8,7 @@ import Commands.CreationCommands.MakeCourseCommand;
 import Commands.CreationCommands.MakeEventCommand;
 import Commands.CreationCommands.PrintHistoryCommand;
 import Commands.FunctionCommands.DownloadDataCommand;
+import Commands.FunctionCommands.SolverCommand;
 import Commands.FunctionCommands.LoadDataCommand;
 import Commands.FunctionCommands.SaveDataCommand;
 import Helpers.InvalidInputException;
@@ -35,6 +36,7 @@ public class CommandFactory {
     static final String GET_ALL_TIMETABLE = "Show TimeTables";
     static final String PRINT_HISTORY = "Get History";
     static final String LOAD_DATA = "Load Data";
+    static final String SOLVE_TIMETABLE = "Solve TimeTable";
     static final String SAVE_DATA = "Save";
     static final String DOWNLOAD_TIMETABLE = "Download Timetable";
     static final String EXIT = "Log Out";
@@ -57,6 +59,7 @@ public class CommandFactory {
                 SAVE_DATA,
                 DOWNLOAD_TIMETABLE,
                 GET_ALL_TIMETABLE,
+                SOLVE_TIMETABLE,
                 PRINT_HISTORY,
                 EXIT
         };
@@ -89,6 +92,8 @@ public class CommandFactory {
                 return new PrintHistoryCommand(controller);
             case LOAD_DATA:
                 return new LoadDataCommand(courseManager);
+            case SOLVE_TIMETABLE:
+                return new SolverCommand(courseManager, dataSource);
             case SAVE_DATA:
                 return new SaveDataCommand(courseManager);
             case DOWNLOAD_TIMETABLE:

@@ -2,11 +2,9 @@ package TimeTableContainers;
 
 import Helpers.ConflictException;
 import Helpers.Constants;
-import Helpers.InvalidInputException;
 import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.Events;
 
-// Importing HashMap class
 import java.util.*;
 
 public class TimeTableManager {
@@ -122,8 +120,9 @@ public class TimeTableManager {
     /**
      * Get all CourseSections in this TimeTable
      *
-     * @return An ArrayList of all the CourseSections in his TimeTable
+     * @return An ArrayList of all the CourseSections in this TimeTable.
      */
+    // use getter for TimeTable to remove for loop
     public ArrayList<CourseSection> returnCourses() {
         ArrayList<CourseSection> courses = new ArrayList<>();
         for (TimeTable timeTable : this.getAllTimeTables())

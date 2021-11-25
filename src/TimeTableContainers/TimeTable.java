@@ -5,7 +5,6 @@ import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.Events;
 import Helpers.Constants;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
@@ -92,26 +91,6 @@ public class TimeTable {
         return timeStrings.toString();
     }
 
-//
-//    /**
-//     *
-//     *
-//     * Precondition: otherTimeTable must have
-//     *
-//     * @param otherTimeTable
-//     */
-//    public void scheduleAll(TimeTable otherTimeTable) {
-//        ArrayList<CourseSection> thisCourses = this.returnCourses();
-//        ArrayList<CourseSection> otherCourses = otherTimeTable.returnCourses();
-//        if (thisCourses.size() > otherCourses.size()){
-//            ArrayList<CourseSection> difference = new ArrayList<>(thisCourses);
-//            difference.removeAll(otherCourses);
-//        }
-//        else if (thisCourses.size() < otherCourses.size()){
-//            ArrayList<CourseSection> difference = new ArrayList<>(otherCourses);
-//        }
-//
-//    }
 
     /**
      * Check if the given course is present in this TimeTable

@@ -4,7 +4,6 @@ import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableContainers.TimeTableManager;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -81,32 +80,7 @@ public class TimeTablePuzzle extends Puzzle {
      */
     @Override
     public boolean failFast() {
-        // Iterate through courses
-        for (HashMap<String, ArrayList<Course>> course : this.courses.values()) {
-            // Iterate through course components(LEC/TUT/PRA)
-            for (ArrayList<Course> courseComponents : course.values()) {
-                // Iterate through individual component sections(LEC0101/LEC0201)
-                for (Course courseComponent : courseComponents) {
-                    String term = courseComponent.getTerm();
-                    // Check if the component section is scheduled in the timetable
-                    if (manager.getTimetable(term).checkCourseSection(courseComponent)) {
-                        break;
-                    }
-                    ArrayList<CourseSection> split = courseComponent.split();
-                    boolean truth = false;
-                    for (CourseSection splitSection : split) {
-                        // Check conflicts, if none, break from loop
-                        if (!manager.getTimetable(term).checkConflicts(splitSection)) {
-                            break;
-                        }
-                    }
-                    return false;
-                }
-
-            }
-
-        }
-        return true;
+        return false;
     }
 
     /**
@@ -115,6 +89,7 @@ public class TimeTablePuzzle extends Puzzle {
      *
      * @return An ArrayList of all courses that can be scheduled
      */
+    // look into substitute for break statements
     @Override
     public TimeTablePuzzle[] extensions() {
         ArrayList<TimeTablePuzzle> extensions = new ArrayList<>();
@@ -165,6 +140,12 @@ public class TimeTablePuzzle extends Puzzle {
         return extensionResult;
     }
 
+    /**
+     * Make this TimeTablePuzzle identical to solved, i.e. schedule all the courses in solved that aren't
+     * in this TimeTable Puzzle.
+     *
+     * @param solved a solved TimeTablePuzzle.
+     */
     public void schedulePuzzle(TimeTablePuzzle solved) {
         ArrayList<CourseSection> thisCourses = this.manager.returnCourses();
         ArrayList<CourseSection> otherCourses = solved.getManager().returnCourses();

@@ -5,35 +5,34 @@ import Commands.NeedsCourses;
 import DataGetting.DataGetter;
 import Functions.DfsSearch;
 import Functions.Puzzle;
-import Functions.Solver;
 import Functions.TimeTablePuzzle;
-import Helpers.InputCheckers.InputChecker;
-import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 
 import java.util.*;
 
 /**
- * THIS IS AN EXAMPLE OF A COMMAND OBJECT. IT IS POORLY DESIGNED ON PURPOSE.
- * TODO PLEASE IMPLEMENT THIS CLASS @TA IF THIS MESSAGE IS STILL HERE WHEN
- * TODO YOU MARK THIS, DO NOT MARK THIS!!!
+ * A command to solve a TimeTable
  */
 public class SolverCommand implements Command, NeedsCourses {
     private final TimeTableManager manager;
-//    private final TimeTablePuzzle puzzle;
     private final DataGetter dataSource;
 
+    /**
+     * A Constructor to create the Command
+     *
+     * @param manager the TimeTableManager with the TimeTables to be scheduled
+     * @param dataSource the data source for all course information
+     */
     public SolverCommand(TimeTableManager manager, DataGetter dataSource) {
         this.manager = manager;
         this.dataSource = dataSource;
     }
 
 
-
     /**
-     * Treat this method as like the "main" (psvm method, or if __name__ ==
-     * "__main__" method in Python).
+     *Prompt the User to input the courses they'd like to schedule.
+     *
      */
     @Override
     public void execute(){
@@ -59,32 +58,42 @@ public class SolverCommand implements Command, NeedsCourses {
             // Figure out how to catch exception
         }
 
-        TimeTablePuzzle puzzle = new TimeTablePuzzle(courses, this.manager);
+        TimeTablePuzzle puzzle = new TimeTablePuzzle(courses, manager);
         DfsSearch solver = new DfsSearch();
         Set<String> seen = new HashSet<>();
         ArrayList<Puzzle> solved = solver.solve(puzzle, seen);
 
-        Scanner userTimeTableChoice = new Scanner(System.in);
-        int lastIndex = solved.size() - 1;
-
-        // Return Timetables to User
-        if (solved.get(lastIndex) instanceof TimeTablePuzzle) {
-            // TimeTable[] timeTables = ((TimeTablePuzzle) solved.get(lastIndex)).getManager().getAllTimeTables();
-            String timeTables = ((TimeTablePuzzle) solved.get(lastIndex)).getManager().toString();
-            System.out.println(timeTables + " Do you like this schedule? (true/false)");
-            if (Boolean.parseBoolean(userTimeTableChoice.nextLine())) {
-                puzzle.schedulePuzzle((TimeTablePuzzle) solved.get(lastIndex));
-            }
-        }
+       scheduleSolved(puzzle, (TimeTablePuzzle) solved.get(solved.size() - 1));
     }
 
 
+    /**
+     * A String representation of the Solver Command.
+     *
+     * @return the String representation.
+     */
     @Override
     public String toString() {
         return "Used the Solver Function";
     }
 
-    // ============================ Predicates =================================
+    // ============================= Helpers ===================================
 
+    /**
+     * Schedule all the solved courses in the solved TimeTablePuzzle to this TimeTablePuzzle
+     *
+     * @param puzzle the TimeTablePuzzle with the TimeTables to be scheduled
+     * @param solved the solved TimeTablePuzzle to be scheduled
+     */
+    public void scheduleSolved(TimeTablePuzzle puzzle, TimeTablePuzzle solved) {
 
+        Scanner userTimeTableChoice = new Scanner(System.in);
+
+        // Return Timetables to User
+        String timeTables = (solved.getManager().toString());
+        System.out.println(timeTables + " Do you like this schedule? (true/false)");
+        if (Boolean.parseBoolean(userTimeTableChoice.nextLine())) {
+            puzzle.schedulePuzzle(solved);
+        }
+    }
 }
