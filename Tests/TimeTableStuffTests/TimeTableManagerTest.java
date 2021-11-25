@@ -119,7 +119,8 @@ class TimeTableManagerTest {
         LocalTime time6 =  LocalTime.of(6,0,0);
         LocalTime time9 =  LocalTime.of(9,0,0);
         TimeTableManager manager = new TimeTableManager();
-        manager.addTimeTable("Winter 2021");
+        // With current implementation, the timetable manager will automatically create the timetable
+        // if it doesn't exist.
         Activity activity = new Activity(time6,time9,Constants.MONDAY,"Winter 2021","nap");
         assertTrue(manager.schedule(activity));
     }

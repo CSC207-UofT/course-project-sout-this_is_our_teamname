@@ -41,13 +41,13 @@ public class TimeTableManager {
         if (term.equals("Year")){
             for (String t : timetables.keySet()){
                 if (t.split("\\s+")[1].equals(year)){
-                    timetables.get(t).schedule(event);
+                    this.getTimetable(t).schedule(event);
                 }
             }
             return true;
         }
         else{
-             return(timetables.get(event.getTerm()).schedule(event));
+             return(this.getTimetable(event.getTerm()).schedule(event));
         }
 
 
