@@ -209,6 +209,8 @@ public class MakeEventCommand implements Command {
         public boolean run(String prompt) {
             return prompt.equals(Constants.FALL) ||
                     prompt.equals(Constants.WINTER);
+            //TODO Winter 2021 as input
+//            return prompt.matches("^[a-zA-Z]*[0-9]{4}$");
         }
     }
 
