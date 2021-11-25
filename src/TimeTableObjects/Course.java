@@ -1,14 +1,27 @@
 package TimeTableObjects;
 
 import TimeTableObjects.EventObjects.CourseSection;
-import TimeTableObjects.Interfaces.Sliceable;
+import TimeTableObjects.Interfaces.Splittable;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
-public class Course implements Sliceable<CourseSection> {
+//TODO rename this
+/**
+ * This is a course section (LEC/TUT/PRA) chosen by the user
+ *
+ * === Private Attributes ===
+ * sectionName is the section code of the course section
+ * professor The professor teaching this course section
+ * faculty The faculty this course belongs to
+ * deliveryMethod The delivery method for this course section
+ * timeLocation The time and corresponding location for this course
+ * term The term for this course
+ * wait_list Whether the course is waitlisted
+ * courseName is the course code
+ */
+public class Course implements Splittable<CourseSection> {
     private final String sectionName;
     private final String professor;
     private final String faculty;
@@ -57,6 +70,38 @@ public class Course implements Sliceable<CourseSection> {
         this.wait_list = wait_list;
     }
 
+    /** Split the course into section objects
+     *
+     * @return A list of section objects
+     */
+    @Override
+    public ArrayList<CourseSection> split(){
+        ArrayList<CourseSection> courseSectionList = new ArrayList<>();
+
+        for (Object[] time : this.timeLocation.keySet()) {
+            LocalTime start = ((LocalTime) time[THE_START]);
+            LocalTime end = ((LocalTime) time[THE_END]);
+            String date = ((String) time[THE_DATE]);
+            String description = sectionName + " of" + faculty + " with " + professor + " by " + deliveryMethod
+                    + " session" + " at " + this.timeLocation.get(time);
+            CourseSection s = new CourseSection(this.courseName, start, end, date, this.term,
+                    this.sectionName, this.wait_list);
+            s.setDescription(description);
+            courseSectionList.add(s);
+        }
+        return courseSectionList;
+    }
+
+    /**
+     * Add to the TimeLocation List.
+     *
+     * @param dateTimeArray the time and date to add
+     * @param location the location of the object
+     */
+    public void addToTimeLocation(Object[] dateTimeArray, String location){
+        this.timeLocation.put(dateTimeArray, location);
+    }
+  
     /**
      * Get the Course code for this Course
      *
@@ -77,26 +122,7 @@ public class Course implements Sliceable<CourseSection> {
      *
      * @return the times and corresponding locations
      */
-    public HashMap<Object[], String> getTimeLocation() {
-        return this.timeLocation;
-    }
-
-    /**
-     * Return the details of this Course
-     *
-     * @return the details of this course
-     */
-    public String toString() {
-        StringBuilder CourseString = new StringBuilder();
-        for (Object[] loc : this.timeLocation.keySet()){
-            CourseString.append(loc[THE_DATE]).append(" ");
-            CourseString.append(loc[THE_START]).append(" - ");
-            CourseString.append(loc[THE_END]).append(" at ");
-            CourseString.append(timeLocation.get(loc)).append(", ");
-        }
-        CourseString.append("with ").append(this.professor);
-        return CourseString.toString();
-    }
+    public HashMap<Object[], String> getTimeLocation() {return this.timeLocation;}
 
     /**
      * Get the term for this course
@@ -108,35 +134,22 @@ public class Course implements Sliceable<CourseSection> {
     }
 
     /**
-     * Add to the TimeLocation List.
+     * Return the details of this Course
      *
-     * @param dateTimeArray the time and date to add
-     * @param location the location of the object
+     * @return the details of this course
      */
-    public void addToTimeLocation(Object[] dateTimeArray, String location){
-        this.timeLocation.put(dateTimeArray, location);
-    }
-
-    /** Split the course into section objects
-     *
-     * @return A list of section objects
-     */
-    @Override
-    public ArrayList<CourseSection> split(){
-        ArrayList<CourseSection> courseSectionList = new ArrayList<>();
-
-        for (Object[] time : this.timeLocation.keySet()) {
-            LocalTime start = ((LocalTime) time[1]);
-            LocalTime end = ((LocalTime) time[2]);
-            String date = ((String) time[0]);
-            CourseSection s = new CourseSection((this.courseName + this.sectionName), start, end,
-                    this.timeLocation.get(time), date, this.term,
-                    this.sectionName, this.professor, this.faculty,
-                    this.deliveryMethod, this.wait_list);
-            courseSectionList.add(s);
+    public String toString() {
+        StringBuilder CourseString = new StringBuilder();
+        for (Object[] location : this.timeLocation.keySet()){
+            CourseString.append(location[THE_DATE]).append(" ");
+            CourseString.append(location[THE_START]).append(" - ");
+            CourseString.append(location[THE_END]).append(" at ");
+            CourseString.append(timeLocation.get(location)).append(", ");
         }
-        return courseSectionList;
+        CourseString.append("with ").append(this.professor);
+        return CourseString.toString();
     }
+
 
     public static void main(String[] args) {
         Object[] testDateTime1 = {"Friday",
