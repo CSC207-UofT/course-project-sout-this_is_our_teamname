@@ -1,6 +1,7 @@
 package Commands.CreationCommands;
 
 import Commands.Command;
+import Commands.NeedsCourses;
 import DataGetting.DataGetter;
 import Helpers.ConflictException;
 import TimeTableObjects.Course;
@@ -9,10 +10,8 @@ import Helpers.InputCheckers.Predicate;
 import Helpers.InputCheckers.InputChecker;
 import TimeTableContainers.TimeTableManager;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Scanner;
 
 /**
  * A command to create a Course Object.
@@ -21,7 +20,7 @@ import java.util.Scanner;
  * dataSource: The source where the data is from.
  * manager: The manager that will eventually schedule the object
  */
-public class MakeCourseCommand implements Command {
+public class MakeCourseCommand implements Command, NeedsCourses {
     private final DataGetter dataSource;
     private final TimeTableManager manager;
     private final ArrayList<Course> scheduledCourse;
@@ -49,7 +48,9 @@ public class MakeCourseCommand implements Command {
             // Clears the dataSource so it doesn't build up.
             dataSource.clearData();
 
-            userInputs();
+            LinkedHashMap<String, ArrayList<Course>> course_data =
+                    NeedsCourses.userInputs(dataSource);
+            promptUser(course_data);
 
             boolean isConflicted = false;
             // Pass this to the TimeTableManager. We will fix it in Phase 2
@@ -57,70 +58,56 @@ public class MakeCourseCommand implements Command {
             for (Course item : this.scheduledCourse){
                 ArrayList<CourseSection> sections = item.split();
                 for (CourseSection section: sections){
-                    try {
+//                    try {
+
                         manager.schedule(section);
                         running = false;
-                    }
-                    catch (ConflictException e) {
-                        isConflicted = true;
-                        break;
-                    }
-                }
-                // If there was a conflict, don't bother scheduling anything
-                // else!
-                if (isConflicted){
-                    break;
-                }
-            }
-
-            // If there is a conflict
-            if (isConflicted){
-                InputChecker repeat = new InputChecker(
-                        "An conflict has occurred! Course" +
-                                " scheduled Unsuccessfully. Would you" +
-                                " like to try again? (true/false)",
-                        new isBoolean());
-
-                String repeatInput = repeat.checkCorrectness();
-                if (repeatInput.equals("false")){
-                    running = false;
+//                    }
+//                    catch (ConflictException e) {
+//                        isConflicted = true;
+//                        break;
+//                    }
+//                }
+//                // If there was a conflict, don't bother scheduling anything
+//                // else!
+//                if (isConflicted){
+//                    break;
+//                }
+//            }
+//
+//            // If there is a conflict
+//            if (isConflicted){
+//                InputChecker repeat = new InputChecker(
+//                        "An conflict has occurred! Course" +
+//                                " scheduled Unsuccessfully. Would you" +
+//                                " like to try again? (true/false)",
+//                        new isBoolean());
+//
+//                String repeatInput = repeat.checkCorrectness();
+//                if (repeatInput.equals("false")){
+//                    running = false;
                 }
             }
         }
     }
 
     /**
-     * Prompts the user for inputs
+     * A String representation of the Command Object
+     *
+     * @return the string representation of the command object
      */
-    private void userInputs() {
-        LinkedHashMap<String, ArrayList<Course>> course_data =
-                new LinkedHashMap<>();
-
-        boolean validCourseChecker = true;
-        while (validCourseChecker){
-            // The user enters the section they want to search
-            String[] questions = {"Please Enter the course Name (eg CSC207H1. " +
-                    "Don't forget the 'H1'!!!): ", "Enter the term of the " +
-                    "course (Fall/Winter):", "Enter the year of the course " +
-                    "(2020/2021): "};
-            String[] responses = new String[3];
-            for (int i = 0; i < questions.length; i++) {
-                Scanner userChoice = new Scanner(System.in);
-                System.out.println(questions[i]);
-                responses[i] = userChoice.nextLine();
+    @Override
+    public String toString(){
+        StringBuilder temporaryString = new StringBuilder("Scheduled the item" +
+                " ");
+        if (this.hasScheduled()){
+            for (Course item : this.scheduledCourse){
+                temporaryString.append(item.getSectionName()).append(" ");
             }
-
-            try {
-                // Gets the data from the datasource
-                course_data = dataSource.getData(responses[0], responses[1],
-                        responses[2]);
-                validCourseChecker = false;
-            } catch (FileNotFoundException e) {
-                System.out.println("Course not found. Please try again!");
-            }
+            return temporaryString.toString();
+        } else {
+            return "No Course Scheduled";
         }
-
-        promptUser(course_data);
     }
 
     // ============================= Helpers ===================================
@@ -176,7 +163,7 @@ public class MakeCourseCommand implements Command {
         return null;
     }
 
-    // ============================= Predicates ================================
+    // ======================== Predicates Classes =============================
     /**
      * A predicate to check if the course input is correct
      *
@@ -227,29 +214,12 @@ public class MakeCourseCommand implements Command {
         }
     }
 
+    // ============================ Predicates =================================
     /**
      * Return if there has already been a course been scheduled
      * @return true iff there has been a course scheduled.
      */
     protected boolean hasScheduled(){
         return scheduledCourse.size() != 0;
-    }
-
-    /**
-     * A String representation of the Command Object
-     *
-     * @return the string representation of the command object
-     */
-    @Override
-    public String toString(){
-        StringBuilder sb = new StringBuilder("Scheduled the item");
-        if (this.hasScheduled()){
-            for (Course item : this.scheduledCourse){
-                sb.append(item.getSectionName());
-            }
-            return sb.toString();
-        } else {
-            return "No Course Scheduled";
-        }
     }
 }

@@ -1,10 +1,18 @@
  package TimeTableObjects.EventObjects;
 
 import TimeTableObjects.Events;
+import TimeTableObjects.Interfaces.Reconstructable;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 
-public class Activity extends Events {
+ /**
+  * Activity is an extracurricular or social Events object.
+  *
+  * === Private Attributes ===
+  * description contains all the other info about the activity
+  */
+public class Activity extends Events  implements Reconstructable {
     private final String description;
 
     /**
@@ -25,25 +33,19 @@ public class Activity extends Events {
     }
 
      /**
-      * Construct a activity with time, location and a name.
-      * @param theStartTime is the start time of the activity.
-      * @param theEndTime is the end time of the activity.
-      * @param theLocation is the location of the activity.
-      * @param theDate is the weekday of the activity.
-      * @param term is the term of the activity
-      * @param name is the name of the activity.
+      * reconstruct takes an Events object and returns an Arraylist based on the non-time/date attributes.
       */
-    public Activity(LocalTime theStartTime,
-                    LocalTime theEndTime,
-                    String theLocation,
-                    String theDate,
-                    String term,
-                    String name) {
-        super(theStartTime, theEndTime, theLocation, theDate, term);
-        this.description = name + " " + this.getDescription();
-    }
+     @Override
+     public ArrayList<String> reconstruct() {
+         ArrayList<String> list = new ArrayList<>(3);
+         // index 0: class name, index 1: Activity name, index 2: description
+         list.add(0, this.getClass().getSimpleName());
+         list.add(1, this.getName());
+         list.add(2, this.description);
+         return list;
+     }
 
-    /**
+     /**
      *  Generate the string representation of the activity.
      * @return the string representation of the activity.
      */

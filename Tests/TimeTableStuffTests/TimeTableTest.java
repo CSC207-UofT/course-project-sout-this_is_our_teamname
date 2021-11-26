@@ -1,7 +1,7 @@
 package TimeTableStuffTests;
 
 import TimeTableObjects.EventObjects.Activity;
-import TimeTableObjects.Events;
+import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.Task;
 import Helpers.Constants;
 
@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,14 +27,27 @@ class TimeTableTest {
         LocalTime time10 = LocalTime.of(10, 0,0);
         LocalTime time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture1 = new CourseSection("MAT257", time9,time10,
-                "SS100",Constants.MONDAY,Constants.YEAR,"LEC 0101","Gauss","Arts and Science","In Person", false);
-        CourseSection lecture2 = new CourseSection("MAT157", time9,time11,
-                "SS101",Constants.MONDAY,Constants.FALL,"LEC 0101", "Descartes","Arts and Science","Online", false);
-        CourseSection lecture3 = new CourseSection("MAT137", time10,time11,
-                "SS100",Constants.MONDAY,Constants.FALL,"LEC 0101", "Alphonso","Arts and Science","Online", false);
+        CourseSection lecture1 = new CourseSection("MAT257", time9, time10, Constants.MONDAY, Constants.YEAR,
+                "LEC 0101", false);
+        String description = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
+                + " session " + " at " + "SS100";
+        lecture1.setDescription(description);
+
+        CourseSection lecture2 = new CourseSection("MAT157", time9,time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
+                + " session " + " at " + "SS101";
+        lecture2.setDescription(description2);
+
+        CourseSection lecture3 = new CourseSection("MAT137", time10,time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description3 = "LEC 0303" + " of " + "Arts and Science" + " with " + "Professor.C" + " by " + "in-person"
+                + " session " + " at " + "SS102";
+        lecture3.setDescription(description3);
+
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
-        Task task= new Task(time5,time6,"home",Constants.MONDAY,Constants.FALL);
+        Task task= new Task(time5,time6,Constants.MONDAY,Constants.FALL);
+        task.addToName("home");
         TimeTable table = new TimeTable();
         assertTrue(table.schedule(lecture1));
         assertFalse(table.schedule(lecture2));
@@ -50,16 +64,24 @@ class TimeTableTest {
         LocalTime time10 = LocalTime.of(10, 0,0);
         LocalTime time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture0 = new CourseSection("MAT257", time9,time10,
-                "SS100", Constants.MONDAY,Constants.YEAR,"LEC 0101","Gauss","Arts and Science","In Person", false);
-        CourseSection lecture1 = new CourseSection("MAT137", time10,time11,
-                "SS100",Constants.THURSDAY,Constants.FALL,"LEC 0101", "Alphonso","Arts and Science","Online", false);
-        Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
-        Task task= new Task(time5,time6,"home",Constants.MONDAY,Constants.FALL);
+        CourseSection lecture1 = new CourseSection("MAT257", time9, time10, Constants.MONDAY, Constants.YEAR,
+                "LEC 0101", false);
+        String description = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
+                + " session " + " at " + "SS100";
+        lecture1.setDescription(description);
 
+        CourseSection lecture2 = new CourseSection("MAT157", time9,time11,Constants.MONDAY,Constants.FALL,
+                "LEC 0101", false);
+        String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
+                + " session " + " at " + "SS101";
+        lecture2.setDescription(description2);
+
+        Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
+        Task task= new Task(time5,time6,Constants.MONDAY,Constants.FALL);
+        task.addToName("home");
         TimeTable table = new TimeTable();
-        table.schedule(lecture0);
         table.schedule(lecture1);
+        table.schedule(lecture2);
         table.schedule(activity);
         table.schedule(task);
         String actual = table.toString();
@@ -78,51 +100,38 @@ class TimeTableTest {
     }
 
     @Test
-    public void checkCourse() {
+    public void checkCourseSection() {
         LocalTime startTime1 = LocalTime.of(9, 0, 0);
         LocalTime startTime2 = LocalTime.of(10, 0, 0);
         LocalTime endTime1 = LocalTime.of(10, 0, 0);
         LocalTime endTime2 = LocalTime.of(11, 0, 0);
 
-        CourseSection lecture1 =
-                new CourseSection("MAT257", startTime1, endTime1, "SS100",
-                        Constants.MONDAY, Constants.YEAR,
-                "LEC0101", "Gauss", "Arts and Science", "In Person", false);
-        CourseSection lecture2 =
-                new CourseSection("MAT257", startTime2, endTime2, "SS101",
-                        Constants.MONDAY, Constants.FALL, "LEC0201", "Descartes", "Arts and Science", "Online", false);
-        CourseSection lecture3 =
-                new CourseSection("MAT257", startTime2, endTime2, "SS100",
-                        Constants.TUESDAY, Constants.FALL, "PRA0101", "Alphonso", "Arts and Science", "Online", false);
-        CourseSection lecture4 =
-                new CourseSection("CSC207", startTime2, endTime2, "BA1160",
-                        Constants.WEDNESDAY, Constants.FALL,
-                "LEC0101", "Calver", "Arts and Science", "In Person", false);
-        CourseSection lecture5 =
-                new CourseSection("CSC207", startTime1, endTime1, "BA1160",
-                        Constants.WEDNESDAY, Constants.FALL,
-                "TUT0101", "TA", "Arts and Science", "Online", false);
-        CourseSection lecture6 =
-                new CourseSection("CSC236", startTime1, endTime1, "BA1160",
-                        Constants.THURSDAY, Constants.FALL,
-                "TUT0101", "TA", "Arts and Science", "Online", false);
+        Object[] date1 = {Constants.MONDAY, startTime1, endTime1};
+        Object[] date2 = {Constants.THURSDAY, startTime1, endTime1};
+        HashMap<Object[], String> testDateTimeMap1 = new HashMap<>();
+        testDateTimeMap1.put(date1, "LM161");
+        testDateTimeMap1.put(date2, "LM161");
+
+        Course course1 = new Course("MAT257", "LEC0101", "Gausss", "A&S",
+                "In Person", testDateTimeMap1, Constants.FALL, true);
+
+        Object[] date3 = {Constants.TUESDAY, startTime2, endTime2};
+        Object[] date4 = {Constants.THURSDAY, startTime2, endTime2};
+        HashMap<Object[], String> testDateTimeMap2 = new HashMap<>();
+        testDateTimeMap1.put(date3, "LM161");
+        testDateTimeMap1.put(date4, "LM161");
+
+        Course course2 = new Course("MAT257", "LEC0201", "Descartes", "A&S",
+                "Online", testDateTimeMap2, Constants.FALL, false);
 
         TimeTable table = new TimeTable();
-        table.schedule(lecture1);
-        table.schedule(lecture2);
-        table.schedule(lecture3);
-        table.schedule(lecture4);
-        table.schedule(lecture5);
-        table.schedule(lecture6);
 
-        ArrayList<Events> actual = table.checkCourse("MAT257");
+        ArrayList<CourseSection> split1 = course1.split();
+        for (CourseSection splitSection1 : split1) {
+            table.schedule(splitSection1);
+        }
 
-        ArrayList<Events> expected = new ArrayList<>();
-        expected.add(lecture1);
-        expected.add(lecture2);
-        expected.add(lecture3);
-        Assertions.assertEquals(expected, actual);
-
+        Assertions.assertTrue(table.checkCourseSection(course1));
+        Assertions.assertFalse(table.checkCourseSection(course2));
     }
-
 }
