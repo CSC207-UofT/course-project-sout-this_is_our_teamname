@@ -4,7 +4,6 @@ import Commands.Command;
 import Commands.NeedsCourses;
 import DataGetting.DataGetter;
 import Functions.DfsSearch;
-import Functions.Puzzle;
 import Functions.TimeTablePuzzle;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
@@ -13,6 +12,9 @@ import java.util.*;
 
 /**
  * A command to solve a TimeTable
+ * === Private Attributes ===
+ *  dataSource: The source where the data is from.
+ *  manager: The manager that will eventually schedule given courses.
  */
 public class SolverCommand implements Command, NeedsCourses {
     private final TimeTableManager manager;
@@ -60,10 +62,10 @@ public class SolverCommand implements Command, NeedsCourses {
 
         TimeTablePuzzle puzzle = new TimeTablePuzzle(courses, manager);
         DfsSearch solver = new DfsSearch();
-        Set<String> seen = new HashSet<>();
-        ArrayList<Puzzle> solved = solver.solve(puzzle, seen);
+        Set<TimeTablePuzzle> seen = new HashSet<>();
+        ArrayList<TimeTablePuzzle> solved = solver.solve(puzzle, seen);
 
-       scheduleSolved(puzzle, (TimeTablePuzzle) solved.get(solved.size() - 1));
+       scheduleSolved(puzzle, solved.get(solved.size() - 1));
     }
 
 
@@ -76,6 +78,7 @@ public class SolverCommand implements Command, NeedsCourses {
     public String toString() {
         return "Used the Solver Function";
     }
+
 
     // ============================= Helpers ===================================
 

@@ -1,6 +1,7 @@
 package TimeTableContainers;
 
 import Helpers.Constants;
+import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
@@ -239,16 +240,20 @@ public class TimeTableManager {
 
     /**
      * Get all CourseSections in this TimeTable
+     * Precondition: All CourseSections in this TimeTable occur between the hours of 07:00 to 22:00 on weekdays.
      *
-     * @return An ArrayList of all the CourseSections in his TimeTable
+     * @return An ArrayList of all the CourseSections in this TimeTable
      */
     public ArrayList<CourseSection> returnCourses() {
         ArrayList<CourseSection> courses = new ArrayList<>();
         for (TimeTable timeTable : this.getAllTimeTables())
-            for (Events[] day : timeTable.getCalendar().values()) {
-                for (Events hour : day) {
-                    if (hour instanceof CourseSection){
-                        courses.add((CourseSection) hour);
+            for (String day: timeTable.getCalendar().keySet()) {
+                if (!Objects.equals(day, Constants.SATURDAY) && !Objects.equals(day, Constants.SUNDAY)) {
+                    for (int hour=7; hour<23; hour++) {
+                        Events hourEvent = timeTable.getCalendar().get(day)[hour];
+                        if (hourEvent instanceof CourseSection) {
+                            courses.add((CourseSection) hourEvent);
+                        }
                     }
                 }
             }
