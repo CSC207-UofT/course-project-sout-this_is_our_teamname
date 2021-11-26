@@ -136,5 +136,10 @@ public class CommandFactory {
         this.dataSource = theDataSource;
     }
 
+    /**
+     * Sets the AllowedFunctions to connect to
+     *
+     * @param newAllowedFunction the AllowedFunction to connect to
+     */
     public void setAllowedFunctions(String[] newAllowedFunction) {this.allowedFunctions = newAllowedFunction;}
 }

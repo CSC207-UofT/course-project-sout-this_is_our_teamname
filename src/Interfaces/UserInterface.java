@@ -34,7 +34,7 @@ public class UserInterface {
     /**
      * Runs the UserInterface.
      *
-     * The IOException will be raised if the given file, datasource.json, is not found.
+     * The IOException will be raised if the given file, datasource.txt, is not found.
      */
     public void run() throws IOException {
         // As long as the program is running
@@ -46,9 +46,9 @@ public class UserInterface {
         this.operator.SetDatasource(theFactory, this.read());
 
         // Ban the functions banned by operator.
-        ArrayList<String> banFunctions = this.operator.getBannedfunctions();
+        ArrayList<String> banFunctions = this.operator.getBannedFunctions();
         for (String x : banFunctions) {
-            this.operator.banfunction(x, theFactory);
+            this.operator.banFunction(x, theFactory);
         }
 
         while (running) {
@@ -70,15 +70,16 @@ public class UserInterface {
 
 
     /**
-     * Read  the datasource.json file.
+     * Read the datasource.txt file.
      *
-     * The IOException will be raised if the given file, datasource.json, is not found.
+     * The IOException will be raised if the given file is not found.
      *
-     * @return A string in datasource.json.
+     * @return A string in datasource.txt.
      */
     private String read() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("src/Interfaces/datasource.json"));
+        // Read the file.
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("src/Interfaces/datasource.txt"));
         String s;
         // Check whether the datasource.json is empty.
         if ((s = bufferedReader.readLine()) != null) {

@@ -31,7 +31,7 @@ public class InterfaceFacade {
 
     /**
      * Runs the InterfaceFacade.
-     * The IOException will be raised if the given file, datasource.json, is not found.
+     * The IOException will be raised if the given file, datasource.txt, is not found.
      */
     public void run() throws IOException {
         // As long as the program is running
@@ -52,7 +52,7 @@ public class InterfaceFacade {
             // Check whether the user wants to exit the program, if user inputs "true", the while loop will stop.
             InputChecker requestContinue = new InputChecker("Do you want to exit? " +
                     "(true/false):",
-                    new isValidContinue());
+                    new isValidBoolean());
             String whetherContinue = requestContinue.checkCorrectness();
             if (whetherContinue.equals("true")){
                 running = false;}
@@ -64,7 +64,7 @@ public class InterfaceFacade {
      * A InterfaceFacade. The main method of the program and the one that the
      * user interacts with.
      *
-     *The IOException will be raised if the given file, datasource.json, is not found.
+     *The IOException will be raised if the given file, datasource.txt, is not found.
      *
      * @param args The arguments
      */
@@ -93,11 +93,11 @@ public class InterfaceFacade {
 
 
     /**
-     * A predicate to determine if the input is valid
+     * A predicate to determine if the input is valid boolean.
      */
-    private static class isValidContinue extends Predicate {
+    private static class isValidBoolean extends Predicate {
         private final String[] allowed;
-        public isValidContinue(){
+        public isValidBoolean(){
             this.allowed = new String[]{"true", "false"};
         }
         @Override
