@@ -23,8 +23,6 @@ public class OperatorInterface {
     private final DatabaseController control;
     private String datasource;
 
-
-
     /**
      * Constructor.
      * Set control and datasource.
@@ -32,9 +30,7 @@ public class OperatorInterface {
     public OperatorInterface(DatabaseController controller) {
         this.control = controller;
         this.datasource = null;
-
     }
-
 
     /**
      * Set the datasource to the CommandFactory according to the operator's choice.
@@ -85,9 +81,9 @@ public class OperatorInterface {
             }
         }
 
-        // Update the allowedFunction in the CommandFactory
+        // Save the new allowedFunction.
         this.downloadFunction(newFunctions);
-
+        // Update the allowedFunction in the CommandFactory
         commandFactory.setAllowedFunctions(newFunctions);
         this.control.setFactory(commandFactory);
     }
@@ -97,7 +93,6 @@ public class OperatorInterface {
      * Runs the OperatorInterface
      */
     public void run() throws IOException {
-
         // Checks which datasource does the operator want to set.
         InputChecker requestDatasource = new InputChecker("Which datasource do you want to set (CSVScraper/WebScraper/n (if you do not want to set)): ",
                 new isValidDatasource());
@@ -130,7 +125,6 @@ public class OperatorInterface {
                 String requested = requestCommand.checkCorrectness();
 
                 // Ban the function
-                //this.bannedFunctions.add(requested);
                 this.banFunction(requested, theFactory);
 
                 // Checks if the operator wants to ban another function.
@@ -175,7 +169,7 @@ public class OperatorInterface {
 
 
     /**
-     * Save the name of the selected function in the file, functions.txt.
+     * Save the new list if allowedFunctions in the file, functions.txt.
      *
      * @param function the number of the function banned by operator.
      * @exception IOException throws when the file, functions.txt, is not found.

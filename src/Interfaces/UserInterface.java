@@ -6,7 +6,6 @@ import InterfaceAdaptors.Presenter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 
 
 /**
@@ -48,20 +47,9 @@ public class UserInterface {
         CommandFactory theFactory = new CommandFactory(control);
         this.operator.SetDatasource(theFactory, this.readDatasource());
 
-        //TODO: the banFunction will be fixed later
-
-        //ArrayList<String> banFunctions = this.operator.getBannedFunctions();
-        //theFactory.setAllowedFunctions();
-        //String[] banFunctions = this.readFunctions();
-        //theFactory.setAllowedFunctions(banFunctions);
-        //this.control.setFactory(theFactory);
-        //for (int i = 0; i < banFunctions.length(); i++) {
-        //char function = banFunctions.charAt(i);
-        // Convert the char to String
-        //String stringFunction = String.valueOf(function);
-
-        // this.operator.banFunction(stringFunction, theFactory);
-        //}
+        // Set the AllowedFunction in the file.
+        String[] banFunctions = this.readFunctions();
+        theFactory.setAllowedFunctions(banFunctions);
 
         while (running) {
             System.out.println("\nCurrent datasource: " + this.operator.getDatasource());
@@ -106,7 +94,7 @@ public class UserInterface {
      *
      * The IOException will be raised if the given file is not found.
      *
-     * @return A string in datasource.txt.
+     * @return the Array of allowedFunctions.
      */
     private String[] readFunctions() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
@@ -117,17 +105,10 @@ public class UserInterface {
         if ((s = bufferedReader.readLine()) != null) {
             stringBuilder.append(s.trim());
         }
+        // rawString is the String contains "[" and "]", need to delete them first and then convert the String into Array
         String rawString = stringBuilder.toString();
-        StringBuilder newString = new StringBuilder();
-        String deletedString = "[]";
-        char deletedChar1 = deletedString.charAt(0);
-        char deletedChar2 = deletedString.charAt(1);
-        for (int i = 0; i < rawString.length(); i ++) {
-            if (rawString.charAt(i) != deletedChar1 & rawString.charAt(i) != deletedChar2){
-                newString.append(rawString.charAt(i));
-            }
-        }
-        System.out.println(Arrays.toString(newString.toString().trim().split(",")));
-        return newString.toString().split(",");
+        String newString = rawString.substring(1, rawString.length() - 1);
+
+        return newString.split(",\\s+");
     }
 }
