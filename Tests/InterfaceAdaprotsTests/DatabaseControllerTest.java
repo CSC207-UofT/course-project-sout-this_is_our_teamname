@@ -1,8 +1,8 @@
-package ControllersTests;
+package InterfaceAdaprotsTests;
 
 import Commands.Command;
-import Controllers.CommandFactory;
-import Controllers.DatabaseController;
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.DatabaseController;
 import DataGetting.CSVScraper;
 import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
