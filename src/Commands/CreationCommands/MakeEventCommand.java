@@ -138,8 +138,7 @@ public class MakeEventCommand implements Command {
     }
 
     /**
-     * A helper method for schedule (Events). A Factory to return the event in
-     * the correct type.
+     * A helper method for scheduling events.
      *
      * @param startTime the start time
      * @param endTime the end time
@@ -149,25 +148,29 @@ public class MakeEventCommand implements Command {
      * @param type the type of object
      * @return event "cast" to the correct type.
      */
-    private Events getEventObject(LocalTime startTime, LocalTime endTime,
-                                  String theLocation, String theDate,
-                                  String term, String type) {
+    private Events getCorrectTimeTableObject(LocalTime startTime,
+                                             LocalTime endTime,
+                                             String theLocation,
+                                             String theDate,
+                                             String term,
+                                             String type) {
         // Creates the Activity
         if (type.equals(Constants.ACTIVITY)){
             // Asks the user for the description of the object
             Scanner descriptionScanner = new Scanner(System.in);
             System.out.println("Please provide a description of your activity: ");
 
-            return new Activity(startTime, endTime, theLocation, theDate,
+            return new Activity(startTime, endTime, theDate,
                     term, descriptionScanner.nextLine());
-        // Creates the task
+            // Creates the task
         } else if (type.equals(Constants.TASK)){
-            return new Task(startTime, endTime, theLocation, theDate, term);
+            Task task = new Task(startTime, endTime, theDate, term);
+            task.addToName(theLocation);
+            return task;
         }
 
         // ...
         // Add more types of events here!
-
         else {
             return null;
         }
