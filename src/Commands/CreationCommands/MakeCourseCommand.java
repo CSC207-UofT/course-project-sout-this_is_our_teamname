@@ -56,11 +56,7 @@ public class MakeCourseCommand implements Command, NeedsCourses {
         if (!hasConflict){
             // Pass this to the TimeTableManager.
             for (CourseSection item : sections){
-                try {
-                    manager.schedule(item);
-                } catch (ConflictException e) {
-                    System.out.println("ERROR MakeCourseCommand");
-                }
+                manager.schedule(item);
             }
         } else {
             System.out.println("A Conflict has occurred. Please Try Again!");
