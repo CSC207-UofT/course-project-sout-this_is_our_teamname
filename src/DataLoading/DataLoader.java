@@ -24,7 +24,6 @@ import java.util.Objects;
  * csv file.
  */
 public class DataLoader {
-
     private static final String[] days = {Constants.MONDAY, Constants.TUESDAY, Constants.WEDNESDAY,
             Constants.THURSDAY, Constants.FRIDAY, Constants.SATURDAY, Constants.SUNDAY};
 

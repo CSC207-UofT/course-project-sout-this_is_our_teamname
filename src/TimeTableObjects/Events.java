@@ -1,26 +1,17 @@
 package TimeTableObjects;
-import TimeTableObjects.Interfaces.Reconstructable;
-
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 /**
  * Events class is a class that can be stored in a TimeTable class.
- * === Private Attributes ===
- * startTime is the starting time of the event
- * endTime is the ending time of the event
- * date is the weekday of the event
- * term is which school term the timetable belongs to
- * name is the name or a short description of the Event
  */
-public abstract class Events implements Reconstructable {
+public abstract class Events {
     private final LocalTime startTime;
     private final LocalTime endTime;
     private final String date;
     private final String term;
-    private String name;
+    private String description;
 
-
+    // TODO FIX constructor parameters(and subclasses) after everything works.
     /**
      * Construct an event with time and a description.
      * @param startTime is the start time of the event.
@@ -36,25 +27,28 @@ public abstract class Events implements Reconstructable {
         this.endTime = endTime;
         this.date = theDate;
         this.term = term;
-        this.name = "";
+        this.description = "";
     }
 
     /**
-     * reconstruct takes an Events object and returns an Arraylist based on the non-time/date attributes.
+     * Construct an event with time, location and a description.
+     * @param startTime is the start time of the event.
+     * @param endTime is the end time of the event.
+     * @param theLocation is the location of the event.
+     * @param theDate is the weekday of the event.
+     * @param term is the term of the event.
      */
-    public abstract ArrayList<String> reconstruct();
-
-    /**
-     * Set the name for the event.
-     * @param name is going to be the name of the Events object
-     */
-    public void setName(String name) {this.name = name;}
-
-    /**
-     * Add to the name of the event
-     * @param info is going to be added to the name of the Events object
-     */
-    public void addToName(String info) {this.name += info;}
+    public Events(LocalTime startTime,
+                  LocalTime endTime,
+                  String theLocation,
+                  String theDate,
+                  String term) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.date = theDate;
+        this.term = term;
+        this.description = "at " + theLocation;
+    }
 
     /**
      * Get the start time for the event
@@ -84,17 +78,30 @@ public abstract class Events implements Reconstructable {
      * Get the description for the event
      * @return  description
      */
-    public String getName() {return name;}
+    public String getDescription() {
+        return description;
+    }
 
     /**
      * Get the term for this event
+     *
      * @return term
      */
-    public String getTerm() {return term;}
+    public String getTerm() {
+        return term;
+    }
 
     /**
      * Generate the String representation of the event.
      * @return the string representation of the event.
      */
     public abstract String toString();
+
+    //TODO need to rethink about how to add to description. since we should be able to change it anytime.
+    /**
+     * Change description for the event. (Currently an one time deal)
+     */
+    public void addDescription(String info) {
+        this.description = info;
+    }
 }

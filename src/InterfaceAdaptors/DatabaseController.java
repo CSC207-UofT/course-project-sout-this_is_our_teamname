@@ -1,10 +1,9 @@
-package Controllers;
+package InterfaceAdaptors;
 import Commands.Command;
 import Commands.FunctionCommands.ExitProgramCommand;
-import Helpers.InputCheckers.InputChecker;
-import Helpers.InputCheckers.Predicate;
 import Helpers.InvalidInputException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Stack;
@@ -33,47 +32,6 @@ public class DatabaseController {
     }
 
     /**
-     * Runs and Prompts the user with what they want to do
-     *
-     * @return true iff the program has been able to execute the command
-     * correctly
-     */
-    public boolean run(){
-        // A brute forced implementation of conflict checker with bugs. Needs
-        // to be fixed
-        boolean exitProgramCommand = true;
-
-        boolean running = true;
-        while (running){
-            // Get a hashmap of all functions, with numbered keys to
-            // enumerate the choices
-            LinkedHashMap<String, String> NumberedKeysToAllowedFunctions =
-                    hashMapIt(this.Factory.getAllowedFunctions());
-
-            // Print out enumerated lists
-            for (String num : NumberedKeysToAllowedFunctions.keySet()){
-                System.out.println(num + ": " + NumberedKeysToAllowedFunctions.get(num));
-            }
-
-            InputChecker requestCommand = new InputChecker("Please select a " +
-                    "command to execute", new isValidCommand(NumberedKeysToAllowedFunctions));
-            String requested = requestCommand.checkCorrectness();
-
-            try {
-                // True iff the command has been able to run the allowed
-                // function
-                exitProgramCommand = runCommand(NumberedKeysToAllowedFunctions.get(requested));
-                running = false;
-            } catch (InvalidInputException e){
-                System.out.println("Command not allowed. Please try again!");
-            }
-        }
-
-        // Indicates to UI to exit the program.
-        return exitProgramCommand;
-    }
-
-    /**
      * Sets the command into the Command History.
      *
      * The command history will act as a history of all the commands in order
@@ -99,23 +57,6 @@ public class DatabaseController {
         // invalid
         executeCommand(theCommand);
         return true;
-    }
-
-    // ============================== Helpers ==================================
-    /**
-     * Returns a hashmap of the entries in the string array commandList with
-     * corresponding integer values from least to greatest.
-     *
-     * @param commandList the array of strings
-     * @return a hashmap of items from strings as values and ascending
-     * integers as keys
-     */
-    private LinkedHashMap<String, String> hashMapIt(String[] commandList){
-        LinkedHashMap<String, String> enumerateToCommandMap = new LinkedHashMap<>();
-        for (int i = 0; i < commandList.length; i++){
-            enumerateToCommandMap.put(String.valueOf(i), commandList[i]);
-        }
-        return enumerateToCommandMap;
     }
 
     // ===================== Command Pattern Infrastructure ====================
@@ -150,19 +91,19 @@ public class DatabaseController {
         return CommandHistory;
     }
 
-    // ============================ Predicates =================================
     /**
-     * A predicate to determine if the command is a valid input
+     * Returns a hashmap of the entries in the string array commandList with
+     * corresponding integer values from least to greatest.
+     *
+     * @return a hashmap of items from strings as values and ascending
+     * integers as keys
      */
-    private static class isValidCommand extends Predicate {
-        private final HashMap<String, String> allowed;
-        public isValidCommand(HashMap<String, String> values){
-            this.allowed = values;
+    public LinkedHashMap<String, String> getAllowedFunctions(){
+        String[] commandList = this.Factory.getAllowedFunctions();
+        LinkedHashMap<String, String> enumerateToCommandMap = new LinkedHashMap<>();
+        for (int i = 0; i < commandList.length; i++){
+            enumerateToCommandMap.put(String.valueOf(i), commandList[i]);
         }
-
-        @Override
-        public boolean run(String prompt) {
-            return this.allowed.containsKey(prompt);
-        }
+        return enumerateToCommandMap;
     }
 }

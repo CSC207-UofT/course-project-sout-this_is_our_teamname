@@ -5,7 +5,7 @@
 
 ## Collaborators
 * `TimeTableManger`
-* `Controllers`
+* `InterfaceAdaptors`
 
 ## Responsibilities
 * Responsible for holding the information from the user and passing it to 
