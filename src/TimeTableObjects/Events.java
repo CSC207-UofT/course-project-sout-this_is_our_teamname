@@ -46,6 +46,16 @@ public abstract class Events implements Reconstructable {
     public abstract ArrayList<String> reconstruct();
 
     /**
+     * If the Events object has an empty string for name attribute,
+     * then set name to: "Unnamed" + Activity/Task/CourseSection
+     */
+    public void unnamed(){
+        if (this.getName().isEmpty()){
+            this.setName("Unnamed" + this.getClass().getSimpleName());
+        }
+    }
+
+    /**
      * Set the name for the event.
      *
      * @param name is going to be the name of the Events object
@@ -91,9 +101,9 @@ public abstract class Events implements Reconstructable {
     }
 
     /**
-     * Get the description for the event
+     * Get the name for the event,note: task's name will be name + " at " + task's location
      *
-     * @return description
+     * @return name
      */
     public String getName() {
         return name;
