@@ -2,6 +2,7 @@ package InterfaceAdaptors;
 import Commands.Command;
 import Commands.FunctionCommands.ExitProgramCommand;
 import Helpers.InvalidInputException;
+import TimeTableContainers.TimeTableManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,6 +82,14 @@ public class DatabaseController {
      */
     public void setFactory(CommandFactory theFactory){
         this.Factory = theFactory;
+    }
+
+    /**
+     * Set the manager to the factory
+     *
+     */
+    public void setManager(){
+        this.Factory.setManager(new TimeTableManager());
     }
 
     /**

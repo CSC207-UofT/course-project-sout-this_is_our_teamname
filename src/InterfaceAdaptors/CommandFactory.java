@@ -28,7 +28,7 @@ public class CommandFactory {
     private TimeTableManager courseManager;
     private CourseGetter dataSource;
     private final DatabaseController controller;
-    private final String[] allowedFunctions;
+    private String[] allowedFunctions;
 
     // Commands
     static final String SCHEDULE_COURSE = "Schedule Course";
@@ -135,4 +135,11 @@ public class CommandFactory {
     public void setDataSource(CourseGetter theDataSource){
         this.dataSource = theDataSource;
     }
+
+    /**
+     * Sets the AllowedFunctions to connect to
+     *
+     * @param newAllowedFunction the AllowedFunction to connect to
+     */
+    public void setAllowedFunctions(String[] newAllowedFunction) {this.allowedFunctions = newAllowedFunction;}
 }
