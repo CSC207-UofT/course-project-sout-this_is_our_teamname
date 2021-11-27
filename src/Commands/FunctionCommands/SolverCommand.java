@@ -2,13 +2,10 @@ package Commands.FunctionCommands;
 
 import Commands.Command;
 import Commands.NeedsCourses;
-import DataGetting.DataGetter;
+import DataGetting.CourseGetter;
 import Functions.DfsSearch;
 import Functions.Puzzle;
-import Functions.Solver;
 import Functions.TimeTablePuzzle;
-import Helpers.InputCheckers.InputChecker;
-import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 
@@ -22,9 +19,9 @@ import java.util.*;
 public class SolverCommand implements Command, NeedsCourses {
     private final TimeTableManager manager;
 //    private final TimeTablePuzzle puzzle;
-    private final DataGetter dataSource;
+    private final CourseGetter dataSource;
 
-    public SolverCommand(TimeTableManager manager, DataGetter dataSource) {
+    public SolverCommand(TimeTableManager manager, CourseGetter dataSource) {
         this.manager = manager;
         this.dataSource = dataSource;
     }

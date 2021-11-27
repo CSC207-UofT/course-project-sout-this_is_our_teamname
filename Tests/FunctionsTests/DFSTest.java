@@ -1,7 +1,7 @@
 package FunctionsTests;
 
-import Controllers.CommandFactory;
-import Controllers.DatabaseController;
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.DatabaseController;
 import Functions.DfsSearch;
 import Functions.Puzzle;
 import Functions.TimeTablePuzzle;
@@ -105,7 +105,7 @@ public class DFSTest {
         HashSet<String> seen = new HashSet<>();
         ArrayList<Puzzle> solved = solver.solve(puzzle, seen);
         int lastIndex = solved.size() - 1;
-        Assertions.assertFalse(solved.get(lastIndex) == puzzle);
+        Assertions.assertNotSame(solved.get(lastIndex), puzzle);
 
     }
 }

@@ -70,11 +70,7 @@ public class MakeEventCommand implements Command {
         }
 
         if (!scheduleIt){
-            try {
-                manager.schedule(toSchedule);
-            } catch (ConflictException e) {
-                System.out.println("ERROR MakeEventCommand");
-            }
+            manager.schedule(toSchedule);
         }
 
         System.out.println("Event Scheduled");
@@ -148,12 +144,12 @@ public class MakeEventCommand implements Command {
      * @param type the type of object
      * @return event "cast" to the correct type.
      */
-    private Events getCorrectTimeTableObject(LocalTime startTime,
-                                             LocalTime endTime,
-                                             String theLocation,
-                                             String theDate,
-                                             String term,
-                                             String type) {
+    private Events getEventObject(LocalTime startTime,
+                                  LocalTime endTime,
+                                  String theLocation,
+                                  String theDate,
+                                  String term,
+                                  String type) {
         // Creates the Activity
         if (type.equals(Constants.ACTIVITY)){
             // Asks the user for the description of the object
