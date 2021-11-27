@@ -27,6 +27,7 @@ public class Presenter {
 
         boolean running = true;
         while (running){
+            this.control.setManager();
             // Get a hashmap of all functions, with numbered keys to
             // enumerate the choices
             LinkedHashMap<String, String> NumberedKeysToAllowedFunctions =
@@ -56,6 +57,17 @@ public class Presenter {
         // Indicates to UI to exit the program.
         return exitProgramCommand;
     }
+
+    // ============================ Helper Methods =================================
+    /**
+     * Get the controller.
+     *
+     * @return the DatabaseController object.
+     */
+    public DatabaseController getController() {
+        return this.control;
+    }
+
 
     // ============================ Predicates =================================
     /**

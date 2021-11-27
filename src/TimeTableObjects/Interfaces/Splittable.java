@@ -10,6 +10,6 @@ import java.util.ArrayList;
  *
  * @param <T> A section
  */
-public interface Sliceable<T> {
+public interface Splittable<T> {
     ArrayList<CourseSection> split();
 }

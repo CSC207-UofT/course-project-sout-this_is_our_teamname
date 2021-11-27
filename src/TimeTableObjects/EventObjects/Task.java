@@ -3,10 +3,14 @@ package TimeTableObjects.EventObjects;
 import TimeTableObjects.Events;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 
+/**
+ * Task is a reminder Events object.
+ */
 public class Task extends Events {
     /**
-     * Construct a task with time and a description.
+     * Construct a task with time, location and a description.
      * @param theStartTime is the start time of the task.
      * @param theEndTime is the end time of the task.
      * @param theDate is the weekday of the task.
@@ -20,19 +24,14 @@ public class Task extends Events {
     }
 
     /**
-     * Construct a task with time, location and a description.
-     * @param theStartTime is the start time of the task.
-     * @param theEndTime is the end time of the task.
-     * @param theLocation is the location of the task.
-     * @param theDate is the weekday of the task.
-     * @param term is the term of the task
+     * reconstruct takes an Events object and returns an Arraylist based on the non-time/date attributes.
      */
-    public Task(LocalTime theStartTime,
-                LocalTime theEndTime,
-                String theLocation,
-                String theDate,
-                String term) {
-        super(theStartTime, theEndTime, theLocation, theDate, term);
+    @Override
+    public ArrayList<String> reconstruct() {
+        ArrayList<String> list = new ArrayList<>(1);
+        // index 0: task name
+        list.add(0, this.getName());
+        return list;
     }
 
     /**
@@ -41,11 +40,11 @@ public class Task extends Events {
      */
     @Override
     public String toString() {
-        if (this.getDescription() == null) {
+        if (this.getName() == null) {
             return "N/A";
         }
         else{
-            return this.getDescription();
+            return this.getName();
         }
     }
 }

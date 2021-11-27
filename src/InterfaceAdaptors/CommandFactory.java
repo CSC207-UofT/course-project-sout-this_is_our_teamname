@@ -1,5 +1,6 @@
 package InterfaceAdaptors;
 
+import Commands.FunctionCommands.SolverCommand;
 import Commands.FunctionCommands.ExitProgramCommand;
 import DataGetting.CourseGetter;
 import Commands.Command;
@@ -27,12 +28,13 @@ public class CommandFactory {
     private TimeTableManager courseManager;
     private CourseGetter dataSource;
     private final DatabaseController controller;
-    private final String[] allowedFunctions;
+    private String[] allowedFunctions;
 
     // Commands
     static final String SCHEDULE_COURSE = "Schedule Course";
     static final String SCHEDULE_EVENT = "Schedule Event";
     static final String GET_ALL_TIMETABLE = "Show TimeTables";
+    static final String SOLVE_TIMETABLE = "Solve Timetable";
     static final String PRINT_HISTORY = "Get History";
     static final String LOAD_DATA = "Load Data";
     static final String SAVE_DATA = "Save";
@@ -57,6 +59,7 @@ public class CommandFactory {
                 SAVE_DATA,
                 DOWNLOAD_TIMETABLE,
                 GET_ALL_TIMETABLE,
+                SOLVE_TIMETABLE,
                 PRINT_HISTORY,
                 EXIT
         };
@@ -85,6 +88,8 @@ public class CommandFactory {
                 return new MakeEventCommand(courseManager);
             case GET_ALL_TIMETABLE:
                 return new GetAllTimeTablesCommand(courseManager);
+            case SOLVE_TIMETABLE:
+                return new SolverCommand(courseManager, dataSource);
             case PRINT_HISTORY:
                 return new PrintHistoryCommand(controller);
             case LOAD_DATA:
@@ -130,4 +135,11 @@ public class CommandFactory {
     public void setDataSource(CourseGetter theDataSource){
         this.dataSource = theDataSource;
     }
+
+    /**
+     * Sets the AllowedFunctions to connect to
+     *
+     * @param newAllowedFunction the AllowedFunction to connect to
+     */
+    public void setAllowedFunctions(String[] newAllowedFunction) {this.allowedFunctions = newAllowedFunction;}
 }
