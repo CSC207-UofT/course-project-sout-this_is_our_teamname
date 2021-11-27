@@ -29,7 +29,7 @@ public class CourseSection extends Events  implements Reconstructable {
      * @param startTime The start time of this section.
      * @param endTime The end time of the section
      * @param theDate The date of the section
-     * @param term The term for this course
+     * @param term The term and year for this course e.g. Fall 2021
      * @param sectionCode The code for this course
      * @param waitlist Whether the course is waitlisted
      */

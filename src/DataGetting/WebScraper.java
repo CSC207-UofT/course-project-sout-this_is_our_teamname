@@ -51,7 +51,7 @@ public class WebScraper extends DataGetter{
             throw new FileNotFoundException();
         }
 
-        filterData(doc);
+        filterData(doc, theYear);
     }
 
     // ============================== Helpers ==================================
@@ -89,7 +89,7 @@ public class WebScraper extends DataGetter{
      *
      * @param doc a document object associated with corresponding html.
      */
-    private void filterData(Document doc) {
+    private void filterData(Document doc, String year) {
         // find element by combination of elements with id.
         String term = removeCss(doc.select("span#u158").text());
         String faculty = removeCss(doc.select("span#u13").text());
@@ -122,7 +122,10 @@ public class WebScraper extends DataGetter{
 
             String theTerm = formatTerm(courseCode, term);
 
-            addCourseToData(courseCode, theTerm, section, faculty,
+            if (courseCode.charAt(courseCode.length() - 2) == 'Y'){
+                theTerm = "Year";
+            }
+            addCourseToData(courseCode, theTerm + " " + year, section, faculty,
                     locationTimeMap, professor, deliveryMethod);
 
             i++;
