@@ -1,13 +1,16 @@
 package FunctionsTests;
 
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.DatabaseController;
 import Functions.DfsSearch;
+import Functions.Puzzle;
 import Functions.TimeTablePuzzle;
-
 import Helpers.Constants;
-
+import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
-
+import TimeTableObjects.EventObjects.CourseSection;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -86,10 +89,10 @@ public class DFSTest {
 
         HashMap<String, HashMap<String, ArrayList<Course>>> courses = new HashMap<>();
         HashMap<String, ArrayList<Course>> csc = new HashMap<>();
-        ArrayList<Course> csc207Lec = new ArrayList<>(Arrays.asList(A, B, C));
-        ArrayList<Course> csc207Tut = new ArrayList<>(Arrays.asList(D, E, F));
-        csc.put("LEC", csc207Lec);
-        csc.put("TUT", csc207Tut);
+        ArrayList<Course> cscLec = new ArrayList<>(Arrays.asList(A, B, C));
+        ArrayList<Course> cscTut = new ArrayList<>(Arrays.asList(D, E, F));
+        csc.put("LEC", cscLec);
+        csc.put("TUT", cscTut);
 
         courses.put("CSC207", csc);
 
@@ -142,19 +145,16 @@ public class DFSTest {
 
         courses.put("CSC236", csc236);
 
-
         TimeTableManager manager = new TimeTableManager();
 
         TimeTablePuzzle puzzle = new TimeTablePuzzle(courses, manager);
 
         DfsSearch solver = new DfsSearch();
 
-        HashSet<TimeTablePuzzle> seen = new HashSet<>();
-        ArrayList<TimeTablePuzzle> solved = solver.solve(puzzle, seen);
+        HashSet<String> seen = new HashSet<>();
+        ArrayList<Puzzle> solved = solver.solve(puzzle, seen);
         int lastIndex = solved.size() - 1;
         Assertions.assertNotSame(solved.get(lastIndex), puzzle);
-
-        System.out.println(solved.get(lastIndex).getManager().getTimetable(Constants.FALL));
 
     }
 }

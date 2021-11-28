@@ -18,7 +18,7 @@ import java.util.Scanner;
  * Precondition: The file is a properly structured csv file. Please see the
  * sample directory for correctly formatted files.
  */
-public class CSVScraper extends DataGetter {
+public class CSVScraper extends CourseGetter {
     // Some constants to sort the file
     private final static int SECTION = 0;
     private final static int TIME = 1;
@@ -236,7 +236,7 @@ public class CSVScraper extends DataGetter {
     public static void main(String[] args) {
         CSVScraper a = new CSVScraper();
         try {
-            HashMap<String, ArrayList<Course>> got = a.getData("CSC207H1", "Fall",
+            HashMap<String, ArrayList<Course>> got = a.retrieveData("CSC207H1", "Fall",
                     "2021");
             System.out.println(got);
         } catch (FileNotFoundException e){

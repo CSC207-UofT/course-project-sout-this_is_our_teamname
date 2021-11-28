@@ -11,27 +11,25 @@ import java.time.LocalTime;
 import java.util.*;
 
 /**
- * A WebScraper class. It is a DataGetter class that gets the data from the course finder
+ * A WebScraper class. It is a DataGetter class that gets the data from a the course finder
  * website.
  *
  */
-public class WebScraper extends DataGetter{
+public class WebScraper extends CourseGetter {
 
     /**
-     * Constructor of the WebScraper. Reads and filters the data correctly
+     * Constructor of the CSVScraper. Reads and filters the data correctly
      * into the data hashmap.
      *
      * @param courseName the name of the course
      * @param theTerm the term of the course
      * @param theYear the course starts.
-     * @exception FileNotFoundException Throws file not found exception if the html for the
-     * given course is not found.
      */
     @Override
     public void CalibrateData(String courseName, String theTerm,
                               String theYear) throws FileNotFoundException {
 
-        String searchQuery = formatSearchQuery(theTerm, courseName, theYear);
+        String searchQuery = buildSearchQuery(theTerm, courseName, theYear);
 
         // format the url and connect to the coursefinder.
         Document doc;
@@ -63,7 +61,7 @@ public class WebScraper extends DataGetter{
      * @param theTerm the term of the course
      * @param theYear the course starts
      */
-    private String formatSearchQuery(String theTerm, String courseName, String theYear) {
+    private String buildSearchQuery(String theTerm, String courseName, String theYear) {
         String termKey = "";
         String termId = "";
 
@@ -95,7 +93,6 @@ public class WebScraper extends DataGetter{
         String faculty = removeCss(doc.select("span#u13").text());
         String courseCode = removeCss(doc.select("div#u19").text());
 
-
         // loop over the rows in the html and add corresponding sections.
         String section = removeCss(doc.select("span#u245_line" + 0).text());
         String professor = removeCss(doc.select("span#u263_line" + 0).text());
@@ -120,8 +117,16 @@ public class WebScraper extends DataGetter{
                 locationTimeMap.put(times.get(j), locations.get(j));
             }
 
-            String theTerm = formatTerm(courseCode, term);
-
+            String theTerm;
+            if (courseCode.contains("Y1")){
+                theTerm = Constants.YEAR;
+            } else if (term.contains("Fall")){
+                theTerm = Constants.FALL;
+            } else if (term.contains("Winter")){
+                theTerm = Constants.WINTER;
+            } else {
+                theTerm = "";
+            }
             addCourseToData(courseCode, theTerm, section, faculty,
                     locationTimeMap, professor, deliveryMethod);
 
@@ -164,14 +169,12 @@ public class WebScraper extends DataGetter{
     // ============================== CSS Filters ==============================
     /**
      * Clean up the strings with Css tags.
-     * Example of unfiltered string <\div> CSC207H1 <\div> and wanted string CSC207H1.
      *
-     * @param unfilteredString the string being cleaned.
+     * @param dirtyString the string being cleaned.
      * @return a string without css tags
      */
-
-    private String removeCss(String unfilteredString){
-        return unfilteredString.replaceAll("(?is)<style.*?>.*?</style>", "");
+    private String removeCss(String dirtyString){
+        return dirtyString.replaceAll("(?is)<style.*?>.*?</style>", "");
     }
 
     // ================================ Formatters =============================
@@ -190,7 +193,7 @@ public class WebScraper extends DataGetter{
         // times.
         String[] times = formattedTimeString.split("(?=\\s[A-Z])");
 
-        ArrayList<Object[]> timesList = new ArrayList<>();
+        ArrayList<Object[]> retList = new ArrayList<>();
         if (formattedTimeString.length() != 0){
             for (String timeEntry : times) {
                 // Remove white space
@@ -200,14 +203,14 @@ public class WebScraper extends DataGetter{
                 LocalTime formattedStart = formatTime(dateAndTime[1].split("-")[0]);
                 LocalTime formattedEnd = formatTime(dateAndTime[1].split("-")[1]);
 
-                timesList.add(new Object[]{formatDate(dateAndTime[0]), formattedStart,
+                retList.add(new Object[]{formatDate(dateAndTime[0]), formattedStart,
                         formattedEnd});
             }
         } else {
-            timesList.add(new Object[]{Constants.TBA, LocalTime.of(0, 0, 0),
+            retList.add(new Object[]{Constants.TBA, LocalTime.of(0, 0, 0),
                     LocalTime.of(0, 0, 0)});
         }
-        return timesList;
+        return retList;
     }
 
     /**
@@ -235,8 +238,7 @@ public class WebScraper extends DataGetter{
     }
 
     /**
-     * Reformat the time string so that it corresponds to what course object wants.
-     *
+     * Returns a time object that
      * @param time the time as a string
      * @return the time as a Local time
      */
@@ -259,27 +261,6 @@ public class WebScraper extends DataGetter{
     }
 
     /**
-     * Get the formatted term from the given course code and term.
-     *
-     * @param courseCode string of the course code.
-     * @param term string of the term.
-     * @return new string of the determined term.
-     */
-    private String formatTerm(String courseCode, String term){
-        String theTerm;
-        if (courseCode.contains("Y1")){
-            theTerm = Constants.YEAR;
-        } else if (term.contains("Fall")){
-            theTerm = Constants.FALL;
-        } else if (term.contains("Winter")){
-            theTerm = Constants.WINTER;
-        } else {
-            theTerm = "";
-        }
-        return theTerm;
-    }
-
-    /**
      * A main method to develop this module
      *
      * @param args arguments
@@ -290,7 +271,7 @@ public class WebScraper extends DataGetter{
         for (String course : courses){
             try {
                 LinkedHashMap<String,
-                        ArrayList<Course>> got = a.getData(course, "Fall",
+                        ArrayList<Course>> got = a.retrieveData(course, "Fall",
                         "2021");
                 System.out.println(got);
             } catch (FileNotFoundException e){

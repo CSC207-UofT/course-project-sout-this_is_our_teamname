@@ -68,6 +68,8 @@ public class TimeTable {
      * @return true if scheduling is successful, false if there is a conflict
      */
     public boolean schedule(Events event) {
+        // eliminating possible empty string for name attribute, so it would show up in display better.
+        event.unnamed();
         if (checkConflicts(event)) {
             int start = event.getStartTime().getHour();
             int end = event.getEndTime().getHour();

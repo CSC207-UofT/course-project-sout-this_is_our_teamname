@@ -1,9 +1,8 @@
-package Commands.FunctionCommands;
-
 import Commands.Command;
 import Commands.NeedsCourses;
-import DataGetting.DataGetter;
+import DataGetting.CourseGetter;
 import Functions.DfsSearch;
+import Functions.Puzzle;
 import Functions.TimeTablePuzzle;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
@@ -13,31 +12,30 @@ import java.util.*;
 /**
  * A command to solve a TimeTable
  * === Private Attributes ===
- *  dataSource: The source where the data is from.
- *  manager: The manager that will eventually schedule given courses.
+ * dataSource: The source where the data is from.
+ * manager: The manager that will eventually schedule given courses.
  */
 public class SolverCommand implements Command, NeedsCourses {
     private final TimeTableManager manager;
-    private final DataGetter dataSource;
+    private final CourseGetter dataSource;
 
     /**
      * A Constructor to create the Command
      *
-     * @param manager the TimeTableManager with the TimeTables to be scheduled
+     * @param manager    the TimeTableManager with the TimeTables to be scheduled
      * @param dataSource the data source for all course information
      */
-    public SolverCommand(TimeTableManager manager, DataGetter dataSource) {
+    public SolverCommand(TimeTableManager manager, CourseGetter dataSource) {
         this.manager = manager;
         this.dataSource = dataSource;
     }
 
 
     /**
-     *Prompt the User to input the courses they'd like to schedule.
-     *
+     * Prompt the User to input the courses they'd like to schedule.
      */
     @Override
-    public void execute(){
+    public void execute() {
         HashMap<String, HashMap<String, ArrayList<Course>>> courses = new HashMap<>();
         boolean courseCounter = true;
         while (courseCounter) {
@@ -65,7 +63,7 @@ public class SolverCommand implements Command, NeedsCourses {
         Set<TimeTablePuzzle> seen = new HashSet<>();
         ArrayList<TimeTablePuzzle> solved = solver.solve(puzzle, seen);
 
-       scheduleSolved(puzzle, solved.get(solved.size() - 1));
+        scheduleSolved(puzzle, solved.get(solved.size() - 1));
     }
 
 

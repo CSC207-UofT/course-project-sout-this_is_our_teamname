@@ -1,12 +1,15 @@
-package Controllers;
+package InterfaceAdaptors;
 
-import Commands.CreationCommands.*;
 import Commands.FunctionCommands.SolverCommand;
 import Commands.FunctionCommands.ExitProgramCommand;
+import DataGetting.CourseGetter;
+import Commands.Command;
+import Commands.CreationCommands.GetAllTimeTablesCommand;
+import Commands.CreationCommands.MakeCourseCommand;
+import Commands.CreationCommands.MakeEventCommand;
 import Commands.RemovalCommands.RemoveEventCommand;
 import Commands.RemovalCommands.RemoveTimeTable;
-import DataGetting.DataGetter;
-import Commands.Command;
+import Commands.CreationCommands.PrintHistoryCommand;
 import Commands.FunctionCommands.DownloadDataCommand;
 import Commands.FunctionCommands.LoadDataCommand;
 import Commands.FunctionCommands.SaveDataCommand;
@@ -25,9 +28,9 @@ import TimeTableContainers.TimeTableManager;
  */
 public class CommandFactory {
     private TimeTableManager courseManager;
-    private DataGetter dataSource;
+    private CourseGetter dataSource;
     private final DatabaseController controller;
-    private final String[] allowedFunctions;
+    private String[] allowedFunctions;
 
     // Commands
     static final String SCHEDULE_COURSE = "Schedule Course";
@@ -143,7 +146,14 @@ public class CommandFactory {
      *
      * @param theDataSource the DataGetter to connect to
      */
-    public void setDataSource(DataGetter theDataSource){
+    public void setDataSource(CourseGetter theDataSource){
         this.dataSource = theDataSource;
     }
+
+    /**
+     * Sets the AllowedFunctions to connect to
+     *
+     * @param newAllowedFunction the AllowedFunction to connect to
+     */
+    public void setAllowedFunctions(String[] newAllowedFunction) {this.allowedFunctions = newAllowedFunction;}
 }
