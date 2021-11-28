@@ -48,67 +48,73 @@ public class MakeEventCommand implements Command {
     }
 
     /**
-     * Prompts the user to create a timetableObject
+     * Prompts the user to create an Event
      */
     @Override
     public void execute() {
-        boolean running = true;
+        HashMap<String, String> responses = promptUser();
 
-        while (running){
-            LinkedHashMap<String, InputChecker> prompts = new LinkedHashMap<>();
-            prompts.put(NAME, new InputChecker("Enter a name for an object " +
-                    "(eg; Dinner with Prof Gries and Friends)", new isTrivial()));
-            prompts.put(START_TIME, new InputChecker("Enter the Start Time (in" +
-                    " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
-                    "No space between time and AM/PM)", new isTime()));
-            prompts.put(END_TIME, new InputChecker("Enter the End Time (in " +
-                    " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
-                    "No space between time and AM/PM)", new isTime()));
-            prompts.put(LOCATION, new InputChecker("Enter the Location (eg; " +
-                    "MY150, Home, Middle of Nowhere)", new isTrivial()));
-            prompts.put(DATE, new InputChecker("Enter the Day of the week (eg;" +
-                    " Monday, Tuesday, Wednesday, etc.)", new isDate()));
-            prompts.put(TERM, new InputChecker("Enter the Term (Fall/Winter)",
-                    new isTerm()));
-            prompts.put(TYPE, new InputChecker("Enter the Type of the Object " +
-                    "(Activity/Task)", new isTrivial()));
+        Events toSchedule = getEventObject(
+                StringToTime.makeTime(responses.get(START_TIME)),
+                StringToTime.makeTime(responses.get(END_TIME)),
+                responses.get(LOCATION),
+                responses.get(DATE),
+                responses.get(TERM),
+                responses.get(TYPE));
 
-            HashMap<String, String> responses = new HashMap<>();
-
-            for (String prompt : prompts.keySet()) {
-                responses.put(prompt, prompts.get(prompt).checkCorrectness());
-            }
-
-            Events toSchedule = getCorrectTimeTableObject(
-                    StringToTime.makeTime(responses.get(START_TIME)),
-                    StringToTime.makeTime(responses.get(END_TIME)),
-                    responses.get(LOCATION),
-                    responses.get(DATE),
-                    responses.get(TERM),
-                    responses.get(TYPE));
-
+        boolean scheduleIt = false;
+        if (toSchedule == null || manager.checkConflicts(toSchedule)){
+            scheduleIt = true;
+        } else {
             this.scheduledObject = toSchedule;
+        }
 
-            assert toSchedule != null;
-//            try {
-                manager.schedule(toSchedule);
-                running = false;
-//            } catch (ConflictException e) {
-//                InputChecker repeat = new InputChecker("An conflict has occurred! " +
-//                        "Event scheduled Unsuccessfully. Would you like to " +
-//                        "try again? (true/false)", new isBoolean());
-//
-//                String repeatInput = repeat.checkCorrectness();
-//                if (repeatInput.equals("false")){
-//                    running = false;
-//                }
-//            }
+        if (!scheduleIt){
+            manager.schedule(toSchedule);
         }
 
         System.out.println("Event Scheduled");
     }
 
+    /**
+     * Prompt the user
+     *
+     * @return a hashmap of the questions and the response of the user
+     */
+    private HashMap<String, String> promptUser() {
+        LinkedHashMap<String, InputChecker> prompts = new LinkedHashMap<>();
+        prompts.put(NAME, new InputChecker("Enter a name for an object " +
+                "(eg; Dinner with Prof Gries and Friends)", new isTrivial()));
+        prompts.put(START_TIME, new InputChecker("Enter the Start Time (in" +
+                " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
+                "No space between time and AM/PM)", new isTime()));
+        prompts.put(END_TIME, new InputChecker("Enter the End Time (in " +
+                " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
+                "No space between time and AM/PM)", new isTime()));
+        prompts.put(LOCATION, new InputChecker("Enter the Location (eg; " +
+                "MY150, Home, Middle of Nowhere)", new isTrivial()));
+        prompts.put(DATE, new InputChecker("Enter the Day of the week (eg;" +
+                " Monday, Tuesday, Wednesday, etc.)", new isDate()));
+        prompts.put(TERM, new InputChecker("Enter the Term (Fall/Winter)",
+                new isTerm()));
+        prompts.put(TYPE, new InputChecker("Enter the Type of the Object " +
+                "(Activity/Task)", new isTrivial()));
+
+        HashMap<String, String> responses = new HashMap<>();
+
+        for (String prompt : prompts.keySet()) {
+            responses.put(prompt, prompts.get(prompt).checkCorrectness());
+        }
+        return responses;
+    }
+
     // ============================= Helper Methods ============================
+
+    /**
+     * A string representation of the command
+     *
+     * @return the string representation of the command
+     */
     @Override
     public String toString() {
         if (this.hasScheduled()){
@@ -120,6 +126,7 @@ public class MakeEventCommand implements Command {
 
     /**
      * Return if there has already been an object been scheduled
+     *
      * @return true iff there has been a course scheduled.
      */
     protected boolean hasScheduled(){
@@ -137,12 +144,12 @@ public class MakeEventCommand implements Command {
      * @param type the type of object
      * @return event "cast" to the correct type.
      */
-    private Events getCorrectTimeTableObject(LocalTime startTime,
-                                             LocalTime endTime,
-                                             String theLocation,
-                                             String theDate,
-                                             String term,
-                                             String type) {
+    private Events getEventObject(LocalTime startTime,
+                                  LocalTime endTime,
+                                  String theLocation,
+                                  String theDate,
+                                  String term,
+                                  String type) {
         // Creates the Activity
         if (type.equals(Constants.ACTIVITY)){
             // Asks the user for the description of the object
@@ -151,7 +158,7 @@ public class MakeEventCommand implements Command {
 
             return new Activity(startTime, endTime, theDate,
                     term, descriptionScanner.nextLine());
-        // Creates the task
+            // Creates the task
         } else if (type.equals(Constants.TASK)){
             Task task = new Task(startTime, endTime, theDate, term);
             task.addToName(theLocation);
@@ -160,7 +167,6 @@ public class MakeEventCommand implements Command {
 
         // ...
         // Add more types of events here!
-
         else {
             return null;
         }

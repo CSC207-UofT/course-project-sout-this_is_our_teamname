@@ -5,7 +5,7 @@
 * A Data Structure
 
 ## Collaborators
-* `Controllers` Requests the information and sends the object to 
+* `InterfaceAdaptors` Requests the information and sends the object to 
   `TimeTableManager`
 * `DataGathering` Creates the object
 * `TimeTableManager` Splits the course into sections to place into `TimeTable`

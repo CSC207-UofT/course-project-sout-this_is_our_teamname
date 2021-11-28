@@ -37,17 +37,17 @@ It has 2 subclasses: **HCourse**, half-year course, and **YCourse**, year course
    <br />
 8. **DataGetter** is an abstract class. It collaborates with **Interfaces** and should have a **get** method that finds the information and returns it in a Map (Data Type: Data). Its subclasses are **WebScraper** and **CSVScraper**.<br />
    <br />
-9. **WebScraper** is the subclass of **DataGetter**. It collaborates with **Controllers** and **OperatorInterface**. It reads the HTML of the UofT Course finder for the giver course and throws an Error when the given course is not found, analyze, filters the data, and stores the data as a Course Objects, and stores the course objects in a HashMap with section codes as keys and the courses as values.<br />
+9. **WebScraper** is the subclass of **DataGetter**. It collaborates with **InterfaceAdaptors** and **OperatorInterface**. It reads the HTML of the UofT Course finder for the giver course and throws an Error when the given course is not found, analyze, filters the data, and stores the data as a Course Objects, and stores the course objects in a HashMap with section codes as keys and the courses as values.<br />
    <br />
-10. **CSVScraper** is the subclass of **DataGetter**. It collaborates with **Controllers** and **OperatorInterface**. It reads a CSV file for the given course for information and throws an Error when the given course is not found, analyzes and filters the data and stores the data as **Course** Objects, and stores the **Course** objects in a HashMap with section codes as keys and the courses as values.<br />
+10. **CSVScraper** is the subclass of **DataGetter**. It collaborates with **InterfaceAdaptors** and **OperatorInterface**. It reads a CSV file for the given course for information and throws an Error when the given course is not found, analyzes and filters the data and stores the data as **Course** Objects, and stores the **Course** objects in a HashMap with section codes as keys and the courses as values.<br />
     <br />
 11. **Interfaces** collaborates with **TimeTableManager**. User interacts with it to input the course to search. It sends Input to **TimeTableManager** to interpret and deal with and displays final product to the user.<br />
     <br />
-12. **Controllers** collaborates with **Interfaces** and **TimeTableManager**. It generates prompts based on the information received from **Interfaces** and sends objects to **TimeTableManager** to schedule.<br />
+12. **InterfaceAdaptors** collaborates with **Interfaces** and **TimeTableManager**. It generates prompts based on the information received from **Interfaces** and sends objects to **TimeTableManager** to schedule.<br />
     <br />
 13. **OperatorInterface** collaborates with **TimeTableManager**. Operator interacts with it, and it configures **TimeTableManager** and **DataGetter**.<br />
     <br />
-14. **NonCourseObject** collaborates with **TimeTableManager** and **Controllers** Responsible for holding the information from the user and passing it to
+14. **NonCourseObject** collaborates with **TimeTableManager** and **InterfaceAdaptors** Responsible for holding the information from the user and passing it to
     **TimeTableManager** to create individual **TimeTableObjects**.
 
 (See [CRC_Cards_README](CRC_Cards/CRC_Cards_README.md))
@@ -65,15 +65,15 @@ Course, Life, DescriptionlessLife.
 
 ####Case 1:  User inputs Course.
 1. The `Interfaces` will send the input "Course" to the
-   `Controllers`, which will prompt the user with questions about
+   `InterfaceAdaptors`, which will prompt the user with questions about
    what they want to input. In this case, it will ask for what course
    User wants to input.<br />
    <br />
 2. The `Interfaces` will send this information to the
-   `Controllers`, which will prompt the User with questions about
+   `InterfaceAdaptors`, which will prompt the User with questions about
    the course code they want to input.<br />
    <br />
-3. The `Controllers` class then will request the data from the
+3. The `InterfaceAdaptors` class then will request the data from the
    `CSVScraper` by using the `getData` method.<br />
    <br />
 4. The `CSVScraper` then collects and sorts all the
@@ -86,9 +86,9 @@ Course, Life, DescriptionlessLife.
    the classes at that time. Each course block will hold the Times and Locations
    as an `HashMap<ArrayList<Object>, String>`.<br />
    <br />
-5. The `Controllers` retrieves the HashMap from the `CSVScraper` class
+5. The `InterfaceAdaptors` retrieves the HashMap from the `CSVScraper` class
    and prompts the user to select a LEC/TUT/PRA of the course by printing each
-   the details of the `Course`. The `Controllers` then sends the chosen
+   the details of the `Course`. The `InterfaceAdaptors` then sends the chosen
    to the `TimeTableManager` class through a `schedule` method. <br />
    <br />
 
@@ -123,7 +123,7 @@ Course, Life, DescriptionlessLife.
    required for the Life Object.<br />
    <br />
 
-2. The `Controllers` class will then create a `NonCourseObject`,
+2. The `InterfaceAdaptors` class will then create a `NonCourseObject`,
    which will store all the necessary information of the input, including
    the type of object. In this case, the `NonCourseObject` will store the
    date, start/end time, description, term, and the name of the activity, along
@@ -196,7 +196,7 @@ an instructor in CSC148H1 Winter 2021, source of code)
   * WebScraper (Trivial Implementation)
   * Interfaces
   * OperatorInterface (Trivial Implementation)
-  * Controllers
+  * InterfaceAdaptors
   * GlobalHelperMethod
   * Constants (Trivial Implementation)
 * Wrote Specifications
