@@ -1,6 +1,7 @@
 package Commands.CreationCommands;
 
 import Commands.Command;
+import Commands.ManagerChanged;
 import Commands.NeedsCourses;
 import DataGetting.CourseGetter;
 import Helpers.ConflictException;
@@ -19,11 +20,14 @@ import java.util.LinkedHashMap;
  * === Private Attributes ===
  * dataSource: The source where the data is from.
  * manager: The manager that will eventually schedule the object
+ * scheduledCourse: The courses to be scheduled
+ * managerChanged: Whether the TimeTableManager is changed
  */
-public class MakeCourseCommand implements Command, NeedsCourses {
+public class MakeCourseCommand implements Command, NeedsCourses, ManagerChanged {
     private final CourseGetter dataSource;
     private final TimeTableManager manager;
     private final ArrayList<Course> scheduledCourse;
+    private boolean managerChanged;
 
     /**
      * A constructor to initialize what this command is connected to
@@ -35,6 +39,7 @@ public class MakeCourseCommand implements Command, NeedsCourses {
         this.manager = sendTo;
         this.dataSource = dataSource;
         this.scheduledCourse = new ArrayList<>();
+        this.managerChanged = false;
     }
 
     /**
@@ -58,6 +63,7 @@ public class MakeCourseCommand implements Command, NeedsCourses {
             for (CourseSection item : sections){
                 manager.schedule(item);
             }
+            this.managerChanged = true;
         } else {
             System.out.println("A Conflict has occurred. Please Try Again!");
         }
@@ -81,6 +87,20 @@ public class MakeCourseCommand implements Command, NeedsCourses {
             return "No Course Scheduled";
         }
     }
+
+    /**
+     * Whether the TimeTableManager is changed by this command.
+     * @return True if manager is changed, false otherwise.
+     */
+    @Override
+    public boolean managerChanged() { return this.managerChanged; }
+
+    /**
+     * Gets the TimeTableManager
+     * @return the TimeTableManager
+     */
+    @Override
+    public TimeTableManager getManager() { return this.manager; }
 
     // ============================= Helpers ===================================
     /**

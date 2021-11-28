@@ -60,23 +60,6 @@ public class TimeTable {
     }
 
     /**
-     * Returns a copy of the timetable (not alias)
-     *
-     * @return the copy of the timetable
-     */
-    public LinkedHashMap<String, Events[]> getCopy() {
-        LinkedHashMap<String, Events[]> copy = new LinkedHashMap<>();
-        for (String day : this.calendar.keySet()) {
-            Events[] events = new Events[24];
-            for (int i = 0; i < 24; i++) {
-                events[i] = this.calendar.get(day)[i];
-            }
-            copy.put(day, events);
-        }
-        return copy;
-    }
-
-    /**
      * Schedules the given activity into the appropriate weekday.
      *
      * @param event the given activity

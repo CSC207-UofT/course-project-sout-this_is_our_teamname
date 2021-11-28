@@ -1,6 +1,7 @@
 package Commands.CreationCommands;
 
 import Commands.Command;
+import Commands.ManagerChanged;
 import Helpers.ConflictException;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.Events;
@@ -24,8 +25,9 @@ import java.util.regex.Pattern;
  * === Private Attributes ===
  * manager: The manager that will eventually schedule the object
  * scheduledObject: An non course Event waiting to be scheduled
+ * managerChanged: Whether the TimeTableManager is changed
  */
-public class MakeEventCommand implements Command {
+public class MakeEventCommand implements Command, ManagerChanged {
     // Some Constants:
     final String NAME = "Name";
     final String START_TIME = "Start Time";
@@ -37,6 +39,7 @@ public class MakeEventCommand implements Command {
 
     private final TimeTableManager manager;
     private Events scheduledObject;
+    private boolean managerChanged;
 
     /**
      * A constructor to set the command
@@ -45,6 +48,7 @@ public class MakeEventCommand implements Command {
     public MakeEventCommand(TimeTableManager theManager){
         this.manager = theManager;
         this.scheduledObject = null;
+        this.managerChanged = false;
     }
 
     /**
@@ -71,6 +75,7 @@ public class MakeEventCommand implements Command {
 
         if (!scheduleIt){
             manager.schedule(toSchedule);
+            this.managerChanged = true;
         }
 
         System.out.println("Event Scheduled");
@@ -107,6 +112,20 @@ public class MakeEventCommand implements Command {
         }
         return responses;
     }
+
+    /**
+     * Whether the TimeTableManager is changed by this command.
+     * @return True if manager is changed, false otherwise.
+     */
+    @Override
+    public boolean managerChanged() { return this.managerChanged; }
+
+    /**
+     * Gets the TimeTableManager
+     * @return the TimeTableManager
+     */
+    @Override
+    public TimeTableManager getManager() { return this.manager; }
 
     // ============================= Helper Methods ============================
 
