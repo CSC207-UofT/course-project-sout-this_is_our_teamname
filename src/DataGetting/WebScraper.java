@@ -31,7 +31,7 @@ public class WebScraper extends CourseGetter {
     public void CalibrateData(String courseName, String theTerm,
                               String theYear) throws FileNotFoundException {
 
-        String searchQuery = buildSearchQuery(theTerm, courseName, theYear);
+        String searchQuery = formatSearchQuery(theTerm, courseName, theYear);
 
         // format the url and connect to the coursefinder.
         Document doc;
@@ -290,7 +290,7 @@ public class WebScraper extends CourseGetter {
         for (String course : courses){
             try {
                 LinkedHashMap<String,
-                        ArrayList<Course>> got = a.getData(course, "Fall",
+                        ArrayList<Course>> got = a.retrieveData(course, "Fall",
                         "2021");
                 System.out.println(got);
             } catch (FileNotFoundException e){
