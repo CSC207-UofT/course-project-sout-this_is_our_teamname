@@ -134,4 +134,26 @@ class TimeTableTest {
         Assertions.assertTrue(table.checkCourseSection(course1));
         Assertions.assertFalse(table.checkCourseSection(course2));
     }
+
+    @Test
+    public void remove() {
+        LocalTime start1 =  LocalTime.of(6,0,0);
+        LocalTime end1 =  LocalTime.of(7,0,0);
+        Activity dinner = new Activity(start1, end1, Constants.MONDAY, Constants.FALL, "Dinner with Friends" );
+        int intStart1 = start1.getHour();
+
+        LocalTime start2 =  LocalTime.of(1,0,0);
+        LocalTime end2 =  LocalTime.of(2,0,0);
+        Activity walk = new Activity(start2, end2, Constants.WEDNESDAY, Constants.FALL, "Walking the Dog" );
+        int intStart2 = start2.getHour();
+
+        TimeTable timeTable = new TimeTable();
+        timeTable.schedule(dinner);
+        timeTable.schedule(walk);
+
+        timeTable.remove(start1, end1, Constants.MONDAY);
+
+        assertNull(timeTable.getCalendar().get(Constants.MONDAY)[intStart1]);
+        assertSame(timeTable.getCalendar().get(Constants.WEDNESDAY)[intStart2], walk);
+    }
 }

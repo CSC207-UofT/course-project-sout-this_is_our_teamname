@@ -7,6 +7,9 @@ import Commands.Command;
 import Commands.CreationCommands.GetAllTimeTablesCommand;
 import Commands.CreationCommands.MakeCourseCommand;
 import Commands.CreationCommands.MakeEventCommand;
+import Commands.CreationCommands.AddTimeTableCommand;
+import Commands.RemovalCommands.RemoveEventCommand;
+import Commands.RemovalCommands.RemoveTimeTable;
 import Commands.CreationCommands.PrintHistoryCommand;
 import Commands.FunctionCommands.DownloadDataCommand;
 import Commands.FunctionCommands.LoadDataCommand;
@@ -33,8 +36,11 @@ public class CommandFactory {
     // Commands
     static final String SCHEDULE_COURSE = "Schedule Course";
     static final String SCHEDULE_EVENT = "Schedule Event";
+    static final String REMOVE_EVENT = "Remove Event";
     static final String GET_ALL_TIMETABLE = "Show TimeTables";
     static final String SOLVE_TIMETABLE = "Solve Timetable";
+    static final String ADD_TIMETABLE = "Add Timetable";
+    static final String REMOVE_TIMETABLE = "Remove Timetable";
     static final String PRINT_HISTORY = "Get History";
     static final String LOAD_DATA = "Load Data";
     static final String SAVE_DATA = "Save";
@@ -55,11 +61,14 @@ public class CommandFactory {
         this.allowedFunctions = new String[]{
                 SCHEDULE_COURSE,
                 SCHEDULE_EVENT,
+                REMOVE_EVENT,
                 LOAD_DATA,
                 SAVE_DATA,
                 DOWNLOAD_TIMETABLE,
                 GET_ALL_TIMETABLE,
                 SOLVE_TIMETABLE,
+                ADD_TIMETABLE,
+                REMOVE_TIMETABLE,
                 PRINT_HISTORY,
                 EXIT
         };
@@ -86,10 +95,16 @@ public class CommandFactory {
                 return new MakeCourseCommand(courseManager, dataSource);
             case SCHEDULE_EVENT:
                 return new MakeEventCommand(courseManager);
+            case REMOVE_EVENT:
+                return new RemoveEventCommand(courseManager);
             case GET_ALL_TIMETABLE:
                 return new GetAllTimeTablesCommand(courseManager);
             case SOLVE_TIMETABLE:
                 return new SolverCommand(courseManager, dataSource);
+            case ADD_TIMETABLE:
+                return new AddTimeTableCommand(courseManager);
+            case REMOVE_TIMETABLE:
+                return new RemoveTimeTable(courseManager);
             case PRINT_HISTORY:
                 return new PrintHistoryCommand(controller);
             case LOAD_DATA:

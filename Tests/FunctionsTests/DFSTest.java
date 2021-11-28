@@ -1,16 +1,10 @@
 package FunctionsTests;
 
-import InterfaceAdaptors.CommandFactory;
-import InterfaceAdaptors.DatabaseController;
 import Functions.DfsSearch;
-import Functions.Puzzle;
 import Functions.TimeTablePuzzle;
 import Helpers.Constants;
-import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
-import TimeTableObjects.EventObjects.CourseSection;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -23,8 +17,10 @@ public class DFSTest {
     public void solve() {
         LocalTime startTime1 = LocalTime.of(9, 0, 0);
         LocalTime startTime2 = LocalTime.of(10, 0, 0);
+        LocalTime startTime3 = LocalTime.of(11, 0, 0);
         LocalTime endTime1 = LocalTime.of(10, 0, 0);
         LocalTime endTime2 = LocalTime.of(11, 0, 0);
+        LocalTime endTime3 = LocalTime.of(12, 0, 0);
 
 
         Object[] testDateTime1 = {Constants.MONDAY, startTime1, endTime1};
@@ -65,8 +61,6 @@ public class DFSTest {
         Course D = new Course("CSC207","TUT0101", "Gries", "A&S", "In-Person",
                 testDateTimeMap4, Constants.FALL, false);
 
-        ArrayList<CourseSection> split = D.split();
-
 
 
         Object[] testDateTime7 = {Constants.TUESDAY, startTime2, endTime2};
@@ -96,14 +90,63 @@ public class DFSTest {
 
         courses.put("CSC207", csc);
 
+
+        Object[] testDateTime9 = {Constants.MONDAY, startTime1, endTime3};
+
+        HashMap<Object[], String> testDateTimeMap7 = new HashMap<>();
+        testDateTimeMap7.put(testDateTime9, "ES1050");
+
+        Course G = new Course("CSC236","LEC0101", "Heap", "A&S", "In-Person",
+                testDateTimeMap7, Constants.FALL, false);
+
+
+        Object[] testDateTime10 = {Constants.TUESDAY, startTime2, endTime2};
+        Object[] testDateTime11 = {Constants.THURSDAY, startTime2, endTime2};
+
+        HashMap<Object[], String> testDateTimeMap8 = new HashMap<>();
+        testDateTimeMap8.put(testDateTime10, "WB116");
+        testDateTimeMap8.put(testDateTime11, "WB116");
+
+        Course H = new Course("CSC236","LEC0201", "Baumgart", "A&S", "In-Person",
+                testDateTimeMap8, Constants.FALL, false);
+
+
+        Object[] testDateTime12 = {Constants.TUESDAY, startTime3, endTime3};
+        Object[] testDateTime13 = {Constants.THURSDAY, startTime3, endTime3};
+
+        HashMap<Object[], String> testDateTimeMap9 = new HashMap<>();
+        testDateTimeMap9.put(testDateTime12, "WB116");
+        testDateTimeMap9.put(testDateTime13, "WB116");
+
+        Course I = new Course("CSC236","LEC0301", "Baumgart", "A&S", "In-Person",
+                testDateTimeMap9, Constants.FALL, false);
+
+
+        Object[] testDateTime14 = {Constants.WEDNESDAY, startTime3, endTime3};
+        Object[] testDateTime15 = {Constants.FRIDAY, startTime3, endTime3};
+
+        HashMap<Object[], String> testDateTimeMap10 = new HashMap<>();
+        testDateTimeMap10.put(testDateTime14, "KP108");
+        testDateTimeMap10.put(testDateTime15, "KP108");
+
+        Course J = new Course("CSC236","LEC0401", "Heap", "A&S", "In-Person",
+                testDateTimeMap10, Constants.FALL, false);
+
+
+        HashMap<String, ArrayList<Course>> csc236 = new HashMap<>();
+        ArrayList<Course> csc236Lec = new ArrayList<>(Arrays.asList(G, H, I, J));
+        csc236.put("LEC", csc236Lec);
+
+        courses.put("CSC236", csc236);
+
         TimeTableManager manager = new TimeTableManager();
 
         TimeTablePuzzle puzzle = new TimeTablePuzzle(courses, manager);
 
         DfsSearch solver = new DfsSearch();
 
-        HashSet<String> seen = new HashSet<>();
-        ArrayList<Puzzle> solved = solver.solve(puzzle, seen);
+        HashSet<TimeTablePuzzle> seen = new HashSet<>();
+        ArrayList<TimeTablePuzzle> solved = solver.solve(puzzle, seen);
         int lastIndex = solved.size() - 1;
         Assertions.assertNotSame(solved.get(lastIndex), puzzle);
 
