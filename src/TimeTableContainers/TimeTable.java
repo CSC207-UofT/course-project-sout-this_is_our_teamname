@@ -1,6 +1,7 @@
 package TimeTableContainers;
 
 import TimeTableObjects.Course;
+import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
@@ -68,7 +69,7 @@ public class TimeTable {
     public boolean schedule(Events event) {
         // eliminating possible empty string for name attribute, so it would show up in display better.
         event.unnamed();
-        if (checkConflicts(event)) {
+        if (checkConflicts(event) && event instanceof Activity) {
             int start = event.getStartTime().getHour();
             int end = event.getEndTime().getHour();
 
@@ -76,6 +77,10 @@ public class TimeTable {
             for (int i = start; i < end; i++) {
                 this.calendar.get(event.getDate())[i] = event;
             }
+            return true;
+        }
+        else if (checkConflicts(event) && event instanceof Task) {
+            this.taskCalendar.get(event.getDate()).add((Task) event);
             return true;
         }
         return false;
@@ -217,6 +222,21 @@ public class TimeTable {
         for (String day : this.calendar.keySet()) {
             StringBuilder times = new StringBuilder(day + ":\n");
 
+            //Add reminder for all tasks
+            StringBuilder tasks = new StringBuilder();
+            tasks.append("\t").append("Reminder: ");
+            ArrayList<Task> allTasks = this.taskCalendar.get(day);
+            for (int i = 0; i < allTasks.size(); i++) {
+                if (i == 0) {
+                    tasks.append(allTasks.get(i));
+                }
+                else {
+                    tasks.append(", ").append(allTasks.get(i));
+                }
+            }
+            times.append(tasks).append("\n");
+
+            //Add all courses and activities
             Events[] events = this.calendar.get(day);
             for (int i = 0; i < events.length; i++) {
                 times.append("\t").append(i).append(":00 ");
