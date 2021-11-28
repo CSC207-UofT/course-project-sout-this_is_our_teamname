@@ -18,8 +18,8 @@ import java.util.LinkedHashMap;
  * tasks contain Task objects(as values) in the corresponding weekday(as keys)
  */
 public class TimeTable {
-    private final LinkedHashMap<String, Events[]> calendar;
-    private final LinkedHashMap<String, ArrayList<Task>> taskCalendar;
+    private LinkedHashMap<String, Events[]> calendar;
+    private LinkedHashMap<String, ArrayList<Task>> taskCalendar;
 
     public TimeTable() {
         this.calendar = new LinkedHashMap<>() {{
@@ -40,7 +40,22 @@ public class TimeTable {
             put(Constants.SATURDAY, new ArrayList<>());
             put(Constants.SUNDAY, new ArrayList<>());
         }};
+    }
 
+    /**
+     * Sets the TimeTable with given savedCalendar
+     * @param savedCalendar is the saved calendar
+     */
+    public void setCalendar(LinkedHashMap<String, Events[]> savedCalendar) {
+        this.calendar = savedCalendar;
+    }
+
+    /**
+     * Sets the TimeTable with given savedTaskCalendar
+     * @param savedTaskCalendar is the saved task calendar
+     */
+    public void setTaskCalendar(LinkedHashMap<String, ArrayList<Task>> savedTaskCalendar) {
+        this.taskCalendar = savedTaskCalendar;
     }
 
     /**
@@ -120,6 +135,49 @@ public class TimeTable {
      */
     public LinkedHashMap<String, Events[]> getCalendar() {
         return this.calendar;
+    }
+
+    /**
+     * Gets a copy of the calendar (not alias)
+     *
+     * @return the copy of the calendar
+     */
+    public LinkedHashMap<String, Events[]> getCalendarCopy() {
+        LinkedHashMap<String, Events[]> copy = new LinkedHashMap<>();
+        for (String day : this.calendar.keySet()) {
+            Events[] events = new Events[24];
+            for (int i = 0; i < 24; i++) {
+                events[i] = this.calendar.get(day)[i];
+            }
+            copy.put(day, events);
+        }
+        return copy;
+    }
+
+    /**
+     * Gets a copy of the taskCalendar (not alias)
+     *
+     * @return the copy of the taskCalendar
+     */
+    public LinkedHashMap<String, ArrayList<Task>> getTaskCopy() {
+        LinkedHashMap<String, ArrayList<Task>> copy = new LinkedHashMap<>();
+        for (String day : this.taskCalendar.keySet()) {
+            ArrayList<Task> tasks = new ArrayList<>(this.taskCalendar.get(day));
+            copy.put(day, tasks);
+        }
+        return copy;
+    }
+
+    /**
+     * Gets a copy of the TimeTable (not alias)
+     *
+     * @return the copy of the TimeTable
+     */
+    public TimeTable getCopy() {
+        TimeTable copy = new TimeTable();
+        copy.setCalendar(getCalendarCopy());
+        copy.setTaskCalendar(getTaskCopy());
+        return copy;
     }
 
     /**
