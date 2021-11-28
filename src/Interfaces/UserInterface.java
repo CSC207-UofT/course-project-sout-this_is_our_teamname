@@ -6,6 +6,7 @@ import InterfaceAdaptors.Presenter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 
 /**
@@ -47,9 +48,12 @@ public class UserInterface {
         CommandFactory theFactory = new CommandFactory(control);
         this.operator.SetDatasource(theFactory, this.readDatasource());
 
-        // Set the AllowedFunction in the file.
+        // Set the AllowedFunction in the file to be the one saved in the file.
         String[] banFunctions = this.readFunctions();
-        theFactory.setAllowedFunctions(banFunctions);
+        // Check whether the file is empty.
+        if (!Arrays.toString(banFunctions).equals("[]")) {
+            theFactory.setAllowedFunctions(banFunctions);
+        }
 
         while (running) {
             System.out.println("\nCurrent datasource: " + this.operator.getDatasource());
@@ -101,13 +105,16 @@ public class UserInterface {
         // Read the file.
         BufferedReader bufferedReader = new BufferedReader(new FileReader("src/Interfaces/functions.txt"));
         String s;
+        String newString = "";
         // Check whether the datasource.json is empty.
         if ((s = bufferedReader.readLine()) != null) {
+            // rawString is the String contains "[" and "]", need to delete them first and then convert the String into Array
             stringBuilder.append(s.trim());
+            String rawString = stringBuilder.toString();
+            newString = rawString.substring(1, rawString.length() - 1);
         }
-        // rawString is the String contains "[" and "]", need to delete them first and then convert the String into Array
-        String rawString = stringBuilder.toString();
-        String newString = rawString.substring(1, rawString.length() - 1);
+
+
 
         return newString.split(",\\s+");
     }

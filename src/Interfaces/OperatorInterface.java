@@ -43,7 +43,6 @@ public class OperatorInterface {
         // Set the datasource of theFactory to be CSVScraper if operator chooses it.
         if (input.equals("CSVScraper")) {
             theFactory.setDataSource(new CSVScraper());
-            //theFactory.setManager(new TimeTableManager());
             this.control.setFactory(theFactory);
             this.datasource = input;
             this.downloadDatasource(input);
@@ -52,7 +51,7 @@ public class OperatorInterface {
         } else if (input.equals("WebScraper")) {
             theFactory.setDataSource(new WebScraper());
             theFactory.setManager(new TimeTableManager());
-            //this.control.setFactory(theFactory);
+            this.control.setFactory(theFactory);
             this.datasource = input;
             this.downloadDatasource(input);
         }
