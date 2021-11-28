@@ -7,6 +7,7 @@ import Commands.Command;
 import Commands.CreationCommands.GetAllTimeTablesCommand;
 import Commands.CreationCommands.MakeCourseCommand;
 import Commands.CreationCommands.MakeEventCommand;
+import Commands.CreationCommands.AddTimeTableCommand;
 import Commands.RemovalCommands.RemoveEventCommand;
 import Commands.RemovalCommands.RemoveTimeTable;
 import Commands.CreationCommands.PrintHistoryCommand;

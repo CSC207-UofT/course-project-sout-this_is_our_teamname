@@ -1,16 +1,10 @@
 package FunctionsTests;
 
-import InterfaceAdaptors.CommandFactory;
-import InterfaceAdaptors.DatabaseController;
 import Functions.DfsSearch;
-import Functions.Puzzle;
 import Functions.TimeTablePuzzle;
 import Helpers.Constants;
-import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
-import TimeTableObjects.EventObjects.CourseSection;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -151,8 +145,8 @@ public class DFSTest {
 
         DfsSearch solver = new DfsSearch();
 
-        HashSet<String> seen = new HashSet<>();
-        ArrayList<Puzzle> solved = solver.solve(puzzle, seen);
+        HashSet<TimeTablePuzzle> seen = new HashSet<>();
+        ArrayList<TimeTablePuzzle> solved = solver.solve(puzzle, seen);
         int lastIndex = solved.size() - 1;
         Assertions.assertNotSame(solved.get(lastIndex), puzzle);
 

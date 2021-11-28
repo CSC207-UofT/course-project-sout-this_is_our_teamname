@@ -1,8 +1,9 @@
+package Commands.FunctionCommands;
+
 import Commands.Command;
 import Commands.NeedsCourses;
 import DataGetting.CourseGetter;
 import Functions.DfsSearch;
-import Functions.Puzzle;
 import Functions.TimeTablePuzzle;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
@@ -40,7 +41,7 @@ public class SolverCommand implements Command, NeedsCourses {
         boolean courseCounter = true;
         while (courseCounter) {
             // Get user input and course info
-            LinkedHashMap<String, ArrayList<Course>> indivCourse =
+            LinkedHashMap<String, ArrayList<Course>>indivCourse =
                     NeedsCourses.userInputs(dataSource);
             // Get course code
             ArrayList<String> keyList = new ArrayList<>(indivCourse.keySet());
