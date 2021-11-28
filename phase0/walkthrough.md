@@ -32,12 +32,12 @@ assume all times are PM for simplicity)
    <br />
 
 3. The `Interfaces` will send this information to the 
-   `Controllers`, which will prompt the user with questions about 
+   `InterfaceAdaptors`, which will prompt the user with questions about 
    what they want to input. In this case, it will ask for what course 
    BillyBobJoe wants to input, which he then enters `MAT257Y1`.<br />
    <br />
 
-4. The `Controllers` class then will request the data from the 
+4. The `InterfaceAdaptors` class then will request the data from the 
    DataGathering class by using the instance `getData` method. The query is 
    then sent to the `DataGathering` class (whatever it is).<br />
    <br />
@@ -70,13 +70,13 @@ new ArrayList<Object>{"Friday", Time(14, 0, 0), Time(15, 0, 0)}: MY150
    different times.  <br />
    <br />
 
-6. The `Controllers` retrieves the HashMap from the `DataGathering` class 
+6. The `InterfaceAdaptors` retrieves the HashMap from the `DataGathering` class 
    and prompts the user to select a course object by printing each the details 
    of the `Course`. The user then types the course into the command line (at 
-   least for Phase 0) to "commit" their choice. The `Controllers` then 
+   least for Phase 0) to "commit" their choice. The `InterfaceAdaptors` then 
    sends the course object at the value of the course section that the user 
    selected to the `TimeTableManager` class. For this example, 
-   `Controllers` will send the LEC 0101 `Course` object to 
+   `InterfaceAdaptors` will send the LEC 0101 `Course` object to 
    `TimeTableManager` through a `schedule` method. The `Schedule` method 
    here is Overloaded to be able to deal with both `course` objects and 
    `NonCourseObjects` (see Walk Through 2 for more details on this).<br />
@@ -134,7 +134,7 @@ with the Toronto Theremin Orchestra (IDK if this is real).
    required for the Life Object.<br />
    <br />
 
-3. The `Controllers` class will then create a `NonCourseObject`, 
+3. The `InterfaceAdaptors` class will then create a `NonCourseObject`, 
    which will store all the necessary information of the input, including 
    the type of object. In this case, the `NonCourseObject` will store the 
    date, start/end time, description, term, and the name of the activity, along 

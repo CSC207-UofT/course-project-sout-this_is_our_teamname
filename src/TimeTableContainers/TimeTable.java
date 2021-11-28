@@ -6,6 +6,7 @@ import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
 import Helpers.Constants;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -44,11 +45,31 @@ public class TimeTable {
     }
 
     /**
+     * Returns a copy of the timetable (not alias)
+     *
+     * @return the copy of the timetable
+     */
+    public LinkedHashMap<String, Events[]> getCopy() {
+        LinkedHashMap<String, Events[]> copy = new LinkedHashMap<>();
+        for (String day : this.calendar.keySet()) {
+            Events[] events = new Events[24];
+            for (int i = 0; i < 24; i++) {
+                events[i] = this.calendar.get(day)[i];
+            }
+            copy.put(day, events);
+        }
+        return copy;
+    }
+
+    /**
      * Schedules the given activity into the appropriate weekday.
+     *
      * @param event the given activity
      * @return true if scheduling is successful, false if there is a conflict
      */
     public boolean schedule(Events event) {
+        // eliminating possible empty string for name attribute, so it would show up in display better.
+        event.unnamed();
         if (checkConflicts(event)) {
             int start = event.getStartTime().getHour();
             int end = event.getEndTime().getHour();
@@ -64,6 +85,7 @@ public class TimeTable {
 
     /**
      * Check if there is a conflict in the timetable with given activity.
+     *
      * @param activity the given activity
      * @return true if there is no conflict, false otherwise
      */
@@ -71,10 +93,32 @@ public class TimeTable {
         Events[] weekday = calendar.get(activity.getDate());
         int start = activity.getStartTime().getHour();
         int end = activity.getEndTime().getHour();
-        for (int i = start; i < end; i++ ){
-            if (weekday[i] != null){
+        for (int i = start; i < end; i++) {
+            if (weekday[i] != null) {
                 return false;
             }
+        }
+        return true;
+    }
+
+    /**
+     * Remove the given activity from this TimeTable
+     * Precondition: the start time is later than the end time of this activity.
+     *
+     * @param startTime The start time of this activity
+     * @param endTime   The end time of this activity
+     * @param day       The day of the week this activity is on
+     * @return          true if the activity was removed, false otherwise.
+     */
+    public boolean remove(LocalTime startTime, LocalTime endTime, String day) {
+        int startTimeInt = startTime.getHour();
+        int endTimeInt = endTime.getHour();
+        if (this.calendar.get(day)[startTimeInt] == null) {
+            return false;
+        }
+        while (startTimeInt != endTimeInt) {
+            this.calendar.get(day)[startTimeInt] = null;
+            startTimeInt += 1;
         }
         return true;
     }
@@ -86,11 +130,12 @@ public class TimeTable {
      * @return true if the course is present, false otherwise
      */
     public boolean checkCourseSection(Course course) {
-        String courseCode = course.getSectionName();
+        String courseCode = course.getCourseName() + course.getSectionName();
         for (Events[] day : this.calendar.values()) {
             for (Events hour : day) {
                 if (hour instanceof CourseSection) {
-                    String sectionCode = ((CourseSection) hour).getSectionCode();
+                    String sectionCode = ((CourseSection) hour).getCourseName() +
+                            ((CourseSection) hour).getSectionCode();
                     if (sectionCode.equals(courseCode)) {
                         return true;
                     }
@@ -146,23 +191,3 @@ public class TimeTable {
     }
 }
 
-//
-//    /**
-//     *
-//     *
-//     * Precondition: otherTimeTable must have
-//     *
-//     * @param otherTimeTable
-//     */
-//    public void scheduleAll(TimeTable otherTimeTable) {
-//        ArrayList<CourseSection> thisCourses = this.returnCourses();
-//        ArrayList<CourseSection> otherCourses = otherTimeTable.returnCourses();
-//        if (thisCourses.size() > otherCourses.size()){
-//            ArrayList<CourseSection> difference = new ArrayList<>(thisCourses);
-//            difference.removeAll(otherCourses);
-//        }
-//        else if (thisCourses.size() < otherCourses.size()){
-//            ArrayList<CourseSection> difference = new ArrayList<>(otherCourses);
-//        }
-//
-//    }

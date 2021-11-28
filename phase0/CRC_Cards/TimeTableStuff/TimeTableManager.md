@@ -4,7 +4,7 @@
 * An **Use Case**
 
 ## Collaborators
-* `Controllers` (receives the `TimeTableObjects` to schedule)
+* `InterfaceAdaptors` (receives the `TimeTableObjects` to schedule)
 * `Course` (One data structure that passed from interface)
 * `Section` (Created by `.split()` in `Course`, the object being scheduled)
 * `TimeTableObject` + their children (the object being scheduled)

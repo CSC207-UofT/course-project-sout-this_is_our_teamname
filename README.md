@@ -4,6 +4,9 @@ Welcome to our Team Repo! In this repo, please find our course project for
 CSC207H1 F, Fall 2021 at the University of Toronto St.George.
 
 ## Table Of Contents
+### Requirements
+* [Instructions](External_Libraries.md)
+
 ### Phase 2
 * [Design Document](phase2/design_document.md)
 * [Progress Report](phase2/progress_report.md)

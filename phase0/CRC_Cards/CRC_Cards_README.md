@@ -15,7 +15,7 @@ In this file, please find our CRC cards. It is categorized into 4 folders:
   * [TimeTableObject](EntitiesAndObjects/TimeTableObjects/TimeTableObject.md)
   * [Sliceable](EntitiesAndObjects/TimeTableObjects/Interfaces/Slicable.md)
 * TimeTableContainers
-  * [Controllers](DatabaseController/DatabaseController.md)
+  * [InterfaceAdaptors](DatabaseController/DatabaseController.md)
   * [TimeTable](TimeTableStuff/TimeTable.md)
   * [TimeTableManager](TimeTableStuff/TimeTableManager.md)
 * Interfaces

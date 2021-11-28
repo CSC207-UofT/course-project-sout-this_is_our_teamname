@@ -68,7 +68,7 @@ public class MakeEventCommand implements Command {
                     "MY150, Home, Middle of Nowhere)", new isTrivial()));
             prompts.put(DATE, new InputChecker("Enter the Day of the week (eg;" +
                     " Monday, Tuesday, Wednesday, etc.)", new isDate()));
-            prompts.put(TERM, new InputChecker("Enter the Term e.g. Fall 2021/Winter 2022",
+            prompts.put(TERM, new InputChecker("Enter the Term (Fall/Winter)",
                     new isTerm()));
             prompts.put(TYPE, new InputChecker("Enter the Type of the Object " +
                     "(Activity/Task)", new isTrivial()));
@@ -207,9 +207,8 @@ public class MakeEventCommand implements Command {
     private static class isTerm extends Predicate {
         @Override
         public boolean run(String prompt) {
-//            return prompt.equals(Constants.FALL) ||
-//                    prompt.equals(Constants.WINTER);
-            return prompt.matches("[a-zA-Z]+\\s[0-9]+");
+            return prompt.equals(Constants.FALL) ||
+                    prompt.equals(Constants.WINTER);
         }
     }
 

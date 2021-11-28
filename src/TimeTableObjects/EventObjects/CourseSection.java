@@ -33,9 +33,13 @@ public class CourseSection extends Events  implements Reconstructable {
      * @param sectionCode The code for this course
      * @param waitlist Whether the course is waitlisted
      */
-    public CourseSection(String CourseName, LocalTime startTime,
-                         LocalTime endTime, String theDate, String term,
-                         String sectionCode, boolean waitlist) {
+    public CourseSection(String CourseName,
+                         LocalTime startTime,
+                         LocalTime endTime,
+                         String theDate,
+                         String term,
+                         String sectionCode,
+                         boolean waitlist) {
         super(startTime, endTime, theDate, term);
         this.courseName = CourseName;
         this.sectionCode = sectionCode;

@@ -11,11 +11,11 @@ import java.time.LocalTime;
 import java.util.*;
 
 /**
- * A WebScraper class. It is a DataGetter class that gets the data from the course finder
+ * A WebScraper class. It is a DataGetter class that gets the data from a the course finder
  * website.
  *
  */
-public class WebScraper extends DataGetter{
+public class WebScraper extends CourseGetter {
 
     /**
      * Constructor of the WebScraper. Reads and filters the data correctly
@@ -31,7 +31,7 @@ public class WebScraper extends DataGetter{
     public void CalibrateData(String courseName, String theTerm,
                               String theYear) throws FileNotFoundException {
 
-        String searchQuery = formatSearchQuery(theTerm, courseName, theYear);
+        String searchQuery = buildSearchQuery(theTerm, courseName, theYear);
 
         // format the url and connect to the coursefinder.
         Document doc;
@@ -51,7 +51,7 @@ public class WebScraper extends DataGetter{
             throw new FileNotFoundException();
         }
 
-        filterData(doc, theYear);
+        filterData(doc);
     }
 
     // ============================== Helpers ==================================
@@ -89,7 +89,7 @@ public class WebScraper extends DataGetter{
      *
      * @param doc a document object associated with corresponding html.
      */
-    private void filterData(Document doc, String year) {
+    private void filterData(Document doc) {
         // find element by combination of elements with id.
         String term = removeCss(doc.select("span#u158").text());
         String faculty = removeCss(doc.select("span#u13").text());
@@ -122,10 +122,7 @@ public class WebScraper extends DataGetter{
 
             String theTerm = formatTerm(courseCode, term);
 
-            if (courseCode.charAt(courseCode.length() - 2) == 'Y'){
-                theTerm = "Year";
-            }
-            addCourseToData(courseCode, theTerm + " " + year, section, faculty,
+            addCourseToData(courseCode, theTerm, section, faculty,
                     locationTimeMap, professor, deliveryMethod);
 
             i++;
