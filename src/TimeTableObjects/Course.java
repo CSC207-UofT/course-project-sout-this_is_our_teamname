@@ -48,7 +48,7 @@ public class Course implements Splittable<CourseSection> {
      *                     String[], String, where the string array will hold
      *                     the date and time information like the following:
      *                     {date, startTime, endTime}
-     * @param term The term for this course
+     * @param term The term and year for this course e.g. Fall 2021
      * @param wait_list Whether the course is waitlisted
      */
     public Course(String CourseName,

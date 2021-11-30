@@ -1,6 +1,6 @@
 package Commands;
 
-import DataGetting.DataGetter;
+import DataGetting.CourseGetter;
 import Helpers.InputCheckers.InputChecker;
 import TimeTableObjects.Course;
 
@@ -16,7 +16,7 @@ public interface NeedsCourses {
     /**
      * Prompts the user for inputs
      */
-    static LinkedHashMap<String, ArrayList<Course>> userInputs(DataGetter dataSource) {
+    static LinkedHashMap<String, ArrayList<Course>> userInputs(CourseGetter dataSource) {
         LinkedHashMap<String, ArrayList<Course>> course_data =
                 new LinkedHashMap<>();
 
@@ -31,7 +31,7 @@ public interface NeedsCourses {
 
             try {
                 // Gets the data from the datasource
-                course_data = dataSource.getData(responses[0], responses[1],
+                course_data = dataSource.retrieveData(responses[0], responses[1],
                         responses[2]);
                 validCourseChecker = false;
             } catch (FileNotFoundException e) {

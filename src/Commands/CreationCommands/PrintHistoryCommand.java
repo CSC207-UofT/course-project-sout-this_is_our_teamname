@@ -1,7 +1,7 @@
 package Commands.CreationCommands;
 
 import Commands.Command;
-import Controllers.DatabaseController;
+import InterfaceAdaptors.DatabaseController;
 
 import java.util.Stack;
 

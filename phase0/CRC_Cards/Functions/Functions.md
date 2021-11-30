@@ -10,7 +10,7 @@
 ## Collaborators
 * `TimeTable` (to contort)
 * `TimeTableObject` + its children (to contort)
-* `Controllers` (To call a method)
+* `InterfaceAdaptors` (To call a method)
 
 ## Responsibilities
 * To define functions and tools that the timetable can use

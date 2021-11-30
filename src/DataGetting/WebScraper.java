@@ -11,11 +11,11 @@ import java.time.LocalTime;
 import java.util.*;
 
 /**
- * A WebScraper class. It is a DataGetter class that gets the data from the course finder
+ * A WebScraper class. It is a DataGetter class that gets the data from a the course finder
  * website.
  *
  */
-public class WebScraper extends DataGetter{
+public class WebScraper extends CourseGetter {
 
     /**
      * Constructor of the WebScraper. Reads and filters the data correctly
@@ -290,7 +290,7 @@ public class WebScraper extends DataGetter{
         for (String course : courses){
             try {
                 LinkedHashMap<String,
-                        ArrayList<Course>> got = a.getData(course, "Fall",
+                        ArrayList<Course>> got = a.retrieveData(course, "Fall",
                         "2021");
                 System.out.println(got);
             } catch (FileNotFoundException e){

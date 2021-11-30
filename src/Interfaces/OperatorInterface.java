@@ -2,8 +2,8 @@ package Interfaces;
 
 import DataGetting.CSVScraper;
 import DataGetting.WebScraper;
-import Controllers.DatabaseController;
-import Controllers.CommandFactory;
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.DatabaseController;
 import TimeTableContainers.TimeTableManager;
 import Helpers.InputCheckers.InputChecker;
 import Helpers.InputCheckers.Predicate;
@@ -18,24 +18,19 @@ import java.util.*;
  * === Private Attributes ===
  * control: This is a DatabaseController
  * datasource: A String of the selected datasource's name
- * bannedFunctions: An ArrayList of  names of functions that are banned by the operator.
  */
 public class OperatorInterface {
     private final DatabaseController control;
     private String datasource;
-   // private final ArrayList<String> bannedFunctions;
-
 
     /**
      * Constructor.
-     * Set control, datasource, and bannedFunctions.
+     * Set control and datasource.
      */
     public OperatorInterface(DatabaseController controller) {
         this.control = controller;
         this.datasource = null;
-       // this.bannedFunctions = new ArrayList<>();
     }
-
 
     /**
      * Set the datasource to the CommandFactory according to the operator's choice.
@@ -48,7 +43,6 @@ public class OperatorInterface {
         // Set the datasource of theFactory to be CSVScraper if operator chooses it.
         if (input.equals("CSVScraper")) {
             theFactory.setDataSource(new CSVScraper());
-            theFactory.setManager(new TimeTableManager());
             this.control.setFactory(theFactory);
             this.datasource = input;
             this.downloadDatasource(input);
@@ -80,15 +74,15 @@ public class OperatorInterface {
         String bannedFunction = oldFunctions[index];
         for (int i = 0, k = 0; i < oldFunctions.length; i ++) {
             if (! oldFunctions[i].equals(bannedFunction)) {
-               // this.downloadFunction();
+                // this.downloadFunction();
                 newFunctions[k] = oldFunctions[i];
                 k++;
             }
         }
 
-        // Update the allowedFunction in the CommandFactory
+        // Save the new allowedFunction.
         this.downloadFunction(newFunctions);
-
+        // Update the allowedFunction in the CommandFactory
         commandFactory.setAllowedFunctions(newFunctions);
         this.control.setFactory(commandFactory);
     }
@@ -98,54 +92,53 @@ public class OperatorInterface {
      * Runs the OperatorInterface
      */
     public void run() throws IOException {
+        // Checks which datasource does the operator want to set.
+        InputChecker requestDatasource = new InputChecker("Which datasource do you want to set (CSVScraper/WebScraper/n (if you do not want to set)): ",
+                new isValidDatasource());
+        String type = requestDatasource.checkCorrectness();
+        // Set the datasource if the operator has chosen one.
+        CommandFactory theFactory = new CommandFactory(control);
+        this.SetDatasource(theFactory, type);
 
-            // Checks which datasource does the operator want to set.
-            InputChecker requestDatasource = new InputChecker("Which datasource do you want to set (CSVScraper/WebScraper/n (if you do not want to set)): ",
-                    new isValidDatasource());
-            String type = requestDatasource.checkCorrectness();
-            // Set the datasource if the operator has chosen one.
-            CommandFactory theFactory = new CommandFactory(control);
-            this.SetDatasource(theFactory, type);
-
-            // Checks if the user wants to ban a function.
-            InputChecker requestBan = new InputChecker("Do you want to ban a function? " +
+        // Checks if the user wants to ban a function.
+        InputChecker requestBan = new InputChecker("Do you want to ban a function? " +
                 "(true/false):",
                 new isValidBoolean());
-            String ban = requestBan.checkCorrectness();
+        String ban = requestBan.checkCorrectness();
 
-            // If the operator wants to ban a function.
-            if (ban.equals("true")) {
-                // As long as the operator wants to ban function.
-                boolean running2 = true;
-                while (running2){
-                    // Print all functions that the operator can choose to ban.
-                    LinkedHashMap<String, String> allowed =
-                            hashMapit(theFactory.getAllowedFunctions());
-                    for (String key : allowed.keySet()){
-                        System.out.println(key + ": " + allowed.get(key));
-                    }
+        // If the operator wants to ban a function.
+        if (ban.equals("true")) {
+            // As long as the operator wants to ban function.
+            boolean running2 = true;
+            while (running2){
+                // Print all functions that the operator can choose to ban.
+                LinkedHashMap<String, String> allowed =
+                        hashMapit(theFactory.getAllowedFunctions());
+                for (String key : allowed.keySet()){
+                    System.out.println(key + ": " + allowed.get(key));
+                }
 
-                    // Ask operator which function to ban.
-                    InputChecker requestCommand = new InputChecker("Which function do you want to ban?",
-                            new isValidCommand(allowed));
-                    String requested = requestCommand.checkCorrectness();
+                // Ask operator which function to ban.
+                InputChecker requestCommand = new InputChecker("Which function do you want to ban?",
+                        new isValidCommand(allowed));
+                String requested = requestCommand.checkCorrectness();
 
-                    // Ban the function
-                    //this.bannedFunctions.add(requested);
-                    this.banFunction(requested, theFactory);
+                // Ban the function
+                this.banFunction(requested, theFactory);
 
-                    // Checks if the operator wants to ban another function.
-                    InputChecker continueBan = new InputChecker("Do you want to ban another function? " +
-                            "(true/false):", new isValidBoolean());
-                    String whetherBan = continueBan.checkCorrectness();
+                // Checks if the operator wants to ban another function.
+                InputChecker continueBan = new InputChecker("Do you want to ban another function? " +
+                        "(true/false):", new isValidBoolean());
+                String whetherBan = continueBan.checkCorrectness();
 
-                    // If operator does not want to ban another function.
-                    if (whetherBan.equals("false")) {
-                        running2 = false;
-                    }
+                // If operator does not want to ban another function.
+                if (whetherBan.equals("false")) {
+                    running2 = false;
                 }
             }
+        }
     }
+
 
     // ============================ Helper Methods =================================
     /**
@@ -175,7 +168,7 @@ public class OperatorInterface {
 
 
     /**
-     * Save the name of the selected function in the file, functions.txt.
+     * Save the new list if allowedFunctions in the file, functions.txt.
      *
      * @param function the number of the function banned by operator.
      * @exception IOException throws when the file, functions.txt, is not found.

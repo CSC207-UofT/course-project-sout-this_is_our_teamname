@@ -1,7 +1,8 @@
 package Interfaces;
 
-import Controllers.DatabaseController;
-import Controllers.CommandFactory;
+import InterfaceAdaptors.DatabaseController;
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.Presenter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,17 +16,20 @@ import java.util.Arrays;
  * === Private Attributes ===
  *  control: The DatabaseController object.
  *  operator: The OperatorInterface object.
+ *  presenter: the Presenter object.
  */
 public class UserInterface {
     private final DatabaseController control;
     private final OperatorInterface operator;
+    private final Presenter presenter;
 
     /**
      * Constructor of the UserInterface.
-     * Sets control and operator.
+     * Sets presenter, control and operator.
      */
     public UserInterface() {
-        this.control = new DatabaseController();
+        this.presenter = new Presenter();
+        this.control = this.presenter.getController();
         this.operator = new OperatorInterface(this.control);
     }
 
@@ -44,17 +48,16 @@ public class UserInterface {
         CommandFactory theFactory = new CommandFactory(control);
         this.operator.SetDatasource(theFactory, this.readDatasource());
 
-
+        // Set the AllowedFunction in the file to be the one saved in the file.
         String[] banFunctions = this.readFunctions();
-        System.out.println(Arrays.toString(banFunctions));
+        // Check whether the file is empty.
         if (!Arrays.toString(banFunctions).equals("[]")) {
             theFactory.setAllowedFunctions(banFunctions);
         }
 
-
         while (running) {
             System.out.println("\nCurrent datasource: " + this.operator.getDatasource());
-            running = control.run();
+            running = presenter.run();
         }
     }
 
@@ -95,24 +98,24 @@ public class UserInterface {
      *
      * The IOException will be raised if the given file is not found.
      *
-     * @return A string in datasource.txt.
+     * @return the Array of allowedFunctions.
      */
     private String[] readFunctions() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         // Read the file.
         BufferedReader bufferedReader = new BufferedReader(new FileReader("src/Interfaces/functions.txt"));
         String s;
-        String newString1 = "";
+        String newString = "";
         // Check whether the datasource.json is empty.
         if ((s = bufferedReader.readLine()) != null) {
+            // rawString is the String contains "[" and "]", need to delete them first and then convert the String into Array
             stringBuilder.append(s.trim());
             String rawString = stringBuilder.toString();
-            newString1 = rawString.substring(1, rawString.length() - 1);
+            newString = rawString.substring(1, rawString.length() - 1);
         }
-        // rawString is the String contains "[" and "]", need to delete them first and then convert the String into Array
 
-        System.out.println(newString1);
 
-        return newString1.split(",\\s+");
+
+        return newString.split(",\\s+");
     }
 }

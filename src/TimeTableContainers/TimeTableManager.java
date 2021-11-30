@@ -1,6 +1,7 @@
 package TimeTableContainers;
 
 import Helpers.Constants;
+import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
@@ -20,13 +21,10 @@ public class TimeTableManager {
     private final HashMap<String, TimeTable> timetables;
 
     /**
-     * Creates a new TimeTableManager with two default TimeTables for Fall and Winter.
+     * Creates a new TimeTableManager with no timetables.
      */
     public TimeTableManager() {
-        this.timetables = new HashMap<>() {{
-            put(Constants.FALL, new TimeTable());
-            put(Constants.WINTER, new TimeTable());
-        }};
+        this.timetables = new HashMap<>();
     }
 
     /**
@@ -35,18 +33,36 @@ public class TimeTableManager {
      *
      * @param event an Events passed from user interface
      */
-    public void schedule(Events event) {
-        switch (event.getTerm()) {
-            case Constants.FALL:
-                timetables.get(Constants.FALL).schedule(event);
-                break;
-            case Constants.WINTER:
-                timetables.get(Constants.WINTER).schedule(event);
-                break;
-            default:
-                timetables.get(Constants.FALL).schedule(event);
-                timetables.get(Constants.WINTER).schedule(event);
+    public boolean schedule(Events event) {
+        String[] splited = event.getTerm().split("\\s+");
+        // Since the format is Term Year, the term is at index 0 and year index 1
+        String term = splited[0];
+        String year = splited[1];
+        // If we want to schedule a year event, we want every term in that year get scheduled.
+        if (term.equals("Year")){
+            for (String t : timetables.keySet()){
+                if (t.split("\\s+")[1].equals(year)){
+                    this.getTimetable(t).schedule(event);
+                }
+            }
+            return true;
         }
+        else{
+             return(this.getTimetable(event.getTerm()).schedule(event));
+        }
+
+
+//        switch (event.getTerm()) {
+//            case Constants.FALL:
+//                timetables.get(Constants.FALL).schedule(event);
+//                break;
+//            case Constants.WINTER:
+//                timetables.get(Constants.WINTER).schedule(event);
+//                break;
+//            default:
+//                timetables.get(Constants.FALL).schedule(event);
+//                timetables.get(Constants.WINTER).schedule(event);
+//        }
 //        if (event.getTerm().equals(Constants.FALL)){
 //           timetables.get(Constants.FALL).schedule(event);
 //
@@ -94,29 +110,30 @@ public class TimeTableManager {
     }
 
     /**
-     * Add a new empty TimeTable with the given term.
+     * Add a new empty TimeTable with the given name.
      *
-     * @param term given term the of timetable
+     * @param name given name the of timetable
      * @return true if we successfully add a new TimeTable, else false.
      */
-    public boolean addTimeTable(String term) {
-        if (this.timetables.containsKey(term)) {
+    public boolean addTimeTable(String name) {
+        if (this.timetables.containsKey(name)) {
             return false;
         } else {
-            timetables.put(term, new TimeTable());
+            timetables.put(name, new TimeTable());
             return true;
         }
     }
 
     /**
-     * Remove an existing TimeTable with the given term.
+     * Remove an existing TimeTable with the given name. If the timetable doesn't exists,
+     * create a new one with the given name.
      *
-     * @param term given term the of timetable
+     * @param name the given name of timetable
      * @return true if we successfully remove a TimeTable, else false.
      */
-    public boolean removeTimeTable(String term) {
-        if (this.timetables.containsKey(term)) {
-            timetables.remove(term);
+    public boolean removeTimeTable(String name) {
+        if (this.timetables.containsKey(name)) {
+            timetables.remove(name);
             return true;
         } else {
             return false;
@@ -195,6 +212,26 @@ public class TimeTableManager {
     }
 
     /**
+     * Get an event from the user interface and schedule it to the corresponding timetable(s).
+     *
+     * @param event an Events passed from user interface
+     */
+    public boolean checkConflicts(Events event){
+        switch (event.getTerm()){
+            case Constants.FALL:
+                return timetables.get(Constants.FALL).checkConflicts(event);
+            case Constants.WINTER:
+                return timetables.get(Constants.WINTER).checkConflicts(event);
+            case Constants.YEAR:
+                return timetables.get(Constants.FALL).checkConflicts(event) &&
+                        timetables.get(Constants.WINTER).checkConflicts(event);
+            default:
+                // If the timetable is not found, then there is a conflict
+                return false;
+        }
+    }
+
+    /**
      * Returns an array of timetables with all the timetables.
      *
      * @return an array of timetables with all the timetables
@@ -211,17 +248,16 @@ public class TimeTableManager {
     }
 
     /**
-     * Get the timetable object for the given term.
+     * Get the timetable object for the given name.
      *
+     * @param name the name for the wanted timetable.
      * @return the corresponding TimeTable object.
      */
-    public TimeTable getTimetable(String term) {
-        if (this.timetables.containsKey(term)) {
-            return timetables.get(term);
-        } else {
-            //TODO exceptions later
-            return null;
+    public TimeTable getTimetable(String name) {
+        if (!this.timetables.containsKey(name)) {
+            timetables.put(name, new TimeTable());
         }
+        return timetables.get(name);
     }
 
     /**
@@ -239,16 +275,20 @@ public class TimeTableManager {
 
     /**
      * Get all CourseSections in this TimeTable
+     * Precondition: All CourseSections in this TimeTable occur between the hours of 07:00 to 22:00 on weekdays.
      *
-     * @return An ArrayList of all the CourseSections in his TimeTable
+     * @return An ArrayList of all the CourseSections in this TimeTable
      */
     public ArrayList<CourseSection> returnCourses() {
         ArrayList<CourseSection> courses = new ArrayList<>();
         for (TimeTable timeTable : this.getAllTimeTables())
-            for (Events[] day : timeTable.getCalendar().values()) {
-                for (Events hour : day) {
-                    if (hour instanceof CourseSection){
-                        courses.add((CourseSection) hour);
+            for (String day: timeTable.getCalendar().keySet()) {
+                if (!Objects.equals(day, Constants.SATURDAY) && !Objects.equals(day, Constants.SUNDAY)) {
+                    for (int hour=7; hour<23; hour++) {
+                        Events hourEvent = timeTable.getCalendar().get(day)[hour];
+                        if (hourEvent instanceof CourseSection) {
+                            courses.add((CourseSection) hourEvent);
+                        }
                     }
                 }
             }
