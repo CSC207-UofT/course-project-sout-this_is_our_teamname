@@ -36,6 +36,22 @@ public class TimeTable {
 
     }
 
+    /**
+     * Sets the TimeTable with given savedCalendar
+     * @param savedCalendar is the saved calendar
+     */
+    public void setCalendar(LinkedHashMap<String, Events[]> savedCalendar) {
+        this.calendar = savedCalendar;
+    }
+
+    /**
+     * Sets the TimeTable with given savedTaskCalendar
+     * @param savedTaskCalendar is the saved task calendar
+     */
+    public void setTaskCalendar(LinkedHashMap<String, ArrayList<Task>> savedTaskCalendar) {
+        this.taskCalendar = savedTaskCalendar;
+    }
+
     // ========================= Basic Operations ==============================
     /**
      * Schedules the given activity into the appropriate weekday.
@@ -45,9 +61,7 @@ public class TimeTable {
      */
     public boolean schedule(Events event) {
         // eliminating possible empty string for name attribute, so it would show up in display better.
-        if (event.getName().isEmpty()) {
-            event.nameIt();
-        }
+        event.unnamed();
         if (checkConflicts(event) && event instanceof Activity) {
             int start = event.getStartTime().getHour();
             int end = event.getEndTime().getHour();
@@ -57,7 +71,8 @@ public class TimeTable {
                 this.calendar.get(event.getDate())[i] = event;
             }
             return true;
-        } else if (checkConflicts(event) && event instanceof Task) {
+        }
+        else if (checkConflicts(event) && event instanceof Task) {
             this.taskCalendar.get(event.getDate()).add((Task) event);
             return true;
         }
@@ -87,10 +102,10 @@ public class TimeTable {
 
     /**
      * Adds a Task object to the taskCalendar
-     * @param reminder is a Task object
+     * @param task is a Task object
      */
-    public void addTasks(Task reminder) {
-        this.taskCalendar.get(reminder.getDate()).add(reminder);
+    public void addTasks(Task task) {
+        this.taskCalendar.get(task.getDate()).add(task);
     }
 
     /**
@@ -115,7 +130,6 @@ public class TimeTable {
         return true;
     }
 
-    // ================================ toString ===============================
     /**
      * Generate the String representation of the calender.
      * @return the string of calendar
@@ -124,53 +138,86 @@ public class TimeTable {
 
         StringBuilder timeStrings = new StringBuilder();
         for (String day : this.calendar.keySet()) {
-            timeStrings.append(getCalenderString(day));
-            timeStrings.append(getTaskString(day)).append("\n");
-        }
-        return timeStrings.toString();
-    }
+            StringBuilder times = new StringBuilder(day + ":\n");
 
-    private String getTaskString(String day) {
-        // Add reminder for all tasks
-        StringBuilder tasks = new StringBuilder();
-        tasks.append("\t").append("Reminders: ");
-        ArrayList<Task> allReminders = this.taskCalendar.get(day);
-        for (Task allReminder : allReminders) {
-            tasks.append(allReminder).append(", ");
-        }
-        return tasks.substring(0, tasks.length() - 1);
-    }
+            //Add reminder for all tasks
+            StringBuilder tasks = new StringBuilder();
+            tasks.append("\t").append("Reminder: ");
+            ArrayList<Task> allTasks = this.taskCalendar.get(day);
+            for (int i = 0; i < allTasks.size(); i++) {
+                if (i == 0) {
+                    tasks.append(allTasks.get(i));
+                }
+                else {
+                    tasks.append(", ").append(allTasks.get(i));
+                }
+            }
+            times.append(tasks).append("\n");
 
-    private StringBuilder getCalenderString(String day) {
-        StringBuilder times = new StringBuilder(day + ":\n");
-
-        // Add all courses and activities
-        Events[] events = this.calendar.get(day);
-        for (int i = 0; i < events.length; i++) {
-            times.append("\t").append(i).append(":00 ");
-            if (events[i] != null) {
-                times.append(events[i]).append("\n");
-            } else {
-                times.append("\n");
+            //Add all courses and activities
+            Events[] events = this.calendar.get(day);
+            for (int i = 0; i < events.length; i++) {
+                times.append("\t").append(i).append(":00 ");
+                if (events[i] != null) {
+                    times.append(events[i]).append("\n");
+                } else {
+                    times.append("\n");
+                }
             }
         }
-        return times;
     }
 
     // ===================== Setters and Getters ===============================
     /**
-     * Gets a copy of the TimeTable (not alias)
+     * Returns a copy of the timetable (not alias)
      *
-     * @return the copy of the TimeTable
+     * @return the copy of the timetable
      */
-    public TimeTable getCopy() {
-        TimeTable copy = new TimeTable();
-        copy.setCalendar(getCalendarCopy());
-        copy.setTaskCalendar(getTaskCopy());
+    public LinkedHashMap<String, Events[]> getCopy() {
+        LinkedHashMap<String, Events[]> copy = new LinkedHashMap<>();
+        for (String day : this.calendar.keySet()) {
+            Events[] events = new Events[24];
+            for (int i = 0; i < 24; i++) {
+                events[i] = this.calendar.get(day)[i];
+            }
+            copy.put(day, events);
+        }
         return copy;
     }
 
     /**
+     * Get the task hashmap
+     * @return the task hashmap
+     */
+    public LinkedHashMap<String, ArrayList<Task>> getTaskCalendar() {
+        return taskCalendar;
+    }
+
+    /**
+     * Get the calender of the timetable
+     * @return the calender contained in the timetable
+     */
+    public LinkedHashMap<String, Events[]> getCalendar() {
+        return this.calendar;
+    }
+
+    /**
+     * Check if the given course is present in this TimeTable
+     * TODO This method is never used, and incorrect
+     * @param course The course to be checked
+     * @return true if the course is present, false otherwise
+     */
+    public boolean checkCourseSection(Course course) {
+        String courseCode = course.getCourseName() + course.getSectionName();
+        for (Events[] day : this.calendar.values()) {
+            for (Events hour : day) {
+                if (hour instanceof CourseSection) {
+                    String sectionCode = ((CourseSection) hour).getCourseName() +
+                            ((CourseSection) hour).getSectionCode();
+                    if (sectionCode.equals(courseCode)) {
+                        return true;
+                    }
+
      * Gets a copy of the calendar (not alias)
      *
      * @return the copy of the calendar
@@ -195,65 +242,22 @@ public class TimeTable {
     public LinkedHashMap<String, ArrayList<Task>> getTaskCopy() {
         LinkedHashMap<String, ArrayList<Task>> copy = new LinkedHashMap<>();
         for (String day : this.taskCalendar.keySet()) {
-            ArrayList<Task> reminders =
-                    new ArrayList<>(this.taskCalendar.get(day));
-            copy.put(day, reminders);
+            ArrayList<Task> tasks = new ArrayList<>(this.taskCalendar.get(day));
+            copy.put(day, tasks);
         }
         return copy;
     }
 
     /**
-     * Get the task hashmap
-     * @return the task hashmap
+     * Gets a copy of the TimeTable (not alias)
+     *
+     * @return the copy of the TimeTable
      */
-    public LinkedHashMap<String, ArrayList<Task>> getTaskCalendar() {
-        return taskCalendar;
-    }
-
-    /**
-     * Get the calender of the timetable
-     * @return the calender contained in the timetable
-     */
-    public LinkedHashMap<String, Events[]> getCalendar() {
-        return this.calendar;
-    }
-
-    /**
-     * Sets the TimeTable with given savedCalendar
-     * @param savedCalendar is the saved calendar
-     */
-    public void setCalendar(LinkedHashMap<String, Events[]> savedCalendar) {
-        this.calendar = savedCalendar;
-    }
-
-    /**
-     * Sets the TimeTable with given savedTaskCalendar
-     * @param savedTaskCalendar is the saved task calendar
-     */
-    public void setTaskCalendar(LinkedHashMap<String, ArrayList<Task>> savedTaskCalendar) {
-        this.taskCalendar = savedTaskCalendar;
-    }
-
-    /**
-     * Check if the given course is present in this TimeTable
-     * TODO This method is never used, and incorrect
-     * @param course The course to be checked
-     * @return true if the course is present, false otherwise
-     */
-    public boolean checkCourseSection(Course course) {
-        String courseCode = course.getCourseName() + course.getSectionName();
-        for (Events[] day : this.calendar.values()) {
-            for (Events hour : day) {
-                if (hour instanceof CourseSection) {
-                    String sectionCode = ((CourseSection) hour).getCourseName() +
-                            ((CourseSection) hour).getSectionCode();
-                    if (sectionCode.equals(courseCode)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+    public TimeTable getCopy() {
+        TimeTable copy = new TimeTable();
+        copy.setCalendar(getCalendarCopy());
+        copy.setTaskCalendar(getTaskCopy());
+        return copy;
     }
 }
 

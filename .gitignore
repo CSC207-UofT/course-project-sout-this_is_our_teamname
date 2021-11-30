@@ -19,7 +19,7 @@ gradle-app.setting
 
 # User-specific stuff
 .idea/**/workspace.xml
-.idea/**/reminders.xml
+.idea/**/tasks.xml
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
