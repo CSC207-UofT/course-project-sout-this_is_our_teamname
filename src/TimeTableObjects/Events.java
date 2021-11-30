@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * startTime is the starting time of the event
  * endTime is the ending time of the event
  * date is the weekday of the event
- * term is which school term the timetable belongs to
+ * term is which school term and year the timetable belongs to e.g. Winter 2021, Year 2021
  * name is the name or a short description of the Event
  */
 public abstract class Events implements Reconstructable {
