@@ -5,7 +5,7 @@ import Controllers.CommandFactory;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class UserInterface {
     private final DatabaseController control;
     private final OperatorInterface operator;
-
 
     /**
      * Constructor of the UserInterface.
@@ -41,15 +40,17 @@ public class UserInterface {
         boolean running = true;
 
         // Set the DataGetter of the program to be the one in the datasource.json.
-        this.read();
+        this.readDatasource();
         CommandFactory theFactory = new CommandFactory(control);
-        this.operator.SetDatasource(theFactory, this.read());
+        this.operator.SetDatasource(theFactory, this.readDatasource());
 
-        // Ban the functions banned by operator.
-        ArrayList<String> banFunctions = this.operator.getBannedFunctions();
-        for (String x : banFunctions) {
-            this.operator.banFunction(x, theFactory);
+
+        String[] banFunctions = this.readFunctions();
+        System.out.println(Arrays.toString(banFunctions));
+        if (!Arrays.toString(banFunctions).equals("[]")) {
+            theFactory.setAllowedFunctions(banFunctions);
         }
+
 
         while (running) {
             System.out.println("\nCurrent datasource: " + this.operator.getDatasource());
@@ -76,7 +77,7 @@ public class UserInterface {
      *
      * @return A string in datasource.txt.
      */
-    private String read() throws IOException {
+    private String readDatasource() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         // Read the file.
         BufferedReader bufferedReader = new BufferedReader(new FileReader("src/Interfaces/datasource.txt"));
@@ -86,5 +87,32 @@ public class UserInterface {
             stringBuilder.append(s.trim());
         }
         return stringBuilder.toString();
+    }
+
+
+    /**
+     * Read the functions.txt file.
+     *
+     * The IOException will be raised if the given file is not found.
+     *
+     * @return A string in datasource.txt.
+     */
+    private String[] readFunctions() throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        // Read the file.
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("src/Interfaces/functions.txt"));
+        String s;
+        String newString1 = "";
+        // Check whether the datasource.json is empty.
+        if ((s = bufferedReader.readLine()) != null) {
+            stringBuilder.append(s.trim());
+            String rawString = stringBuilder.toString();
+            newString1 = rawString.substring(1, rawString.length() - 1);
+        }
+        // rawString is the String contains "[" and "]", need to delete them first and then convert the String into Array
+
+        System.out.println(newString1);
+
+        return newString1.split(",\\s+");
     }
 }

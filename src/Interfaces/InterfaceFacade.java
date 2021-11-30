@@ -5,7 +5,6 @@ import java.util.Arrays;
 import Helpers.InputCheckers.InputChecker;
 import Helpers.InputCheckers.Predicate;
 
-
 /**
  * A InterfaceFacade class that serves as the Invoker in the facade
  * pattern. It sets the UserInterface and OperatorInterface and executes them according to input.
@@ -18,7 +17,6 @@ public class InterfaceFacade {
     private final UserInterface userInterface;
     private final OperatorInterface operatorInterface;
 
-
     /**
      * Constructor of the InterfaceFacade.
      * Sets userInterface and operatorInterface.
@@ -27,7 +25,6 @@ public class InterfaceFacade {
         this.userInterface = userInterface;
         this.operatorInterface = operatorInterface;
     }
-
 
     /**
      * Runs the InterfaceFacade.

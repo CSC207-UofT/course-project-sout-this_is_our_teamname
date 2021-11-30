@@ -2,16 +2,11 @@ package Interfaces;
 
 import DataGetting.CSVScraper;
 import DataGetting.WebScraper;
-
-
 import Controllers.DatabaseController;
 import Controllers.CommandFactory;
-
-
 import TimeTableContainers.TimeTableManager;
 import Helpers.InputCheckers.InputChecker;
 import Helpers.InputCheckers.Predicate;
-
 import java.io.IOException;
 import java.io.*;
 import java.util.*;
@@ -28,7 +23,7 @@ import java.util.*;
 public class OperatorInterface {
     private final DatabaseController control;
     private String datasource;
-    private final ArrayList<String> bannedFunctions;
+   // private final ArrayList<String> bannedFunctions;
 
 
     /**
@@ -38,7 +33,7 @@ public class OperatorInterface {
     public OperatorInterface(DatabaseController controller) {
         this.control = controller;
         this.datasource = null;
-        this.bannedFunctions = new ArrayList<>();
+       // this.bannedFunctions = new ArrayList<>();
     }
 
 
@@ -56,7 +51,7 @@ public class OperatorInterface {
             theFactory.setManager(new TimeTableManager());
             this.control.setFactory(theFactory);
             this.datasource = input;
-            this.download(input);
+            this.downloadDatasource(input);
 
             // Set the datasource of theFactory to be WebScraper if operator chooses it.
         } else if (input.equals("WebScraper")) {
@@ -64,7 +59,7 @@ public class OperatorInterface {
             theFactory.setManager(new TimeTableManager());
             this.control.setFactory(theFactory);
             this.datasource = input;
-            this.download(input);
+            this.downloadDatasource(input);
         }
     }
 
@@ -74,21 +69,26 @@ public class OperatorInterface {
      *
      * @param ban the name of the banned function.
      * @param commandFactory the CommandFactory which bans the function.
+     * @exception IOException throws if the file functions.txt is not found.
      */
-    public void banFunction(String ban, CommandFactory commandFactory) {
+    public void banFunction(String ban, CommandFactory commandFactory) throws IOException {
         // Create an Array that stores banned functions.
         String[] oldFunctions =  commandFactory.getAllowedFunctions();
         String[] newFunctions = new String[oldFunctions.length - 1];
+        //this.downloadFunction(ban);
         int index = Integer.parseInt(ban);
         String bannedFunction = oldFunctions[index];
         for (int i = 0, k = 0; i < oldFunctions.length; i ++) {
             if (! oldFunctions[i].equals(bannedFunction)) {
+               // this.downloadFunction();
                 newFunctions[k] = oldFunctions[i];
                 k++;
             }
         }
 
         // Update the allowedFunction in the CommandFactory
+        this.downloadFunction(newFunctions);
+
         commandFactory.setAllowedFunctions(newFunctions);
         this.control.setFactory(commandFactory);
     }
@@ -131,7 +131,7 @@ public class OperatorInterface {
                     String requested = requestCommand.checkCorrectness();
 
                     // Ban the function
-                    this.bannedFunctions.add(requested);
+                    //this.bannedFunctions.add(requested);
                     this.banFunction(requested, theFactory);
 
                     // Checks if the operator wants to ban another function.
@@ -147,7 +147,6 @@ public class OperatorInterface {
             }
     }
 
-
     // ============================ Helper Methods =================================
     /**
      * Get the chosen data source.
@@ -160,25 +159,31 @@ public class OperatorInterface {
 
 
     /**
-     * Get the banned functions.
-     *
-     * @return the ArrayList of the name of banned functions.
-     */
-    public ArrayList<String> getBannedFunctions(){
-        return this.bannedFunctions;
-    }
-
-
-    /**
-     * Save the name of the selected datasource in the file. datasource.txt.
+     * Save the name of the selected datasource in the file, datasource.txt.
      *
      * @param source the name of the datasource selected by operator.
      * @exception IOException throws when the file, datasource.txt, is not found.
      */
-    public void download(String source) throws IOException {
+    public void downloadDatasource(String source) throws IOException {
         FileWriter file = new FileWriter("src/Interfaces/datasource.txt");
         // Write the source in the datasource.json.
         file.write(source);
+        file.flush();
+        // After writing, close the file.
+        file.close();
+    }
+
+
+    /**
+     * Save the name of the selected function in the file, functions.txt.
+     *
+     * @param function the number of the function banned by operator.
+     * @exception IOException throws when the file, functions.txt, is not found.
+     */
+    public void downloadFunction(String[] function) throws IOException {
+        FileWriter file = new FileWriter("src/Interfaces/functions.txt");
+        // Write the source in the datasource.json.
+        file.write(Arrays.toString(function));
         file.flush();
         // After writing, close the file.
         file.close();
