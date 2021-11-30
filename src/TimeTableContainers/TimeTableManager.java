@@ -17,7 +17,7 @@ import java.util.*;
  * timetables contains different timetables as values and their corresponding names as keys.
  */
 public class TimeTableManager {
-    private final HashMap<String, TimeTable> timetables;
+    private HashMap<String, TimeTable> timetables;
 
     /**
      * Creates a new TimeTableManager with no timetables.
@@ -27,6 +27,12 @@ public class TimeTableManager {
     }
 
     // =========================== Basic Functions =============================
+    /**
+     * Sets the TimeTableManager with given savedTimeTables
+     * @param savedTimeTables is the saved timetables
+     */
+    public void setTimetables(HashMap<String, TimeTable> savedTimeTables) { this.timetables = savedTimeTables; }
+
     /**
      * Get an event from the user interface and schedule it to the corresponding timetable(s).
      *
@@ -295,6 +301,26 @@ public class TimeTableManager {
             timetables.put(name, new TimeTable());
         }
         return timetables.get(name);
+    }
+
+    /**
+     * Gets the timetables
+     * @return the timetables
+     */
+    public HashMap<String, TimeTable> getTimetables() { return this.timetables;}
+
+    /**
+     * Gets a copy of TimeTableManager (not alias)
+     * @return the copy of the TimeTableManager
+     */
+    public TimeTableManager getCopy() {
+        TimeTableManager copy = new TimeTableManager();
+        HashMap<String, TimeTable> timetablesCopy = new LinkedHashMap<>();
+        for (String term : this.timetables.keySet()) {
+            timetablesCopy.put(term, this.timetables.get(term).getCopy());
+        }
+        copy.setTimetables(timetablesCopy);
+        return copy;
     }
 
     /**

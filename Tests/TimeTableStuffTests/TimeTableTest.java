@@ -77,13 +77,16 @@ class TimeTableTest {
         lecture2.setDescription(description2);
 
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
-        Task task= new Task(time5,time6,Constants.MONDAY,Constants.FALL);
-        task.addToName("home");
+        Task task1 = new Task(time5,time6,Constants.MONDAY,Constants.FALL);
+        Task task2 = new Task(time5,time6,Constants.MONDAY,Constants.FALL);
+        task1.addToName("home");
+        task2.addToName("test");
         TimeTable table = new TimeTable();
         table.schedule(lecture1);
         table.schedule(lecture2);
         table.schedule(activity);
-        table.schedule(task);
+        table.schedule(task1);
+        table.schedule(task2);
         String actual = table.toString();
 
         String expectedCourse0 = "9:00 MAT257 of Arts and Science with Gauss by In Person at SS100";
@@ -91,7 +94,7 @@ class TimeTableTest {
         String expectedActivity1 = "6:00 nap";
         String expectedActivity2 = "7:00 nap";
         String expectedActivity3 = "8:00 nap";
-        String expectedTask= "5:00 ";
+        String expectedTask = "Reminder: home, test";
         assertTrue(actual.contains(expectedCourse0));
         assertTrue(actual.contains(expectedCourse1));
         assertTrue(actual.contains(expectedActivity1)
