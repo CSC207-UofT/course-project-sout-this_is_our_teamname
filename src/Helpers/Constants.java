@@ -15,8 +15,6 @@ public class Constants {
     public static final String TBA = "TBA";
     public static final String ACTIVITY = "Activity";
     public static final String TASK = "Task";
-    public static final String TIMETABLE_OBJECT = "Events";
-    public static final String COURSE = "Course";
-    public static final String TIMETABLEMANAGER = "Time Table Manager";
-    public static final String FUNCTION = "Function";
+    public static final String[] DAYS_OF_THE_WEEK = {MONDAY, TUESDAY,
+            WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY};
 }

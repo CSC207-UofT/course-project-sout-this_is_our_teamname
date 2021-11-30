@@ -2,8 +2,6 @@ package demoGUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.net.URL;
 
 public class homeScreen extends JFrame{
@@ -13,7 +11,7 @@ public class homeScreen extends JFrame{
     JPanel centerPanel = new JPanel(flowLayout);
     JButton cmd1 = new JButton("Schedule Course");
     JButton cmd2 = new JButton("Schedule Event");
-    
+
     SystemTray systemTray;
     public homeScreen() throws AWTException {
         super("TimeTable Scheduler");
@@ -47,7 +45,7 @@ public class homeScreen extends JFrame{
 
         // Terminate program
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+
     }
 
     public void setFrame() throws AWTException {
@@ -56,14 +54,14 @@ public class homeScreen extends JFrame{
         Image image = new ImageIcon(resource).getImage();
         setIconImage(image);
 
-        
-        
+
+
 //        if (SystemTray.isSupported()){
 //            systemTray = SystemTray.getSystemTray();
 //            TrayIcon trayIcon = new TrayIcon(image);
 //            systemTray.add(trayIcon);
 //        }
-//        
+//
 //        this.addWindowFocusListener(new WindowAdapter() {
 //            @Override
 //            public void windowIconified(WindowEvent e) {
@@ -71,7 +69,7 @@ public class homeScreen extends JFrame{
 //            }
 //        });
 //        trayIcon
-        
+
 
         // Set size
         setSize(600, 400);
@@ -82,8 +80,8 @@ public class homeScreen extends JFrame{
         // Fixed size
         setResizable(false);
     }
-    
-    
+
+
     public static void main(String[] args) throws AWTException {
         new homeScreen();
     }
