@@ -1,6 +1,7 @@
 package TimeTableContainers;
 
 import TimeTableObjects.Course;
+import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
@@ -19,8 +20,8 @@ import java.util.LinkedHashMap;
  * tasks contain Task objects(as values) in the corresponding weekday(as keys)
  */
 public class TimeTable {
-    private final LinkedHashMap<String, Events[]> calendar;
-    private final LinkedHashMap<String, ArrayList<Task>> taskCalendar;
+    private LinkedHashMap<String, Events[]> calendar;
+    private LinkedHashMap<String, ArrayList<Task>> taskCalendar;
 
     public TimeTable() {
         this.calendar = new LinkedHashMap<>() {{
@@ -41,24 +42,22 @@ public class TimeTable {
             put(Constants.SATURDAY, new ArrayList<>());
             put(Constants.SUNDAY, new ArrayList<>());
         }};
-
     }
 
     /**
-     * Returns a copy of the timetable (not alias)
-     *
-     * @return the copy of the timetable
+     * Sets the TimeTable with given savedCalendar
+     * @param savedCalendar is the saved calendar
      */
-    public LinkedHashMap<String, Events[]> getCopy() {
-        LinkedHashMap<String, Events[]> copy = new LinkedHashMap<>();
-        for (String day : this.calendar.keySet()) {
-            Events[] events = new Events[24];
-            for (int i = 0; i < 24; i++) {
-                events[i] = this.calendar.get(day)[i];
-            }
-            copy.put(day, events);
-        }
-        return copy;
+    public void setCalendar(LinkedHashMap<String, Events[]> savedCalendar) {
+        this.calendar = savedCalendar;
+    }
+
+    /**
+     * Sets the TimeTable with given savedTaskCalendar
+     * @param savedTaskCalendar is the saved task calendar
+     */
+    public void setTaskCalendar(LinkedHashMap<String, ArrayList<Task>> savedTaskCalendar) {
+        this.taskCalendar = savedTaskCalendar;
     }
 
     /**
@@ -70,7 +69,7 @@ public class TimeTable {
     public boolean schedule(Events event) {
         // eliminating possible empty string for name attribute, so it would show up in display better.
         event.unnamed();
-        if (checkConflicts(event)) {
+        if (checkConflicts(event) && event instanceof Activity) {
             int start = event.getStartTime().getHour();
             int end = event.getEndTime().getHour();
 
@@ -78,6 +77,10 @@ public class TimeTable {
             for (int i = start; i < end; i++) {
                 this.calendar.get(event.getDate())[i] = event;
             }
+            return true;
+        }
+        else if (checkConflicts(event) && event instanceof Task) {
+            this.taskCalendar.get(event.getDate()).add((Task) event);
             return true;
         }
         return false;
@@ -168,6 +171,49 @@ public class TimeTable {
     }
 
     /**
+     * Gets a copy of the calendar (not alias)
+     *
+     * @return the copy of the calendar
+     */
+    public LinkedHashMap<String, Events[]> getCalendarCopy() {
+        LinkedHashMap<String, Events[]> copy = new LinkedHashMap<>();
+        for (String day : this.calendar.keySet()) {
+            Events[] events = new Events[24];
+            for (int i = 0; i < 24; i++) {
+                events[i] = this.calendar.get(day)[i];
+            }
+            copy.put(day, events);
+        }
+        return copy;
+    }
+
+    /**
+     * Gets a copy of the taskCalendar (not alias)
+     *
+     * @return the copy of the taskCalendar
+     */
+    public LinkedHashMap<String, ArrayList<Task>> getTaskCopy() {
+        LinkedHashMap<String, ArrayList<Task>> copy = new LinkedHashMap<>();
+        for (String day : this.taskCalendar.keySet()) {
+            ArrayList<Task> tasks = new ArrayList<>(this.taskCalendar.get(day));
+            copy.put(day, tasks);
+        }
+        return copy;
+    }
+
+    /**
+     * Gets a copy of the TimeTable (not alias)
+     *
+     * @return the copy of the TimeTable
+     */
+    public TimeTable getCopy() {
+        TimeTable copy = new TimeTable();
+        copy.setCalendar(getCalendarCopy());
+        copy.setTaskCalendar(getTaskCopy());
+        return copy;
+    }
+
+    /**
      * Generate the String representation of the calender.
      * @return the string of calendar
      */
@@ -176,6 +222,21 @@ public class TimeTable {
         for (String day : this.calendar.keySet()) {
             StringBuilder times = new StringBuilder(day + ":\n");
 
+            //Add reminder for all tasks
+            StringBuilder tasks = new StringBuilder();
+            tasks.append("\t").append("Reminder: ");
+            ArrayList<Task> allTasks = this.taskCalendar.get(day);
+            for (int i = 0; i < allTasks.size(); i++) {
+                if (i == 0) {
+                    tasks.append(allTasks.get(i));
+                }
+                else {
+                    tasks.append(", ").append(allTasks.get(i));
+                }
+            }
+            times.append(tasks).append("\n");
+
+            //Add all courses and activities
             Events[] events = this.calendar.get(day);
             for (int i = 0; i < events.length; i++) {
                 times.append("\t").append(i).append(":00 ");

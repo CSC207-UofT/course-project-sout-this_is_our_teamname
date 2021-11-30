@@ -1,6 +1,7 @@
 package Commands.CreationCommands;
 
 import Commands.Command;
+import Commands.ManagerChanged;
 import Helpers.ConflictException;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.Events;
@@ -24,8 +25,9 @@ import java.util.regex.Pattern;
  * === Private Attributes ===
  * manager: The manager that will eventually schedule the object
  * scheduledObject: An non course Event waiting to be scheduled
+ * managerChanged: Whether the TimeTableManager is changed
  */
-public class MakeEventCommand implements Command {
+public class MakeEventCommand implements Command, ManagerChanged {
     // Some Constants:
     final String NAME = "Name";
     final String START_TIME = "Start Time";
@@ -37,6 +39,7 @@ public class MakeEventCommand implements Command {
 
     private final TimeTableManager manager;
     private Events scheduledObject;
+    private boolean managerChanged;
 
     /**
      * A constructor to set the command
@@ -45,6 +48,7 @@ public class MakeEventCommand implements Command {
     public MakeEventCommand(TimeTableManager theManager){
         this.manager = theManager;
         this.scheduledObject = null;
+        this.managerChanged = false;
     }
 
     /**
@@ -89,10 +93,14 @@ public class MakeEventCommand implements Command {
 
             this.scheduledObject = toSchedule;
 
+        if (!scheduleIt){
+            manager.schedule(toSchedule);
+            this.managerChanged = true;
+
             assert toSchedule != null;
 //            try {
-                manager.schedule(toSchedule);
-                running = false;
+//              manager.schedule(toSchedule);
+//              running = false;
 //            } catch (ConflictException e) {
 //                InputChecker repeat = new InputChecker("An conflict has occurred! " +
 //                        "Event scheduled Unsuccessfully. Would you like to " +
@@ -103,11 +111,58 @@ public class MakeEventCommand implements Command {
 //                    running = false;
 //                }
 //            }
+
         }
 
         System.out.println("Event Scheduled");
     }
 
+    /**
+     * Prompt the user
+     *
+     * @return a hashmap of the questions and the response of the user
+     */
+    private HashMap<String, String> promptUser() {
+        LinkedHashMap<String, InputChecker> prompts = new LinkedHashMap<>();
+        prompts.put(NAME, new InputChecker("Enter a name for an object " +
+                "(eg; Dinner with Prof Gries and Friends)", new isTrivial()));
+        prompts.put(START_TIME, new InputChecker("Enter the Start Time (in" +
+                " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
+                "No space between time and AM/PM)", new isTime()));
+        prompts.put(END_TIME, new InputChecker("Enter the End Time (in " +
+                " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
+                "No space between time and AM/PM)", new isTime()));
+        prompts.put(LOCATION, new InputChecker("Enter the Location (eg; " +
+                "MY150, Home, Middle of Nowhere)", new isTrivial()));
+        prompts.put(DATE, new InputChecker("Enter the Day of the week (eg;" +
+                " Monday, Tuesday, Wednesday, etc.)", new isDate()));
+        prompts.put(TERM, new InputChecker("Enter the Term (Fall/Winter)",
+                new isTerm()));
+        prompts.put(TYPE, new InputChecker("Enter the Type of the Object " +
+                "(Activity/Task)", new isTrivial()));
+
+        HashMap<String, String> responses = new HashMap<>();
+
+        for (String prompt : prompts.keySet()) {
+            responses.put(prompt, prompts.get(prompt).checkCorrectness());
+        }
+        return responses;
+    }
+
+    /**
+     * Whether the TimeTableManager is changed by this command.
+     * @return True if manager is changed, false otherwise.
+     */
+    @Override
+    public boolean managerChanged() { return this.managerChanged; }
+
+    /**
+     * Gets the TimeTableManager
+     * @return the TimeTableManager
+     */
+    @Override
+    public TimeTableManager getManager() { return this.manager; }
+      
     // ============================= Helper Methods ============================
     @Override
     public String toString() {
