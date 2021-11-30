@@ -2,7 +2,7 @@ package TimeTableStuffTests;
 
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.Course;
-import TimeTableObjects.EventObjects.Task;
+import TimeTableObjects.EventObjects.Reminder;
 import Helpers.Constants;
 
 import TimeTableObjects.EventObjects.CourseSection;
@@ -46,14 +46,14 @@ class TimeTableTest {
         lecture3.setDescription(description3);
 
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
-        Task task= new Task(time5,time6,Constants.MONDAY,Constants.FALL);
-        task.addToName("home");
+        Reminder reminder = new Reminder(time5,time6,Constants.MONDAY,Constants.FALL);
+        reminder.addToName("home");
         TimeTable table = new TimeTable();
         assertTrue(table.schedule(lecture1));
         assertFalse(table.schedule(lecture2));
         assertTrue(table.schedule(lecture3));
         assertTrue(table.schedule(activity));
-        assertTrue(table.schedule(task));
+        assertTrue(table.schedule(reminder));
     }
 
     @Test
@@ -77,16 +77,16 @@ class TimeTableTest {
         lecture2.setDescription(description2);
 
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
-        Task task1 = new Task(time5,time6,Constants.MONDAY,Constants.FALL);
-        Task task2 = new Task(time5,time6,Constants.MONDAY,Constants.FALL);
-        task1.addToName("home");
-        task2.addToName("test");
+        Reminder reminder1 = new Reminder(time5,time6,Constants.MONDAY,Constants.FALL);
+        Reminder reminder2 = new Reminder(time5,time6,Constants.MONDAY,Constants.FALL);
+        reminder1.addToName("home");
+        reminder2.addToName("test");
         TimeTable table = new TimeTable();
         table.schedule(lecture1);
         table.schedule(lecture2);
         table.schedule(activity);
-        table.schedule(task1);
-        table.schedule(task2);
+        table.schedule(reminder1);
+        table.schedule(reminder2);
         String actual = table.toString();
 
         String expectedCourse0 = "9:00 MAT257 of Arts and Science with Gauss by In Person at SS100";
