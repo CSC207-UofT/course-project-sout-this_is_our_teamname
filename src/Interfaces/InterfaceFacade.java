@@ -48,12 +48,12 @@ public class InterfaceFacade {
             String role = requestRole.checkCorrectness();
 
             // Execute the UserInterface if user is running the program.
-            switch (role){
-                case USER:
-                    this.userInterface.run();
-                case OPERATOR:
-                    this.operatorInterface.run();
+            if (role.equals(USER)){
+                this.userInterface.run();
+            } else if (role.equals(OPERATOR)){
+                this.operatorInterface.run();
             }
+            // Cannot be anything else, since input checker forbids it
 
             // Check whether the user wants to exit the program, if user inputs "true", the while loop will stop.
             InputChecker requestContinue =

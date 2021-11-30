@@ -1,8 +1,6 @@
 package Commands.CreationCommands;
 
 import Commands.Command;
-import Commands.ManagerChanged;
-import Helpers.ConflictException;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.Events;
 import TimeTableObjects.EventObjects.Task;
@@ -27,7 +25,7 @@ import java.util.regex.Pattern;
  * scheduledObject: An non course Event waiting to be scheduled
  * managerChanged: Whether the TimeTableManager is changed
  */
-public class MakeEventCommand implements Command, ManagerChanged {
+public class MakeEventCommand implements Command {
     // Some Constants:
     final String NAME = "Name";
     final String START_TIME = "Start Time";
@@ -39,7 +37,6 @@ public class MakeEventCommand implements Command, ManagerChanged {
 
     private final TimeTableManager manager;
     private Events scheduledObject;
-    private boolean managerChanged;
 
     /**
      * A constructor to set the command
@@ -48,7 +45,6 @@ public class MakeEventCommand implements Command, ManagerChanged {
     public MakeEventCommand(TimeTableManager theManager){
         this.manager = theManager;
         this.scheduledObject = null;
-        this.managerChanged = false;
     }
 
     /**
@@ -58,30 +54,8 @@ public class MakeEventCommand implements Command, ManagerChanged {
     public void execute() {
         boolean running = true;
 
-        while (running){
-            LinkedHashMap<String, InputChecker> prompts = new LinkedHashMap<>();
-            prompts.put(NAME, new InputChecker("Enter a name for an object " +
-                    "(eg; Dinner with Prof Gries and Friends)", new isTrivial()));
-            prompts.put(START_TIME, new InputChecker("Enter the Start Time (in" +
-                    " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
-                    "No space between time and AM/PM)", new isTime()));
-            prompts.put(END_TIME, new InputChecker("Enter the End Time (in " +
-                    " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
-                    "No space between time and AM/PM)", new isTime()));
-            prompts.put(LOCATION, new InputChecker("Enter the Location (eg; " +
-                    "MY150, Home, Middle of Nowhere)", new isTrivial()));
-            prompts.put(DATE, new InputChecker("Enter the Day of the week (eg;" +
-                    " Monday, Tuesday, Wednesday, etc.)", new isDate()));
-            prompts.put(TERM, new InputChecker("Enter the Term (Fall/Winter)",
-                    new isTerm()));
-            prompts.put(TYPE, new InputChecker("Enter the Type of the Object " +
-                    "(Activity/Task)", new isTrivial()));
-
-            HashMap<String, String> responses = new HashMap<>();
-
-            for (String prompt : prompts.keySet()) {
-                responses.put(prompt, prompts.get(prompt).checkCorrectness());
-            }
+        while (running) {
+            HashMap<String, String> responses = promptUser();
 
             Events toSchedule = getCorrectTimeTableObject(
                     StringToTime.makeTime(responses.get(START_TIME)),
@@ -91,27 +65,14 @@ public class MakeEventCommand implements Command, ManagerChanged {
                     responses.get(TERM),
                     responses.get(TYPE));
 
-            this.scheduledObject = toSchedule;
-
-        if (!scheduleIt){
-            manager.schedule(toSchedule);
-            this.managerChanged = true;
-
             assert toSchedule != null;
-//            try {
-//              manager.schedule(toSchedule);
-//              running = false;
-//            } catch (ConflictException e) {
-//                InputChecker repeat = new InputChecker("An conflict has occurred! " +
-//                        "Event scheduled Unsuccessfully. Would you like to " +
-//                        "try again? (true/false)", new isBoolean());
-//
-//                String repeatInput = repeat.checkCorrectness();
-//                if (repeatInput.equals("false")){
-//                    running = false;
-//                }
-//            }
-
+            if (!manager.checkConflicts(toSchedule)){
+                scheduledObject = toSchedule;
+                manager.schedule(toSchedule);
+                running = false;
+            } else {
+                System.out.println("Conflict Found. Try again!");
+            }
         }
 
         System.out.println("Event Scheduled");
@@ -149,20 +110,6 @@ public class MakeEventCommand implements Command, ManagerChanged {
         return responses;
     }
 
-    /**
-     * Whether the TimeTableManager is changed by this command.
-     * @return True if manager is changed, false otherwise.
-     */
-    @Override
-    public boolean managerChanged() { return this.managerChanged; }
-
-    /**
-     * Gets the TimeTableManager
-     * @return the TimeTableManager
-     */
-    @Override
-    public TimeTableManager getManager() { return this.manager; }
-      
     // ============================= Helper Methods ============================
     @Override
     public String toString() {

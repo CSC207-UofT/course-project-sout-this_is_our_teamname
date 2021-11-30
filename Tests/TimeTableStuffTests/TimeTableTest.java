@@ -2,12 +2,12 @@ package TimeTableStuffTests;
 
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.Course;
-import TimeTableObjects.EventObjects.Reminder;
 import Helpers.Constants;
 
 import TimeTableObjects.EventObjects.CourseSection;
 
 import TimeTableContainers.TimeTable;
+import TimeTableObjects.EventObjects.Task;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -46,7 +46,8 @@ class TimeTableTest {
         lecture3.setDescription(description3);
 
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
-        Reminder reminder = new Reminder(time5,time6,Constants.MONDAY,Constants.FALL);
+        Task reminder = new Task(time5,time6,Constants.MONDAY,
+                Constants.FALL);
         reminder.addToName("home");
         TimeTable table = new TimeTable();
         assertTrue(table.schedule(lecture1));
@@ -77,8 +78,10 @@ class TimeTableTest {
         lecture2.setDescription(description2);
 
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
-        Reminder reminder1 = new Reminder(time5,time6,Constants.MONDAY,Constants.FALL);
-        Reminder reminder2 = new Reminder(time5,time6,Constants.MONDAY,Constants.FALL);
+        Task reminder1 = new Task(time5,time6,Constants.MONDAY,
+                Constants.FALL);
+        Task reminder2 = new Task(time5,time6,Constants.MONDAY,
+                Constants.FALL);
         reminder1.addToName("home");
         reminder2.addToName("test");
         TimeTable table = new TimeTable();

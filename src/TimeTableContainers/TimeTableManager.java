@@ -2,7 +2,7 @@ package TimeTableContainers;
 
 import Helpers.Constants;
 import TimeTableObjects.EventObjects.CourseSection;
-import TimeTableObjects.EventObjects.Reminder;
+import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
 
 import java.util.ArrayList;
@@ -207,18 +207,19 @@ public class TimeTableManager {
      * @param calendar  is a LinkedHashmap waiting to be filled with string representations of Task object
      */
     private void reformatTaskEvents(TimeTable timetable, LinkedHashMap<String, ArrayList<ArrayList<String>>> calendar) {
-        LinkedHashMap<String, ArrayList<Reminder>> taskSchedule = timetable.getTaskCalendar();
+        LinkedHashMap<String, ArrayList<Task>> taskSchedule =
+                timetable.getTaskCalendar();
         Set<String> taskKeys = taskSchedule.keySet();
         //iterate through taskCalendar for Task objects.
         //iterate through weekdays.
         for (String key : taskKeys) {
-            ArrayList<Reminder> reminderList = taskSchedule.get(key);
+            ArrayList<Task> reminderList = taskSchedule.get(key);
             // finds task objs in taskList if it's not empty
             if (!reminderList.isEmpty()) {
                 // initialize the arraylist in the appropriate calendar date to store task strings.
                 ArrayList<String> emptyList = new ArrayList<>();
                 calendar.get(key).set(24, emptyList);
-                for (Reminder reminder : reminderList) {
+                for (Task reminder : reminderList) {
                     //reconstruct task obj into string
                     String taskString = reminder.reconstruct().get(0);
                     //add tasks to calendar

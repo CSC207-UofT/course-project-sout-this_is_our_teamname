@@ -1,11 +1,10 @@
 package DataLoading;
 
-import TimeTableObjects.EventObjects.Activity;
-import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.EventObjects.Task;
 import Helpers.Constants;
 import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
+import TimeTableObjects.Events;
 
 
 import java.io.*;
@@ -17,12 +16,8 @@ import java.util.Objects;
 /**
  * A class that downloads a timetable manager object to a properly formatted csv file
  *
- * @param ttbmanager the timetable manager that needs to be downloaded
- * @param filename the name that users want to save the file as
  */
 public class CSVDownloader extends DataLoader {
-    private static final String[] days = {Constants.MONDAY, Constants.TUESDAY, Constants.WEDNESDAY,
-            Constants.THURSDAY, Constants.FRIDAY, Constants.SATURDAY, Constants.SUNDAY};
 
     /**
      * Download a timetable manager object to a properly formatted csv file
@@ -70,13 +65,14 @@ public class CSVDownloader extends DataLoader {
     private List<List<String>> TimetableToList(TimeTable timetable) {
         List<List<String>> datalists = new ArrayList<>();
 
-        for (String day : days) {
+        for (String day : Constants.DAYS_OF_THE_WEEK) {
             for (int n = 0; n <= 23; n ++) {
                 if (timetable.getCalendar().get(day)[n] != null) {
                     List<String> datalist = new ArrayList<>();
                     datalist.add(0, day);
-                    datalist.add(1, toString(timetable.getCalendar().get(day)[n].getStartTime()) +
-                            "-" + toString(timetable.getCalendar().get(day)[n].getEndTime()));
+                    Events item = timetable.getCalendar().get(day)[n];
+                    datalist.add(1, item.getStartTime().toString() +
+                            "-" + item.getEndTime().toString());
                     datalist.addAll(timetable.getCalendar().get(day)[n].reconstruct());
                     datalists.add(datalist);
                 }
@@ -88,7 +84,7 @@ public class CSVDownloader extends DataLoader {
                 for (Task task : timetable.getTaskCalendar().get(day)) {
                     tasklist.addAll(task.reconstruct());
                 }
-                datalists.add(tasklist)
+                datalists.add(tasklist);
             }
         }
         return datalists;

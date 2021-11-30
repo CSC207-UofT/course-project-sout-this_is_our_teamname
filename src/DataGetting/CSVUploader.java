@@ -1,17 +1,13 @@
 package DataGetting;
 
 import TimeTableObjects.EventObjects.Activity;
-import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.EventObjects.Task;
-import Helpers.Constants;
 import TimeTableContainers.TimeTable;
-import TimeTableContainers.TimeTableManager;
-
 
 import java.io.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 
 /**
@@ -34,27 +30,23 @@ public class CSVUploader extends DataGetter<TimeTable> {
     public void CalibrateData(String filename, String term,
                               String year) throws FileNotFoundException {
         String filepath = "src\\OutputFiles\\" + filename + "_" + year + "_"  + term + ".csv";
-        String[][] data = read(filepath);
+        String[][] data;
+        try {
+            data = read(filepath);
+        } catch (IOException e){
+            throw new FileNotFoundException();
+        }
         String[][] meaningfuldata = MeaningfulDataHelper(data);
         TimeTable timetable = new TimeTable();
         for (String[] row : meaningfuldata) {
             if (!Objects.equals(row[1], "Tasks")) {
-                String[] times = row[1].split("-")
+                String[] times = row[1].split("-");
                 if (Objects.equals(row[2], "Activity")) {
-                    Activity event = new Activity(LocalTime.of(Integer.valueOf(times[0].substring(0, 2)), 0, 0),
-                            LocalTime.of(Integer.valueOf(times[1].substring(0, 2)), 0, 0), row[0], term, row[5]);
-                    evemt.setName(row[3]);
+                    Activity event = new Activity(LocalTime.of(Integer.parseInt(times[0].substring(0, 2)), 0, 0),
+                            LocalTime.of(Integer.parseInt(times[1].substring(0, 2)), 0, 0), row[0], term, row[5]);
+                    event.setName(row[3]);
                     timetable.schedule(event);
                 }
-                // TODO: Find a way to know waitlist status
-                //else if (Objects.equals(row[2], "CourseSection")) {
-                //    CourseSection event = new CourseSection(row[3],
-                //            LocalTime.of(Integer.valueOf(times[0].substring(0, 2)), 0, 0),
-                //            LocalTime.of(Integer.valueOf(times[1].substring(0, 2)), 0, 0),
-                //            row[0], term, row[4], (...));
-                //    event.setDescription(row[5]);
-                //    timetable.schedule(event);
-                //}
             }
             else {
                 String[] smallmeaningfuldata = SmallMeaningfulDataHelper(row);
@@ -66,6 +58,11 @@ public class CSVUploader extends DataGetter<TimeTable> {
             }
         }
         placeToData(term, timetable);
+    }
+
+    @Override
+    LinkedHashMap<String, ArrayList<TimeTable>> retrieveData(String courseName, String term, String year) throws FileNotFoundException {
+        return null;
     }
 
     /**

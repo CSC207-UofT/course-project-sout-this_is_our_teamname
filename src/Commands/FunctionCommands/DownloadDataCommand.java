@@ -1,5 +1,6 @@
 package Commands.FunctionCommands;
 
+import DataLoading.CSVDownloader;
 import DataLoading.DataLoader;
 import Commands.Command;
 import TimeTableContainers.TimeTableManager;
@@ -9,11 +10,11 @@ import java.util.Scanner;
 
 public class DownloadDataCommand implements Command {
     private final TimeTableManager manager;
-    private final DataLoader loader;
+    private final CSVDownloader loader;
 
     public DownloadDataCommand(TimeTableManager manager){
         this.manager = manager;
-        this.loader = new DataLoader();
+        this.loader = new CSVDownloader();
     }
 
     @Override
@@ -25,7 +26,7 @@ public class DownloadDataCommand implements Command {
             String chosen = ask.nextLine();
 
             try {
-                this.loader.DownloadToReloadable(manager, chosen);
+                this.loader.download(manager, chosen, "YEAR");
                 running = false;
             } catch (IOException e){
                 System.out.println("Cannot find timetable. Try again!");

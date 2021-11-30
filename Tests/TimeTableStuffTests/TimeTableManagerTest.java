@@ -5,7 +5,7 @@ import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.CourseSection;
-import TimeTableObjects.EventObjects.Reminder;
+import TimeTableObjects.EventObjects.Task;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
@@ -33,18 +33,18 @@ class TimeTableManagerTest {
 
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
         activity.addToName("naptime");
-        Reminder reminder0 = new Reminder(time5,time6,Constants.MONDAY,Constants.FALL);
-        reminder0.addToName("home");
-        Reminder reminder1 = new Reminder(time11,time12,Constants.MONDAY,Constants.FALL);
-        reminder1.addToName("work");
+        Task Task0 = new Task(time5,time6,Constants.MONDAY,Constants.FALL);
+        Task0.addToName("home");
+        Task Task1 = new Task(time11,time12,Constants.MONDAY,Constants.FALL);
+        Task1.addToName("work");
 
         //Schedule Events objects from above in TimeTableManager.
         TimeTableManager manager = new TimeTableManager();
         TimeTable timetable = manager.getTimetable(Constants.FALL);
         timetable.schedule(lecture1);
         timetable.schedule(activity);
-        timetable.addTasks(reminder0);
-        timetable.addTasks(reminder1);
+        timetable.addTasks(Task0);
+        timetable.addTasks(Task1);
 
         // reformat fall timetable in manager
         LinkedHashMap<String, ArrayList<ArrayList<String>>> calendar = manager.reformat(timetable);
