@@ -2,8 +2,10 @@ package demoGUI.handler;
 
 
 import demoGUI.userview.HomeScreen;
+import demoGUI.userview.OperatorScreen;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,21 +14,27 @@ import java.awt.event.ActionListener;
  */
 
 
-public class CourseHandler implements ActionListener {
-    public CourseHandler(HomeScreen homeScreen){
-
+public class HomeScreenHandler implements ActionListener {
+    private HomeScreen homeScreen;
+    public HomeScreenHandler(HomeScreen homeScreen){
+        this.homeScreen = homeScreen;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
-        if ("Schedule Course".equals(text)){
-            System.out.println("OKOK");
+        if ("Operator".equals(text)){
+            setting();
 
         } else if ("Reset".equals(text)){
             System.out.println("Sure");
         }
 
 
+    }
+
+    private void setting(){
+        new OperatorScreen();
+        homeScreen.dispose();
     }
 }

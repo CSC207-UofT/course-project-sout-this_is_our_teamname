@@ -11,13 +11,13 @@ import java.net.URL;
  */
 
 // TODO Tray Icon P8, Get text by click enter P9 9:50. jTable for timetable at P10 8:50
-public class HomeScreen extends JFrame{
+public class OperatorScreen extends JFrame{
 
     JLabel title = new JLabel("TimeTable", JLabel.CENTER);
     FlowLayout flowLayout = new FlowLayout();
     JPanel centerPanel = new JPanel(flowLayout);
-    JButton cmd1 = new JButton("Schedule Course");
-    JButton cmd2 = new JButton("Schedule Event");
+    JButton cmd1 = new JButton("User");
+    JButton cmd2 = new JButton("Operator");
 
     // For tray icon refer to bilibili video P8
     SystemTray systemTray;
@@ -25,10 +25,8 @@ public class HomeScreen extends JFrame{
 
     HomeScreenHandler courseHandler;
 
-    public HomeScreen() throws AWTException {
-        super("TimeTable Scheduler");
-
-        courseHandler = new HomeScreenHandler(this);
+    public OperatorScreen() {
+        super("Setting");
 
         Container contentPane = getContentPane();
 
@@ -58,23 +56,23 @@ public class HomeScreen extends JFrame{
 
         // Terminate program
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+
     }
 
-    private void setFrame() throws AWTException {
+    private void setFrame() {
         // Window's icon
         URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
         Image image = new ImageIcon(resource).getImage();
         setIconImage(image);
 
-        
-        
+
+
 //        if (SystemTray.isSupported()){
 //            systemTray = SystemTray.getSystemTray();
 //            TrayIcon trayIcon = new TrayIcon(image);
 //            systemTray.add(trayIcon);
 //        }
-//        
+//
 //        this.addWindowFocusListener(new WindowAdapter() {
 //            @Override
 //            public void windowIconified(WindowEvent e) {
@@ -82,7 +80,7 @@ public class HomeScreen extends JFrame{
 //            }
 //        });
 //        trayIcon
-        
+
 
         // Set size
         setSize(800, 600);
@@ -93,9 +91,10 @@ public class HomeScreen extends JFrame{
         // Fixed size
         setResizable(false);
     }
-    
-    
+
+
     public static void main(String[] args) throws AWTException {
         new OperatorScreen();
     }
 }
+
