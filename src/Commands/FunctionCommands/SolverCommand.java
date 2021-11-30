@@ -1,7 +1,6 @@
 package Commands.FunctionCommands;
 
 import Commands.Command;
-import Commands.ManagerChanged;
 import Commands.NeedsCourses;
 import DataGetting.CourseGetter;
 import Functions.DfsSearch;
@@ -16,12 +15,10 @@ import java.util.*;
  * === Private Attributes ===
  * dataSource: The source where the data is from.
  * manager: The manager that will eventually schedule given courses.
- * managerChanged: Whether the TimeTableManager is changed
  */
-public class SolverCommand implements Command, NeedsCourses, ManagerChanged {
+public class SolverCommand implements Command, NeedsCourses {
     private final TimeTableManager manager;
     private final CourseGetter dataSource;
-    private boolean managerChanged;
 
     /**
      * A Constructor to create the Command
@@ -32,7 +29,6 @@ public class SolverCommand implements Command, NeedsCourses, ManagerChanged {
     public SolverCommand(TimeTableManager manager, CourseGetter dataSource) {
         this.manager = manager;
         this.dataSource = dataSource;
-        this.managerChanged = false;
     }
 
 
@@ -69,7 +65,6 @@ public class SolverCommand implements Command, NeedsCourses, ManagerChanged {
         ArrayList<TimeTablePuzzle> solved = solver.solve(puzzle, seen);
 
         scheduleSolved(puzzle, solved.get(solved.size() - 1));
-        this.managerChanged = true;
     }
 
 
@@ -82,20 +77,6 @@ public class SolverCommand implements Command, NeedsCourses, ManagerChanged {
     public String toString() {
         return "Used the Solver Function";
     }
-
-    /**
-     * Whether the TimeTableManager is changed by this command.
-     * @return True if manager is changed, false otherwise.
-     */
-    @Override
-    public boolean managerChanged() { return this.managerChanged; }
-
-    /**
-     * Gets the TimeTableManager
-     * @return the TimeTableManager
-     */
-    @Override
-    public TimeTableManager getManager() { return this.manager; }
 
 
     // ============================= Helpers ===================================

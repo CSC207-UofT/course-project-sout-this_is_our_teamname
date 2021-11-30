@@ -1,7 +1,6 @@
 package Commands.CreationCommands;
 
 import Commands.Command;
-import Commands.ManagerChanged;
 import Helpers.InputCheckers.InputChecker;
 import TimeTableContainers.TimeTableManager;
 
@@ -12,11 +11,9 @@ import java.util.*;
  *
  * === Private Attributes ===
  * manager: The manager that the TimeTable will be added to
- * managerChanged: Whether the TimeTableManager is changed
  */
-public class AddTimeTableCommand implements Command, ManagerChanged {
+public class AddTimeTableCommand implements Command {
     private final TimeTableManager manager;
-    private boolean managerChanged;
 
     /**
      * A constructor to initialize this command
@@ -25,7 +22,6 @@ public class AddTimeTableCommand implements Command, ManagerChanged {
      */
     public AddTimeTableCommand(TimeTableManager manager) {
         this.manager = manager;
-        this.managerChanged = false;
     }
 
     /**
@@ -45,7 +41,6 @@ public class AddTimeTableCommand implements Command, ManagerChanged {
             }
             else {
                 manager.addTimeTable(response);
-                this.managerChanged = true;
                 String[] question2 = {"Would you like to add another TimeTable? (true/false)"};
                 String response2 = InputChecker.getQuestionsAnswers(question2)[0];
                 if (!Boolean.parseBoolean(response2)) {
@@ -63,18 +58,4 @@ public class AddTimeTableCommand implements Command, ManagerChanged {
     public String toString() {
         return "Added a TimeTable";
     }
-
-    /**
-     * Whether the TimeTableManager is changed by this command.
-     * @return True if manager is changed, false otherwise.
-     */
-    @Override
-    public boolean managerChanged() { return this.managerChanged; }
-
-    /**
-     * Gets the TimeTableManager
-     * @return the TimeTableManager
-     */
-    @Override
-    public TimeTableManager getManager() { return this.manager; }
 }

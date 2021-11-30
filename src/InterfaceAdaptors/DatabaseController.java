@@ -1,10 +1,7 @@
 package InterfaceAdaptors;
 import Commands.Command;
 import Commands.FunctionCommands.ExitProgramCommand;
-import Commands.ManagerChanged;
 import Helpers.InvalidInputException;
-import TimeTableContainers.Caretaker;
-import TimeTableContainers.Originator;
 import TimeTableContainers.TimeTableManager;
 
 import java.util.ArrayList;
@@ -20,17 +17,12 @@ import java.util.Stack;
  * CommandHistory: The history of all the commands that has ever been made
  *  since the program was run (For Phase 2, maybe serialize it so that it can
  *  have a history of all commands ever made)
+ *
  * possibleCommands: The factory that generates the commands to be executed
- * currentManagerIndex: the current index of the TimeTableManager in the list of stored managers
- * Originator: Sets and gets TimeTableManager from Memento
- * Caretaker: Stores all Memento of TimeTableManager
  */
 public class DatabaseController {
     private final Stack<Command> CommandHistory;
     private CommandFactory Factory;
-    private int currentManagerIndex;
-    private final Originator originator;
-    private final Caretaker caretaker;
 
     /**
      * A constructor. Sets the commandHistory and Factory
@@ -38,9 +30,6 @@ public class DatabaseController {
     public DatabaseController(){
         this.CommandHistory = new Stack<>();
         this.Factory = null;
-        this.currentManagerIndex = 0;
-        this.caretaker = new Caretaker();
-        this.originator = new Originator();
     }
 
     /**
@@ -68,27 +57,7 @@ public class DatabaseController {
         // Execute the command. Throws InvalidInputException if the command is
         // invalid
         executeCommand(theCommand);
-
-        //Add to memento if TimeTableManager is changed
-        if (theCommand instanceof ManagerChanged && ((ManagerChanged) theCommand).managerChanged()) {
-            this.originator.setManager(((ManagerChanged) theCommand).getManager());
-            this.caretaker.addMemento(currentManagerIndex, originator.storeInMemento());
-            addManagerIndex();
-        }
-
         return true;
-    }
-
-    /**
-     * Add 1 to currentManagerIndex
-     */
-    public void addManagerIndex() { currentManagerIndex++;}
-
-    /**
-     * Remove 1 from currentManagerIndex
-     */
-    public void removeManagerIndex() {
-        currentManagerIndex--;
     }
 
     // ===================== Command Pattern Infrastructure ====================
@@ -120,11 +89,7 @@ public class DatabaseController {
      *
      */
     public void setManager(){
-        TimeTableManager newManager = new TimeTableManager();
-        this.Factory.setManager(newManager);
-        this.originator.setManager(newManager);
-        this.caretaker.addMemento(currentManagerIndex, this.originator.storeInMemento());
-        this.currentManagerIndex++;
+        this.Factory.setManager(new TimeTableManager());
     }
 
     /**
@@ -150,22 +115,4 @@ public class DatabaseController {
         }
         return enumerateToCommandMap;
     }
-
-    /**
-     * Gets the currentManagerIndex
-     * @return the currentManagerIndex
-     */
-    public int getCurrentManagerIndex() {return currentManagerIndex; }
-
-    /**
-     * Gets the originator
-     * @return the originator
-     */
-    public Originator getOriginator() {return originator; }
-
-    /**
-     * Gets the caretaker
-     * @return the caretaker
-     */
-    public Caretaker getCaretaker() {return caretaker; }
 }

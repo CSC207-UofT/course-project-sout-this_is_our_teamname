@@ -1,7 +1,6 @@
 package Commands.RemovalCommands;
 
 import Commands.Command;
-import Commands.ManagerChanged;
 import Helpers.InputCheckers.InputChecker;
 import TimeTableContainers.TimeTableManager;
 
@@ -12,11 +11,9 @@ import java.util.Set;
  *
  * === Private Attributes ===
  * manager: The manager that the TimeTable will be removed from
- * managerChanged: Whether the TimeTableManager is changed
  */
-public class RemoveTimeTable implements Command, ManagerChanged {
+public class RemoveTimeTable implements Command {
     private final TimeTableManager manager;
-    private boolean managerChanged;
 
     /**
      * A constructor to initialize this command
@@ -25,7 +22,6 @@ public class RemoveTimeTable implements Command, ManagerChanged {
      */
     public RemoveTimeTable(TimeTableManager manager) {
         this.manager = manager;
-        this.managerChanged = false;
     }
 
     /**
@@ -43,7 +39,6 @@ public class RemoveTimeTable implements Command, ManagerChanged {
             Set<String> terms = manager.getTerms();
             if (terms.contains(response)) {
                 manager.removeTimeTable(response);
-                this.managerChanged = true;
                 String[] anotherTimeTable = {"Success! Would you like to remove another TimeTable? (true/false)"};
                 String anotherResponse = InputChecker.getQuestionsAnswers(anotherTimeTable)[0];
                 if (!Boolean.parseBoolean(anotherResponse)) {
@@ -68,19 +63,5 @@ public class RemoveTimeTable implements Command, ManagerChanged {
     public String toString() {
         return "Removed a TimeTable";
     }
-
-    /**
-     * Whether the TimeTableManager is changed by this command.
-     * @return True if manager is changed, false otherwise.
-     */
-    @Override
-    public boolean managerChanged() { return this.managerChanged; }
-
-    /**
-     * Gets the TimeTableManager
-     * @return the TimeTableManager
-     */
-    @Override
-    public TimeTableManager getManager() { return this.manager; }
 }
 

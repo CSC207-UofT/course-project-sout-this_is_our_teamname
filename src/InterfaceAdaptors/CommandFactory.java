@@ -1,6 +1,7 @@
 package InterfaceAdaptors;
 
-import Commands.FunctionCommands.*;
+import Commands.FunctionCommands.SolverCommand;
+import Commands.FunctionCommands.ExitProgramCommand;
 import DataGetting.CourseGetter;
 import Commands.Command;
 import Commands.CreationCommands.GetAllTimeTablesCommand;
@@ -10,6 +11,9 @@ import Commands.CreationCommands.AddTimeTableCommand;
 import Commands.RemovalCommands.RemoveEventCommand;
 import Commands.RemovalCommands.RemoveTimeTable;
 import Commands.CreationCommands.PrintHistoryCommand;
+import Commands.FunctionCommands.DownloadDataCommand;
+import Commands.FunctionCommands.LoadDataCommand;
+import Commands.FunctionCommands.SaveDataCommand;
 import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
 
@@ -41,8 +45,6 @@ public class CommandFactory {
     static final String LOAD_DATA = "Load Data";
     static final String SAVE_DATA = "Save";
     static final String DOWNLOAD_TIMETABLE = "Download Timetable";
-    static final String UNDO = "Undo";
-    static final String REDO = "Redo";
     static final String EXIT = "Log Out";
 
     /**
@@ -68,8 +70,6 @@ public class CommandFactory {
                 ADD_TIMETABLE,
                 REMOVE_TIMETABLE,
                 PRINT_HISTORY,
-                UNDO,
-                REDO,
                 EXIT
         };
     }
@@ -113,10 +113,6 @@ public class CommandFactory {
                 return new SaveDataCommand(courseManager);
             case DOWNLOAD_TIMETABLE:
                 return new DownloadDataCommand(courseManager);
-            case UNDO:
-                return new UndoCommand(courseManager, controller);
-            case REDO:
-                return new RedoCommand(courseManager, controller);
             case EXIT:
                 return new ExitProgramCommand();
             // ... ADD YOUR NEW OBJECTS HERE!

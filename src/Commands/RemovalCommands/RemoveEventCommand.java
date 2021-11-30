@@ -1,6 +1,5 @@
 package Commands.RemovalCommands;
 
-import Commands.ManagerChanged;
 import Helpers.Constants;
 import Helpers.InputCheckers.InputChecker;
 import Helpers.InputCheckers.Predicate;
@@ -19,11 +18,9 @@ import java.util.regex.Pattern;
  *
  * === Private Attributes ===
  * manager: The manager that the Event will be removed from
- * managerChanged: Whether the TimeTableManager is changed
  */
-public class RemoveEventCommand implements Command, ManagerChanged {
+public class RemoveEventCommand implements Command {
     private final TimeTableManager manager;
-    private boolean managerChanged;
 
     /**
      * A constructor to initialize this command
@@ -32,7 +29,6 @@ public class RemoveEventCommand implements Command, ManagerChanged {
      */
     public RemoveEventCommand(TimeTableManager manager) {
         this.manager = manager;
-        this.managerChanged = false;
     }
 
     /**
@@ -66,7 +62,6 @@ public class RemoveEventCommand implements Command, ManagerChanged {
             success = manager.getTimetable(checkedResponse.get("Term")).remove(start, end,
                     (checkedResponse.get("Date")));
             if (success) {
-                this.managerChanged = true;
                 System.out.println("Event removed!");
             }
             if (!success) {
@@ -124,19 +119,5 @@ public class RemoveEventCommand implements Command, ManagerChanged {
     public String toString() {
         return "Removed an Event";
     }
-
-    /**
-     * Whether the TimeTableManager is changed by this command.
-     * @return True if manager is changed, false otherwise.
-     */
-    @Override
-    public boolean managerChanged() { return this.managerChanged; }
-
-    /**
-     * Gets the TimeTableManager
-     * @return the TimeTableManager
-     */
-    @Override
-    public TimeTableManager getManager() { return this.manager; }
 
 }
