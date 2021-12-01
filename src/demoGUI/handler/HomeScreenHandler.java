@@ -3,9 +3,9 @@ package demoGUI.handler;
 
 import demoGUI.userview.HomeScreen;
 import demoGUI.userview.OperatorScreen;
+import demoGUI.userview.UserScreen;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,16 +24,19 @@ public class HomeScreenHandler implements ActionListener {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
         if ("Operator".equals(text)){
-            setting();
+            openOperator();
 
-        } else if ("Reset".equals(text)){
-            System.out.println("Sure");
+        } else if ("User".equals(text)){
+            operUser();
         }
-
-
     }
 
-    private void setting(){
+    private void operUser() {
+        new UserScreen();
+        homeScreen.dispose();
+    }
+
+    private void openOperator(){
         new OperatorScreen();
         homeScreen.dispose();
     }

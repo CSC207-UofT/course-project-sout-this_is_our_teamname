@@ -1,6 +1,6 @@
 package demoGUI.userview;
 
-import demoGUI.handler.HomeScreenHandler;
+import demoGUI.handler.OperatorScreenHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,20 +13,24 @@ import java.net.URL;
 // TODO Tray Icon P8, Get text by click enter P9 9:50. jTable for timetable at P10 8:50
 public class OperatorScreen extends JFrame{
 
-    JLabel title = new JLabel("TimeTable", JLabel.CENTER);
+    JLabel title = new JLabel("This is the operator", JLabel.CENTER);
     FlowLayout flowLayout = new FlowLayout();
     JPanel centerPanel = new JPanel(flowLayout);
-    JButton cmd1 = new JButton("User");
-    JButton cmd2 = new JButton("Operator");
-
+    JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    JButton srcBtn = new JButton("Aisaka");
+    JButton banBtn = new JButton("Taiga");
+    JButton backBtn = new JButton("Back");
+    JButton applyBtn = new JButton("Apply");
     // For tray icon refer to bilibili video P8
     SystemTray systemTray;
 
 
-    HomeScreenHandler courseHandler;
+    OperatorScreenHandler operatorScreenHandler;
 
     public OperatorScreen() {
         super("Setting");
+
+        operatorScreenHandler = new OperatorScreenHandler(this);
 
         Container contentPane = getContentPane();
 
@@ -34,20 +38,27 @@ public class OperatorScreen extends JFrame{
         title.setPreferredSize(new Dimension(0, 80));
 
         // Schedule course
-        cmd1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        cmd1.addActionListener(courseHandler);
+        srcBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        srcBtn.addActionListener(operatorScreenHandler);
 
         // Schedule event
-        cmd2.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        cmd2.addActionListener(courseHandler);
+        banBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        banBtn.addActionListener(operatorScreenHandler);
+
+        // Back button
+        backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        backBtn.addActionListener(operatorScreenHandler);
 
 
-        centerPanel.add(cmd1);
-        centerPanel.add(cmd2);
+        centerPanel.add(srcBtn);
 
+        southPanel.add(banBtn);
+        southPanel.add(backBtn);
 
         contentPane.add(title, BorderLayout.NORTH);
         contentPane.add(centerPanel);
+
+        contentPane.add(southPanel, BorderLayout.SOUTH);
 
 
         setFrame();
@@ -66,22 +77,6 @@ public class OperatorScreen extends JFrame{
         setIconImage(image);
 
 
-
-//        if (SystemTray.isSupported()){
-//            systemTray = SystemTray.getSystemTray();
-//            TrayIcon trayIcon = new TrayIcon(image);
-//            systemTray.add(trayIcon);
-//        }
-//
-//        this.addWindowFocusListener(new WindowAdapter() {
-//            @Override
-//            public void windowIconified(WindowEvent e) {
-//               homeScreen.this.dispose();
-//            }
-//        });
-//        trayIcon
-
-
         // Set size
         setSize(800, 600);
 
@@ -93,7 +88,7 @@ public class OperatorScreen extends JFrame{
     }
 
 
-    public static void main(String[] args) throws AWTException {
+    public static void main(String[] args) {
         new OperatorScreen();
     }
 }

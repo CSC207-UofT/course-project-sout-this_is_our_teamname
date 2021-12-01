@@ -1,5 +1,6 @@
 package demoGUI;
 
+import demoGUI.userview.HomeScreen;
 import demoGUI.userview.OperatorScreen;
 
 import java.awt.*;
@@ -10,6 +11,6 @@ import java.awt.*;
  */
 public class App {
     public static void main(String[] args) throws AWTException {
-        new OperatorScreen();
+        new HomeScreen();
     }
 }

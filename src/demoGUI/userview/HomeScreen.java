@@ -16,19 +16,19 @@ public class HomeScreen extends JFrame{
     JLabel title = new JLabel("TimeTable", JLabel.CENTER);
     FlowLayout flowLayout = new FlowLayout();
     JPanel centerPanel = new JPanel(flowLayout);
-    JButton cmd1 = new JButton("Schedule Course");
-    JButton cmd2 = new JButton("Schedule Event");
+    JButton cmd1 = new JButton("User");
+    JButton cmd2 = new JButton("Operator");
 
     // For tray icon refer to bilibili video P8
     SystemTray systemTray;
 
 
-    HomeScreenHandler courseHandler;
+    HomeScreenHandler homeScreenHandler;
 
-    public HomeScreen() throws AWTException {
+    public HomeScreen() {
         super("TimeTable Scheduler");
 
-        courseHandler = new HomeScreenHandler(this);
+        homeScreenHandler = new HomeScreenHandler(this);
 
         Container contentPane = getContentPane();
 
@@ -37,11 +37,11 @@ public class HomeScreen extends JFrame{
 
         // Schedule course
         cmd1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        cmd1.addActionListener(courseHandler);
+        cmd1.addActionListener(homeScreenHandler);
 
         // Schedule event
         cmd2.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        cmd2.addActionListener(courseHandler);
+        cmd2.addActionListener(homeScreenHandler);
 
 
         centerPanel.add(cmd1);
@@ -61,7 +61,7 @@ public class HomeScreen extends JFrame{
         
     }
 
-    private void setFrame() throws AWTException {
+    private void setFrame() {
         // Window's icon
         URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
         Image image = new ImageIcon(resource).getImage();
