@@ -33,18 +33,18 @@ class TimeTableManagerTest {
 
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
         activity.addToName("naptime");
-        Task task0= new Task(time5,time6,Constants.MONDAY,Constants.FALL);
-        task0.addToName("home");
-        Task task1= new Task(time11,time12,Constants.MONDAY,Constants.FALL);
-        task1.addToName("work");
+        Task Task0 = new Task(time5,time6,Constants.MONDAY,Constants.FALL);
+        Task0.addToName("home");
+        Task Task1 = new Task(time11,time12,Constants.MONDAY,Constants.FALL);
+        Task1.addToName("work");
 
         //Schedule Events objects from above in TimeTableManager.
         TimeTableManager manager = new TimeTableManager();
         TimeTable timetable = manager.getTimetable(Constants.FALL);
         timetable.schedule(lecture1);
         timetable.schedule(activity);
-        timetable.addTasks(task0);
-        timetable.addTasks(task1);
+        timetable.addTasks(Task0);
+        timetable.addTasks(Task1);
 
         // reformat fall timetable in manager
         LinkedHashMap<String, ArrayList<ArrayList<String>>> calendar = manager.reformat(timetable);

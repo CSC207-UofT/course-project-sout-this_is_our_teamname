@@ -1,7 +1,6 @@
 package TimeTableContainers;
 
 import Helpers.Constants;
-import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
@@ -27,30 +26,43 @@ public class TimeTableManager {
         this.timetables = new HashMap<>();
     }
 
+    // =========================== Basic Functions =============================
     /**
      * Get an event from the user interface and schedule it to the corresponding timetable(s).
+     *
      * Precondition: The event to be scheduled will not result in conflicts.
      *
      * @param event an Events passed from user interface
      */
     public boolean schedule(Events event) {
-        String[] splited = event.getTerm().split("\\s+");
+        // Some Constants
+        int TERM = 0;
+        int YEAR = 1;
+
+        String[] splitTImeTableName = event.getTerm().split("\\s+");
+
         // Since the format is Term Year, the term is at index 0 and year index 1
-        String term = splited[0];
-        String year = splited[1];
-        // If we want to schedule a year event, we want every term in that year get scheduled.
-        if (term.equals("Year")){
-            for (String t : timetables.keySet()){
-                if (t.split("\\s+")[1].equals(year)){
-                    this.getTimetable(t).schedule(event);
+        String term = splitTImeTableName[TERM];
+        String year = splitTImeTableName[YEAR];
+
+        // If we want to schedule a year event, we want every term in that year
+        // get scheduled.
+        if (term.equals(Constants.YEAR)) {
+            for (String eachTimeTable : timetables.keySet()) {
+
+                // If the term is in the correct year
+                if (eachTimeTable.split("\\s+")[YEAR].equals(year)) {
+                    this.getTimetable(eachTimeTable).schedule(event);
                 }
             }
             return true;
         }
-        else{
-             return(this.getTimetable(event.getTerm()).schedule(event));
+        // For all other events, schedule it in the proper timetable. Return
+        // true if successful.
+        else {
+            return this.getTimetable(event.getTerm()).schedule(event);
         }
-
+    }
 
 //        switch (event.getTerm()) {
 //            case Constants.FALL:
@@ -74,20 +86,65 @@ public class TimeTableManager {
 //            timetables.get(Constants.FALL).schedule(event);
 //            timetables.get(Constants.WINTER).schedule(event);
 //        }
+
+    /**
+     * Get an event from the user interface and schedule it to the corresponding timetable(s).
+     *
+     * @param event an Events passed from user interface
+     */
+    public boolean checkConflicts(Events event){
+        // Some Constants
+        int TERM = 0;
+        int YEAR = 1;
+
+        String[] splitTImeTableName = event.getTerm().split("\\s+");
+
+        // Since the format is Term Year, the term is at index 0 and year index 1
+        String term = splitTImeTableName[TERM];
+        String year = splitTImeTableName[YEAR];
+
+        // If we want to schedule a year event, we want every term in that year
+        // get scheduled.
+        if (term.equals(Constants.YEAR)) {
+            for (String eachTimeTable : timetables.keySet()) {
+
+                // If the term is in the correct year
+                if (eachTimeTable.split("\\s+")[YEAR].equals(year)) {
+                    if (!this.getTimetable(eachTimeTable).checkConflicts(event)){
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        // For all other events, schedule it in the proper timetable. Return
+        // true if successful.
+        else {
+            return this.getTimetable(event.getTerm()).checkConflicts(event);
+        }
     }
 
     /**
-     * Reformats a given timetable from a hashmap of Events objects to a hashmap of strings
-     * The keys are the weekdays. The value is an arraylist of arraylists of strings.
-     * The outer-layer of the arraylist contains 25 elements, index 0 to 23 corresponds to hours of the day,
-     * each hour contains an arraylist of strings representing the corresponding Event object scheduled in the timetable
-     * index 24 contains an arraylist of task objects which are all day events.
+     * Reformats a given timetable from a hashmap of Events objects to a
+     * hashmap of strings.
+     *
+     * - The keys are the weekdays.
+     * - The value is an arraylist of arraylists of strings.
+     * - The outer-layer of the arraylist contains 25 elements, index 0 to 23
+     *      corresponds to hours of the day,
+     * - each hour contains an arraylist of strings representing the
+     *      corresponding Event object scheduled in the timetable
+     * - index 24 contains an arraylist of task objects which are all day
+     * events.
+     *
+     *  TODO This class is never used
      *
      * @param timetable is a timetable object
      * @return hashmap of strings representation of the  given timetable.
      */
     public LinkedHashMap<String, ArrayList<ArrayList<String>>> reformat(TimeTable timetable) {
-        //creates the value of hashmap: hoursOfDay is an empty list with 24 null elements
+        // creates the value of hashmap: hoursOfDay is an empty list with 24
+        // null elements
         ArrayList<ArrayList<String>> hoursOfDay = new ArrayList<>(24);
         for (int i = 0; i < 25; i++) {
             hoursOfDay.add(i, null);
@@ -150,20 +207,21 @@ public class TimeTableManager {
      * @param calendar  is a LinkedHashmap waiting to be filled with string representations of Task object
      */
     private void reformatTaskEvents(TimeTable timetable, LinkedHashMap<String, ArrayList<ArrayList<String>>> calendar) {
-        LinkedHashMap<String, ArrayList<Task>> taskSchedule = timetable.getTaskCalendar();
+        LinkedHashMap<String, ArrayList<Task>> taskSchedule =
+                timetable.getTaskCalendar();
         Set<String> taskKeys = taskSchedule.keySet();
         //iterate through taskCalendar for Task objects.
         //iterate through weekdays.
         for (String key : taskKeys) {
-            ArrayList<Task> taskList = taskSchedule.get(key);
+            ArrayList<Task> reminderList = taskSchedule.get(key);
             // finds task objs in taskList if it's not empty
-            if (!taskList.isEmpty()) {
+            if (!reminderList.isEmpty()) {
                 // initialize the arraylist in the appropriate calendar date to store task strings.
                 ArrayList<String> emptyList = new ArrayList<>();
                 calendar.get(key).set(24, emptyList);
-                for (Task task : taskList) {
+                for (Task reminder : reminderList) {
                     //reconstruct task obj into string
-                    String taskString = task.reconstruct().get(0);
+                    String taskString = reminder.reconstruct().get(0);
                     //add tasks to calendar
                     calendar.get(key).get(24).add(taskString);
                 }
@@ -209,26 +267,6 @@ public class TimeTableManager {
      */
     public Set<String> getTerms() {
         return this.timetables.keySet();
-    }
-
-    /**
-     * Get an event from the user interface and schedule it to the corresponding timetable(s).
-     *
-     * @param event an Events passed from user interface
-     */
-    public boolean checkConflicts(Events event){
-        switch (event.getTerm()){
-            case Constants.FALL:
-                return timetables.get(Constants.FALL).checkConflicts(event);
-            case Constants.WINTER:
-                return timetables.get(Constants.WINTER).checkConflicts(event);
-            case Constants.YEAR:
-                return timetables.get(Constants.FALL).checkConflicts(event) &&
-                        timetables.get(Constants.WINTER).checkConflicts(event);
-            default:
-                // If the timetable is not found, then there is a conflict
-                return false;
-        }
     }
 
     /**

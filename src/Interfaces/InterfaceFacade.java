@@ -18,6 +18,11 @@ public class InterfaceFacade {
     private final UserInterface userInterface;
     private final OperatorInterface operatorInterface;
 
+    // Constants
+    public static final String USER = "User";
+    public static final String OPERATOR = "Operator";
+    public static final String TRUE = "true";
+    public static final String FALSE = "false";
 
     /**
      * Constructor of the InterfaceFacade.
@@ -28,52 +33,39 @@ public class InterfaceFacade {
         this.operatorInterface = operatorInterface;
     }
 
-
     /**
      * Runs the InterfaceFacade.
-     * The IOException will be raised if the given file, datasource.txt, is not found.
+     * @exception IOException will be raised if the given file, datasource.txt, is not
+     * found.
      */
     public void run() throws IOException {
         // As long as the program is running
         boolean running = true;
         while (running) {
             // Check who is running the program: User or Operator.
-            InputChecker requestRole = new InputChecker("Who are you (User/Operator): ",
-                    new isValidRole());
+            InputChecker requestRole = new InputChecker("Who are you (" +
+                    USER + "/" + OPERATOR + "): ", new isValidRole());
             String role = requestRole.checkCorrectness();
+
             // Execute the UserInterface if user is running the program.
-            if (role.equals("User")) {
+            if (role.equals(USER)){
                 this.userInterface.run();
-                // Execute the OperatorInterface if operator is running the program.
-            } else if (role.equals("Operator")) {
+            } else if (role.equals(OPERATOR)){
                 this.operatorInterface.run();
             }
+            // Cannot be anything else, since input checker forbids it
 
             // Check whether the user wants to exit the program, if user inputs "true", the while loop will stop.
-            InputChecker requestContinue = new InputChecker("Do you want to exit? " +
-                    "(true/false):",
-                    new isValidBoolean());
+            InputChecker requestContinue =
+                    new InputChecker("Do you want to exit? (" + TRUE +
+                            "/" + FALSE + "):", new isValidBoolean());
+
             String whetherContinue = requestContinue.checkCorrectness();
-            if (whetherContinue.equals("true")){
-                running = false;}
+            if (whetherContinue.equals(TRUE)){
+                running = false;
+            }
         }
     }
-
-
-    /**
-     * A InterfaceFacade. The main method of the program and the one that the
-     * user interacts with.
-     *
-     *The IOException will be raised if the given file, datasource.txt, is not found.
-     *
-     * @param args The arguments
-     */
-    public static void main(String[] args) throws IOException {
-        UserInterface user = new UserInterface();
-        InterfaceFacade facade = new InterfaceFacade(user, user.getOperator());
-        facade.run();
-    }
-
 
     // ============================ Predicates =================================
     /**
@@ -81,8 +73,12 @@ public class InterfaceFacade {
      */
     private static class isValidRole extends Predicate {
         private final String[] allowed;
+
+        /**
+         * Constructor
+         */
         public isValidRole(){
-            this.allowed = new String[]{"User", "Operator"};
+            this.allowed = new String[]{USER, OPERATOR};
         }
 
         @Override
@@ -97,12 +93,29 @@ public class InterfaceFacade {
      */
     private static class isValidBoolean extends Predicate {
         private final String[] allowed;
+
         public isValidBoolean(){
-            this.allowed = new String[]{"true", "false"};
+            this.allowed = new String[]{TRUE, FALSE};
         }
+
         @Override
         public boolean run(String prompt) {
             return Arrays.asList(allowed).contains(prompt) ;
         }
+    }
+
+    /**
+     * A InterfaceFacade. The main method of the program and the one that the
+     * user interacts with.
+     *
+     * @exception IOException will be raised if the given file, datasource.txt, is
+     * not found.
+     *
+     * @param args The arguments
+     */
+    public static void main(String[] args) throws IOException {
+        UserInterface user = new UserInterface();
+        InterfaceFacade facade = new InterfaceFacade(user, user.getOperator());
+        facade.run();
     }
 }
