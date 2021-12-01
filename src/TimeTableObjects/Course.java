@@ -79,15 +79,21 @@ public class Course implements Splittable<CourseSection> {
         ArrayList<CourseSection> courseSectionList = new ArrayList<>();
 
         for (Object[] time : this.timeLocation.keySet()) {
+
             LocalTime start = ((LocalTime) time[THE_START]);
             LocalTime end = ((LocalTime) time[THE_END]);
             String date = ((String) time[THE_DATE]);
-            String description = sectionName + " of" + faculty + " with " + professor + " by " + deliveryMethod
-                    + " session" + " at " + this.timeLocation.get(time);
-            CourseSection s = new CourseSection(this.courseName, start, end, date, this.term,
+            String description =
+                    sectionName + " of" + faculty + " with " + professor + " " +
+                            "by " + deliveryMethod + " session" + " at "
+                            + this.timeLocation.get(time);
+
+            CourseSection section = new CourseSection(this.courseName, start, end, date, this.term,
                     this.sectionName, this.wait_list);
-            s.setDescription(description);
-            courseSectionList.add(s);
+            section.setDescription(description);
+            section.setName(courseName);
+
+            courseSectionList.add(section);
         }
         return courseSectionList;
     }
@@ -101,7 +107,7 @@ public class Course implements Splittable<CourseSection> {
     public void addToTimeLocation(Object[] dateTimeArray, String location){
         this.timeLocation.put(dateTimeArray, location);
     }
-  
+
     /**
      * Get the Course code for this Course
      *
@@ -117,6 +123,7 @@ public class Course implements Splittable<CourseSection> {
      * @return the section
      */
     public String getSectionName() {return this.sectionName; }
+
     /**
      * Get the times and corresponding locations for this Course
      *

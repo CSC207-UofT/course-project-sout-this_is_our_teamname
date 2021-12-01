@@ -84,7 +84,9 @@ public class CourseSection extends Events  implements Reconstructable {
      *
      * @return the course code
      */
-    public String getCourseName() {return courseName; }
+    public String getCourseName() {
+        return courseName;
+    }
 
     /**
      * Get the waitlist for this Course

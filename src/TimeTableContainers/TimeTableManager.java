@@ -39,7 +39,8 @@ public class TimeTableManager {
         int TERM = 0;
         int YEAR = 1;
 
-        String[] splitTImeTableName = event.getTerm().split("\\s+");
+        String timeTableName = event.getTerm();
+        String[] splitTImeTableName = timeTableName.split("\\s+");
 
         // Since the format is Term Year, the term is at index 0 and year index 1
         String term = splitTImeTableName[TERM];
@@ -48,44 +49,16 @@ public class TimeTableManager {
         // If we want to schedule a year event, we want every term in that year
         // get scheduled.
         if (term.equals(Constants.YEAR)) {
-            for (String eachTimeTable : timetables.keySet()) {
-
-                // If the term is in the correct year
-                if (eachTimeTable.split("\\s+")[YEAR].equals(year)) {
-                    this.getTimetable(eachTimeTable).schedule(event);
-                }
-            }
+            this.getTimetable(Constants.FALL + " " + year).schedule(event);
+            this.getTimetable(Constants.WINTER + " " + year).schedule(event);
             return true;
         }
         // For all other events, schedule it in the proper timetable. Return
         // true if successful.
         else {
-            return this.getTimetable(event.getTerm()).schedule(event);
+            return this.getTimetable(timeTableName).schedule(event);
         }
     }
-
-//        switch (event.getTerm()) {
-//            case Constants.FALL:
-//                timetables.get(Constants.FALL).schedule(event);
-//                break;
-//            case Constants.WINTER:
-//                timetables.get(Constants.WINTER).schedule(event);
-//                break;
-//            default:
-//                timetables.get(Constants.FALL).schedule(event);
-//                timetables.get(Constants.WINTER).schedule(event);
-//        }
-//        if (event.getTerm().equals(Constants.FALL)){
-//           timetables.get(Constants.FALL).schedule(event);
-//
-//        }
-//        else if (event.getTerm().equals(Constants.WINTER)){
-//            timetables.get(Constants.WINTER).schedule(event);
-//        }
-//        else{
-//            timetables.get(Constants.FALL).schedule(event);
-//            timetables.get(Constants.WINTER).schedule(event);
-//        }
 
     /**
      * Get an event from the user interface and schedule it to the corresponding timetable(s).
@@ -97,7 +70,8 @@ public class TimeTableManager {
         int TERM = 0;
         int YEAR = 1;
 
-        String[] splitTImeTableName = event.getTerm().split("\\s+");
+        String timeTableName = event.getTerm();
+        String[] splitTImeTableName = timeTableName.split("\\s+");
 
         // Since the format is Term Year, the term is at index 0 and year index 1
         String term = splitTImeTableName[TERM];
@@ -106,21 +80,16 @@ public class TimeTableManager {
         // If we want to schedule a year event, we want every term in that year
         // get scheduled.
         if (term.equals(Constants.YEAR)) {
-            for (String eachTimeTable : timetables.keySet()) {
-
-                // If the term is in the correct year
-                if (eachTimeTable.split("\\s+")[YEAR].equals(year)) {
-                    if (!this.getTimetable(eachTimeTable).checkConflicts(event)){
-                        return false;
-                    }
-                }
-            }
-            return true;
+            boolean theFall =
+                    this.getTimetable(Constants.FALL + " " + year).checkConflicts(event);
+            boolean theWinter =
+                    this.getTimetable(Constants.WINTER + " " + year).checkConflicts(event);
+            return theFall && theWinter;
         }
         // For all other events, schedule it in the proper timetable. Return
         // true if successful.
         else {
-            return this.getTimetable(event.getTerm()).checkConflicts(event);
+            return this.getTimetable(timeTableName).checkConflicts(event);
         }
     }
 

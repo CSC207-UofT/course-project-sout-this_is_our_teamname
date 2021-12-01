@@ -58,7 +58,7 @@ public class CSVScraper extends CourseGetter {
         String[][] splicedFileData = splitData(fileData);
 
         ArrayList<Course> courseList = new ArrayList<>();
-        filterData(courseName, courseList, term, faculty, splicedFileData);
+        filterData(courseName, courseList, term, faculty, splicedFileData, theYear);
         for (Course item: courseList){
             placeToData(item.getSectionName(), item);
         }
@@ -79,7 +79,7 @@ public class CSVScraper extends CourseGetter {
      */
     private void filterData(String courseName, ArrayList<Course> courseData,
                             String theTerm, String theFaculty,
-                            String[][] theFileData){
+                            String[][] theFileData, String year){
         // Base Case 1: Size 1 and this is a header.
         if (theFileData.length == 1 && headingCondition(theFileData[0])){
             // Some Parameters
@@ -90,7 +90,8 @@ public class CSVScraper extends CourseGetter {
 
             courseData.add(new Course(courseName, theFileData[0][SECTION],
                     theFileData[0][INSTRUCTOR], theFaculty,
-                    theFileData[0][DELIVERY], TimeLocation, theTerm, hasWaitList
+                    theFileData[0][DELIVERY], TimeLocation,
+                    theTerm + " " + year, hasWaitList
                     )
             );
 
@@ -103,7 +104,7 @@ public class CSVScraper extends CourseGetter {
         } else if (theFileData.length != 1){
             for (String[] item: theFileData){
                 filterData(courseName, courseData, theTerm, theFaculty,
-                        new String[][]{item});
+                        new String[][]{item}, year);
             }
         }
     }
