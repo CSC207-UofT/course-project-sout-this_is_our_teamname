@@ -1,0 +1,1 @@
+[Schedule Course, Remove Event, Load Data, Save, Download Timetable, Show TimeTables, Solve Timetable, Add Timetable, Remove Timetable, Get History, Log Out]
