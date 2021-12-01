@@ -2,6 +2,8 @@ package Interfaces;
 
 import java.io.IOException;
 import java.util.Arrays;
+
+import Helpers.Constants;
 import Helpers.InputCheckers.InputChecker;
 import Helpers.InputCheckers.Predicate;
 
@@ -17,12 +19,6 @@ import Helpers.InputCheckers.Predicate;
 public class InterfaceFacade {
     private final UserInterface userInterface;
     private final OperatorInterface operatorInterface;
-
-    // Constants
-    public static final String USER = "User";
-    public static final String OPERATOR = "Operator";
-    public static final String TRUE = "true";
-    public static final String FALSE = "false";
 
     /**
      * Constructor of the InterfaceFacade.
@@ -43,25 +39,22 @@ public class InterfaceFacade {
         boolean running = true;
         while (running) {
             // Check who is running the program: User or Operator.
-            InputChecker requestRole = new InputChecker("Who are you (" +
-                    USER + "/" + OPERATOR + "): ", new isValidRole());
+            InputChecker requestRole = new InputChecker("Who are you " +
+                    "(User/Operator)", new isValidRole());
             String role = requestRole.checkCorrectness();
 
             // Execute the UserInterface if user is running the program.
-            if (role.equals(USER)){
+            if (role.equals(Constants.USER)){
                 this.userInterface.run();
-            } else if (role.equals(OPERATOR)){
+            } else if (role.equals(Constants.OPERATOR)){
                 this.operatorInterface.run();
             }
-            // Cannot be anything else, since input checker forbids it
-
-            // Check whether the user wants to exit the program, if user inputs "true", the while loop will stop.
             InputChecker requestContinue =
-                    new InputChecker("Do you want to exit? (" + TRUE +
-                            "/" + FALSE + "):", new isValidBoolean());
+                    new InputChecker("Do you want to exit? (true/false):",
+                            new isValidBoolean());
 
             String whetherContinue = requestContinue.checkCorrectness();
-            if (whetherContinue.equals(TRUE)){
+            if (whetherContinue.equals(Constants.TRUE)){
                 running = false;
             }
         }
@@ -78,7 +71,7 @@ public class InterfaceFacade {
          * Constructor
          */
         public isValidRole(){
-            this.allowed = new String[]{USER, OPERATOR};
+            this.allowed = new String[]{Constants.USER, Constants.OPERATOR};
         }
 
         @Override
@@ -87,7 +80,6 @@ public class InterfaceFacade {
         }
     }
 
-
     /**
      * A predicate to determine if the input is valid boolean.
      */
@@ -95,7 +87,7 @@ public class InterfaceFacade {
         private final String[] allowed;
 
         public isValidBoolean(){
-            this.allowed = new String[]{TRUE, FALSE};
+            this.allowed = new String[]{Constants.TRUE, Constants.FALSE};
         }
 
         @Override
@@ -115,7 +107,8 @@ public class InterfaceFacade {
      */
     public static void main(String[] args) throws IOException {
         UserInterface user = new UserInterface();
-        InterfaceFacade facade = new InterfaceFacade(user, user.getOperator());
+        OperatorInterface operator = new OperatorInterface();
+        InterfaceFacade facade = new InterfaceFacade(user, operator);
         facade.run();
     }
 }

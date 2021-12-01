@@ -298,6 +298,10 @@ public class WebScraper extends CourseGetter {
             }
         }
     }
+
+    public String toString(){
+        return "WebScraper";
+    }
 }
 
 

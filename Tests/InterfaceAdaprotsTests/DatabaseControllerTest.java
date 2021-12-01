@@ -26,7 +26,6 @@ public class DatabaseControllerTest {
     public void TestSetup(){
         controller = new DatabaseController();
         CommandFactory theFactory = new CommandFactory(controller);
-        theFactory.setManager(new TimeTableManager());
         theFactory.setDataSource(new CSVScraper());
         controller.setFactory(theFactory);
     }
