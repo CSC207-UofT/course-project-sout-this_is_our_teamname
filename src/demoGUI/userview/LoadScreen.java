@@ -59,6 +59,7 @@ public class LoadScreen extends JFrame{
     private void setFrame() {
         // Window's icon
         URL resource = LoadScreen.class.getClassLoader().getResource("pic2.jpg");
+        assert resource != null;
         Image image = new ImageIcon(resource).getImage();
         setIconImage(image);
 

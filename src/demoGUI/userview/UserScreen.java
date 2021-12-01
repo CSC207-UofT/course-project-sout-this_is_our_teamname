@@ -10,8 +10,9 @@ import java.net.URL;
 public class UserScreen extends JFrame {
 
     FlowLayout flowLayout = new FlowLayout();
-
+    // For timetable
     JPanel centerPanel = new JPanel(flowLayout);
+
     JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
@@ -21,14 +22,12 @@ public class UserScreen extends JFrame {
     JButton saveBtn = new JButton("Save");
     JButton loadBtn = new JButton("Load");
     JButton backBtn = new JButton("Back");
-    // For tray icon refer to bilibili video P8
-    SystemTray systemTray;
 
 
     UserScreenHandler userScreenHandler;
 
     public UserScreen() {
-        super("Setting");
+        super("Timetable");
 
         Rectangle bounds = DimensionUtil.getBounds();
 
@@ -83,6 +82,7 @@ public class UserScreen extends JFrame {
     private void setFrame(Rectangle bounds) {
         // Window's icon
         URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
+        assert resource != null;
         Image image = new ImageIcon(resource).getImage();
         setIconImage(image);
 

@@ -54,6 +54,7 @@ public class HomeScreen extends JFrame{
     public void setFrame() {
         // Window's icon
         URL resource = HomeScreen.class.getClassLoader().getResource("pic2.jpg");
+        assert resource != null;
         Image image = new ImageIcon(resource).getImage();
         setIconImage(image);
 

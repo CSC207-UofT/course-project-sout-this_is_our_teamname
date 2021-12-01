@@ -5,6 +5,7 @@ import demoGUI.handler.OperatorScreenHandler;
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
+import java.util.Objects;
 
 /**
  * This is the homeScreen of the GUI
@@ -20,9 +21,7 @@ public class OperatorScreen extends JFrame{
     JButton banBtn = new JButton("Taiga");
     JButton backBtn = new JButton("Back");
     JButton applyBtn = new JButton("Apply");
-    JComboBox dataBox = new JComboBox<String>();
-    // For tray icon refer to bilibili video P8
-    SystemTray systemTray;
+    JComboBox<String> dataBox = new JComboBox<>();
 
 
     OperatorScreenHandler operatorScreenHandler;
@@ -49,15 +48,18 @@ public class OperatorScreen extends JFrame{
         backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         backBtn.addActionListener(operatorScreenHandler);
 
+        // Apply button
+        applyBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        applyBtn.addActionListener(operatorScreenHandler);
+
         // Dropdown menu
         dataBox.addItem("Webscraper");
         dataBox.addItem("CSVscraper");
 
-
         centerPanel.add(srcBtn);
         centerPanel.add(dataBox);
 
-        southPanel.add(banBtn);
+        southPanel.add(applyBtn);
         southPanel.add(backBtn);
 
         contentPane.add(title, BorderLayout.NORTH);
@@ -78,9 +80,9 @@ public class OperatorScreen extends JFrame{
     private void setFrame() {
         // Window's icon
         URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
+        assert resource != null;
         Image image = new ImageIcon(resource).getImage();
         setIconImage(image);
-
 
         // Set size
         setSize(800, 600);
@@ -92,6 +94,9 @@ public class OperatorScreen extends JFrame{
         setResizable(false);
     }
 
+    public String getDatasource(){
+        return Objects.requireNonNull(dataBox.getSelectedItem()).toString();
+    }
 
     public static void main(String[] args) {
         new OperatorScreen();

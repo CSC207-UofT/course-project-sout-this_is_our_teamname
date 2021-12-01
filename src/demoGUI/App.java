@@ -1,7 +1,6 @@
 package demoGUI;
 
 import demoGUI.userview.HomeScreen;
-import demoGUI.userview.OperatorScreen;
 
 import java.awt.*;
 
