@@ -9,8 +9,8 @@ import java.net.URL;
 public class HomeScreen extends JFrame{
 
     JLabel title = new JLabel("TimeTable", JLabel.CENTER);
-    JPanel centerPanel = new JPanel();
-    JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+    JPanel centerPanel = new JPanel(null);
     JButton userBtn = new JButton("User");
     JButton operatorBtn = new JButton("Operator");
     JButton exitBtn = new JButton("Exit");
@@ -27,22 +27,25 @@ public class HomeScreen extends JFrame{
         title.setPreferredSize(new Dimension(0, 80));
 
         userBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        userBtn.setBounds(220,20,160,40);
         userBtn.addActionListener(homeScreenHandler);
         operatorBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        operatorBtn.setBounds(220, 70 , 160, 40);
         operatorBtn.addActionListener(homeScreenHandler);
 
         exitBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        exitBtn.setBounds(220, 120, 160, 40);
         exitBtn.addActionListener(homeScreenHandler);
+
 
         centerPanel.add(userBtn);
         centerPanel.add(operatorBtn);
-        southPanel.add(exitBtn);
 
+        centerPanel.add(exitBtn);
 
+        title.setOpaque(false);
         contentPane.add(title, BorderLayout.NORTH);
         contentPane.add(centerPanel);
-        contentPane.add(southPanel, BorderLayout.SOUTH);
-
 
         setFrame();
 
@@ -57,7 +60,6 @@ public class HomeScreen extends JFrame{
         assert resource != null;
         Image image = new ImageIcon(resource).getImage();
         setIconImage(image);
-
         
 
         // Set size
