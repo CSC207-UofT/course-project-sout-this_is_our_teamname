@@ -1,40 +1,38 @@
-package demoGUI;
+package demoGUI.userview;
+
+import demoGUI.handler.HomeScreenHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.net.URL;
 
-public class homeScreen extends JFrame{
+public class HomeScreen extends JFrame{
 
     JLabel title = new JLabel("TimeTable", JLabel.CENTER);
     FlowLayout flowLayout = new FlowLayout();
     JPanel centerPanel = new JPanel(flowLayout);
-    JButton cmd1 = new JButton("Schedule Course");
-    JButton cmd2 = new JButton("Schedule Event");
+    JButton userBtn = new JButton("User");
+    JButton operatorBtn = new JButton("Operator");
     
-    SystemTray systemTray;
-    public homeScreen() throws AWTException {
+    HomeScreenHandler homeScreenHandler;
+
+    public HomeScreen() {
         super("TimeTable Scheduler");
+
+        homeScreenHandler = new HomeScreenHandler(this);
+
         Container contentPane = getContentPane();
 
         title.setFont(new Font("Times New Roman", Font.PLAIN, 40));
         title.setPreferredSize(new Dimension(0, 80));
 
-        cmd1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        cmd2.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        userBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        userBtn.addActionListener(homeScreenHandler);
+        operatorBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        operatorBtn.addActionListener(homeScreenHandler);
 
-        centerPanel.add(cmd1);
-        centerPanel.add(cmd2);
-
-
-        // Layout
-        Spring cmd1Width = Spring.width(cmd1);
-        Spring cmd2Width = Spring.width(cmd2);
-        Spring spaceWidth = Spring.constant(20);
-        Spring childWidth = Spring.sum(Spring.sum(cmd1Width, cmd2Width), spaceWidth);
-        int offsetX = childWidth.getValue()/2;
+        centerPanel.add(userBtn);
+        centerPanel.add(operatorBtn);
 
 
         contentPane.add(title, BorderLayout.NORTH);
@@ -50,27 +48,12 @@ public class homeScreen extends JFrame{
         
     }
 
-    public void setFrame() throws AWTException {
+    public void setFrame() {
         // Window's icon
-        URL resource = WindowJFrame.class.getClassLoader().getResource("pic2.jpg");
+        URL resource = HomeScreen.class.getClassLoader().getResource("pic2.jpg");
         Image image = new ImageIcon(resource).getImage();
         setIconImage(image);
 
-        
-        
-//        if (SystemTray.isSupported()){
-//            systemTray = SystemTray.getSystemTray();
-//            TrayIcon trayIcon = new TrayIcon(image);
-//            systemTray.add(trayIcon);
-//        }
-//        
-//        this.addWindowFocusListener(new WindowAdapter() {
-//            @Override
-//            public void windowIconified(WindowEvent e) {
-//               homeScreen.this.dispose();
-//            }
-//        });
-//        trayIcon
         
 
         // Set size
@@ -85,6 +68,6 @@ public class homeScreen extends JFrame{
     
     
     public static void main(String[] args) throws AWTException {
-        new homeScreen();
+        new HomeScreen();
     }
 }
