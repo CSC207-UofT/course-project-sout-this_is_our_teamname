@@ -18,6 +18,8 @@ public class UserScreen extends JFrame {
     JButton courseBtn = new JButton("Schedule Course");
     JButton eventBtn = new JButton("Schedule Task/Activity");
     JButton solBtn = new JButton("Solver");
+    JButton saveBtn = new JButton("Save");
+    JButton loadBtn = new JButton("Load");
     JButton backBtn = new JButton("Back");
     // For tray icon refer to bilibili video P8
     SystemTray systemTray;
@@ -50,12 +52,24 @@ public class UserScreen extends JFrame {
         backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         backBtn.addActionListener(userScreenHandler);
 
+        // Save
+        saveBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        saveBtn.addActionListener(userScreenHandler);
+
+        // Load
+        loadBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        loadBtn.addActionListener(userScreenHandler);
+
+
         southPanel.add(backBtn);
         contentPane.add(southPanel,BorderLayout.SOUTH);
 
         northPanel.add(courseBtn);
         northPanel.add(eventBtn);
         northPanel.add(solBtn);
+        northPanel.add(saveBtn);
+        northPanel.add(loadBtn);
+
 
         contentPane.add(northPanel,BorderLayout.NORTH);
 

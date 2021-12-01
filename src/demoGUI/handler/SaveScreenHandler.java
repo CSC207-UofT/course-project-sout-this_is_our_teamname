@@ -1,8 +1,7 @@
 package demoGUI.handler;
 
 import DataLoading.CSVDownloader;
-import demoGUI.saveandload.ChoosingSaveLoadScreen;
-import demoGUI.saveandload.SaveScreen;
+import demoGUI.userview.SaveScreen;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +30,6 @@ public class SaveScreenHandler implements ActionListener{
     }
 
     private void backChoosing(){
-        new ChoosingSaveLoadScreen();
         savescreen.dispose();
     }
 }

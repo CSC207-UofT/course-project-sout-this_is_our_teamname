@@ -9,10 +9,11 @@ import java.net.URL;
 public class HomeScreen extends JFrame{
 
     JLabel title = new JLabel("TimeTable", JLabel.CENTER);
-    JPanel centerPanel = new JPanel(new FlowLayout());
+    JPanel centerPanel = new JPanel();
+    JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     JButton userBtn = new JButton("User");
     JButton operatorBtn = new JButton("Operator");
-    
+    JButton exitBtn = new JButton("Exit");
     HomeScreenHandler homeScreenHandler;
 
     public HomeScreen() {
@@ -30,12 +31,17 @@ public class HomeScreen extends JFrame{
         operatorBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         operatorBtn.addActionListener(homeScreenHandler);
 
+        exitBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        exitBtn.addActionListener(homeScreenHandler);
+
         centerPanel.add(userBtn);
         centerPanel.add(operatorBtn);
+        southPanel.add(exitBtn);
 
 
         contentPane.add(title, BorderLayout.NORTH);
         contentPane.add(centerPanel);
+        contentPane.add(southPanel, BorderLayout.SOUTH);
 
 
         setFrame();

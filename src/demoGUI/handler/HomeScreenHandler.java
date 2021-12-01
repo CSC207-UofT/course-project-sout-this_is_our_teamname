@@ -25,9 +25,10 @@ public class HomeScreenHandler implements ActionListener {
         String text = jButton.getText();
         if ("Operator".equals(text)){
             openOperator();
-
         } else if ("User".equals(text)){
             operUser();
+        } else if ("Exit".equals(text)){
+            homeScreen.dispose();
         }
     }
 

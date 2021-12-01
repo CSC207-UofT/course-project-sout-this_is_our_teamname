@@ -2,8 +2,7 @@ package demoGUI.handler;
 
 import DataGetting.CSVUploader;
 import Helpers.Constants;
-import demoGUI.saveandload.ChoosingSaveLoadScreen;
-import demoGUI.saveandload.LoadScreen;
+import demoGUI.userview.LoadScreen;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -40,7 +39,6 @@ public class LoadScreenHandler implements ActionListener{
     }
 
     private void backChoosing(){
-        new ChoosingSaveLoadScreen();
         loadscreen.dispose();
     }
 }

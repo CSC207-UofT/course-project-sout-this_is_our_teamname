@@ -1,48 +1,47 @@
-package demoGUI.saveandload;
+package demoGUI.userview;
 
-import demoGUI.handler.LoadScreenHandler;
+import demoGUI.handler.SaveScreenHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.net.URL;
 
-public class LoadScreen extends JFrame{
-    JLabel title = new JLabel("Please enter the name and year of the timetables that you would like to load",
+public class SaveScreen extends JFrame{
+    JLabel title = new JLabel("Please enter the name and year you would like to save your timetables with",
             JLabel.CENTER);
     JPanel centerPanel = new JPanel();
     JPanel southPanel = new JPanel();
-    JButton loadBtn = new JButton("Load");
+    JButton saveBtn = new JButton("Save");
     JButton backBtn = new JButton("Back");
     JTextField name = new JTextField(20);
     JTextField year = new JTextField(4);
 
-    LoadScreenHandler loadscreenhandler;
+    SaveScreenHandler savescreenhandler;
 
-    public LoadScreen() {
+    public SaveScreen() {
         super("Saving");
 
-        loadscreenhandler = new LoadScreenHandler(this);
+        savescreenhandler = new SaveScreenHandler(this);
 
         Container contentPane = getContentPane();
 
-        title.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+        title.setFont(new Font("Times New Roman", Font.PLAIN, 30));
         title.setPreferredSize(new Dimension(0, 80));
 
-        // Load button
-        loadBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        loadBtn.addActionListener(loadscreenhandler);
+        // Save button
+        saveBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        saveBtn.addActionListener(savescreenhandler);
 
         // Back button
         backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        backBtn.addActionListener(loadscreenhandler);
+        backBtn.addActionListener(savescreenhandler);
 
         centerPanel.add(new JLabel("Enter Name"));
         centerPanel.add(name);
         centerPanel.add(new JLabel("Enter Year"));
         centerPanel.add(year);
 
-        southPanel.add(loadBtn);
+        southPanel.add(saveBtn);
         southPanel.add(backBtn);
 
         contentPane.add(title, BorderLayout.NORTH);
@@ -59,7 +58,7 @@ public class LoadScreen extends JFrame{
 
     private void setFrame() {
         // Window's icon
-        URL resource = LoadScreen.class.getClassLoader().getResource("pic2.jpg");
+        URL resource = SaveScreen.class.getClassLoader().getResource("pic2.jpg");
         Image image = new ImageIcon(resource).getImage();
         setIconImage(image);
 
@@ -79,7 +78,7 @@ public class LoadScreen extends JFrame{
     public String getYearString() {return year.getText();}
 
     public static void main(String[] args) {
-        new LoadScreen();
+        new SaveScreen();
 
     }
 }
