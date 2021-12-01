@@ -14,13 +14,13 @@ import java.net.URL;
 public class OperatorScreen extends JFrame{
 
     JLabel title = new JLabel("This is the operator", JLabel.CENTER);
-    FlowLayout flowLayout = new FlowLayout();
-    JPanel centerPanel = new JPanel(flowLayout);
+    JPanel centerPanel = new JPanel();
     JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     JButton srcBtn = new JButton("Aisaka");
     JButton banBtn = new JButton("Taiga");
     JButton backBtn = new JButton("Back");
     JButton applyBtn = new JButton("Apply");
+    JComboBox dataBox = new JComboBox<String>();
     // For tray icon refer to bilibili video P8
     SystemTray systemTray;
 
@@ -49,8 +49,13 @@ public class OperatorScreen extends JFrame{
         backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         backBtn.addActionListener(operatorScreenHandler);
 
+        // Dropdown menu
+        dataBox.addItem("Webscraper");
+        dataBox.addItem("CSVscraper");
+
 
         centerPanel.add(srcBtn);
+        centerPanel.add(dataBox);
 
         southPanel.add(banBtn);
         southPanel.add(backBtn);

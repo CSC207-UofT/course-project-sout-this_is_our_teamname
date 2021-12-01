@@ -9,8 +9,7 @@ import java.net.URL;
 public class HomeScreen extends JFrame{
 
     JLabel title = new JLabel("TimeTable", JLabel.CENTER);
-    FlowLayout flowLayout = new FlowLayout();
-    JPanel centerPanel = new JPanel(flowLayout);
+    JPanel centerPanel = new JPanel(new FlowLayout());
     JButton userBtn = new JButton("User");
     JButton operatorBtn = new JButton("Operator");
     
@@ -40,8 +39,6 @@ public class HomeScreen extends JFrame{
 
 
         setFrame();
-        // Visibility
-        setVisible(true);
 
         // Terminate program
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -64,6 +61,9 @@ public class HomeScreen extends JFrame{
 
         // Fixed size
         setResizable(false);
+
+        // Visibility
+        setVisible(true);
     }
     
     

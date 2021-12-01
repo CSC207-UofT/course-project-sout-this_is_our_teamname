@@ -60,8 +60,6 @@ public class UserScreen extends JFrame {
         contentPane.add(northPanel,BorderLayout.NORTH);
 
         setFrame(bounds);
-        // Visibility
-        setVisible(true);
 
         // Terminate program
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -88,6 +86,9 @@ public class UserScreen extends JFrame {
 
         // Fixed size
         setResizable(false);
+
+        // Visibility
+        setVisible(true);
     }
 
 
