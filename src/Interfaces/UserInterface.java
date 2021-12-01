@@ -1,12 +1,14 @@
 package Interfaces;
 
+import Helpers.InputCheckers.InputChecker;
+import Helpers.InputCheckers.Predicate;
+import Helpers.InvalidInputException;
+import Helpers.Reformatters;
 import InterfaceAdaptors.DatabaseController;
-import InterfaceAdaptors.CommandFactory;
-import InterfaceAdaptors.Presenter;
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 
 /**
@@ -20,19 +22,14 @@ import java.util.Arrays;
  */
 public class UserInterface {
     private final DatabaseController control;
-    private final OperatorInterface operator;
-    private final Presenter presenter;
 
     /**
      * Constructor of the UserInterface.
      * Sets presenter, control and operator.
      */
     public UserInterface() {
-        this.presenter = new Presenter();
-        this.control = this.presenter.getController();
-        this.operator = new OperatorInterface(this.control);
+        this.control = new DatabaseController();
     }
-
 
     /**
      * Runs the UserInterface.
@@ -41,83 +38,50 @@ public class UserInterface {
      * found.
      */
     public void run() throws IOException {
+        this.control.Initialize();
+
         // As long as the program is running
         boolean running = true;
-
-        // Set the DataGetter of the program to be the one in the datasource.json.
-        this.readDatasource();
-        CommandFactory theFactory = new CommandFactory(control);
-        this.operator.SetDatasource(theFactory, this.readDatasource());
-
-        // Set the AllowedFunction in the file to be the one saved in the file.
-        String[] banFunctions = this.readFunctions();
-
-        // Check whether the file is empty.
-        if (!Arrays.toString(banFunctions).equals("[]")) {
-            theFactory.setAllowedFunctions(banFunctions);
-        }
-
         while (running) {
-            System.out.println("\nCurrent datasource: " + this.operator.getDatasource());
-            running = presenter.run();
+            System.out.println("\nCurrent datasource: " + this.control.getDataSource());
+            // Get a hashmap of all functions, with numbered keys to
+            // enumerate the choices
+            LinkedHashMap<String, String> NumberedKeysToAllowedFunctions =
+                    Reformatters.hashMapIt(control.getAllowedFunctions());
+
+
+            // Print out enumerated lists
+            for (String num : NumberedKeysToAllowedFunctions.keySet()){
+                System.out.println(num + ": " + NumberedKeysToAllowedFunctions.get(num));
+            }
+
+            InputChecker requestCommand = new InputChecker("Please select a " +
+                    "command to execute", new isValidCommand(NumberedKeysToAllowedFunctions));
+            String requested = requestCommand.checkCorrectness();
+
+            try {
+                // True iff the command has been able to run the allowed
+                // function
+                running = control.runCommand(NumberedKeysToAllowedFunctions.get(requested));
+            } catch (InvalidInputException e){
+                System.out.println("Command not allowed. Please try again!");
+            }
         }
     }
 
-
-    // ============================ Helper Methods =================================
+    // ========================== Helper Methods ===============================
     /**
-     * Gets the OperatorInterface
-     *
-     * @return An OperatorInterface object.
+     * A predicate to determine if the command is a valid input
      */
-    public OperatorInterface getOperator() {
-        return this.operator;
-    }
-
-
-    /**
-     * Read the datasource.txt file.
-     *
-     * @exception IOException will be raised if the given file is not found.
-     *
-     * @return A string in datasource.txt.
-     */
-    private String readDatasource() throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
-        // Read the file.
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("src/Interfaces/datasource.txt"));
-        String s;
-        // Check whether the datasource.json is empty.
-        if ((s = bufferedReader.readLine()) != null) {
-            stringBuilder.append(s.trim());
-        }
-        return stringBuilder.toString();
-    }
-
-
-    /**
-     * Read the functions.txt file.
-     *
-     * @exception IOException will be raised if the given file is not found.
-     *
-     * @return the Array of allowedFunctions.
-     */
-    private String[] readFunctions() throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
-        // Read the file.
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("src/Interfaces/functions.txt"));
-        String s;
-        String newString = "";
-        // Check whether the datasource.json is empty.
-        if ((s = bufferedReader.readLine()) != null) {
-            // rawString is the String contains "[" and "]", need to delete them first and then convert the String into Array
-            stringBuilder.append(s.trim());
-            String rawString = stringBuilder.toString();
-            newString = rawString.substring(1, rawString.length() - 1);
+    private static class isValidCommand extends Predicate {
+        private final HashMap<String, String> allowed;
+        public isValidCommand(HashMap<String, String> values){
+            this.allowed = values;
         }
 
-
-
-        return newString.split(",\\s+");
+        @Override
+        public boolean run(String prompt) {
+            return this.allowed.containsKey(prompt);
+        }
     }
 }

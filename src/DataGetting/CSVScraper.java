@@ -243,4 +243,8 @@ public class CSVScraper extends CourseGetter {
             System.out.println("File Not Found");
         }
     }
+
+    public String toString(){
+        return "CSVScraper";
+    }
 }
