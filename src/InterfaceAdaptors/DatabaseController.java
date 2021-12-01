@@ -4,13 +4,11 @@ import Commands.FunctionCommands.ExitProgramCommand;
 import DataGetting.CSVScraper;
 import DataGetting.WebScraper;
 import Helpers.InvalidInputException;
-import TimeTableContainers.TimeTableManager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**

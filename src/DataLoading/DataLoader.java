@@ -9,6 +9,8 @@ import java.io.*;
  *
  * Precondition: The file needs to be uploaded is a properly formatted
  * csv file.
+ *
+ * TODO Delete this class! We only have one loader, so this is not needed!
  */
 public abstract class DataLoader {
 

@@ -279,26 +279,6 @@ public class WebScraper extends CourseGetter {
         return theTerm;
     }
 
-    /**
-     * A main method to develop this module
-     *
-     * @param args arguments
-     */
-    public static void main(String[] args) {
-        String [] courses = {"CSC207H1", "APS110H1", "CIV100H1", "MAT137Y1"};
-        WebScraper a = new WebScraper();
-        for (String course : courses){
-            try {
-                LinkedHashMap<String,
-                        ArrayList<Course>> got = a.retrieveData(course, "Fall",
-                        "2021");
-                System.out.println(got);
-            } catch (FileNotFoundException e){
-                System.out.println("File Not Found");
-            }
-        }
-    }
-
     public String toString(){
         return "WebScraper";
     }

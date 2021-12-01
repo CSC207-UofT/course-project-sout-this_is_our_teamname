@@ -228,22 +228,6 @@ public class CSVScraper extends CourseGetter {
         return line.length >= 2 && line[SECTION].equals("");
     }
 
-    /**
-     * A main method to develop this module
-     *
-     * @param args arguments
-     */
-    public static void main(String[] args) {
-        CSVScraper a = new CSVScraper();
-        try {
-            HashMap<String, ArrayList<Course>> got = a.retrieveData("CSC207H1", "Fall",
-                    "2021");
-            System.out.println(got);
-        } catch (FileNotFoundException e){
-            System.out.println("File Not Found");
-        }
-    }
-
     public String toString(){
         return "CSVScraper";
     }
