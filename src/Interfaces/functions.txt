@@ -1,1 +1,0 @@
-[Load Data, Save, Download Timetable, Show TimeTables, Solve Timetable, Get History, Log Out]
