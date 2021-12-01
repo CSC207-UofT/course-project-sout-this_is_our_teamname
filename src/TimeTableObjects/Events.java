@@ -49,10 +49,8 @@ public abstract class Events implements Reconstructable {
      * If the Events object has an empty string for name attribute,
      * then set name to: "Unnamed" + Activity/Task/CourseSection
      */
-    public void unnamed(){
-        if (this.getName().isEmpty()){
-            this.setName("Unnamed" + this.getClass().getSimpleName());
-        }
+    public void nameIt(){
+        this.setName("Unnamed" + this.getClass().getSimpleName());
     }
 
     /**

@@ -37,11 +37,12 @@ public class Activity extends Events  implements Reconstructable {
       */
      @Override
      public ArrayList<String> reconstruct() {
-         ArrayList<String> list = new ArrayList<>(3);
+         ArrayList<String> list = new ArrayList<>(4);
          // index 0: class name, index 1: Activity name, index 2: description
          list.add(0, this.getClass().getSimpleName());
          list.add(1, this.getName());
-         list.add(2, this.description);
+         list.add(2, " ");
+         list.add(3, this.description);
          return list;
      }
 

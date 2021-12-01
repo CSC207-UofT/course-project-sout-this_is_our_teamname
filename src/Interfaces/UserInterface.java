@@ -37,7 +37,8 @@ public class UserInterface {
     /**
      * Runs the UserInterface.
      *
-     * The IOException will be raised if the given file, datasource.txt, is not found.
+     * @exception IOException will be raised if the given file, datasource.txt, is not
+     * found.
      */
     public void run() throws IOException {
         // As long as the program is running
@@ -50,6 +51,7 @@ public class UserInterface {
 
         // Set the AllowedFunction in the file to be the one saved in the file.
         String[] banFunctions = this.readFunctions();
+
         // Check whether the file is empty.
         if (!Arrays.toString(banFunctions).equals("[]")) {
             theFactory.setAllowedFunctions(banFunctions);
@@ -76,7 +78,7 @@ public class UserInterface {
     /**
      * Read the datasource.txt file.
      *
-     * The IOException will be raised if the given file is not found.
+     * @exception IOException will be raised if the given file is not found.
      *
      * @return A string in datasource.txt.
      */
@@ -96,7 +98,7 @@ public class UserInterface {
     /**
      * Read the functions.txt file.
      *
-     * The IOException will be raised if the given file is not found.
+     * @exception IOException will be raised if the given file is not found.
      *
      * @return the Array of allowedFunctions.
      */
