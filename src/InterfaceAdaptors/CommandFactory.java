@@ -13,11 +13,9 @@ import Commands.RemovalCommands.RemoveTimeTable;
 import Commands.CreationCommands.PrintHistoryCommand;
 import Commands.FunctionCommands.DownloadDataCommand;
 import Commands.FunctionCommands.LoadDataCommand;
-import Commands.FunctionCommands.SaveDataCommand;
 import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -66,7 +64,6 @@ public class CommandFactory {
                 SCHEDULE_EVENT,
                 REMOVE_EVENT,
                 LOAD_DATA,
-                SAVE_DATA,
                 DOWNLOAD_TIMETABLE,
                 GET_ALL_TIMETABLE,
                 SOLVE_TIMETABLE,
@@ -111,9 +108,7 @@ public class CommandFactory {
             case PRINT_HISTORY:
                 return new PrintHistoryCommand(controller);
             case LOAD_DATA:
-                return new LoadDataCommand(courseManager);
-            case SAVE_DATA:
-                return new SaveDataCommand(courseManager);
+                return new LoadDataCommand();
             case DOWNLOAD_TIMETABLE:
                 return new DownloadDataCommand(courseManager);
             case EXIT:

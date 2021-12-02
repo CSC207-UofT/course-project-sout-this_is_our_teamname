@@ -2,9 +2,11 @@ package Commands;
 
 import DataGetting.CourseGetter;
 import Helpers.InputCheckers.InputChecker;
+import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 
 import java.io.FileNotFoundException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -13,7 +15,7 @@ import java.util.LinkedHashMap;
  * An interface for commands that requires searching for courses through a
  * dataSource
  */
-public interface NeedsCourses {
+public abstract class NeedsCoursesCommand implements Command {
     /**
      * Split the HashMap of Courses by types
      *
@@ -48,7 +50,7 @@ public interface NeedsCourses {
     /**
      * Prompts the user for inputs
      */
-    static LinkedHashMap<String, ArrayList<Course>> userInputs(CourseGetter dataSource) {
+    public LinkedHashMap<String, ArrayList<Course>> userInputs(CourseGetter dataSource) {
         LinkedHashMap<String, Course> course_data =
                 new LinkedHashMap<>();
 

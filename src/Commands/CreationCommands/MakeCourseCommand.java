@@ -1,9 +1,8 @@
 package Commands.CreationCommands;
 
 import Commands.Command;
-import Commands.NeedsCourses;
+import Commands.NeedsCoursesCommand;
 import DataGetting.CourseGetter;
-import Helpers.ConflictException;
 import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
 import Helpers.InputCheckers.Predicate;
@@ -20,10 +19,10 @@ import java.util.LinkedHashMap;
  * dataSource: The source where the data is from.
  * manager: The manager that will eventually schedule the object
  */
-public class MakeCourseCommand implements Command, NeedsCourses {
+public class MakeCourseCommand extends NeedsCoursesCommand {
+    private final ArrayList<Course> scheduledCourse;
     private final CourseGetter dataSource;
     private final TimeTableManager manager;
-    private final ArrayList<Course> scheduledCourse;
 
     /**
      * A constructor to initialize what this command is connected to
@@ -45,8 +44,7 @@ public class MakeCourseCommand implements Command, NeedsCourses {
         // Clears the dataSource so it doesn't build up.
         dataSource.clearData();
 
-        LinkedHashMap<String, ArrayList<Course>> course_data =
-                NeedsCourses.userInputs(dataSource);
+        LinkedHashMap<String, ArrayList<Course>> course_data = userInputs(dataSource);
         promptUser(course_data);
 
         ArrayList<CourseSection> sections = new ArrayList<>();
