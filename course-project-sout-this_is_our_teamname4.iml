@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/phase1/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Resource" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/demoGUI/resource" type="java-resource" />
     </content>
     <orderEntry type="jdk" jdkName="corretto-11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
