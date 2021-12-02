@@ -5,11 +5,13 @@ import DataGetting.CSVScraper;
 import DataGetting.WebScraper;
 import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.DatabaseController;
+import Interfaces.InterfaceFacade;
+import Interfaces.OperatorInterface;
 import TimeTableContainers.TimeTableManager;
 import demoGUI.userview.HomeScreen;
 import demoGUI.userview.OperatorScreen;
 import demoGUI.userview.UserScreen;
-
+import demoGUI.handler.HomeScreenHandler;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,16 +39,20 @@ public class OperatorScreenHandler implements ActionListener {
             System.out.println("Taiga!");
             JOptionPane.showMessageDialog(operatorScreen,"You touched Taiga's head Aww");
         } else if ("Apply".equals(text)) {
-            String type = operatorScreen.getDatasource();
-            DatabaseController control = new DatabaseController();
-            CommandFactory theFactory = new CommandFactory(control);
-            try {
-                this.SetDatasource(theFactory, control, type);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
-            JOptionPane.showMessageDialog(operatorScreen,"Successfully applied " + type);
+            // Get user input
+//            String type = operatorScreen.getDatasource();
+//            OperatorInterface operator = operatorScreen.getOperator();
+//            CommandFactory factory = new CommandFactory(operator.getControl());
+//
+//            try {
+//                operator.SetDatasource(factory, type);
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//
+//            operatorScreen.setOperator(operator);
+//
+//            JOptionPane.showMessageDialog(operatorScreen,"Successfully applied " + type);
         }
     }
 
@@ -65,7 +71,7 @@ public class OperatorScreenHandler implements ActionListener {
             // Set the datasource of theFactory to be WebScraper if operator chooses it.
         } else if (input.equals("WebScraper")) {
             theFactory.setDataSource(new WebScraper());
-            theFactory.setManager(new TimeTableManager());
+            //theFactory.setManager(new TimeTableManager());
             controller.setFactory(theFactory);
         }
     }

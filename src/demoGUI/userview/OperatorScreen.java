@@ -1,5 +1,6 @@
 package demoGUI.userview;
 
+import Interfaces.OperatorInterface;
 import demoGUI.handler.OperatorScreenHandler;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ import java.util.Objects;
 
 // TODO Tray Icon P8, Get text by click enter P9 9:50. jTable for timetable at P10 8:50
 public class OperatorScreen extends JFrame{
-
+    OperatorInterface operator;
     JLabel title = new JLabel("This is the operator", JLabel.CENTER);
     JPanel centerPanel = new JPanel();
     JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -26,9 +27,9 @@ public class OperatorScreen extends JFrame{
 
     OperatorScreenHandler operatorScreenHandler;
 
-    public OperatorScreen() {
+    public OperatorScreen(OperatorInterface operator) {
         super("Setting");
-
+        this.operator = operator;
         operatorScreenHandler = new OperatorScreenHandler(this);
 
         Container contentPane = getContentPane();
@@ -55,6 +56,7 @@ public class OperatorScreen extends JFrame{
         // Dropdown menu
         dataBox.addItem("Webscraper");
         dataBox.addItem("CSVscraper");
+        dataBox.addItem("Default");
 
         centerPanel.add(srcBtn);
         centerPanel.add(dataBox);
@@ -94,12 +96,17 @@ public class OperatorScreen extends JFrame{
         setResizable(false);
     }
 
+    public OperatorInterface getOperator() {
+        return operator;
+    }
+
+    public void setOperator(OperatorInterface operator) {
+        this.operator = operator;
+    }
+
     public String getDatasource(){
         return Objects.requireNonNull(dataBox.getSelectedItem()).toString();
     }
 
-    public static void main(String[] args) {
-        new OperatorScreen();
-    }
 }
 

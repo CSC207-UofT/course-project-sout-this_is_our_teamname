@@ -115,6 +115,9 @@ public class OperatorInterface {
         file.close();
     }
 
+    public DatabaseController getControl() {
+        return control;
+    }
     // ============================ Predicates =================================
     /**
      * A predicate to determine if the command is valid.

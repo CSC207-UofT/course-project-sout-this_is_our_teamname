@@ -1,6 +1,5 @@
 package demoGUI.handler;
 
-import DataLoading.CSVDownloader;
 import demoGUI.userview.SaveScreen;
 
 import javax.swing.*;
@@ -24,7 +23,7 @@ public class SaveScreenHandler implements ActionListener{
         } else if ("Save".equals(text)){
             String name = savescreen.getNameString();
             String year = savescreen.getYearString();
-            CSVDownloader loader = new CSVDownloader();
+            //CSVDownloader loader = new CSVDownloader();
             //loader.download((...), name, year);
         }
     }

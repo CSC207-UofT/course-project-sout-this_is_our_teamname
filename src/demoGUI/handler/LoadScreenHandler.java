@@ -1,6 +1,5 @@
 package demoGUI.handler;
 
-import DataGetting.CSVUploader;
 import Helpers.Constants;
 import demoGUI.userview.LoadScreen;
 
@@ -26,15 +25,15 @@ public class LoadScreenHandler implements ActionListener{
         } else if ("Load".equals(text)){
             String name = loadscreen.getNameString();
             String year = loadscreen.getYearString();
-            CSVUploader loader = new CSVUploader();
-            String[] terms = {Constants.FALL, Constants.WINTER};
-            for (String term : terms) {
-                try {
-                    loader.CalibrateData(name, term, year);
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-            }
+            // CSVUploader loader = new CSVUploader();
+//            String[] terms = {Constants.FALL, Constants.WINTER};
+//            for (String term : terms) {
+//                try {
+//                    loader.CalibrateData(name, term, year);
+//                } catch (FileNotFoundException ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
         }
     }
 

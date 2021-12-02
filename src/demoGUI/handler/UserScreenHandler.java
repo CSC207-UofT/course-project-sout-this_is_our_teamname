@@ -29,7 +29,7 @@ public class UserScreenHandler implements ActionListener {
             System.out.println("Aisaka!");
             openScheduleEvent();
         } else if ("Solver".equals(text)) {
-
+            new SolverScreen();
         } else if ("Back".equals(text)) {
             backHome();
         }

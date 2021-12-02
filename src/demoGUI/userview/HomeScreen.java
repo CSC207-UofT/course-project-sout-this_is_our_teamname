@@ -40,7 +40,6 @@ public class HomeScreen extends JFrame{
 
         centerPanel.add(userBtn);
         centerPanel.add(operatorBtn);
-
         centerPanel.add(exitBtn);
 
         title.setOpaque(false);
