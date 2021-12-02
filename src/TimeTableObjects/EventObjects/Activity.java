@@ -14,7 +14,7 @@ import java.util.Scanner;
   * === Private Attributes ===
   * description contains all the other info about the activity
   */
-public class Activity extends Events implements Reconstructable, NeedsDescription {
+public class Activity extends Events implements Reconstructable {
     private final String description;
 
     /**
