@@ -28,7 +28,7 @@ public class EventFactory {
         // Creates the Activity
         switch (type){
             case Constants.ACTIVITY:
-                return new Activity(startTime, endTime, theDate, term);
+                return new Activity(startTime, endTime, theDate, term , "");
             case Constants.TASK:
                 Task task = new Task(startTime, endTime, theDate, term);
                 task.addToName(theLocation);

@@ -28,9 +28,10 @@ public class Activity extends Events implements Reconstructable, NeedsDescriptio
     public Activity(LocalTime theStartTime,
                     LocalTime theEndTime,
                     String theDate,
-                    String term) {
+                    String term,
+                    String description) {
         super(theStartTime, theEndTime, theDate, term);
-        this.description = NeedsDescription.buildDescription();
+        this.description = description;
     }
 
      /**
