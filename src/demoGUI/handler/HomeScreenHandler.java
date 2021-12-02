@@ -6,6 +6,7 @@ import Interfaces.OperatorInterface;
 import Interfaces.UserInterface;
 import demoGUI.userview.HomeScreen;
 import demoGUI.userview.OperatorScreen;
+import demoGUI.userview.TimeTableScreen;
 import demoGUI.userview.UserScreen;
 
 import javax.swing.*;
@@ -40,7 +41,7 @@ public class HomeScreenHandler implements ActionListener {
     }
 
     private void operUser() {
-        new UserScreen();
+        new TimeTableScreen();
         homeScreen.dispose();
     }
 
