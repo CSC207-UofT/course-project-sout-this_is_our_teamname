@@ -7,7 +7,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//TODO rename this
 /**
  * This is a course section (LEC/TUT/PRA) chosen by the user
  *
@@ -28,7 +27,6 @@ public class Course implements Splittable<CourseSection> {
     private final String deliveryMethod;
     private final String term;
     private final HashMap<Object[], String> timeLocation;
-    private final boolean wait_list;
     private final String courseName;
 
     // Constants for TimeLocation key
@@ -49,7 +47,6 @@ public class Course implements Splittable<CourseSection> {
      *                     the date and time information like the following:
      *                     {date, startTime, endTime}
      * @param term The term and year for this course e.g. Fall 2021
-     * @param wait_list Whether the course is waitlisted
      */
     public Course(String CourseName,
                   String section,
@@ -57,8 +54,7 @@ public class Course implements Splittable<CourseSection> {
                   String faculty,
                   String deliveryMethod,
                   HashMap<Object[], String> timeLocation,
-                  String term,
-                  boolean wait_list
+                  String term
                   ) {
         this.courseName = CourseName;
         this.sectionName = section;
@@ -67,7 +63,6 @@ public class Course implements Splittable<CourseSection> {
         this.deliveryMethod = deliveryMethod;
         this.timeLocation = timeLocation;
         this.term = term;
-        this.wait_list = wait_list;
     }
 
     /** Split the course into section objects
@@ -89,7 +84,7 @@ public class Course implements Splittable<CourseSection> {
                             + this.timeLocation.get(time);
 
             CourseSection section = new CourseSection(this.courseName, start, end, date, this.term,
-                    this.sectionName, this.wait_list);
+                    this.sectionName);
             section.setDescription(description);
             section.setName(courseName);
 
@@ -157,7 +152,6 @@ public class Course implements Splittable<CourseSection> {
         return CourseString.toString();
     }
 
-
     public static void main(String[] args) {
         Object[] testDateTime1 = {"Friday",
                 LocalTime.of(9, 0, 0),
@@ -172,7 +166,7 @@ public class Course implements Splittable<CourseSection> {
         testDateTimeMap.put(testDateTime2, "LM161");
 
         Course A = new Course("CSC207H1", "LEC 0101", "Paul Gries", "A&S",
-                "In-Person", testDateTimeMap, "Fall", false);
+                "In-Person", testDateTimeMap, "Fall");
         System.out.println(A);
     }
 }
