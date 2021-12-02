@@ -149,7 +149,7 @@ public class TimeTable {
         for (int i = 0; i < events.length; i++) {
             times.append("\t").append(i).append(":00 ");
             if (events[i] != null) {
-                times.append(events[i]).append("\n");
+                times.append(events[i].toString()).append("\n");
             } else {
                 times.append("\n");
             }

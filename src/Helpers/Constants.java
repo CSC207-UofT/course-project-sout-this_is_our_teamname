@@ -17,4 +17,8 @@ public class Constants {
     public static final String TASK = "Task";
     public static final String[] DAYS_OF_THE_WEEK = {MONDAY, TUESDAY,
             WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY};
+    public static final String USER = "User";
+    public static final String OPERATOR = "Operator";
+    public static final String TRUE = "true";
+    public static final String FALSE = "false";
 }

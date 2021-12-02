@@ -44,8 +44,8 @@ public abstract class DataGetter<T>{
      * course (LEC, TUT, PRA) and the values are arraylist of course objects
      * @throws FileNotFoundException If the file is not found.
      */
-    abstract LinkedHashMap<String, ArrayList<T>> retrieveData(String courseName,
-                                                              String term, String year) throws FileNotFoundException;
+    abstract LinkedHashMap<String, T> retrieveData(String courseName,
+                                                   String term, String year) throws FileNotFoundException;
 
     /**
      * Add the object to the data HashMap

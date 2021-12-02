@@ -6,6 +6,7 @@ SIGNIFICANTLY EASIER, SO WHY NOT?
 """
 
 from typing import List
+import os
 
 
 def is_course(cor: str) -> bool:
@@ -27,7 +28,7 @@ def get_data(datafile: str):
     return data
 
 
-def _format_Date(dat: str):
+def _format_date(dat: str):
     if dat == "Mon":
         return "Monday"
     elif dat == "Tue":
@@ -40,7 +41,7 @@ def _format_Date(dat: str):
         return "Friday"
 
 
-def _formatTime(t: str):
+def _format_time(t: str):
     timesplit = t.split(sep=":")
     if timesplit[0] == "":
         return t
@@ -50,8 +51,8 @@ def _formatTime(t: str):
         return f"{int(timesplit[0])}:{timesplit[1]}AM"
 
 
-def formatDateTime(date: str, stime: str, etime: str):
-    return f"{_format_Date(date)} {_formatTime(stime)} - {_formatTime(etime)}"
+def format_date_time(date: str, stime: str, etime: str):
+    return f"{_format_date(date)} {_format_time(stime)} - {_format_time(etime)}"
 
 
 # CONSTANTS
@@ -64,7 +65,7 @@ INSTRUCTOR_FIRSTNAME, INSTRUCTOR_LASTNAME = 7, 8
 DELIVERY = -1
 
 
-def partitionList(lst: List[List[str]]):
+def partition_list(lst: List[List[str]]):
     d = {}
     for sublst in lst:
         if sublst[SECTION] not in d:
@@ -74,17 +75,17 @@ def partitionList(lst: List[List[str]]):
 
 
 def prepare_to_write(obj: List[List[str]]):
-    diction = partitionList(obj)
+    diction = partition_list(obj)
 
     s = ""
     for k in diction:
         dat = diction[k][0]
-        s += f"{k},{formatDateTime(dat[DATE], dat[START_TIME], dat[END_TIME])}," \
+        s += f"{k},{format_date_time(dat[DATE], dat[START_TIME], dat[END_TIME])}," \
              f"{dat[LOCATION]},{dat[INSTRUCTOR_FIRSTNAME]} " \
              f"{dat[INSTRUCTOR_LASTNAME]}, {dat[DELIVERY][:-1]}, 0\n"
         if len(k) > 1:
             for item in diction[k][1:]:
-                s += f",{formatDateTime(item[DATE], item[START_TIME], item[END_TIME])},{item[LOCATION]}\n"
+                s += f",{format_date_time(item[DATE], item[START_TIME], item[END_TIME])},{item[LOCATION]}\n"
         s += ",,,,\n"
     return s[:-1]
 
@@ -100,5 +101,21 @@ def main():
         output.close()
 
 
+def python_patch1():
+    for filename in os.listdir("Winter2021"):
+        input_ = open(f"Winter2021\\{filename}")
+        data = input_.read()
+        input_.close()
+
+        splitdata = data.split(",")
+        splitdata[1] = "Winter2022"
+        data = str.join(",", splitdata)
+
+        output = open(f"Winter2022\\{filename}", "w")
+        output.write(data)
+        output.close()
+
+
 if __name__ == '__main__':
-    main()
+    # main()
+    python_patch1()

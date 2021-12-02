@@ -17,6 +17,9 @@ import Commands.FunctionCommands.SaveDataCommand;
 import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * A factory class to create the individual commands of the class.
  *
@@ -54,7 +57,7 @@ public class CommandFactory {
      *                      is set to.
      */
     public CommandFactory(DatabaseController theController){
-        this.courseManager = null;
+        this.courseManager = new TimeTableManager();
         this.dataSource = null;
         this.controller = theController;
 
@@ -134,15 +137,6 @@ public class CommandFactory {
     }
 
     /**
-     * Sets the TimeTableManager to connect to
-     *
-     * @param theManager the TimeTableManager to connect to
-     */
-    public void setManager(TimeTableManager theManager){
-        this.courseManager = theManager;
-    }
-
-    /**
      * Sets the DataGetter to connect to
      *
      * @param theDataSource the DataGetter to connect to
@@ -156,5 +150,11 @@ public class CommandFactory {
      *
      * @param newAllowedFunction the AllowedFunction to connect to
      */
-    public void setAllowedFunctions(String[] newAllowedFunction) {this.allowedFunctions = newAllowedFunction;}
+    public void setAllowedFunctions(ArrayList<String> newAllowedFunction) {
+        this.allowedFunctions = newAllowedFunction.toArray(new String[0]);
+    }
+
+    public CourseGetter getDataSource(){
+        return this.dataSource;
+    }
 }

@@ -27,7 +27,6 @@ public class CommandFactoryTest {
     public void Setup(){
         factory = new CommandFactory(new DatabaseController());
         manager = new TimeTableManager();
-        factory.setManager(manager);
         factory.setDataSource(new CSVScraper());
     }
 
