@@ -1,6 +1,7 @@
-package GUI.Controllers;
+package demoGUI.handler;
 
-import GUI.Views.TimeTableScreen;
+import com.sun.tools.javac.Main;
+import demoGUI.userview.TimeTableScreen;
 import demoGUI.userview.*;
 
 import javax.swing.*;
@@ -18,8 +19,8 @@ public class TimeTableScreenController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
-        //TODO  use switch case here
 
+        //TODO  use switch case here
         if ("Back".equals(text)){backHome();}
 
         else if ("Schedule Course".equals(text)){
@@ -38,7 +39,7 @@ public class TimeTableScreenController implements ActionListener {
     }
 
     private void backHome(){
-        new HomeScreen();
+        new MainMenu();
         timeTableScreen.dispose();
     }
     private void openScheduleCourse(){

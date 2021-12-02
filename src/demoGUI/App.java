@@ -1,6 +1,6 @@
 package demoGUI;
 
-import demoGUI.userview.HomeScreen;
+import demoGUI.userview.MainMenu;
 
 import java.awt.*;
 
@@ -10,6 +10,6 @@ import java.awt.*;
  */
 public class App {
     public static void main(String[] args) throws AWTException {
-        new HomeScreen();
+        new MainMenu();
     }
 }

@@ -1,7 +1,7 @@
-package GUI.Controllers;
+package demoGUI.handler;
 
 
-import GUI.Views.MainMenu;
+import demoGUI.userview.MainMenu;
 import demoGUI.userview.OperatorScreen;
 import demoGUI.userview.UserScreen;
 

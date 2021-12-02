@@ -1,6 +1,6 @@
-package GUI.Views;
+package demoGUI.userview;
 
-import GUI.Controllers.MainMenuController;
+import demoGUI.handler.MainMenuController;
 
 import javax.swing.*;
 
