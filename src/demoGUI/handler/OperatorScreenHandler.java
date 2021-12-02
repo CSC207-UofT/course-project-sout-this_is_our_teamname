@@ -7,6 +7,7 @@ import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.DatabaseController;
 import demoGUI.userview.MainMenu;
 import demoGUI.userview.OperatorScreen;
+import demoGUI.userview.TimeTableScreen;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,7 +31,7 @@ public class OperatorScreenHandler implements ActionListener {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
         if ("Back".equals(text)){
-            backHome();
+            back();
         } else if ("Taiga".equals(text)){
             System.out.println("Taiga!");
             JOptionPane.showMessageDialog(operatorScreen,"You touched Taiga's head Aww");
@@ -48,8 +49,8 @@ public class OperatorScreenHandler implements ActionListener {
         }
     }
 
-    private void backHome(){
-        new MainMenu();
+    private void back(){
+        new TimeTableScreen();
         operatorScreen.dispose();
     }
 

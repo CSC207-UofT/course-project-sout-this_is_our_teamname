@@ -21,15 +21,16 @@ public class TimeTableScreenController implements ActionListener {
         String text = jButton.getText();
 
         //TODO  use switch case here
-        if ("Back".equals(text)){backHome();}
-
-        else if ("Schedule Course".equals(text)){
+        if ("Schedule Course".equals(text)){
             System.out.println("Taiga!");
             openScheduleCourse();
         }
         else if ("Schedule Task/Activity".equals(text)){
             System.out.println("Aisaka!");
             openScheduleEvent();
+        }
+        else if ("Settings".equals(text)){
+            openSettings();
         }
 
         //TODO move solver into Schedule Course.
@@ -41,6 +42,10 @@ public class TimeTableScreenController implements ActionListener {
     private void backHome(){
         new MainMenu();
         timeTableScreen.dispose();
+    }
+
+    private void openSettings(){
+        new OperatorScreen();
     }
     private void openScheduleCourse(){
         new ScheduleCourseScreen();

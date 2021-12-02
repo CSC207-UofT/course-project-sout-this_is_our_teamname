@@ -2,6 +2,7 @@ package demoGUI;
 
 import demoGUI.userview.HomeScreen;
 import demoGUI.userview.MainMenu;
+import demoGUI.userview.TimeTableScreen;
 
 import java.awt.*;
 
@@ -11,6 +12,6 @@ import java.awt.*;
  */
 public class App {
     public static void main(String[] args) throws AWTException {
-        new MainMenu();
+        new TimeTableScreen();
     }
 }

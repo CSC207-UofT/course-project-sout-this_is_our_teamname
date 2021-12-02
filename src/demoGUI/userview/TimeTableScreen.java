@@ -14,7 +14,9 @@ public class TimeTableScreen extends JFrame{
     private JButton solverButton;
     private JButton saveButton;
     private JButton loadButton;
-    private JButton backButton;
+    private JButton settingsButton;
+    private JTabbedPane TimeTabletabbedPane;
+    private JTable table1;
     TimeTableScreenController timeTableScreenController;
 
     public TimeTableScreen() {
@@ -29,7 +31,7 @@ public class TimeTableScreen extends JFrame{
         solverButton.addActionListener(timeTableScreenController);
         saveButton.addActionListener(timeTableScreenController);
         loadButton.addActionListener(timeTableScreenController);
-        backButton.addActionListener(timeTableScreenController);
+        settingsButton.addActionListener(timeTableScreenController);
 
         // Terminate program
         setDefaultCloseOperation(EXIT_ON_CLOSE);
