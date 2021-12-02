@@ -27,9 +27,9 @@ public class OperatorScreen extends JFrame{
 
     OperatorScreenHandler operatorScreenHandler;
 
-    public OperatorScreen(OperatorInterface operator) {
+    public OperatorScreen() {
         super("Setting");
-        this.operator = operator;
+        //this.operator = operator;
         operatorScreenHandler = new OperatorScreenHandler(this);
 
         Container contentPane = getContentPane();

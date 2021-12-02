@@ -4,7 +4,6 @@ package demoGUI.handler;
 import demoGUI.userview.MainMenu;
 import demoGUI.userview.OperatorScreen;
 import demoGUI.userview.TimeTableScreen;
-import demoGUI.userview.UserScreen;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
