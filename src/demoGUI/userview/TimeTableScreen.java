@@ -16,7 +16,7 @@ public class TimeTableScreen extends JFrame{
     private JButton loadButton;
     private JButton settingsButton;
     private JTabbedPane TimeTabletabbedPane;
-    private JTable table1;
+    private JTable timetable1;
     TimeTableScreenController timeTableScreenController;
 
     public TimeTableScreen() {
