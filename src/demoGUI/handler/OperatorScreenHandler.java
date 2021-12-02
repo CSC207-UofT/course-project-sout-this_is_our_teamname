@@ -5,10 +5,8 @@ import DataGetting.CSVScraper;
 import DataGetting.WebScraper;
 import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.DatabaseController;
-import TimeTableContainers.TimeTableManager;
-import demoGUI.userview.HomeScreen;
+import demoGUI.userview.MainMenu;
 import demoGUI.userview.OperatorScreen;
-import demoGUI.userview.UserScreen;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -51,7 +49,7 @@ public class OperatorScreenHandler implements ActionListener {
     }
 
     private void backHome(){
-        new HomeScreen();
+        new MainMenu();
         operatorScreen.dispose();
     }
 
@@ -65,7 +63,6 @@ public class OperatorScreenHandler implements ActionListener {
             // Set the datasource of theFactory to be WebScraper if operator chooses it.
         } else if (input.equals("WebScraper")) {
             theFactory.setDataSource(new WebScraper());
-            theFactory.setManager(new TimeTableManager());
             controller.setFactory(theFactory);
         }
     }

@@ -1,8 +1,11 @@
 package demoGUI.userview;
 
 import demoGUI.handler.TimeTableScreenController;
+import demoGUI.util.DimensionUtil;
 
 import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
 
 public class TimeTableScreen extends JFrame{
     private JPanel TimeTableView;
@@ -30,14 +33,38 @@ public class TimeTableScreen extends JFrame{
 
         // Terminate program
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        Rectangle bounds = DimensionUtil.getBounds();
+        setFrame(bounds);
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("TimeTableView");
-        frame.setContentPane(new TimeTableScreen().TimeTableView);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1200,900);
-        frame.pack();
-        frame.setVisible(true);
+    private void setFrame(Rectangle bounds) {
+        // Window's icon
+        URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
+        assert resource != null;
+        Image image = new ImageIcon(resource).getImage();
+        setIconImage(image);
+
+        setBounds(bounds);
+
+        // Full screen
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(true);
+        setVisible(true);
+
+        // Show in the middle
+        setLocationRelativeTo(null);
+
+        // Fixed size
+        setResizable(false);
+
+        // Visibility
+        setVisible(true);
+    }
+
+    public static void main(String[] args) throws AWTException {
+        new TimeTableScreen();
     }
 }

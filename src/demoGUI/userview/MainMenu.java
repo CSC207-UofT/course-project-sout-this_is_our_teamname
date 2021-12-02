@@ -3,6 +3,8 @@ package demoGUI.userview;
 import demoGUI.handler.MainMenuController;
 
 import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
 
 public class MainMenu extends JFrame{
     private JPanel MainMenu;
@@ -11,12 +13,11 @@ public class MainMenu extends JFrame{
     private JButton settingButton;
     private JButton timeTableButton;
     private JButton exitButton;
-    private MainMenuController mainMenuController;
 
     public MainMenu() {
-        super();
+        super("Main Menu");
 
-        mainMenuController = new MainMenuController(this);
+        MainMenuController mainMenuController = new MainMenuController(this);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(MainMenu);
@@ -24,14 +25,32 @@ public class MainMenu extends JFrame{
         settingButton.addActionListener(mainMenuController);
         timeTableButton.addActionListener(mainMenuController);
         exitButton.addActionListener(mainMenuController);
+
+        setFrame();
+    }
+
+    public void setFrame() {
+        // Window's icon
+        URL resource = HomeScreen.class.getClassLoader().getResource("pic2.jpg");
+        assert resource != null;
+        Image image = new ImageIcon(resource).getImage();
+        setIconImage(image);
+
+
+        // Set size
+        setSize(600, 400);
+
+        // Show in the middle
+        setLocationRelativeTo(null);
+
+        // Fixed size
+        setResizable(false);
+
+        // Visibility
+        setVisible(true);
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("TimeTableApp");
-        frame.setContentPane(new MainMenu().MainMenu);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setSize(400,400);
-        frame.pack();
+        new JFrame();
     }
 }

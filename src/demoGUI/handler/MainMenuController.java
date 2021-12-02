@@ -3,6 +3,7 @@ package demoGUI.handler;
 
 import demoGUI.userview.MainMenu;
 import demoGUI.userview.OperatorScreen;
+import demoGUI.userview.TimeTableScreen;
 import demoGUI.userview.UserScreen;
 
 import javax.swing.*;
@@ -25,7 +26,7 @@ public class MainMenuController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
-        if ("Settins".equals(text)){
+        if ("Settings".equals(text)){
             openOperator();
         } else if ("TimeTable".equals(text)){
             operUser();
@@ -35,7 +36,7 @@ public class MainMenuController implements ActionListener {
     }
 
     private void operUser() {
-        new UserScreen();
+        new TimeTableScreen();
         mainMenu.dispose();
     }
 
