@@ -51,7 +51,7 @@ public class WebScraper extends CourseGetter {
             throw new FileNotFoundException();
         }
 
-        filterData(doc);
+        filterData(doc, theYear);
     }
 
     // ============================== Helpers ==================================
@@ -89,7 +89,7 @@ public class WebScraper extends CourseGetter {
      *
      * @param doc a document object associated with corresponding html.
      */
-    private void filterData(Document doc) {
+    private void filterData(Document doc, String year) {
         // find element by combination of elements with id.
         String term = removeCss(doc.select("span#u158").text());
         String faculty = removeCss(doc.select("span#u13").text());
@@ -123,7 +123,7 @@ public class WebScraper extends CourseGetter {
             String theTerm = formatTerm(courseCode, term);
 
             addCourseToData(courseCode, theTerm, section, faculty,
-                    locationTimeMap, professor, deliveryMethod);
+                    locationTimeMap, professor, deliveryMethod, year);
 
             i++;
 
@@ -152,12 +152,14 @@ public class WebScraper extends CourseGetter {
                                  String faculty,
                                  HashMap<Object[], String> timeToLocationMap,
                                  String theInstructor,
-                                 String theDeliveryMethod){
+                                 String theDeliveryMethod,
+                                 String year){
 
         // We will fix this in phase 2. Wait list current can only be set to
         // false.
         Course theCourse = new Course(courseName, sectionName, theInstructor,
-                faculty, theDeliveryMethod, timeToLocationMap, term, false);
+                faculty, theDeliveryMethod, timeToLocationMap,
+                term + " " + year, false);
         placeToData(sectionName, theCourse);
     }
 
@@ -279,24 +281,8 @@ public class WebScraper extends CourseGetter {
         return theTerm;
     }
 
-    /**
-     * A main method to develop this module
-     *
-     * @param args arguments
-     */
-    public static void main(String[] args) {
-        String [] courses = {"CSC207H1", "APS110H1", "CIV100H1", "MAT137Y1"};
-        WebScraper a = new WebScraper();
-        for (String course : courses){
-            try {
-                LinkedHashMap<String,
-                        ArrayList<Course>> got = a.retrieveData(course, "Fall",
-                        "2021");
-                System.out.println(got);
-            } catch (FileNotFoundException e){
-                System.out.println("File Not Found");
-            }
-        }
+    public String toString(){
+        return "WebScraper";
     }
 }
 

@@ -1,7 +1,6 @@
 package Commands.FunctionCommands;
 
-import Commands.Command;
-import Commands.NeedsCourses;
+import Commands.NeedsCoursesCommand;
 import DataGetting.CourseGetter;
 import Functions.DfsSearch;
 import Functions.TimeTablePuzzle;
@@ -16,9 +15,9 @@ import java.util.*;
  * dataSource: The source where the data is from.
  * manager: The manager that will eventually schedule given courses.
  */
-public class SolverCommand implements Command, NeedsCourses {
-    private final TimeTableManager manager;
+public class SolverCommand extends NeedsCoursesCommand {
     private final CourseGetter dataSource;
+    private final TimeTableManager manager;
 
     /**
      * A Constructor to create the Command
@@ -41,8 +40,7 @@ public class SolverCommand implements Command, NeedsCourses {
         boolean courseCounter = true;
         while (courseCounter) {
             // Get user input and course info
-            LinkedHashMap<String, ArrayList<Course>>indivCourse =
-                    NeedsCourses.userInputs(dataSource);
+            LinkedHashMap<String, ArrayList<Course>>indivCourse = userInputs(dataSource);
             // Get course code
             ArrayList<String> keyList = new ArrayList<>(indivCourse.keySet());
             Course course = indivCourse.get(keyList.get(0)).get(0);

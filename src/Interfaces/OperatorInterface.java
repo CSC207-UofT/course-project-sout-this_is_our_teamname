@@ -1,12 +1,11 @@
 package Interfaces;
 
-import DataGetting.CSVScraper;
-import DataGetting.WebScraper;
-import InterfaceAdaptors.CommandFactory;
+import Helpers.Constants;
+import Helpers.Reformatters;
 import InterfaceAdaptors.DatabaseController;
-import TimeTableContainers.TimeTableManager;
 import Helpers.InputCheckers.InputChecker;
 import Helpers.InputCheckers.Predicate;
+
 import java.io.IOException;
 import java.io.*;
 import java.util.*;
@@ -20,73 +19,28 @@ import java.util.*;
  * datasource: A String of the selected datasource's name
  */
 public class OperatorInterface {
-    private final DatabaseController control;
     private String datasource;
+    private final DatabaseController control;
 
     /**
      * Constructor.
      * Set control and datasource.
      */
-    public OperatorInterface(DatabaseController controller) {
-        this.control = controller;
+    public OperatorInterface() {
         this.datasource = null;
+        this.control = new DatabaseController();
     }
 
     /**
      * Set the datasource to the CommandFactory according to the operator's choice.
      *
-     * @param theFactory: The CommandFactory object is used to set the datasource.
      * @param input: A String of the name of the datasource inputted by the operator.
      * @exception IOException throws if the file datasource.txt is not found.
      */
-    public void SetDatasource(CommandFactory theFactory, String input) throws IOException {
-        // Set the datasource of theFactory to be CSVScraper if operator chooses it.
-        if (input.equals("CSVScraper")) {
-            theFactory.setDataSource(new CSVScraper());
-            this.control.setFactory(theFactory);
-            this.datasource = input;
-            this.downloadDatasource(input);
-
-            // Set the datasource of theFactory to be WebScraper if operator chooses it.
-        } else if (input.equals("WebScraper")) {
-            theFactory.setDataSource(new WebScraper());
-            theFactory.setManager(new TimeTableManager());
-            this.control.setFactory(theFactory);
-            this.datasource = input;
-            this.downloadDatasource(input);
-        }
+    public void SetDatasource(String input) throws IOException {
+        this.datasource = input;
+        this.downloadDatasource(input);
     }
-
-
-    /**
-     * Ban the function in the CommandFactory according to the operator's choice.
-     *
-     * @param ban the name of the banned function.
-     * @param commandFactory the CommandFactory which bans the function.
-     * @exception IOException throws if the file functions.txt is not found.
-     */
-    public void banFunction(String ban, CommandFactory commandFactory) throws IOException {
-        // Create an Array that stores banned functions.
-        String[] oldFunctions =  commandFactory.getAllowedFunctions();
-        String[] newFunctions = new String[oldFunctions.length - 1];
-        //this.downloadFunction(ban);
-        int index = Integer.parseInt(ban);
-        String bannedFunction = oldFunctions[index];
-        for (int i = 0, k = 0; i < oldFunctions.length; i ++) {
-            if (! oldFunctions[i].equals(bannedFunction)) {
-                // this.downloadFunction();
-                newFunctions[k] = oldFunctions[i];
-                k++;
-            }
-        }
-
-        // Save the new allowedFunction.
-        this.downloadFunction(newFunctions);
-        // Update the allowedFunction in the CommandFactory
-        commandFactory.setAllowedFunctions(newFunctions);
-        this.control.setFactory(commandFactory);
-    }
-
 
     /**
      * Runs the OperatorInterface
@@ -96,9 +50,9 @@ public class OperatorInterface {
         InputChecker requestDatasource = new InputChecker("Which datasource do you want to set (CSVScraper/WebScraper/n (if you do not want to set)): ",
                 new isValidDatasource());
         String type = requestDatasource.checkCorrectness();
+
         // Set the datasource if the operator has chosen one.
-        CommandFactory theFactory = new CommandFactory(control);
-        this.SetDatasource(theFactory, type);
+        this.SetDatasource(type);
 
         // Checks if the user wants to ban a function.
         InputChecker requestBan = new InputChecker("Do you want to ban a function? " +
@@ -107,50 +61,45 @@ public class OperatorInterface {
         String ban = requestBan.checkCorrectness();
 
         // If the operator wants to ban a function.
-        if (ban.equals("true")) {
-            // As long as the operator wants to ban function.
-            boolean running2 = true;
-            while (running2){
-                // Print all functions that the operator can choose to ban.
-                LinkedHashMap<String, String> allowed =
-                        hashMapit(theFactory.getAllowedFunctions());
-                for (String key : allowed.keySet()){
-                    System.out.println(key + ": " + allowed.get(key));
-                }
+        if (ban.equals(Constants.TRUE)) {
+            promptBan();
+        }
+    }
 
-                // Ask operator which function to ban.
-                InputChecker requestCommand = new InputChecker("Which function do you want to ban?",
-                        new isValidCommand(allowed));
-                String requested = requestCommand.checkCorrectness();
+    private void promptBan() throws IOException {
+        // As long as the operator wants to ban function.
+        boolean running = true;
+        while (running){
+            // Print all functions that the operator can choose to ban.
+            LinkedHashMap<String, String> allowed =
+                    Reformatters.hashMapIt(control.getAllowedFunctions());
 
-                // Ban the function
-                this.banFunction(requested, theFactory);
+            for (String key : allowed.keySet()){
+                System.out.println(key + ": " + allowed.get(key));
+            }
 
-                // Checks if the operator wants to ban another function.
-                InputChecker continueBan = new InputChecker("Do you want to ban another function? " +
-                        "(true/false):", new isValidBoolean());
-                String whetherBan = continueBan.checkCorrectness();
+            // Ask operator which function to ban.
+            InputChecker requestCommand = new InputChecker("Which function do you want to ban?",
+                    new isValidCommand(allowed));
+            String requested = requestCommand.checkCorrectness();
 
-                // If operator does not want to ban another function.
-                if (whetherBan.equals("false")) {
-                    running2 = false;
-                }
+            // Ban the function
+            this.control.setBanned(requested);
+
+            // Checks if the operator wants to ban another function.
+            InputChecker continueBan = new InputChecker("Do you want to ban another function? " +
+                    "(true/false):", new isValidBoolean());
+            String whetherBan = continueBan.checkCorrectness();
+
+            // If operator does not want to ban another function.
+            if (whetherBan.equals(Constants.FALSE)) {
+                running = false;
             }
         }
     }
 
 
     // ============================ Helper Methods =================================
-    /**
-     * Get the chosen data source.
-     *
-     * @return the String of the name of the selected datasource.
-     */
-    public String getDatasource() {
-        return this.datasource;
-    }
-
-
     /**
      * Save the name of the selected datasource in the file, datasource.txt.
      *
@@ -166,40 +115,9 @@ public class OperatorInterface {
         file.close();
     }
 
-
-    /**
-     * Save the new list if allowedFunctions in the file, functions.txt.
-     *
-     * @param function the number of the function banned by operator.
-     * @exception IOException throws when the file, functions.txt, is not found.
-     */
-    public void downloadFunction(String[] function) throws IOException {
-        FileWriter file = new FileWriter("src/Interfaces/functions.txt");
-        // Write the source in the datasource.json.
-        file.write(Arrays.toString(function));
-        file.flush();
-        // After writing, close the file.
-        file.close();
+    public DatabaseController getControl() {
+        return control;
     }
-
-
-    /**
-     * Returns a hashmap of the entries in the string array strings with
-     * corresponding integer values from least to greatest.
-     *
-     * @param strings the array of strings
-     * @return a hashmap of items from strings as values and ascending
-     * integers as keys
-     */
-    private LinkedHashMap<String, String> hashMapit(String[] strings) {
-        LinkedHashMap<String, String> theMap = new LinkedHashMap<>();
-        for (int i = 0; i < strings.length; i++) {
-            theMap.put(String.valueOf(i), strings[i]);
-        }
-        return theMap;
-    }
-
-
     // ============================ Predicates =================================
     /**
      * A predicate to determine if the command is valid.
@@ -216,7 +134,6 @@ public class OperatorInterface {
         }
     }
 
-
     /**
      * A predicate to determine if the datasource is valid input.
      */
@@ -230,7 +147,6 @@ public class OperatorInterface {
             return Arrays.asList(allowed).contains(prompt) ;
         }
     }
-
 
     /**
      * A predicate to determine if the input is valid boolean.
