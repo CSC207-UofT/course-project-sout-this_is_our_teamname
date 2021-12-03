@@ -14,6 +14,7 @@ import TimeTableContainers.TimeTableManager;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
@@ -148,7 +149,10 @@ public class MakeEventCommand implements Command {
         // Creates the Activity
         switch (type){
             case Constants.ACTIVITY:
-                return new Activity(startTime, endTime, theDate, term , "");
+                Scanner descriptionScanner = new Scanner(System.in);
+                System.out.println("Enter Description: ");
+                return new Activity(startTime, endTime, theDate, term,
+                        descriptionScanner.nextLine());
             case Constants.TASK:
                 Task task = new Task(startTime, endTime, theDate, term);
                 task.addToName(theLocation);

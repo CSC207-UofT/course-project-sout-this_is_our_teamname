@@ -22,13 +22,13 @@ public class SectionTest {
         LocalTime Time11 = LocalTime.of(11,0,0);
 
         CourseSection lecture0 = new CourseSection("MAT257", Time9,Time10, Constants.MONDAY,Constants.YEAR,
-                "LEC 0101", false);
+                "LEC 0101");
         String description0 = "LEC 0100" + " of " + "Arts and Science" + " with " + "Professor.0" + " by " + "Online"
                 + " session " + " at " + "SS100";
         lecture0.setName(description0);
 
         CourseSection lecture1 = new CourseSection("MAT137", Time10,Time11,Constants.MONDAY,Constants.FALL,
-                "LEC 0101", false);
+                "LEC 0101");
         String description1 = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
                 + " session " + " at " + "SS101";
         lecture1.setName(description1);

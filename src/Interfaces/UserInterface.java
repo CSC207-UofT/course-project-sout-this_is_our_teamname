@@ -38,7 +38,7 @@ public class UserInterface {
      * found.
      */
     public void run() throws IOException {
-        this.control.Initialize();
+        this.control.configureUserInterface();
 
         // As long as the program is running
         boolean running = true;

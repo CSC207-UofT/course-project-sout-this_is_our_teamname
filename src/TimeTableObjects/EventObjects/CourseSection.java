@@ -16,7 +16,6 @@ import java.util.ArrayList;
  * description contains all the other info of the course section
  */
 public class CourseSection extends Events  implements Reconstructable {
-    private final boolean waitlist;
     private final String courseName;
     private final String sectionCode;
     private String description;
@@ -31,19 +30,16 @@ public class CourseSection extends Events  implements Reconstructable {
      * @param theDate The date of the section
      * @param term The term and year for this course e.g. Fall 2021
      * @param sectionCode The code for this course
-     * @param waitlist Whether the course is waitlisted
      */
     public CourseSection(String CourseName,
                          LocalTime startTime,
                          LocalTime endTime,
                          String theDate,
                          String term,
-                         String sectionCode,
-                         boolean waitlist) {
+                         String sectionCode) {
         super(startTime, endTime, theDate, term);
         this.courseName = CourseName;
         this.sectionCode = sectionCode;
-        this.waitlist = waitlist;
         this.description = "";
     }
 
@@ -86,15 +82,6 @@ public class CourseSection extends Events  implements Reconstructable {
      */
     public String getCourseName() {
         return courseName;
-    }
-
-    /**
-     * Get the waitlist for this Course
-     *
-     * @return true if section is waitlisted, false otherwise
-     */
-    public boolean getWaitlist() {
-        return this.waitlist;
     }
 
     /**

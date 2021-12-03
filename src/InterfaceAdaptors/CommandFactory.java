@@ -145,8 +145,8 @@ public class CommandFactory {
      *
      * @param newAllowedFunction the AllowedFunction to connect to
      */
-    public void setAllowedFunctions(ArrayList<String> newAllowedFunction) {
-        this.allowedFunctions = newAllowedFunction.toArray(new String[0]);
+    public void setAllowedFunctions(String[] newAllowedFunction) {
+        this.allowedFunctions = newAllowedFunction.clone();
     }
 
     public CourseGetter getDataSource(){
