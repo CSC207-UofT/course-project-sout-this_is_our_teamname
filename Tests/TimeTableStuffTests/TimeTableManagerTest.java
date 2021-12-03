@@ -26,7 +26,7 @@ class TimeTableManagerTest {
 
         // creates Events objects
         CourseSection lecture1 = new CourseSection("MAT257", time9, time11, Constants.MONDAY, Constants.YEAR,
-                "LEC 0101", false);
+                "LEC 0101");
         String description1 = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
                 + " session" + " at" + " SS100";
         lecture1.setDescription(description1);
@@ -105,7 +105,7 @@ class TimeTableManagerTest {
         LocalTime time9 =  LocalTime.of(9,0,0);
         LocalTime time10 = LocalTime.of(10, 0,0);
         CourseSection lecture = new CourseSection("MAT157", time9,time10,Constants.MONDAY,"Year 2021",
-                "LEC 0101", false);
+                "LEC 0101");
         String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
                 + " session " + " at " + "SS101";
         lecture.setDescription(description2);

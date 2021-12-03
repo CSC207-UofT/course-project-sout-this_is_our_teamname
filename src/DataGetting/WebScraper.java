@@ -159,7 +159,7 @@ public class WebScraper extends CourseGetter {
         // false.
         Course theCourse = new Course(courseName, sectionName, theInstructor,
                 faculty, theDeliveryMethod, timeToLocationMap,
-                term + " " + year, false);
+                term + " " + year);
         placeToData(sectionName, theCourse);
     }
 

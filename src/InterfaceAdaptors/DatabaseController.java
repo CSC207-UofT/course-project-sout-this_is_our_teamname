@@ -34,46 +34,22 @@ public class DatabaseController {
         this.Factory = new CommandFactory(this);
     }
 
-    // ===================== Stuff moved from OI and UI ========================
-    public void Initialize() throws IOException {
+    // ======================== Control UserInterface ==========================
+
+    /**
+     * Configures the UserInterface
+     * @throws IOException if the file cannot be found to get the information
+     */
+    public void configureUserInterface() throws IOException {
         // Set the DataGetter of the program to be the one in the datasource.json.
         String source = this.readDatasource();
-        this.setDatasource(source);
+        this.configureDataSource(source);
 
         // Set the AllowedFunction in the file to be the one saved in the file.
         String[] banFunctions = this.readFunctions();
 
-        for (String function : banFunctions){
-            this.getBanned(function);
-        }
-    }
+        this.Factory.setAllowedFunctions(banFunctions);
 
-    /**
-     * Sets the command into the Command History.
-     *
-     * The command history will act as a history of all the commands in order
-     * they were added. The setCommands will also execute the command.
-     *
-     * @param requestedCommand the command that has been requested
-     * @return true iff the command has been run properly. False to indicate
-     * that the program should exit
-     * @exception InvalidInputException Throws invalid Input exception if the
-     * input command is invalid
-     */
-    public boolean runCommand(String requestedCommand) throws InvalidInputException {
-        assert this.Factory != null;
-        Command theCommand = this.Factory.getCommand(requestedCommand);
-
-        // If the command is to exit the program, it will return false to let
-        // UserInterface know to exit the program
-        if (theCommand instanceof ExitProgramCommand) {
-            return false;
-        }
-
-        // Execute the command. Throws InvalidInputException if the command is
-        // invalid
-        executeCommand(theCommand);
-        return true;
     }
 
     /**
@@ -81,59 +57,13 @@ public class DatabaseController {
      *
      * @param input: A String of the name of the datasource inputted by the operator.
      */
-    public void setDatasource(String input) {
+    private void configureDataSource(String input) {
         // Set the datasource of theFactory to be CSVScraper if operator chooses it.
         if (input.equals("CSVScraper")) {
             this.Factory.setDataSource(new CSVScraper());
         } else if (input.equals("WebScraper")) {
             this.Factory.setDataSource(new WebScraper());
         }
-    }
-
-    /**
-     * Ban the function in the CommandFactory according to the operator's choice.
-     *
-     * @param ban the name of the banned function.
-     */
-    public void getBanned(String ban) {
-        // Update the allowedFunction in the CommandFactory
-        this.Factory.setAllowedFunctions(removeFromBanned(ban));
-    }
-
-    private ArrayList<String> removeFromBanned(String ban){
-        String[] oldFunctions =  this.Factory.getAllowedFunctions();
-        ArrayList<String> newFunctions = new ArrayList<>();
-
-        if (ban.equals("")) {
-            newFunctions.addAll(Arrays.asList(oldFunctions));
-        } else {
-            String bannedFunction = oldFunctions[Integer.parseInt(ban)];
-
-            for (String oldFunction : oldFunctions) {
-                if (!oldFunction.equals(bannedFunction)) {
-                    newFunctions.add(oldFunction);
-                }
-            }
-        }
-        return newFunctions;
-    }
-
-    /**
-     * Ban the function in the CommandFactory according to the operator's choice.
-     *
-     * @param ban the name of the banned function.
-     * @exception IOException throws if the file functions.txt is not found.
-     */
-    public void setBanned(String ban) throws IOException {
-        ArrayList<String> function = removeFromBanned(ban);
-
-        FileWriter file = new FileWriter("src/Interfaces/functions.txt");
-        // Write the source in the datasource.json.
-        file.write(function.toString());
-
-        file.flush();
-        // After writing, close the file.
-        file.close();
     }
 
     /**
@@ -178,7 +108,77 @@ public class DatabaseController {
         return newString.split(",\\s+");
     }
 
+    // ======================= Control OperatorInterface =======================
+    /**
+     * Ban the function in the CommandFactory according to the operator's choice.
+     *
+     * @param ban the name of the banned function.
+     * @exception IOException throws if the file functions.txt is not found.
+     */
+    public void setBanned(String ban) throws IOException {
+        ArrayList<String> function = new ArrayList<>(Arrays.asList(this.Factory.getAllowedFunctions()));
+        function.remove(ban);
+
+        FileWriter file = new FileWriter("src/Interfaces/functions.txt");
+        // Write the ALLOWED functions in functions.txt.
+        file.write(function.toString());
+
+        file.flush();
+        // After writing, close the file.
+        file.close();
+
+        // Set the factory so that it persists even before the program exits
+        this.Factory.setAllowedFunctions(function.toArray(new String[0]));
+    }
+
+    /**
+     * Set the datasource to the CommandFactory according to the operator's choice.
+     *
+     * @param input: A String of the name of the datasource inputted by the operator.
+     * @exception IOException throws if the file datasource.txt is not found.
+     */
+    public void setDataSource(String input) throws IOException {
+        // Set the factory so that it persists even before the program exits
+        configureDataSource(input);
+
+        FileWriter file = new FileWriter("src/Interfaces/datasource.txt");
+        // Write the source in the datasource.json.
+        file.write(input);
+
+        file.flush();
+        // After writing, close the file.
+        file.close();
+    }
+
     // ===================== Command Pattern Infrastructure ====================
+    /**
+     * Sets the command into the Command History.
+     *
+     * The command history will act as a history of all the commands in order
+     * they were added. The setCommands will also execute the command.
+     *
+     * @param requestedCommand the command that has been requested
+     * @return true iff the command has been run properly. False to indicate
+     * that the program should exit
+     * @exception InvalidInputException Throws invalid Input exception if the
+     * input command is invalid
+     */
+    public boolean runCommand(String requestedCommand) throws InvalidInputException {
+        assert this.Factory != null;
+        Command theCommand = this.Factory.getCommand(requestedCommand);
+
+        // If the command is to exit the program, it will return false to let
+        // UserInterface know to exit the program
+        if (theCommand instanceof ExitProgramCommand) {
+            return false;
+        }
+
+        // Execute the command. Throws InvalidInputException if the command is
+        // invalid
+        executeCommand(theCommand);
+        return true;
+    }
+
     /**
      * Sends the command into the commandHistory and executes the command.
      *

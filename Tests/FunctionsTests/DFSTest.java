@@ -30,7 +30,7 @@ public class DFSTest {
         testDateTimeMap1.put(testDateTime1, "LM161");
         testDateTimeMap1.put(testDateTime2, "LM161");
         Course A = new Course("CSC207","LEC0101", "Gries", "A&S", "In-Person",
-                testDateTimeMap1, Constants.FALL, false);
+                testDateTimeMap1, Constants.FALL);
 
 
         Object[] testDateTime3 = {Constants.WEDNESDAY, startTime1, endTime1};
@@ -41,7 +41,7 @@ public class DFSTest {
         testDateTimeMap2.put(testDateTime4, "LM161");
 
         Course B = new Course("CSC207","LEC0201", "Gries", "A&S", "In-Person",
-                testDateTimeMap2, Constants.FALL, false);
+                testDateTimeMap2, Constants.FALL);
 
         Object[] testDateTime5 = {Constants.FRIDAY, startTime1, endTime2};
 
@@ -51,7 +51,7 @@ public class DFSTest {
 
 
         Course C = new Course("CSC207","LEC0301", "Gries", "A&S", "In-Person",
-                testDateTimeMap3, Constants.FALL, false);
+                testDateTimeMap3, Constants.FALL);
 
         Object[] testDateTime6 = {Constants.MONDAY, startTime2, endTime2};
 
@@ -59,7 +59,7 @@ public class DFSTest {
         testDateTimeMap4.put(testDateTime6, "LM161");
 
         Course D = new Course("CSC207","TUT0101", "Gries", "A&S", "In-Person",
-                testDateTimeMap4, Constants.FALL, false);
+                testDateTimeMap4, Constants.FALL);
 
 
 
@@ -69,7 +69,7 @@ public class DFSTest {
         testDateTimeMap5.put(testDateTime7, "LM161");
 
         Course E = new Course("CSC207","TUT0201", "Gries", "A&S", "In-Person",
-                testDateTimeMap5, Constants.FALL, false);
+                testDateTimeMap5, Constants.FALL);
 
 
         Object[] testDateTime8 = {Constants.WEDNESDAY, startTime2, endTime2};
@@ -78,7 +78,7 @@ public class DFSTest {
         testDateTimeMap6.put(testDateTime8, "LM161");
 
         Course F = new Course("CSC207","TUT0301", "Gries", "A&S", "In-Person",
-                testDateTimeMap6, Constants.FALL, false);
+                testDateTimeMap6, Constants.FALL);
 
 
         HashMap<String, HashMap<String, ArrayList<Course>>> courses = new HashMap<>();
@@ -97,7 +97,7 @@ public class DFSTest {
         testDateTimeMap7.put(testDateTime9, "ES1050");
 
         Course G = new Course("CSC236","LEC0101", "Heap", "A&S", "In-Person",
-                testDateTimeMap7, Constants.FALL, false);
+                testDateTimeMap7, Constants.FALL);
 
 
         Object[] testDateTime10 = {Constants.TUESDAY, startTime2, endTime2};
@@ -108,7 +108,7 @@ public class DFSTest {
         testDateTimeMap8.put(testDateTime11, "WB116");
 
         Course H = new Course("CSC236","LEC0201", "Baumgart", "A&S", "In-Person",
-                testDateTimeMap8, Constants.FALL, false);
+                testDateTimeMap8, Constants.FALL);
 
 
         Object[] testDateTime12 = {Constants.TUESDAY, startTime3, endTime3};
@@ -119,7 +119,7 @@ public class DFSTest {
         testDateTimeMap9.put(testDateTime13, "WB116");
 
         Course I = new Course("CSC236","LEC0301", "Baumgart", "A&S", "In-Person",
-                testDateTimeMap9, Constants.FALL, false);
+                testDateTimeMap9, Constants.FALL);
 
 
         Object[] testDateTime14 = {Constants.WEDNESDAY, startTime3, endTime3};
@@ -130,7 +130,7 @@ public class DFSTest {
         testDateTimeMap10.put(testDateTime15, "KP108");
 
         Course J = new Course("CSC236","LEC0401", "Heap", "A&S", "In-Person",
-                testDateTimeMap10, Constants.FALL, false);
+                testDateTimeMap10, Constants.FALL);
 
 
         HashMap<String, ArrayList<Course>> csc236 = new HashMap<>();

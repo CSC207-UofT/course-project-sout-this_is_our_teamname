@@ -86,13 +86,11 @@ public class CSVScraper extends CourseGetter {
             HashMap<Object[], String> TimeLocation = new HashMap<>();
             TimeLocation.put(splitDateTime(theFileData[0][TIME]),
                     theFileData[0][LOCATION]);
-            boolean hasWaitList = theFileData[0][WAITLIST].equals("0");
 
             courseData.add(new Course(courseName, theFileData[0][SECTION],
                     theFileData[0][INSTRUCTOR], theFaculty,
                     theFileData[0][DELIVERY], TimeLocation,
-                    theTerm + " " + year, hasWaitList
-                    )
+                    theTerm + " " + year)
             );
 
         // Base Case 2: Size 1 and this is a not a header.

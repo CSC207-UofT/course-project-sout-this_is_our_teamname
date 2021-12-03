@@ -7,7 +7,6 @@ import Helpers.InputCheckers.InputChecker;
 import Helpers.InputCheckers.Predicate;
 
 import java.io.IOException;
-import java.io.*;
 import java.util.*;
 
 
@@ -32,17 +31,6 @@ public class OperatorInterface {
     }
 
     /**
-     * Set the datasource to the CommandFactory according to the operator's choice.
-     *
-     * @param input: A String of the name of the datasource inputted by the operator.
-     * @exception IOException throws if the file datasource.txt is not found.
-     */
-    public void SetDatasource(String input) throws IOException {
-        this.datasource = input;
-        this.downloadDatasource(input);
-    }
-
-    /**
      * Runs the OperatorInterface
      */
     public void run() throws IOException {
@@ -51,8 +39,10 @@ public class OperatorInterface {
                 new isValidDatasource());
         String type = requestDatasource.checkCorrectness();
 
-        // Set the datasource if the operator has chosen one.
-        this.SetDatasource(type);
+        if (!type.equals("n")) {
+            // Set the datasource if the operator has chosen one.
+            this.control.setDataSource(type);
+        }
 
         // Checks if the user wants to ban a function.
         InputChecker requestBan = new InputChecker("Do you want to ban a function? " +
@@ -84,7 +74,7 @@ public class OperatorInterface {
             String requested = requestCommand.checkCorrectness();
 
             // Ban the function
-            this.control.setBanned(requested);
+            this.control.setBanned(allowed.get(requested));
 
             // Checks if the operator wants to ban another function.
             InputChecker continueBan = new InputChecker("Do you want to ban another function? " +
@@ -98,26 +88,6 @@ public class OperatorInterface {
         }
     }
 
-
-    // ============================ Helper Methods =================================
-    /**
-     * Save the name of the selected datasource in the file, datasource.txt.
-     *
-     * @param source the name of the datasource selected by operator.
-     * @exception IOException throws when the file, datasource.txt, is not found.
-     */
-    public void downloadDatasource(String source) throws IOException {
-        FileWriter file = new FileWriter("src/Interfaces/datasource.txt");
-        // Write the source in the datasource.json.
-        file.write(source);
-        file.flush();
-        // After writing, close the file.
-        file.close();
-    }
-
-    public DatabaseController getControl() {
-        return control;
-    }
     // ============================ Predicates =================================
     /**
      * A predicate to determine if the command is valid.
