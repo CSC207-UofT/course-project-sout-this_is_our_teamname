@@ -27,6 +27,7 @@ public class ScheduleCourseScreen extends JFrame{
     JButton backBtn = new JButton("Back");
     JButton searchBtn = new JButton("Search");
     JButton applyBtn = new JButton("Schedule");
+    JButton solverBtn = new JButton("Solver");
 
     ScheduleCourseHandler scheduleCourseHandler;
 
@@ -75,6 +76,10 @@ public class ScheduleCourseScreen extends JFrame{
         applyBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         applyBtn.addActionListener(scheduleCourseHandler);
 
+        // Solver button
+        solverBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        solverBtn.addActionListener(scheduleCourseHandler);
+        solverBtn.setBounds(450, 220, 120, 40);
         // Dropdown menu
 
         addYear(yearBox);
@@ -83,7 +88,7 @@ public class ScheduleCourseScreen extends JFrame{
 
         centerPanel.add(courseName);
         centerPanel.add(nameTxt);
-
+        centerPanel.add(solverBtn);
         centerPanel.add(year);
         centerPanel.add(yearBox);
         centerPanel.add(term);
@@ -95,6 +100,7 @@ public class ScheduleCourseScreen extends JFrame{
         centerPanel.add(tutBox);
         southPanel.add(backBtn);
         southPanel.add(applyBtn);
+
 
 
         contentPane.add(centerPanel);
