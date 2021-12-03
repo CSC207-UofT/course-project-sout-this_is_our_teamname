@@ -33,7 +33,6 @@ public class OperatorScreenHandler implements ActionListener {
         if ("Back".equals(text)){
             backHome();
         } else if ("Taiga".equals(text)){
-            System.out.println("Taiga!");
             JOptionPane.showMessageDialog(operatorScreen,"You touched Taiga's head Aww");
         } else if ("Apply".equals(text)) {
             // Get user input
@@ -50,18 +49,4 @@ public class OperatorScreenHandler implements ActionListener {
         operatorScreen.dispose();
     }
 
-    private void SetDatasource(CommandFactory theFactory, DatabaseController controller, String input) throws IOException {
-        // Set the datasource of theFactory to be CSVScraper if operator chooses it.
-
-        if (input.equals("CSVScraper")) {
-            theFactory.setDataSource(new CSVScraper());
-            controller.setFactory(theFactory);
-
-            // Set the datasource of theFactory to be WebScraper if operator chooses it.
-        } else if (input.equals("WebScraper")) {
-            theFactory.setDataSource(new WebScraper());
-            //theFactory.setManager(new TimeTableManager());
-            controller.setFactory(theFactory);
-        }
-    }
 }

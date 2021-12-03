@@ -1,5 +1,10 @@
 package demoGUI.userview;
 
+import Interfaces.InterfaceFacade;
+import Interfaces.OperatorInterface;
+import Interfaces.UserInterface;
+
+
 import demoGUI.handler.TimeTableScreenController;
 import demoGUI.util.DimensionUtil;
 
@@ -18,6 +23,12 @@ public class TimeTableScreen extends JFrame{
     private JTabbedPane TimeTabletabbedPane;
     private JTable timetable1;
     TimeTableScreenController timeTableScreenController;
+
+
+    // Initialize interface facade.
+    private InterfaceFacade interfaceFacade;
+
+
 
     public TimeTableScreen() {
         super();

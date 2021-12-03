@@ -1,10 +1,15 @@
 package demoGUI.userview;
 
+import TimeTableObjects.Course;
 import demoGUI.handler.ScheduleCourseHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.PortUnreachableException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Objects;
 
 public class ScheduleCourseScreen extends JFrame{
 
@@ -54,19 +59,20 @@ public class ScheduleCourseScreen extends JFrame{
         termBox.setBounds(320, 160, 120, 40);
 
         searchBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        searchBtn.addActionListener(scheduleCourseHandler);
         searchBtn.setBounds(250, 220, 120, 40);
 
         lecture.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        lecture.setBounds(200, 280, 120, 40);
+        lecture.setBounds(40, 280, 120, 40);
 
-        lectureBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        lectureBox.setBounds(320, 280, 120, 40);
+        lectureBox.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        lectureBox.setBounds(120, 280, 600, 40);
 
         tutorial.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        tutorial.setBounds(200, 340, 120, 40);
+        tutorial.setBounds(40, 340, 120, 40);
 
-        tutBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        tutBox.setBounds(320, 340, 120, 40);
+        tutBox.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        tutBox.setBounds(120, 340, 600, 40);
 
         // Back button
         backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -146,11 +152,38 @@ public class ScheduleCourseScreen extends JFrame{
         yearBox.addItem("2021");
     }
 
+    public String getCourseName(){
+        return Objects.requireNonNull(nameTxt.getText());
+    }
+
+    public String getTerm(){
+        return Objects.requireNonNull(termBox.getSelectedItem()).toString();
+
+    }
+
+    public String getYear(){
+        return Objects.requireNonNull(yearBox.getSelectedItem()).toString();
+
+    }
+
+    public void setLeturebox(ArrayList<String> input){
+       for(int i = 0; i < input.size(); i++){
+           this.lectureBox.addItem(input.get(i));
+        }
+    }
+
+
+    public void setTutBox(ArrayList<String> input){
+        for (int i = 0; i < input.size(); i++){
+            this.tutBox.addItem(input.get(i));
+        }
+    }
 
     public static void main(String[] args) {
         new ScheduleCourseScreen();
 
     }
+
 
 
 }
