@@ -8,22 +8,26 @@ import java.awt.*;
 import java.net.URL;
 
 public class TimeTableScreen extends JFrame{
-    private JPanel TimeTableView;
+    private JPanel TimeTableRootPanel;
+    private JPanel ButtonsPanel;
+    private JPanel TabsPanel;
+    private JPanel TimeTablePanel;
     private JButton courseButton;
     private JButton taskActivityButton;
     private JButton solverButton;
     private JButton saveButton;
     private JButton loadButton;
     private JButton settingsButton;
-    private JTabbedPane TimeTabletabbedPane;
-    private JTable timetable1;
+    private JPanel TitilePanel;
+    private JLabel titleLable;
+    private JTable table1;
     TimeTableScreenController timeTableScreenController;
 
     public TimeTableScreen() {
         super();
 
         timeTableScreenController = new TimeTableScreenController(this);
-        this.setContentPane(TimeTableView);
+        this.setContentPane(TimeTableRootPanel);
 
         // add button functions
         courseButton.addActionListener(timeTableScreenController);
