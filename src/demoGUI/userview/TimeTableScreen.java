@@ -33,6 +33,14 @@ public class TimeTableScreen extends JFrame{
     public TimeTableScreen() {
         super();
 
+
+        // Construct InterfaceFacade
+        UserInterface userInterface = new UserInterface();
+        OperatorInterface operatorInterface = new OperatorInterface();
+        this.interfaceFacade = new InterfaceFacade(userInterface, operatorInterface);
+
+
+
         timeTableScreenController = new TimeTableScreenController(this);
         this.setContentPane(TimeTableView);
 

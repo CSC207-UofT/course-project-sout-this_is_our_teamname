@@ -69,5 +69,8 @@ public class ScheduleCourseHandler implements ActionListener {
         scheduleCourseScreen.dispose();
     }
 
+
+
 }
+
 
