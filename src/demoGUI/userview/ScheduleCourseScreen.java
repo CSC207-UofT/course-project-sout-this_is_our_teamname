@@ -53,7 +53,7 @@ public class ScheduleCourseScreen extends JFrame{
         termBox.setBounds(320, 160, 120, 40);
 
         searchBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        searchBtn.setBounds(350, 220, 120, 40);
+        searchBtn.setBounds(250, 220, 120, 40);
 
         lecture.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         lecture.setBounds(200, 280, 120, 40);
@@ -79,7 +79,6 @@ public class ScheduleCourseScreen extends JFrame{
 
         addYear(yearBox);
         addTerm(termBox);
-
 
 
         centerPanel.add(courseName);

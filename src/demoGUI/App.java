@@ -12,4 +12,9 @@ public class App {
     public static void main(String[] args) throws AWTException {
         new TimeTableScreen();
     }
+    @Override public String toString(){
+
+        return null;
+    }
 }
+

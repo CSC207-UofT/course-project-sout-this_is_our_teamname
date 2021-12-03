@@ -15,10 +15,10 @@ import java.util.Objects;
 // TODO Tray Icon P8, Get text by click enter P9 9:50. jTable for timetable at P10 8:50
 public class OperatorScreen extends JFrame{
     OperatorInterface operator;
-    JLabel title = new JLabel("This is the operator", JLabel.CENTER);
-    JPanel centerPanel = new JPanel();
+    JLabel title = new JLabel("Setting", JLabel.CENTER);
+    JLabel datasource = new JLabel("Data source");
+    JPanel centerPanel = new JPanel(null);
     JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    JButton srcBtn = new JButton("Aisaka");
     JButton banBtn = new JButton("Taiga");
     JButton backBtn = new JButton("Back");
     JButton applyBtn = new JButton("Apply");
@@ -37,10 +37,8 @@ public class OperatorScreen extends JFrame{
         title.setFont(new Font("Times New Roman", Font.PLAIN, 40));
         title.setPreferredSize(new Dimension(0, 80));
 
-        // Schedule course
-        srcBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        srcBtn.addActionListener(operatorScreenHandler);
-
+        datasource.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        datasource.setBounds(240, 30,120, 30);
         // Schedule event
         banBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         banBtn.addActionListener(operatorScreenHandler);
@@ -54,13 +52,14 @@ public class OperatorScreen extends JFrame{
         applyBtn.addActionListener(operatorScreenHandler);
 
         // Dropdown menu
+        dataBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         dataBox.addItem("Webscraper");
         dataBox.addItem("CSVscraper");
         dataBox.addItem("Default");
+        dataBox.setBounds(400, 30,120, 30);
 
-        centerPanel.add(srcBtn);
         centerPanel.add(dataBox);
-
+        centerPanel.add(datasource);
         southPanel.add(applyBtn);
         southPanel.add(backBtn);
 
