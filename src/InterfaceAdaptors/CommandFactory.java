@@ -16,8 +16,6 @@ import Commands.FunctionCommands.LoadDataCommand;
 import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
 
-import java.util.ArrayList;
-
 /**
  * A factory class to create the individual commands of the class.
  *
@@ -44,6 +42,7 @@ public class CommandFactory {
     static final String REMOVE_TIMETABLE = "Remove Timetable";
     static final String PRINT_HISTORY = "Get History";
     static final String LOAD_DATA = "Load Data";
+    //TODO delete save_data?
     static final String SAVE_DATA = "Save";
     static final String DOWNLOAD_TIMETABLE = "Download Timetable";
     static final String EXIT = "Log Out";
@@ -90,6 +89,26 @@ public class CommandFactory {
     public Command getCommand(String inputCommand) throws InvalidInputException {
         assert this.dataSource != null && this.courseManager != null;
 
+        if (controller.getCurrentUI().equals("cmd")) {
+            return getCmdCommand(inputCommand);
+        }
+        else {
+            return getGUICommand(inputCommand);
+        }
+    }
+
+    // ========================= helper functions ===========================
+    /**
+     * Helper method to return the corresponding command object
+     * to whatever has been inputted by the user in command line. Please see
+     * `DatabaseController` for how the command objects will be used
+     *
+     * @param inputCommand The STRING input command of the user. IT MUST
+     *                     CORRESPOND TO THE STATIC CONSTANTS ABOVE
+     * @return The correct command object
+     * @throws InvalidInputException If the inputCommand is invalid, throw this!
+     */
+    private Command getCmdCommand(String inputCommand) throws InvalidInputException {
         switch (inputCommand) {
             case SCHEDULE_COURSE:
                 return new MakeCourseCommand(courseManager, dataSource);
@@ -116,6 +135,42 @@ public class CommandFactory {
             // ... ADD YOUR NEW OBJECTS HERE!
 
             // The command is invalid
+            default:
+                throw new InvalidInputException();
+        }
+    }
+
+    /**
+     * Helper method to return the corresponding command object
+     * to whatever has been inputted by the user in GUI. Please see
+     * `DatabaseController` for how the command objects will be used
+     *
+     * @param inputCommand The STRING input command of the user. IT MUST
+     *                     CORRESPOND TO THE STATIC CONSTANTS ABOVE
+     * @return The correct command object
+     * @throws InvalidInputException If the inputCommand is invalid, throw this!
+     */
+    private Command getGUICommand(String inputCommand) throws InvalidInputException {
+        switch (inputCommand) {
+            case SCHEDULE_COURSE:
+                return new MakeCourseCommand(courseManager, dataSource);
+            case SCHEDULE_EVENT:
+                return new MakeEventCommand(courseManager);
+            case REMOVE_EVENT:
+                return new RemoveEventCommand(courseManager);
+            case GET_ALL_TIMETABLE:
+                return new GetAllTimeTablesCommand(courseManager);
+            case SOLVE_TIMETABLE:
+                return new SolverCommand(courseManager, dataSource);
+            case ADD_TIMETABLE:
+                return new AddTimeTableCommand(courseManager);
+            case REMOVE_TIMETABLE:
+                return new RemoveTimeTable(courseManager);
+            case LOAD_DATA:
+                return new LoadDataCommand();
+            case DOWNLOAD_TIMETABLE:
+                return new DownloadDataCommand(courseManager);
+                //no return statement error blocker, default return will never be reached.
             default:
                 throw new InvalidInputException();
         }

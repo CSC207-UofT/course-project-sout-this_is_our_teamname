@@ -20,7 +20,9 @@ import java.util.*;
  *  since the program was run (For Phase 2, maybe serialize it so that it can
  *  have a history of all commands ever made)
  *
- * possibleCommands: The factory that generates the commands to be executed
+ * Factory: A commandFactory that generates the commands to be executed
+ *
+ * currentUI: the currentUI the program is running in. cmd: Commandline, gui: GUI.
  */
 public class DatabaseController {
     private final Stack<Command> CommandHistory;

@@ -1,6 +1,6 @@
 package demoGUI.handler;
 
-import com.sun.tools.javac.Main;
+import InterfaceAdaptors.DatabaseController;
 import demoGUI.userview.TimeTableScreen;
 import demoGUI.userview.*;
 
@@ -19,47 +19,37 @@ public class TimeTableScreenController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
+        //Setup DatabaseController Obj
+        DatabaseController controller = new DatabaseController("gui");
+        //given the button (and its text), run command and open a new window
+        runButton(controller, text);
+    }
 
-        //TODO  use switch case here
-        if ("Schedule Course".equals(text)){
-            openScheduleCourse();
+    private void runButton(DatabaseController controller, String buttonText){
+        switch(buttonText){
+            case "Schedule Course":
+                try{
+                    controller.runCommand("Schedule Course");
+                } catch (Exception ignore){}
+                new ScheduleCourseScreen();
+            case "Schedule Task/Activity":
+                try{
+                    controller.runCommand("Schedule Event");
+                } catch (Exception ignore){}
+                new ScheduleEventScreen();
+            case "Save":
+                try{
+                    controller.runCommand("Download Timetable");
+                } catch (Exception ignore){}
+                new SaveScreen();
+            case "Load":
+                try{
+                    controller.runCommand("Load Data");
+                } catch (Exception ignore){}
+                new LoadScreen();
+            case "Settings":
+                new OperatorScreen();
         }
-        else if ("Schedule Task/Activity".equals(text)){
-            openScheduleEvent();
-        }
-        else if ("Settings".equals(text)){
-            openSettings();
-        }
-
-        //TODO move solver into Schedule Course.
-        else if ("Solver".equals(text)) {}
-        else if ("Load".equals(text)) {openLoad();}
-        else if ("Save".equals(text)) {openSave();}
     }
-
-    private void backHome(){
-        new MainMenu();
-        timeTableScreen.dispose();
-    }
-
-    private void openSettings(){
-        new OperatorScreen();
-    }
-    private void openScheduleCourse(){
-        new ScheduleCourseScreen();
-    }
-
-    private void openScheduleEvent(){
-        new ScheduleEventScreen();
-    }
-
-    private void openSave() {
-        new SaveScreen();
-    }
-
-    private void openLoad() {
-        new LoadScreen();
-    }
-
 }
 

@@ -129,30 +129,13 @@ public class ScheduleEventScreen extends JFrame{
     }
 
     private void addDropdowntime(JComboBox<String> Timebox) {
-        Timebox.addItem("01:00AM");
-        Timebox.addItem("02:00AM");
-        Timebox.addItem("03:00AM");
-        Timebox.addItem("04:00AM");
-        Timebox.addItem("05:00AM");
-        Timebox.addItem("06:00AM");
-        Timebox.addItem("07:00AM");
-        Timebox.addItem("08:00AM");
-        Timebox.addItem("09:00AM");
-        Timebox.addItem("10:00AM");
-        Timebox.addItem("11:00AM");
-        Timebox.addItem("12:00AM");
-        Timebox.addItem("13:00PM");
-        Timebox.addItem("14:00PM");
-        Timebox.addItem("15:00PM");
-        Timebox.addItem("16:00PM");
-        Timebox.addItem("17:00PM");
-        Timebox.addItem("18:00PM");
-        Timebox.addItem("19:00PM");
-        Timebox.addItem("20:00PM");
-        Timebox.addItem("21:00PM");
-        Timebox.addItem("22:00PM");
-        Timebox.addItem("23:00PM");
-        Timebox.addItem("12:00PM");
+        for (int i=0; i<=24; i++) {
+            if (i <=9){
+                Timebox.addItem( "0" + i + ":00");
+            }
+            else {
+                Timebox.addItem( i + ":00");}
+        }
     }
 
     private void addWeekday(JComboBox<String> dayBox) {
