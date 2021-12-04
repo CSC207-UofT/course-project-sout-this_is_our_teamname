@@ -2,11 +2,9 @@ package Commands;
 
 import DataGetting.CourseGetter;
 import Helpers.InputCheckers.InputChecker;
-import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 
 import java.io.FileNotFoundException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;

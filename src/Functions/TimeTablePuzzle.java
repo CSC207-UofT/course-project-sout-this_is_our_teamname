@@ -37,6 +37,116 @@ public class TimeTablePuzzle {
         this.extendedCourse = null;
     }
 
+    // ========================= Basic Operations ==============================
+
+    /**
+     * Add the scheduled course to this TimeTablePuzzle.
+     *
+     * @param course the scheduled course to be added.
+     */
+    public void addScheduledCourse(Course course) {scheduled.add(course);}
+
+    /**
+     * Determine whether all the courses have been scheduled, if the "puzzle" has been solved
+     *
+     * @return true if the courses have been scheduled, false otherwise
+     */
+    public boolean isSolved() {
+        int counter = 0;
+        for (HashMap<String, ArrayList<Course>> course : this.getCourses().values()) {
+            counter = counter + course.size();
+        }
+        return counter == this.getScheduled().size();
+    }
+    
+    /**
+     * Gets an ArrayList of all possible sections for a single(random) course component(LEC/PRA/TUT) that can be scheduled
+     * with existing courses (for example return all CSC207 LEC sections).
+     *
+     * @return An ArrayList of all sections for course component that can be scheduled.
+     */
+    public ArrayList<TimeTablePuzzle> extensions() {
+        ArrayList<TimeTablePuzzle> extensions = new ArrayList<>();
+        ArrayList<CourseSection> presentCourseSections = this.manager.getCourses();
+
+        // Iterate through courses
+        for (HashMap<String, ArrayList<Course>> course : this.courses.values()) {
+            // Iterate through course components(LEC/TUT/PRA)
+            for (ArrayList<Course> courseComponents : course.values()) {
+                // Iterate through individual component sections(LEC0101/LEC0201) and check if already scheduled
+                boolean truth = true;
+                for (int i = 0; i < courseComponents.size(); i++) {
+                    if (this.getScheduled().contains(courseComponents.get(i))) {
+                        i = courseComponents.size();
+                        truth = false;
+                    }
+                }
+                if (truth) {
+                    for (Course courseComponent : courseComponents) {
+                        String term = courseComponent.getTerm();
+                        ArrayList<CourseSection> split = courseComponent.split();
+
+                        boolean conflictTruth = true;
+                        for (CourseSection splitSection : split) {
+                            // Check conflicts, if none, break from loop
+                            if (!manager.getTimetable(term).checkConflicts(splitSection)) {
+                                conflictTruth = false;
+                            }
+                        }
+                        if (conflictTruth) {
+                            // If no conflicts for all split sections, create extension with course added
+                            // First make copy of TimeTable Manager
+                            TimeTableManager managerCopy = new TimeTableManager();
+                            for (CourseSection courseSection : presentCourseSections) {
+                                String term2 = courseSection.getTerm();
+                                managerCopy.getTimetable(term2).schedule(courseSection);
+                            }
+                            // Schedule new course
+                            for (CourseSection splitSection : split) {
+                                managerCopy.getTimetable(term).schedule(splitSection);
+
+                                TimeTablePuzzle puzzleExtension = new TimeTablePuzzle(this.courses, managerCopy);
+
+                                // Copy scheduled courses
+                                for (Course scheduledCourse : this.scheduled) {
+                                    puzzleExtension.addScheduledCourse(scheduledCourse);
+                                }
+                                puzzleExtension.setExtendedCourse(courseComponent);
+
+                                // Add extension to course
+                                extensions.add(puzzleExtension);
+                            }
+                        }
+                    }
+                    return extensions;
+                }
+
+            }
+        }
+        return extensions;
+    }
+
+    /**
+     * Make this TimeTablePuzzle identical to solved, i.e. schedule all the courses in solved that aren't
+     * in this TimeTable Puzzle.
+     *
+     * @param solved a solved TimeTablePuzzle.
+     */
+    public void schedulePuzzle(TimeTablePuzzle solved) {
+        ArrayList<CourseSection> thisCourses = this.manager.getCourses();
+        ArrayList<CourseSection> otherCourses = solved.getManager().getCourses();
+
+        ArrayList<CourseSection> difference = new ArrayList<>(otherCourses);
+        difference.removeAll(thisCourses);
+
+        for (CourseSection courseSection : difference) {
+            String term = courseSection.getTerm();
+            this.getManager().getTimetable(term).schedule(courseSection);
+        }
+    }
+
+    // ===================== Setters and Getters ===============================
+
     /**
      * Get the courses this TimeTablePuzzle is supposed to schedule.
      *
@@ -75,113 +185,7 @@ public class TimeTablePuzzle {
      *
      * @param course the extended course
      */
-    public void addExtendedCourse(Course course) { extendedCourse = course; }
+    public void setExtendedCourse(Course course) { extendedCourse = course; }
 
-    /**
-     * Add the scheduled course to this TimeTablePuzzle.
-     *
-     * @param course the scheduled course to be added.
-     */
-    public void addScheduledCourse(Course course) {scheduled.add(course);}
-
-    /**
-     * Determine whether all the courses have been scheduled, if the "puzzle" has been solved
-     *
-     * @return true if the courses have been scheduled, false otherwise
-     */
-    public boolean isSolved() {
-        int counter = 0;
-        for (HashMap<String, ArrayList<Course>> course : this.getCourses().values()) {
-            counter = counter + course.size();
-        }
-        return counter == this.getScheduled().size();
-    }
-
-
-    /**
-     * Gets an ArrayList of all possible sections for a certain course component(LEC/PRA/TUT) that can be scheduled
-     * with existing courses (for example return all CSC207 LEC sections)
-     *
-     * @return An ArrayList of all sections for course component that can be scheduled
-     */
-    public ArrayList<TimeTablePuzzle> extensions() {
-        ArrayList<TimeTablePuzzle> extensions = new ArrayList<>();
-        ArrayList<CourseSection> presentCourseSections = this.manager.returnCourses();
-
-        // Iterate through courses
-        for (HashMap<String, ArrayList<Course>> course : this.courses.values()) {
-            // Iterate through course components(LEC/TUT/PRA)
-            for (ArrayList<Course> courseComponents : course.values()) {
-                // Iterate through individual component sections(LEC0101/LEC0201) and check if already scheduled
-                boolean truth = true;
-                for (int i = 0; i < courseComponents.size(); i++) {
-                    if (this.getScheduled().contains(courseComponents.get(i))) {
-                        i = courseComponents.size();
-                        truth = false;
-                    }
-                }
-                if (truth) {
-                    for (Course courseComponent : courseComponents) {
-                        String term = courseComponent.getTerm();
-                        ArrayList<CourseSection> split = courseComponent.split();
-
-                        boolean conflictTruth = true;
-                        for (CourseSection splitSection : split) {
-                            // Check conflicts, if none, break from loop
-                            if (!manager.getTimetable(term).hasConflicts(splitSection)) {
-                                conflictTruth = false;
-                            }
-                        }
-                        if (conflictTruth) {
-                            // If no conflicts for all split sections, create extension with course added
-                            // First make copy of TimeTable Manager
-                            TimeTableManager managerCopy = new TimeTableManager();
-                            for (CourseSection courseSection : presentCourseSections) {
-                                String term2 = courseSection.getTerm();
-                                managerCopy.getTimetable(term2).schedule(courseSection);
-                            }
-                            // Schedule new course
-                            for (CourseSection splitSection : split) {
-                                managerCopy.getTimetable(term).schedule(splitSection);
-
-                                TimeTablePuzzle puzzleExtension = new TimeTablePuzzle(this.courses, managerCopy);
-
-                                // Copy scheduled courses
-                                for (Course scheduledCourse : this.scheduled) {
-                                    puzzleExtension.addScheduledCourse(scheduledCourse);
-                                }
-                                puzzleExtension.addExtendedCourse(courseComponent);
-
-                                // Add extension to course
-                                extensions.add(puzzleExtension);
-                            }
-                        }
-                        return extensions;
-                    }
-                }
-
-            }
-        }
-        return extensions;
-    }
-
-    /**
-     * Make this TimeTablePuzzle identical to solved, i.e. schedule all the courses in solved that aren't
-     * in this TimeTable Puzzle.
-     *
-     * @param solved a solved TimeTablePuzzle.
-     */
-    public void schedulePuzzle(TimeTablePuzzle solved) {
-        ArrayList<CourseSection> thisCourses = this.manager.returnCourses();
-        ArrayList<CourseSection> otherCourses = solved.getManager().returnCourses();
-
-        ArrayList<CourseSection> difference = new ArrayList<>(otherCourses);
-        difference.removeAll(thisCourses);
-
-        for (CourseSection courseSection : difference) {
-            String term = courseSection.getTerm();
-            this.getManager().getTimetable(term).schedule(courseSection);
-        }
-    }
 }
 
