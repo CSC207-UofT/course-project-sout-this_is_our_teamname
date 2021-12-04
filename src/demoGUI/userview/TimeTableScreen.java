@@ -56,7 +56,7 @@ public class TimeTableScreen extends JFrame{
                 {"11:00PM"}};
         timeTable.setModel(new DefaultTableModel(
                 data,
-                new String[]{"",Constants.MONDAY,Constants.TUESDAY,Constants.WEDNESDAY,Constants.THURSDAY,
+                new String[]{"", Constants.MONDAY,Constants.TUESDAY,Constants.WEDNESDAY,Constants.THURSDAY,
                         Constants.FRIDAY,Constants.SATURDAY,Constants.SUNDAY}
         ));
         //set the hour column width
@@ -69,7 +69,6 @@ public class TimeTableScreen extends JFrame{
             columns.getColumn(i).setCellRenderer(centreRenderer);
         }
     }
-
     private void setFrame(Rectangle bounds) {
         // Window's icon
         URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
@@ -86,8 +85,6 @@ public class TimeTableScreen extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(true);
         setVisible(true);
-
-
 
         // Show in the middle
         setLocationRelativeTo(null);
