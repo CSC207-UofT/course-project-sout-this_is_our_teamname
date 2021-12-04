@@ -63,7 +63,7 @@ public class TimeTableManager {
      *
      * @param event an Events passed from user interface
      */
-    public boolean checkConflicts(Events event){
+    public boolean hasConflicts(Events event){
         // Some Constants
         int TERM = 0;
         int YEAR = 1;
@@ -79,15 +79,15 @@ public class TimeTableManager {
         // get scheduled.
         if (term.equals(Constants.YEAR)) {
             boolean theFall =
-                    this.getTimetable(Constants.FALL + " " + year).checkConflicts(event);
+                    this.getTimetable(Constants.FALL + " " + year).hasConflicts(event);
             boolean theWinter =
-                    this.getTimetable(Constants.WINTER + " " + year).checkConflicts(event);
-            return theFall && theWinter;
+                    this.getTimetable(Constants.WINTER + " " + year).hasConflicts(event);
+            return theFall || theWinter;
         }
         // For all other events, schedule it in the proper timetable. Return
         // true if successful.
         else {
-            return this.getTimetable(timeTableName).checkConflicts(event);
+            return this.getTimetable(timeTableName).hasConflicts(event);
         }
     }
 

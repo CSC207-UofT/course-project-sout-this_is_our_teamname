@@ -1,12 +1,10 @@
  package TimeTableObjects.EventObjects;
 
 import TimeTableObjects.Events;
-import TimeTableObjects.Interfaces.NeedsDescription;
 import TimeTableObjects.Interfaces.Reconstructable;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Scanner;
 
  /**
   * Activity is an extracurricular or social Events object.
