@@ -1,6 +1,5 @@
 package Commands.CreationCommands;
 
-import Commands.Command;
 import Commands.NeedsCoursesCommand;
 import DataGetting.CourseGetter;
 import TimeTableObjects.Course;
@@ -49,7 +48,7 @@ public class MakeCourseCommand extends NeedsCoursesCommand {
 
         ArrayList<CourseSection> sections = new ArrayList<>();
 
-        boolean hasConflict = checkConflicts(sections);
+        boolean hasConflict = hasConflicts(sections);
 
         if (!hasConflict){
             // Pass this to the TimeTableManager.
@@ -140,11 +139,11 @@ public class MakeCourseCommand extends NeedsCoursesCommand {
      * @param sections the list of courses
      * @return true iff there is a conflict. Returns false otherwise.
      */
-    private boolean checkConflicts(ArrayList<CourseSection> sections) {
+    private boolean hasConflicts(ArrayList<CourseSection> sections) {
         for (Course course : this.scheduledCourse){
             ArrayList<CourseSection> conflictCheckSections = course.split();
             for (CourseSection sectionOfCourse : conflictCheckSections){
-                if (manager.checkConflicts(sectionOfCourse)){
+                if (!manager.hasConflicts(sectionOfCourse)){
                     sections.add(sectionOfCourse);
                 } else {
                     return true;
