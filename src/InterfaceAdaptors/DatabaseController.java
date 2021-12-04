@@ -27,6 +27,16 @@ import java.util.*;
 public class DatabaseController {
     private final Stack<Command> CommandHistory;
     private CommandFactory Factory;
+    private final String currentUI;
+
+    /**
+     * A constructor. Sets the commandHistory and Factory
+     */
+    public DatabaseController(String currentUI){
+        this.CommandHistory = new Stack<>();
+        this.currentUI = currentUI;
+        this.Factory = new CommandFactory(this);
+    }
 
 
     // ======================== Control UserInterface ==========================
@@ -231,6 +241,7 @@ public class DatabaseController {
         return this.Factory.getAllowedFunctions();
     }
 
+    //TODO: add docstring
     public String getDataSource(){
         return this.Factory.getDataSource().toString();
     }

@@ -208,6 +208,7 @@ public class CommandFactory {
         this.allowedFunctions = newAllowedFunction.clone();
     }
 
+    //TODO: add docstring
     public CourseGetter getDataSource(){
         return this.dataSource;
     }

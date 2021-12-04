@@ -14,6 +14,7 @@ import TimeTableObjects.Events;
 import demoGUI.userview.ScheduleEventScreen;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
@@ -36,8 +37,8 @@ public class GUIMakeEventCommand implements Command {
     final String DATE = "Date";
     final String TERM = "Term";
     final String TYPE = "Type";
+    final String DESCRIPTION = "description";
 
-    private final TimeTableManager manager;
     private Events scheduledObject;
     private ScheduleEventScreen scheduleEventScreen;
 
@@ -45,9 +46,9 @@ public class GUIMakeEventCommand implements Command {
      * A constructor to set the command
      * @param scheduleEventScreen //TODO finish here
      */
-    public GUIMakeEventCommand(TimeTableManager theManager){
-        this.manager = theManager;
+    public GUIMakeEventCommand(ScheduleEventScreen scheduleEventScreen){
         this.scheduledObject = null;
+        this.scheduleEventScreen = scheduleEventScreen;
     }
 
     /**
@@ -66,9 +67,16 @@ public class GUIMakeEventCommand implements Command {
                     responses.get(LOCATION),
                     responses.get(DATE),
                     responses.get(TERM),
-                    responses.get(TYPE));
+                    responses.get(TYPE),
+                    responses.get(DESCRIPTION));
+
 
             assert toSchedule != null;
+            TimeTableManager manager = scheduleEventScreen.getController().getFactory().getCourseManager();
+            System.out.println(manager.toString());
+            boolean bool1 = manager.hasConflicts(toSchedule);
+            System.out.println(bool1);
+            System.out.println("if");
             if (!manager.hasConflicts(toSchedule)){
                 System.out.println("if not");
                 scheduledObject = toSchedule;
@@ -140,14 +148,16 @@ public class GUIMakeEventCommand implements Command {
                                                    String theLocation,
                                                    String theDate,
                                                    String term,
-                                                   String type) {
+                                                   String type,
+                                                   String description) {
         // Creates the Activity
         switch (type){
             case Constants.ACTIVITY:
-                Scanner descriptionScanner = new Scanner(System.in);
-                System.out.println("Enter Description: ");
-                return new Activity(startTime, endTime, theDate, term,
-                        descriptionScanner.nextLine());
+                Activity activity = new Activity(startTime, endTime, theDate, term, description);
+                activity.setName(name);
+                return activity;
+
+            //need to change
             case Constants.TASK:
                 Task task = new Task(startTime, endTime, theDate, term);
                 task.addToName(theLocation);

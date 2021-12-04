@@ -33,22 +33,15 @@ public class TimeTableScreenController implements ActionListener {
     private void runButton(DatabaseController controller, String buttonText){
         switch(buttonText){
             case "Schedule Course":
-                try{
-                    controller.runCommand("Schedule Course");
-                } catch (Exception ignore){}
                 new ScheduleCourseScreen();
+                break;
             case "Schedule Task/Activity":
                 new ScheduleEventScreen(controller);
                 break;
             case "Save":
-                try{
-                    controller.runCommand("Download Timetable");
-                } catch (Exception ignore){}
                 new SaveScreen();
+                break;
             case "Load":
-                try{
-                    controller.runCommand("Load Data");
-                } catch (Exception ignore){}
                 new LoadScreen();
                 break;
             case "Settings":

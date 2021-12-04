@@ -1,5 +1,7 @@
 package demoGUI.userview;
 
+import Helpers.Constants;
+import InterfaceAdaptors.DatabaseController;
 import demoGUI.handler.ScheduleEventHandler;
 
 import javax.swing.*;
@@ -7,7 +9,7 @@ import java.awt.*;
 import java.net.URL;
 import java.util.Objects;
 
-public class ScheduleEventScreen extends JFrame{
+public class ScheduleEventScreen extends AbstractScreen{
 
     JPanel centerPanel = new JPanel(null);
     JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -141,23 +143,15 @@ public class ScheduleEventScreen extends JFrame{
     }
 
     private void addDropdowntime(JComboBox<String> Timebox) {
-        for (int i=0; i<=24; i++) {
-            if (i <=9){
-                Timebox.addItem( "0" + i + ":00");
-            }
-            else {
-                Timebox.addItem( i + ":00");}
+        for (String time : Constants.TIME) {
+            Timebox.addItem(time);
         }
     }
 
     private void addWeekday(JComboBox<String> dayBox) {
-        dayBox.addItem("Monday");
-        dayBox.addItem("Tuesday");
-        dayBox.addItem("Wednesday");
-        dayBox.addItem("Thursday");
-        dayBox.addItem("Friday");
-        dayBox.addItem("Saturday");
-        dayBox.addItem("Sunday");
+        for (String weekday : Constants.DAYS_OF_THE_WEEK) {
+            dayBox.addItem(weekday);
+        }
     }
 
     private void addTerm(JComboBox<String> termBox){
