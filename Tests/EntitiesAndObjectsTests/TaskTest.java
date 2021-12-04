@@ -24,9 +24,8 @@ public class TaskTest {
         Task breakfast = new Task(Time8, Time9, Constants.MONDAY, Constants.YEAR);
         breakfast.addToName("McDonald's");
         Task shower = new Task(Time9, Time10, Constants.MONDAY, Constants.YEAR);
-        shower.addToName("home");
-        assertEquals(breakfast.getName(), "at McDonald's");
-        assertNull(shower.getName());
+        assertEquals("McDonald's", breakfast.getName());
+        assertEquals("", shower.getName());
     }
 
     @Test
@@ -39,7 +38,7 @@ public class TaskTest {
         breakfast.addToName("McDonald's");
         Task shower = new Task(Time9, Time10, Constants.MONDAY, Constants.YEAR);
         shower.addToName("home");
-        assertEquals(breakfast.toString(), "08:00 - 09:00: at McDonald's");
-        assertEquals(shower.toString(), "09:00 - 10:00: N/A");
+        assertEquals("McDonald's", breakfast.toString());
+        assertEquals("home", shower.toString());
     }
 }

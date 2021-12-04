@@ -1,5 +1,6 @@
  package TimeTableObjects.EventObjects;
 
+import Helpers.Constants;
 import TimeTableObjects.Events;
 import TimeTableObjects.Interfaces.Reconstructable;
 
@@ -16,7 +17,7 @@ public class Activity extends Events implements Reconstructable {
     private final String description;
 
     /**
-     * Construct a activity with time and a description.
+     * Construct an activity with time and a description.
      * @param theStartTime is the start time of the activity.
      * @param theEndTime is the end time of the activity.
      * @param theDate is the weekday of the activity.
@@ -47,7 +48,7 @@ public class Activity extends Events implements Reconstructable {
      }
 
      /**
-     *  Generate the string representation of the activity.
+     * Generate the string representation of the activity.
      * @return the string representation of the activity.
      */
     @Override

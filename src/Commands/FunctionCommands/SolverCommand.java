@@ -65,7 +65,6 @@ public class SolverCommand extends NeedsCoursesCommand {
         scheduleSolved(puzzle, solved.get(solved.size() - 1));
     }
 
-
     /**
      * A String representation of the Solver Command.
      *

@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
-public class SaveScreen extends JFrame{
+public class SaveScreen extends AbstractScreen{
     JLabel title = new JLabel("Please enter the name and year you would like to save your timetables with",
             JLabel.CENTER);
     JPanel centerPanel = new JPanel(null);
@@ -21,7 +21,7 @@ public class SaveScreen extends JFrame{
     SaveScreenHandler savescreenhandler;
 
     public SaveScreen() {
-        super("Saving");
+        super("Save");
 
         savescreenhandler = new SaveScreenHandler(this);
 
@@ -70,7 +70,7 @@ public class SaveScreen extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    private void setFrame() {
+    protected void setFrame() {
         // Window's icon
         URL resource = SaveScreen.class.getClassLoader().getResource("pic2.jpg");
         Image image = new ImageIcon(resource).getImage();

@@ -27,7 +27,7 @@ public class OperatorInterface {
      */
     public OperatorInterface() {
         this.datasource = null;
-        this.control = new DatabaseController();
+        this.control = new DatabaseController("cmd");
     }
 
     /**

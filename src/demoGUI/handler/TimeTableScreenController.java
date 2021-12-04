@@ -1,65 +1,57 @@
 package demoGUI.handler;
 
-import com.sun.tools.javac.Main;
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.DatabaseController;
 import demoGUI.userview.TimeTableScreen;
 import demoGUI.userview.*;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TimeTableScreenController implements ActionListener {
     private TimeTableScreen timeTableScreen;
+    private DatabaseController controller;
 
     public TimeTableScreenController(TimeTableScreen timeTableScreen) {
+
         this.timeTableScreen = timeTableScreen;
+        this.controller = new DatabaseController("gui");
+
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
+        //given the button (and its text), run command and open a new window
+        runButton(controller, text);
+    }
 
-        //TODO  use switch case here
-        if ("Schedule Course".equals(text)){
-            openScheduleCourse();
+    private void runButton(DatabaseController controller, String buttonText){
+        switch(buttonText){
+            case "Schedule Course":
+                new ScheduleCourseScreen();
+                break;
+            case "Schedule Task/Activity":
+                new ScheduleEventScreen(controller);
+                break;
+            case "Save":
+                new SaveScreen();
+                break;
+            case "Load":
+                new LoadScreen();
+                break;
+            case "Settings":
+                new OperatorScreen();
+                break;
         }
-        else if ("Schedule Task/Activity".equals(text)){
-            openScheduleEvent();
-        }
-        else if ("Settings".equals(text)){
-            openSettings();
-        }
-
-        //TODO move solver into Schedule Course.
-        else if ("Solver".equals(text)) {}
-        else if ("Load".equals(text)) {openLoad();}
-        else if ("Save".equals(text)) {openSave();}
     }
 
-    private void backHome(){
-        new MainMenu();
-        timeTableScreen.dispose();
+    public DatabaseController getController() {
+        return controller;
     }
-
-    private void openSettings(){
-        new OperatorScreen();
-    }
-    private void openScheduleCourse(){
-        new ScheduleCourseScreen();
-    }
-
-    private void openScheduleEvent(){
-        new ScheduleEventScreen();
-    }
-
-    private void openSave() {
-        new SaveScreen();
-    }
-
-    private void openLoad() {
-        new LoadScreen();
-    }
-
 }
 

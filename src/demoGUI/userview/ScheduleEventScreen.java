@@ -1,12 +1,15 @@
 package demoGUI.userview;
 
+import Helpers.Constants;
+import InterfaceAdaptors.DatabaseController;
 import demoGUI.handler.ScheduleEventHandler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
+import java.util.Objects;
 
-public class ScheduleEventScreen extends JFrame{
+public class ScheduleEventScreen extends AbstractScreen{
 
     JPanel centerPanel = new JPanel(null);
     JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -26,18 +29,27 @@ public class ScheduleEventScreen extends JFrame{
     JComboBox<String> typeBox = new JComboBox<>();
     JButton backBtn = new JButton("Back");
     JButton applyBtn = new JButton("Schedule");
+    JTextField descriptionTxt = new JTextField();
+    JLabel description = new JLabel("Description");
+
+    DatabaseController controller;
 
     ScheduleEventHandler scheduleEventHandler;
 
-    public ScheduleEventScreen() {
-        super("Schedule Event");
+    public ScheduleEventScreen(DatabaseController controller) {
+        super("Schedule NonCourse");
         scheduleEventHandler = new ScheduleEventHandler(this);
+        this.controller = controller;
         Container contentPane = getContentPane();
 
         eventName.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         eventName.setBounds(200, 40, 120, 40);
         nameTxt.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         nameTxt.setBounds(320, 40, 220, 40);
+        descriptionTxt.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        descriptionTxt.setBounds(320, 460, 400, 40);
+        description.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        description.setBounds(200, 460, 120, 40);
         startTime.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         startTime.setBounds(200, 100, 120, 40);
         startTimeBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -93,6 +105,8 @@ public class ScheduleEventScreen extends JFrame{
         centerPanel.add(termBox);
         centerPanel.add(type);
         centerPanel.add(typeBox);
+        centerPanel.add(description);
+        centerPanel.add(descriptionTxt);
 
         southPanel.add(backBtn);
         southPanel.add(applyBtn);
@@ -107,7 +121,7 @@ public class ScheduleEventScreen extends JFrame{
 
     }
 
-    private void setFrame() {
+    protected void setFrame() {
         // Window's icon
         URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
         assert resource != null;
@@ -129,40 +143,15 @@ public class ScheduleEventScreen extends JFrame{
     }
 
     private void addDropdowntime(JComboBox<String> Timebox) {
-        Timebox.addItem("01:00AM");
-        Timebox.addItem("02:00AM");
-        Timebox.addItem("03:00AM");
-        Timebox.addItem("04:00AM");
-        Timebox.addItem("05:00AM");
-        Timebox.addItem("06:00AM");
-        Timebox.addItem("07:00AM");
-        Timebox.addItem("08:00AM");
-        Timebox.addItem("09:00AM");
-        Timebox.addItem("10:00AM");
-        Timebox.addItem("11:00AM");
-        Timebox.addItem("12:00AM");
-        Timebox.addItem("13:00PM");
-        Timebox.addItem("14:00PM");
-        Timebox.addItem("15:00PM");
-        Timebox.addItem("16:00PM");
-        Timebox.addItem("17:00PM");
-        Timebox.addItem("18:00PM");
-        Timebox.addItem("19:00PM");
-        Timebox.addItem("20:00PM");
-        Timebox.addItem("21:00PM");
-        Timebox.addItem("22:00PM");
-        Timebox.addItem("23:00PM");
-        Timebox.addItem("12:00PM");
+        for (String time : Constants.TIME) {
+            Timebox.addItem(time);
+        }
     }
 
     private void addWeekday(JComboBox<String> dayBox) {
-        dayBox.addItem("Monday");
-        dayBox.addItem("Tuesday");
-        dayBox.addItem("Wednesday");
-        dayBox.addItem("Thursday");
-        dayBox.addItem("Friday");
-        dayBox.addItem("Saturday");
-        dayBox.addItem("Sunday");
+        for (String weekday : Constants.DAYS_OF_THE_WEEK) {
+            dayBox.addItem(weekday);
+        }
     }
 
     private void addTerm(JComboBox<String> termBox){
@@ -174,8 +163,46 @@ public class ScheduleEventScreen extends JFrame{
         typeBox.addItem("Activity");
         typeBox.addItem("Task");
     }
+
+    public DatabaseController getController() {
+        return controller;
+    }
+
+    public String getName(){
+        return Objects.requireNonNull(nameTxt.getText());
+    }
+
+    public String getStartTime(){
+        return Objects.requireNonNull(startTimeBox.getSelectedItem()).toString();
+    }
+
+    public String getEndTime(){
+        return Objects.requireNonNull(endTimeBox.getSelectedItem()).toString();
+    }
+
+    public String getLocations(){
+        return Objects.requireNonNull(locationTxt.getText());
+    }
+
+    public String getDate(){
+        return Objects.requireNonNull(dayBox.getSelectedItem()).toString();
+    }
+
+    public String getTerm(){
+        return Objects.requireNonNull(termBox.getSelectedItem()).toString();
+    }
+
+    public String getEventType() {
+        return Objects.requireNonNull(typeBox.getSelectedItem()).toString();
+    }
+
+    public String getDescription() {
+        return Objects.requireNonNull(descriptionTxt.getText());
+    }
+
     public static void main(String[] args) {
-        new ScheduleEventScreen();
+        DatabaseController controller = new DatabaseController("gui");
+        new ScheduleEventScreen(controller);
 
     }
 

@@ -1,10 +1,14 @@
 package demoGUI.handler;
 
+import Helpers.Constants;
+import Helpers.StringToTime;
+import demoGUI.GUIcommands.GUIMakeEventCommand;
 import demoGUI.userview.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
 
 public class ScheduleEventHandler implements ActionListener {
     private ScheduleEventScreen scheduleEventScreen;
@@ -12,13 +16,22 @@ public class ScheduleEventHandler implements ActionListener {
     public ScheduleEventHandler(ScheduleEventScreen scheduleEventScreen){
         this.scheduleEventScreen = scheduleEventScreen;
     }
-
+    //TODO add exception diag window for when inputs are incorrect, such as endtime equal or earlier then starttime
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
         if ("Back".equals(text)){
             backUser();
+        }
+        else if ("Schedule".equals(text)) {
+            try{
+                scheduleEventScreen.getController().getFactory().setScreen(scheduleEventScreen);
+                scheduleEventScreen.getController().runCommand(Constants.SCHEDULE_EVENT);
+                System.out.println(scheduleEventScreen.getController().getFactory().getCourseManager().toString());
+            } catch (Exception ignore){}
+            scheduleEventScreen.dispose();
+
         }
     }
 

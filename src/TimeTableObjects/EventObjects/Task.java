@@ -40,7 +40,7 @@ public class Task extends Events {
      */
     @Override
     public String toString() {
-        if (this.getName() == null) {
+        if (this.getName().equals("")) {
             return "N/A";
         }
         else{

@@ -67,24 +67,6 @@ public class CourseSection extends Events  implements Reconstructable {
     }
 
     /**
-     * Get the section for this Course
-     *
-     * @return the section
-     */
-    public String getSectionCode() {
-        return sectionCode;
-    }
-
-    /**
-     * Get the Course Code for this Course
-     *
-     * @return the course code
-     */
-    public String getCourseName() {
-        return courseName;
-    }
-
-    /**
      *
      * @return a string
      */

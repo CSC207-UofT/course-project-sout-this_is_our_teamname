@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
-public class ScheduleCourseScreen extends JFrame{
+public class ScheduleCourseScreen extends AbstractScreen{
 
     JPanel centerPanel = new JPanel(null);
     JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -37,7 +37,7 @@ public class ScheduleCourseScreen extends JFrame{
     ScheduleCourseHandler scheduleCourseHandler;
 
     public ScheduleCourseScreen() {
-        super("Schedule Event");
+        super("Schedule Course");
         scheduleCourseHandler = new ScheduleCourseHandler(this);
         Container contentPane = getContentPane();
 
@@ -118,7 +118,7 @@ public class ScheduleCourseScreen extends JFrame{
 
     }
 
-    private void setFrame() {
+    protected void setFrame() {
         // Window's icon
         URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
         assert resource != null;
