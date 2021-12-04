@@ -6,7 +6,6 @@ import demoGUI.util.DimensionUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
@@ -19,7 +18,6 @@ public class TimeTableScreen extends JFrame{
     private JPanel TimeTablePanel;
     private JButton courseButton;
     private JButton taskActivityButton;
-    private JButton solverButton;
     private JButton saveButton;
     private JButton loadButton;
     private JButton settingsButton;
@@ -38,7 +36,6 @@ public class TimeTableScreen extends JFrame{
         // add button functions
         courseButton.addActionListener(timeTableScreenController);
         taskActivityButton.addActionListener(timeTableScreenController);
-        solverButton.addActionListener(timeTableScreenController);
         saveButton.addActionListener(timeTableScreenController);
         loadButton.addActionListener(timeTableScreenController);
         settingsButton.addActionListener(timeTableScreenController);
