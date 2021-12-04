@@ -22,11 +22,9 @@ public class TimeTableScreenController implements ActionListener {
 
         //TODO  use switch case here
         if ("Schedule Course".equals(text)){
-            System.out.println("Taiga!");
             openScheduleCourse();
         }
         else if ("Schedule Task/Activity".equals(text)){
-            System.out.println("Aisaka!");
             openScheduleEvent();
         }
         else if ("Settings".equals(text)){
