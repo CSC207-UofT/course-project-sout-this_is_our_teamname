@@ -103,6 +103,7 @@ public class MakeCourseCommand extends NeedsCoursesCommand {
                     "choose the section that you want (eg; LEC 0101. Only " +
                     "enter the section code). Enter 'Null' if you do not want to " +
                     "schedule any section: ",
+
                     new isValidCourse(courseTypeToCourseMap.get(typeOfCourse)));
             String selected = sectionChoice.checkCorrectness();
 
