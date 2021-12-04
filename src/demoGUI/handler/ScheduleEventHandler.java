@@ -12,7 +12,7 @@ public class ScheduleEventHandler implements ActionListener {
     public ScheduleEventHandler(ScheduleEventScreen scheduleEventScreen){
         this.scheduleEventScreen = scheduleEventScreen;
     }
-
+    //TODO add exception diag window for when inputs are incorrect, such as endtime equal or earlier then starttime
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();

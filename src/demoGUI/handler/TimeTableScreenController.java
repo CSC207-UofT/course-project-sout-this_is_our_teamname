@@ -1,26 +1,31 @@
 package demoGUI.handler;
 
+import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.DatabaseController;
 import demoGUI.userview.TimeTableScreen;
 import demoGUI.userview.*;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TimeTableScreenController implements ActionListener {
     private TimeTableScreen timeTableScreen;
+    private DatabaseController controller;
 
     public TimeTableScreenController(TimeTableScreen timeTableScreen) {
+
         this.timeTableScreen = timeTableScreen;
+        this.controller = new DatabaseController("gui");
+
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
-        //Setup DatabaseController Obj
-        DatabaseController controller = new DatabaseController("gui");
         //given the button (and its text), run command and open a new window
         runButton(controller, text);
     }
@@ -33,10 +38,8 @@ public class TimeTableScreenController implements ActionListener {
                 } catch (Exception ignore){}
                 new ScheduleCourseScreen();
             case "Schedule Task/Activity":
-                try{
-                    controller.runCommand("Schedule Event");
-                } catch (Exception ignore){}
-                new ScheduleEventScreen();
+                new ScheduleEventScreen(controller);
+                break;
             case "Save":
                 try{
                     controller.runCommand("Download Timetable");
@@ -47,9 +50,15 @@ public class TimeTableScreenController implements ActionListener {
                     controller.runCommand("Load Data");
                 } catch (Exception ignore){}
                 new LoadScreen();
+                break;
             case "Settings":
                 new OperatorScreen();
+                break;
         }
+    }
+
+    public DatabaseController getController() {
+        return controller;
     }
 }
 

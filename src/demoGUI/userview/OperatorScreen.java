@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 
 // TODO Tray Icon P8, Get text by click enter P9 9:50. jTable for timetable at P10 8:50
-public class OperatorScreen extends JFrame{
+public class OperatorScreen extends AbstractScreen{
     OperatorInterface operator;
     JLabel title = new JLabel("Setting", JLabel.CENTER);
     JLabel datasource = new JLabel("Data source");
@@ -28,7 +28,7 @@ public class OperatorScreen extends JFrame{
     OperatorScreenHandler operatorScreenHandler;
 
     public OperatorScreen() {
-        super("Setting");
+        super("Settings");
         //this.operator = operator;
         operatorScreenHandler = new OperatorScreenHandler(this);
 
@@ -78,7 +78,7 @@ public class OperatorScreen extends JFrame{
 
     }
 
-    private void setFrame() {
+    protected void setFrame() {
         // Window's icon
         URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
         assert resource != null;

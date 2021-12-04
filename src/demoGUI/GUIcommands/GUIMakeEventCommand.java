@@ -1,6 +1,7 @@
 package demoGUI.GUIcommands;
 
 import Commands.Command;
+import Commands.CreationCommands.MakeEventCommand;
 import Helpers.Constants;
 import Helpers.InputCheckers.InputChecker;
 import Helpers.InputCheckers.Predicate;
@@ -10,6 +11,7 @@ import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
+import demoGUI.userview.ScheduleEventScreen;
 
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -37,10 +39,11 @@ public class GUIMakeEventCommand implements Command {
 
     private final TimeTableManager manager;
     private Events scheduledObject;
+    private ScheduleEventScreen scheduleEventScreen;
 
     /**
      * A constructor to set the command
-     * @param theManager The manager to connect to
+     * @param scheduleEventScreen //TODO finish here
      */
     public GUIMakeEventCommand(TimeTableManager theManager){
         this.manager = theManager;
@@ -53,11 +56,11 @@ public class GUIMakeEventCommand implements Command {
     @Override
     public void execute() {
         boolean running = true;
-
         while (running) {
             HashMap<String, String> responses = promptUser();
 
             Events toSchedule = getCorrectTimeTableObject(
+                    responses.get(NAME),
                     StringToTime.makeTime(responses.get(START_TIME)),
                     StringToTime.makeTime(responses.get(END_TIME)),
                     responses.get(LOCATION),
@@ -67,10 +70,15 @@ public class GUIMakeEventCommand implements Command {
 
             assert toSchedule != null;
             if (!manager.hasConflicts(toSchedule)){
+                System.out.println("if not");
                 scheduledObject = toSchedule;
-                manager.schedule(toSchedule);
+                System.out.println("to be scheduled");
+                boolean bool = manager.schedule(toSchedule);
+                System.out.println(bool);
+                System.out.println(manager.toString());
                 running = false;
-            } else {
+            }
+            else {
                 System.out.println("Conflict Found. Try again!");
             }
         }
@@ -84,31 +92,17 @@ public class GUIMakeEventCommand implements Command {
      * @return a hashmap of the questions and the response of the user
      */
     private HashMap<String, String> promptUser() {
-        LinkedHashMap<String, InputChecker> prompts = new LinkedHashMap<>();
-        prompts.put(NAME, new InputChecker("Enter a name for an object " +
-                "(eg; Dinner with Prof Gries and Friends)", new isTrivial()));
-        prompts.put(START_TIME, new InputChecker("Enter the Start Time (in" +
-                " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
-                "No space between time and AM/PM)", new isTime()));
-        prompts.put(END_TIME, new InputChecker("Enter the End Time (in " +
-                " a 12h clock format - hh:mm[AM/PM] eg: 10:00AM or 09:00PM. " +
-                "No space between time and AM/PM)", new isTime()));
-        prompts.put(LOCATION, new InputChecker("Enter the Location (eg; " +
-                "MY150, Home, Middle of Nowhere)", new isTrivial()));
-        prompts.put(DATE, new InputChecker("Enter the Day of the week (eg;" +
-                " Monday, Tuesday, Wednesday, etc.)", new isDate()));
-        prompts.put(TERM, new InputChecker("Enter the Term (Fall/Winter)",
-                new isTerm()));
-        prompts.put(TYPE, new InputChecker("Enter the Type of the Object " +
-                "(Activity/Task)", new isTrivial()));
-
-        HashMap<String, String> responses = new HashMap<>();
-
-        for (String prompt : prompts.keySet()) {
-            responses.put(prompt, prompts.get(prompt).checkCorrectness());
-        }
-
-        return responses;
+        LinkedHashMap<String, String> prompts = new LinkedHashMap<>();
+        prompts.put(NAME, scheduleEventScreen.getName());
+        prompts.put(START_TIME,scheduleEventScreen.getStartTime());
+        prompts.put(END_TIME,scheduleEventScreen.getEndTime());
+        prompts.put(LOCATION,scheduleEventScreen.getLocations());
+        prompts.put(DATE,scheduleEventScreen.getDate());
+        prompts.put(TERM,scheduleEventScreen.getTerm());
+        prompts.put(TYPE,scheduleEventScreen.getEventType());
+        prompts.put(DESCRIPTION,scheduleEventScreen.getDescription());
+;
+        return prompts;
     }
 
     // ============================= Helper Methods ============================
@@ -140,7 +134,8 @@ public class GUIMakeEventCommand implements Command {
      * @param type the type of object
      * @return event "cast" to the correct type.
      */
-    public static Events getCorrectTimeTableObject(LocalTime startTime,
+    public static Events getCorrectTimeTableObject(String name,
+                                                   LocalTime startTime,
                                                    LocalTime endTime,
                                                    String theLocation,
                                                    String theDate,

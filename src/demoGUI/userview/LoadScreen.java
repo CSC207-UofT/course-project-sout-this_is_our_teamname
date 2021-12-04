@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
-public class LoadScreen extends JFrame{
+public class LoadScreen extends AbstractScreen{
     JLabel title = new JLabel("Please enter the name and year of the timetables that you would like to load",
             JLabel.CENTER);
     JPanel centerPanel = new JPanel(null);
@@ -21,7 +21,7 @@ public class LoadScreen extends JFrame{
     LoadScreenHandler loadscreenhandler;
 
     public LoadScreen() {
-        super("Loading");
+        super("Load");
 
         loadscreenhandler = new LoadScreenHandler(this);
 
@@ -70,7 +70,7 @@ public class LoadScreen extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    private void setFrame() {
+    protected void setFrame() {
         // Window's icon
         URL resource = LoadScreen.class.getClassLoader().getResource("pic2.jpg");
         assert resource != null;

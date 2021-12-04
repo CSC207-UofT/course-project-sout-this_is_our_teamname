@@ -28,16 +28,8 @@ public class DatabaseController {
     private final Stack<Command> CommandHistory;
     private CommandFactory Factory;
 
-    /**
-     * A constructor. Sets the commandHistory and Factory
-     */
-    public DatabaseController(){
-        this.CommandHistory = new Stack<>();
-        this.Factory = new CommandFactory(this);
-    }
 
     // ======================== Control UserInterface ==========================
-
     /**
      * Configures the UserInterface
      * @throws IOException if the file cannot be found to get the information
@@ -110,6 +102,7 @@ public class DatabaseController {
         return newString.split(",\\s+");
     }
 
+
     // ======================= Control OperatorInterface =======================
     /**
      * Ban the function in the CommandFactory according to the operator's choice.
@@ -132,7 +125,6 @@ public class DatabaseController {
         // Set the factory so that it persists even before the program exits
         this.Factory.setAllowedFunctions(function.toArray(new String[0]));
     }
-
     /**
      * Set the datasource to the CommandFactory according to the operator's choice.
      *
@@ -151,6 +143,7 @@ public class DatabaseController {
         // After writing, close the file.
         file.close();
     }
+
 
     // ===================== Command Pattern Infrastructure ====================
     /**
@@ -180,7 +173,6 @@ public class DatabaseController {
         executeCommand(theCommand);
         return true;
     }
-
     /**
      * Sends the command into the commandHistory and executes the command.
      *
@@ -194,7 +186,17 @@ public class DatabaseController {
         theCommand.execute();
     }
 
+
     // ============================ Setters and Getters ========================
+
+    /** Get the commandFactory attribute: Factory
+     *
+     * @return Factory attribute
+     */
+    public CommandFactory getFactory() {
+        return Factory;
+    }
+
     /**
      * Set the factory attached to this controller
      *
@@ -211,6 +213,12 @@ public class DatabaseController {
     public Stack<Command> getCommandHistory() {
         return CommandHistory;
     }
+
+    /**
+     * Gets the type of UI currently in use.
+     * @return string representation of UI currently in use
+     */
+    public String getCurrentUI() { return currentUI; }
 
     /**
      * Returns a hashmap of the entries in the string array commandList with
