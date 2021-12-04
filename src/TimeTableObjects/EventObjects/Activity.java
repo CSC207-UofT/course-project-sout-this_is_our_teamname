@@ -1,5 +1,6 @@
  package TimeTableObjects.EventObjects;
 
+import Helpers.Constants;
 import TimeTableObjects.Events;
 import TimeTableObjects.Interfaces.Reconstructable;
 
@@ -47,15 +48,11 @@ public class Activity extends Events implements Reconstructable {
      }
 
      /**
-     *  Generate the string representation of the activity.
+     * Generate the string representation of the activity.
      * @return the string representation of the activity.
      */
     @Override
     public String toString() {
-        String start = this.getStartTime().toString();
-        String end = this.getEndTime().toString();
-        String activityString = "";
-        activityString = activityString + start + " - " + end + ": " + this.description;
-        return activityString;
+        return this.description;
     }
 }

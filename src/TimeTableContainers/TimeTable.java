@@ -1,6 +1,5 @@
 package TimeTableContainers;
 
-import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.EventObjects.Task;
@@ -21,8 +20,8 @@ import java.util.LinkedHashMap;
  * tasksCalender: contain Task objects(as values) in the corresponding weekday (as keys)
  */
 public class TimeTable {
-    private LinkedHashMap<String, Events[]> calendar;
-    private LinkedHashMap<String, ArrayList<Task>> taskCalendar;
+    private final LinkedHashMap<String, Events[]> calendar;
+    private final LinkedHashMap<String, ArrayList<Task>> taskCalendar;
 
     /**
      * Constructs an empty TimeTable.
@@ -122,7 +121,7 @@ public class TimeTable {
     // ================================ toString ===============================
 
     /**
-     * Generate the String representation of the calender.
+     * Generate the String representation of the calendar.
      *
      * @return the string of calendar
      */
@@ -186,30 +185,12 @@ public class TimeTable {
     }
 
     /**
-     * Get the calender of the timetable
+     * Get the calendar of the timetable
      *
-     * @return the calender contained in the timetable
+     * @return the calendar contained in the timetable
      */
     public LinkedHashMap<String, Events[]> getCalendar() {
         return this.calendar;
-    }
-
-    /**
-     * Sets the TimeTable with given savedTaskCalendar
-     *
-     * @param savedTaskCalendar is the saved task calendar
-     */
-    public void setTaskCalendar(LinkedHashMap<String, ArrayList<Task>> savedTaskCalendar) {
-        this.taskCalendar = savedTaskCalendar;
-    }
-
-    /**
-     * Sets the TimeTable with given savedCalendar
-     *
-     * @param savedCalendar is the saved calendar
-     */
-    public void setCalendar(LinkedHashMap<String, Events[]> savedCalendar) {
-        this.calendar = savedCalendar;
     }
 }
 

@@ -79,15 +79,15 @@ public class TimeTableManager {
         // get scheduled.
         if (term.equals(Constants.YEAR)) {
             boolean theFall =
-                    this.getTimetable(Constants.FALL + " " + year).hasConflicts(event);
+                    this.getTimetable(Constants.FALL + " " + year).checkConflicts(event);
             boolean theWinter =
-                    this.getTimetable(Constants.WINTER + " " + year).hasConflicts(event);
+                    this.getTimetable(Constants.WINTER + " " + year).checkConflicts(event);
             return theFall || theWinter;
         }
         // For all other events, schedule it in the proper timetable. Return
         // true if successful.
         else {
-            return this.getTimetable(timeTableName).hasConflicts(event);
+            return this.getTimetable(timeTableName).checkConflicts(event);
         }
     }
 
@@ -120,28 +120,6 @@ public class TimeTableManager {
         } else {
             return false;
         }
-    }
-
-    /**
-     * Get all CourseSections in this TimeTable
-     * Precondition: All CourseSections in this TimeTable occur between the hours of 07:00 to 22:00 on weekdays.
-     *
-     * @return An ArrayList of all the CourseSections in this TimeTable
-     */
-    public ArrayList<CourseSection> returnCourses() {
-        ArrayList<CourseSection> courses = new ArrayList<>();
-        for (TimeTable timeTable : this.getAllTimeTables())
-            for (String day: timeTable.getCalendar().keySet()) {
-                if (!Objects.equals(day, Constants.SATURDAY) && !Objects.equals(day, Constants.SUNDAY)) {
-                    for (int hour=7; hour<23; hour++) {
-                        Events hourEvent = timeTable.getCalendar().get(day)[hour];
-                        if (hourEvent instanceof CourseSection) {
-                            courses.add((CourseSection) hourEvent);
-                        }
-                    }
-                }
-            }
-        return courses;
     }
 
     /**
@@ -195,5 +173,27 @@ public class TimeTableManager {
             timetables.put(name, new TimeTable());
         }
         return timetables.get(name);
+    }
+
+    /**
+     * Get all CourseSections in this TimeTable
+     * Precondition: All CourseSections in this TimeTable occur between the hours of 07:00 to 22:00 on weekdays.
+     *
+     * @return An ArrayList of all the CourseSections in this TimeTable
+     */
+    public ArrayList<CourseSection> getCourses() {
+        ArrayList<CourseSection> courses = new ArrayList<>();
+        for (TimeTable timeTable : this.getAllTimeTables())
+            for (String day: timeTable.getCalendar().keySet()) {
+                if (!Objects.equals(day, Constants.SATURDAY) && !Objects.equals(day, Constants.SUNDAY)) {
+                    for (int hour=7; hour<23; hour++) {
+                        Events hourEvent = timeTable.getCalendar().get(day)[hour];
+                        if (hourEvent instanceof CourseSection) {
+                            courses.add((CourseSection) hourEvent);
+                        }
+                    }
+                }
+            }
+        return courses;
     }
 }

@@ -24,19 +24,19 @@ public class SectionTest {
         CourseSection lecture0 = new CourseSection("MAT257", Time9,Time10, Constants.MONDAY,Constants.YEAR,
                 "LEC 0101");
         String description0 = "LEC 0100" + " of " + "Arts and Science" + " with " + "Professor.0" + " by " + "Online"
-                + " session " + " at " + "SS100";
-        lecture0.setName(description0);
+                + " session" + " at " + "SS100";
+        lecture0.setDescription(description0);
 
         CourseSection lecture1 = new CourseSection("MAT137", Time10,Time11,Constants.MONDAY,Constants.FALL,
                 "LEC 0101");
         String description1 = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
-                + " session " + " at " + "SS101";
-        lecture1.setName(description1);
+                + " session" + " at " + "SS101";
+        lecture1.setDescription(description1);
 
 
-        assertEquals("MAT257 of Arts and Science with Gauss by In Person at SS100",
+        assertEquals("MAT257: LEC 0100 of Arts and Science with Professor.0 by Online session at SS100",
                 lecture0.toString());
-        assertEquals("MAT137 of Arts and Science with Alphonso by Online at SS100", lecture1.toString());
+        assertEquals("MAT137: LEC 0101 of Arts and Science with Professor.A by Online session at SS101", lecture1.toString());
     }
 
     @Test

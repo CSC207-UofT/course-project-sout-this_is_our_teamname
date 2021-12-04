@@ -26,62 +26,51 @@ public class TimeTablePuzzleTest {
         LocalTime endTime1 = LocalTime.of(10, 0, 0);
         LocalTime endTime2 = LocalTime.of(11, 0, 0);
 
-
+        // Create Course A
         Object[] testDateTime1 = {Constants.MONDAY, startTime1, endTime1};
         Object[] testDateTime2 = {Constants.THURSDAY, startTime1, endTime1};
-
         HashMap<Object[], String> testDateTimeMap1 = new HashMap<>();
         testDateTimeMap1.put(testDateTime1, "LM161");
         testDateTimeMap1.put(testDateTime2, "LM161");
         Course A = new Course("CSC207","LEC0101", "Gries", "A&S", "In-Person",
                 testDateTimeMap1, Constants.FALL);
-        ArrayList<CourseSection> split = A.split();
-        for (CourseSection section : split) {
-            manager.getTimetable(Constants.FALL).schedule(section);
-        }
 
-
+        // Create Course B
         Object[] testDateTime3 = {Constants.WEDNESDAY, startTime2, endTime2};
         HashMap<Object[], String> testDateTimeMap2 = new HashMap<>();
         testDateTimeMap2.put(testDateTime3, "LM161");
         Course B = new Course("CSC207", "LEC0201", "Calver", "A&S", "In-Person",
                 testDateTimeMap2, Constants.FALL);
 
-
+        // Create Course C
         Object[] testDateTime4 = {Constants.TUESDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap3 = new HashMap<>();
         testDateTimeMap3.put(testDateTime4, "LM161");
         Course C = new Course("CSC207", "TUT0101", "TA", "A&S", "In-Person",
                 testDateTimeMap3, Constants.FALL);
-        for (CourseSection section : C.split()) {
-            manager.getTimetable(Constants.FALL).schedule(section);
-        }
 
-
+        // Create Course D
         Object[] testDateTime5 = {Constants.FRIDAY, startTime2, endTime2};
         HashMap<Object[], String> testDateTimeMap4 = new HashMap<>();
         testDateTimeMap4.put(testDateTime5, "LM161");
         Course D = new Course("CSC207", "TUT0201", "TA", "A&S", "In-Person",
                 testDateTimeMap4, Constants.FALL);
 
-
+        // Create Course E
         Object[] testDateTime6 = {Constants.FRIDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap5 = new HashMap<>();
         testDateTimeMap5.put(testDateTime6, "LM161");
         Course E = new Course("MAT157", "LEC0101", "Prof", "A&S", "In-Person",
                 testDateTimeMap5, Constants.FALL);
-        for (CourseSection section : E.split()) {
-            manager.getTimetable(Constants.FALL).schedule(section);
-        }
 
-
+        // Create Course F
         Object[] testDateTime7 = {Constants.WEDNESDAY, startTime1, endTime1};
         HashMap<Object[], String> testDateTimeMap6 = new HashMap<>();
         testDateTimeMap6.put(testDateTime7, "LM161");
         Course F = new Course("MAT157", "LEC0201", "Prof", "A&S", "In-Person",
                 testDateTimeMap6, Constants.FALL);
 
-
+        // Create courses HashMap for TimeTablePuzzle
         HashMap<String, HashMap<String, ArrayList<Course>>> courses = new HashMap<>();
         HashMap<String, ArrayList<Course>> csc = new HashMap<>();
         ArrayList<Course> cscLec = new ArrayList<>(Arrays.asList(A, B));
@@ -96,96 +85,28 @@ public class TimeTablePuzzleTest {
         courses.put("CSC207", csc);
         courses.put("MAT157", mat);
 
+        // Schedule Course A
+        ArrayList<CourseSection> split = A.split();
+        for (CourseSection section : split) {
+            manager.getTimetable(Constants.FALL).schedule(section);
+        }
+        // Schedule Course C
+        for (CourseSection section : C.split()) {
+            manager.getTimetable(Constants.FALL).schedule(section);
+        }
+        // Schedule Course E
+        for (CourseSection section : E.split()) {
+            manager.getTimetable(Constants.FALL).schedule(section);
+        }
+
         TimeTablePuzzle ttPuzzle = new TimeTablePuzzle(courses, manager);
+        ttPuzzle.addScheduledCourse(A);
+        ttPuzzle.addScheduledCourse(C);
+        ttPuzzle.addScheduledCourse(E);
         boolean truth = ttPuzzle.isSolved();
         Assertions.assertTrue(truth);
 
     }
-
-//    @Test
-//    public void failFast() {
-//        TimeTableManager manager = new TimeTableManager();
-//
-//        LocalTime startTime1 = LocalTime.of(9, 0, 0);
-//        LocalTime startTime2 = LocalTime.of(10, 0, 0);
-//        LocalTime endTime1 = LocalTime.of(10, 0, 0);
-//        LocalTime endTime2 = LocalTime.of(11, 0, 0);
-//
-//
-//        Object[] testDateTime1 = {Constants.MONDAY, startTime1, endTime1};
-//        Object[] testDateTime2 = {Constants.THURSDAY, startTime1, endTime1};
-//        HashMap<Object[], String> testDateTimeMap1 = new HashMap<>();
-//        testDateTimeMap1.put(testDateTime1, "LM161");
-//        testDateTimeMap1.put(testDateTime2, "LM161");
-//        Course A = new Course("CSC207", "LEC0101", "Gries", "A&S", "In-Person",
-//                testDateTimeMap1, Constants.FALL, false);
-//        ArrayList<CourseSection> split = A.split();
-//        for (CourseSection section : split) {
-//            manager.getTimetable(Constants.FALL).schedule(section);
-//        }
-//
-//
-//        Object[] testDateTime3 = {Constants.WEDNESDAY, startTime2, endTime2};
-//        HashMap<Object[], String> testDateTimeMap2 = new HashMap<>();
-//        testDateTimeMap2.put(testDateTime3, "LM161");
-//        Course B = new Course("CSC207", "LEC0201", "Calver", "A&S", "In-Person",
-//                testDateTimeMap2, Constants.FALL, false);
-//
-//
-//        Object[] testDateTime4 = {Constants.TUESDAY, startTime1, endTime1};
-//        HashMap<Object[], String> testDateTimeMap3 = new HashMap<>();
-//        testDateTimeMap3.put(testDateTime4, "LM161");
-//        Course C = new Course("CSC207", "TUT0101", "TA", "A&S", "In-Person",
-//                testDateTimeMap3, Constants.FALL, false);
-//
-//
-//        Object[] testDateTime5 = {Constants.FRIDAY, startTime1, endTime1};
-//        HashMap<Object[], String> testDateTimeMap4 = new HashMap<>();
-//        testDateTimeMap4.put(testDateTime5, "LM161");
-//        Course D = new Course("CSC207", "TUT0201", "TA", "A&S", "In-Person",
-//                testDateTimeMap4, Constants.FALL, false);
-//
-//
-//        Object[] testDateTime6 = {Constants.FRIDAY, startTime1, endTime1};
-//        HashMap<Object[], String> testDateTimeMap5 = new HashMap<>();
-//        testDateTimeMap5.put(testDateTime6, "LM161");
-//        Course E = new Course("MAT157", "LEC0101", "Prof", "A&S", "In-Person",
-//                testDateTimeMap5, Constants.FALL, false);
-//        for (CourseSection section : E.split()) {
-//            manager.getTimetable(Constants.FALL).schedule(section);
-//        }
-//
-//
-//        Object[] testDateTime7 = {Constants.WEDNESDAY, startTime1, endTime1};
-//        HashMap<Object[], String> testDateTimeMap6 = new HashMap<>();
-//        testDateTimeMap6.put(testDateTime7, "LM161");
-//        Course F = new Course("MAT157", "LEC0201", "Prof", "A&S", "In-Person",
-//                testDateTimeMap6, Constants.FALL, false);
-//
-//        HashMap<String, HashMap<String, ArrayList<Course>>> courses = new HashMap<>();
-//        HashMap<String, ArrayList<Course>> csc = new HashMap<>();
-//        ArrayList<Course> cscLec = new ArrayList<>(Arrays.asList(A, B));
-//        ArrayList<Course> cscTut = new ArrayList<>(Arrays.asList(C, D));
-//        csc.put("LEC", cscLec);
-//        csc.put("TUT", cscTut);
-//
-//        HashMap<String, ArrayList<Course>> mat = new HashMap<>();
-//        ArrayList<Course> matLec = new ArrayList<>(Arrays.asList(E, F));
-//        mat.put("LEC", matLec);
-//
-//        courses.put("CSC207", csc);
-//        courses.put("MAT157", mat);
-//
-//        TimeTablePuzzle ttPuzzle = new TimeTablePuzzle(courses, manager);
-//        Assertions.assertFalse(ttPuzzle.failFast());
-//
-//
-//        for (CourseSection section : C.split()) {
-//            manager.getTimetable(Constants.FALL).schedule(section);
-//        }
-//        Assertions.assertTrue(ttPuzzle.failFast());
-//
-//    }
 
     @Test
     public void extensions() {
@@ -267,8 +188,10 @@ public class TimeTablePuzzleTest {
         courses.put("CSC207", csc);
         courses.put("MAT157", mat);
         TimeTablePuzzle ttPuzzle = new TimeTablePuzzle(courses, manager);
+        ttPuzzle.addScheduledCourse(A);
 
         TimeTablePuzzle ttPuzzleC = new TimeTablePuzzle(courses, managerC);
+        ttPuzzleC.addScheduledCourse(A);
         ArrayList<CourseSection> splitC = C.split();
         for (CourseSection section : splitC) {
             String term = section.getTerm();
@@ -276,6 +199,7 @@ public class TimeTablePuzzleTest {
         }
 
         TimeTablePuzzle ttPuzzleD = new TimeTablePuzzle(courses, managerD);
+        ttPuzzleD.addScheduledCourse(A);
         ArrayList<CourseSection> splitD = D.split();
         for (CourseSection section : splitD) {
             String term = section.getTerm();
@@ -283,6 +207,7 @@ public class TimeTablePuzzleTest {
         }
 
         TimeTablePuzzle ttPuzzleE = new TimeTablePuzzle(courses, managerE);
+        ttPuzzleE.addScheduledCourse(A);
         ArrayList<CourseSection> splitE = E.split();
         for (CourseSection section : splitE) {
             String term = section.getTerm();
@@ -290,6 +215,7 @@ public class TimeTablePuzzleTest {
         }
 
         TimeTablePuzzle ttPuzzleF = new TimeTablePuzzle(courses, managerF);
+        ttPuzzleF.addScheduledCourse(A);
         ArrayList<CourseSection> splitF = F.split();
         for (CourseSection section : splitF) {
             String term = section.getTerm();
@@ -297,20 +223,30 @@ public class TimeTablePuzzleTest {
         }
 
         ArrayList<TimeTablePuzzle> expected = new ArrayList<>
-                (Arrays.asList(ttPuzzleC, ttPuzzleD, ttPuzzleE, ttPuzzleF));
+                (Arrays.asList(ttPuzzleC, ttPuzzleD));
 
         ArrayList<TimeTablePuzzle> actual = ttPuzzle.extensions();
 
-        System.out.println("hi");
+        Assertions.assertEquals(expected.size(), actual.size());
 
-        Assertions.assertEquals(actual, expected);
+        // Schedule Course C and test again
+        for (CourseSection indivSplitC : splitC) {
+            String term = indivSplitC.getTerm();
+            ttPuzzle.getManager().getTimetable(term).schedule(indivSplitC);
+        }
+        ttPuzzle.addScheduledCourse(C);
+
+        ArrayList<TimeTablePuzzle> expected2 = new ArrayList<>
+                (Arrays.asList(ttPuzzleE, ttPuzzleF));
+
+        ArrayList<TimeTablePuzzle> actual2 = ttPuzzle.extensions();
+
+        Assertions.assertEquals(expected2.size(), actual2.size());
     }
 
     @Test
     public void schedulePuzzle() {
 
-        LocalTime time5 =  LocalTime.of(5,0,0);
-        LocalTime time6 =  LocalTime.of(6,0,0);
         LocalTime time9 =  LocalTime.of(9,0,0);
         LocalTime time10 = LocalTime.of(10, 0,0);
         LocalTime time11 = LocalTime.of(11,0,0);
@@ -346,8 +282,11 @@ public class TimeTablePuzzleTest {
         TimeTablePuzzle puzzle1 = new TimeTablePuzzle(courses, manager1);
         TimeTablePuzzle puzzle2 = new TimeTablePuzzle(courses, manager2);
         puzzle2.schedulePuzzle(puzzle1);
+        // Get all courses for both TimeTablePuzzles
+        ArrayList<CourseSection> allCourses1 = puzzle1.getManager().getCourses();
+        ArrayList<CourseSection> allCourses2 = puzzle2.getManager().getCourses();
 
-        Assertions.assertEquals(puzzle1, puzzle2);
+        Assertions.assertEquals(allCourses1, allCourses2);
 
     }
 }

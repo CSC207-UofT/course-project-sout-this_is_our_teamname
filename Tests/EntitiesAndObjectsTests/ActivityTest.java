@@ -26,7 +26,7 @@ public class ActivityTest {
         Activity shower = new Activity(Time9, Time10, Constants.MONDAY, Constants.YEAR,
                 "remember to wash clothes");
 
-        assertEquals("08:00 - 09:00: buy coffee", breakfast.toString());
-        assertEquals("09:00 - 10:00: remember to wash clothes", shower.toString());
+        assertEquals("buy coffee", breakfast.toString());
+        assertEquals("remember to wash clothes", shower.toString());
     }
 }
