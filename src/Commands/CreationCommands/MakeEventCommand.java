@@ -66,7 +66,7 @@ public class MakeEventCommand implements Command {
                     responses.get(TYPE));
 
             assert toSchedule != null;
-            if (!manager.checkConflicts(toSchedule)){
+            if (!manager.hasConflicts(toSchedule)){
                 scheduledObject = toSchedule;
                 manager.schedule(toSchedule);
                 running = false;

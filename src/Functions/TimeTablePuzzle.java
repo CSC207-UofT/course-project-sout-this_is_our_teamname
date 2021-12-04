@@ -10,7 +10,7 @@ import java.util.HashMap;
 /**
  * A Puzzle class for TimeTable Manager, schedules the given courses in the appropriate timetables
  * without any conflicts
- * 
+ *
  * === Private Attributes ===
  *  courses: The courses this TimeTablePuzzle will solve.
  *  manager: The manager that will schedule the courses.
@@ -128,7 +128,7 @@ public class TimeTablePuzzle {
                         boolean conflictTruth = true;
                         for (CourseSection splitSection : split) {
                             // Check conflicts, if none, break from loop
-                            if (!manager.getTimetable(term).checkConflicts(splitSection)) {
+                            if (!manager.getTimetable(term).hasConflicts(splitSection)) {
                                 conflictTruth = false;
                             }
                         }
