@@ -18,7 +18,7 @@ public class Activity extends Events implements Reconstructable {
     private final String description;
 
     /**
-     * Construct a activity with time and a description.
+     * Construct an activity with time and a description.
      * @param theStartTime is the start time of the activity.
      * @param theEndTime is the end time of the activity.
      * @param theDate is the weekday of the activity.
@@ -54,6 +54,10 @@ public class Activity extends Events implements Reconstructable {
      */
     @Override
     public String toString() {
-        return this.description;
+        String start = this.getStartTime().toString();
+        String end = this.getEndTime().toString();
+        String activityString = "";
+        activityString = activityString + start + " - " + end + ": " + this.description;
+        return activityString;
     }
 }

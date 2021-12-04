@@ -17,26 +17,29 @@ import java.util.LinkedHashMap;
  * it will still be stored, and a conflict warning will be sent back prompting user to take action or ignore it.
  *
  * === Private Attributes ===
- * calendar: a single timetable from Monday to Friday, and 24 intervals per
- *  day that can be filled with an event.
- * tasksCalender: contain Task objects(as values) in the corresponding weekday
- *  (as keys)
+ * calendar: a single timetable from Monday to Friday, and 24 intervals per day that can be filled with an event.
+ * tasksCalender: contain Task objects(as values) in the corresponding weekday (as keys)
  */
 public class TimeTable {
     private LinkedHashMap<String, Events[]> calendar;
     private LinkedHashMap<String, ArrayList<Task>> taskCalendar;
 
+    /**
+     * Constructs an empty TimeTable.
+     */
     public TimeTable() {
-        this.calendar = new LinkedHashMap<>(){};
-        this.taskCalendar = new LinkedHashMap<>(){};
-        for (String day : Constants.DAYS_OF_THE_WEEK){
+        this.calendar = new LinkedHashMap<>() {
+        };
+        this.taskCalendar = new LinkedHashMap<>() {
+        };
+        for (String day : Constants.DAYS_OF_THE_WEEK) {
             this.calendar.put(day, new Events[24]);
             this.taskCalendar.put(day, new ArrayList<>());
-        };
-
+        }
     }
 
     // ========================= Basic Operations ==============================
+
     /**
      * Schedules the given activity into the appropriate weekday.
      *
@@ -48,7 +51,7 @@ public class TimeTable {
         if (event.getName().isEmpty()) {
             event.nameIt();
         }
-        if (checkConflicts(event) && event instanceof Activity) {
+        if (checkConflicts(event) && (event instanceof Activity || event instanceof CourseSection)) {
             int start = event.getStartTime().getHour();
             int end = event.getEndTime().getHour();
 
@@ -87,6 +90,7 @@ public class TimeTable {
 
     /**
      * Adds a Task object to the taskCalendar
+     *
      * @param reminder is a Task object
      */
     public void addTasks(Task reminder) {
@@ -95,12 +99,12 @@ public class TimeTable {
 
     /**
      * Remove the given activity from this TimeTable
-     * Precondition: the start time is later than the end time of this activity.
+     * Precondition: the end time is later than the start time of this activity.
      *
      * @param startTime The start time of this activity
      * @param endTime   The end time of this activity
      * @param day       The day of the week this activity is on
-     * @return          true if the activity was removed, false otherwise.
+     * @return true if the activity was removed, false otherwise.
      */
     public boolean remove(LocalTime startTime, LocalTime endTime, String day) {
         int startTimeInt = startTime.getHour();
@@ -116,8 +120,10 @@ public class TimeTable {
     }
 
     // ================================ toString ===============================
+
     /**
      * Generate the String representation of the calender.
+     *
      * @return the string of calendar
      */
     public String toString() {
@@ -130,6 +136,12 @@ public class TimeTable {
         return timeStrings.toString();
     }
 
+    /**
+     * Generate the String representation of all the tasks for the given day.
+     *
+     * @param day the day for the String to be generated from
+     * @return the string of the tasks for the day
+     */
     private String getTaskString(String day) {
         // Add reminder for all tasks
         StringBuilder tasks = new StringBuilder();
@@ -138,9 +150,15 @@ public class TimeTable {
         for (Task allReminder : allReminders) {
             tasks.append(allReminder).append(", ");
         }
-        return tasks.substring(0, tasks.length() - 1);
+        return tasks.substring(0, tasks.length() - 2);
     }
 
+    /**
+     * Generate a String representation of the Calendar for the given day.
+     *
+     * @param day the day for the String to be generated from
+     * @return the string of the calendar for the day
+     */
     private StringBuilder getCalenderString(String day) {
         StringBuilder times = new StringBuilder(day + ":\n");
 
@@ -159,51 +177,8 @@ public class TimeTable {
 
     // ===================== Setters and Getters ===============================
     /**
-     * Gets a copy of the TimeTable (not alias)
-     *
-     * @return the copy of the TimeTable
-     */
-    public TimeTable getCopy() {
-        TimeTable copy = new TimeTable();
-        copy.setCalendar(getCalendarCopy());
-        copy.setTaskCalendar(getTaskCopy());
-        return copy;
-    }
-
-    /**
-     * Gets a copy of the calendar (not alias)
-     *
-     * @return the copy of the calendar
-     */
-    public LinkedHashMap<String, Events[]> getCalendarCopy() {
-        LinkedHashMap<String, Events[]> copy = new LinkedHashMap<>();
-        for (String day : this.calendar.keySet()) {
-            Events[] events = new Events[24];
-            for (int i = 0; i < 24; i++) {
-                events[i] = this.calendar.get(day)[i];
-            }
-            copy.put(day, events);
-        }
-        return copy;
-    }
-
-    /**
-     * Gets a copy of the taskCalendar (not alias)
-     *
-     * @return the copy of the taskCalendar
-     */
-    public LinkedHashMap<String, ArrayList<Task>> getTaskCopy() {
-        LinkedHashMap<String, ArrayList<Task>> copy = new LinkedHashMap<>();
-        for (String day : this.taskCalendar.keySet()) {
-            ArrayList<Task> reminders =
-                    new ArrayList<>(this.taskCalendar.get(day));
-            copy.put(day, reminders);
-        }
-        return copy;
-    }
-
-    /**
      * Get the task hashmap
+     *
      * @return the task hashmap
      */
     public LinkedHashMap<String, ArrayList<Task>> getTaskCalendar() {
@@ -212,6 +187,7 @@ public class TimeTable {
 
     /**
      * Get the calender of the timetable
+     *
      * @return the calender contained in the timetable
      */
     public LinkedHashMap<String, Events[]> getCalendar() {
@@ -219,15 +195,8 @@ public class TimeTable {
     }
 
     /**
-     * Sets the TimeTable with given savedCalendar
-     * @param savedCalendar is the saved calendar
-     */
-    public void setCalendar(LinkedHashMap<String, Events[]> savedCalendar) {
-        this.calendar = savedCalendar;
-    }
-
-    /**
      * Sets the TimeTable with given savedTaskCalendar
+     *
      * @param savedTaskCalendar is the saved task calendar
      */
     public void setTaskCalendar(LinkedHashMap<String, ArrayList<Task>> savedTaskCalendar) {
@@ -235,25 +204,12 @@ public class TimeTable {
     }
 
     /**
-     * Check if the given course is present in this TimeTable
-     * TODO This method is never used, and incorrect
-     * @param course The course to be checked
-     * @return true if the course is present, false otherwise
+     * Sets the TimeTable with given savedCalendar
+     *
+     * @param savedCalendar is the saved calendar
      */
-    public boolean checkCourseSection(Course course) {
-        String courseCode = course.getCourseName() + course.getSectionName();
-        for (Events[] day : this.calendar.values()) {
-            for (Events hour : day) {
-                if (hour instanceof CourseSection) {
-                    String sectionCode = ((CourseSection) hour).getCourseName() +
-                            ((CourseSection) hour).getSectionCode();
-                    if (sectionCode.equals(courseCode)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+    public void setCalendar(LinkedHashMap<String, Events[]> savedCalendar) {
+        this.calendar = savedCalendar;
     }
 }
 

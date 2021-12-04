@@ -34,10 +34,9 @@ public class SectionTest {
         lecture1.setName(description1);
 
 
-        assertEquals(lecture0.toString(),
-                "MAT257 of Arts and Science with Gauss by In Person at SS100");
-        assertEquals(lecture1.toString(),
-                "MAT137 of Arts and Science with Alphonso by Online at SS100");
+        assertEquals("MAT257 of Arts and Science with Gauss by In Person at SS100",
+                lecture0.toString());
+        assertEquals("MAT137 of Arts and Science with Alphonso by Online at SS100", lecture1.toString());
     }
 
     @Test
