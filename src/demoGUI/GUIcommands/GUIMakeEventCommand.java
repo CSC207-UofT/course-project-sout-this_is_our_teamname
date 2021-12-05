@@ -75,9 +75,11 @@ public class GUIMakeEventCommand implements Command {
 
             assert toSchedule != null;
             TimeTableManager manager = scheduleEventScreen.getController().getFactory().getCourseManager();
+
             if (!manager.hasConflicts(toSchedule)){
                 scheduledObject = toSchedule;
                 manager.schedule(toSchedule);
+
                 running = false;
             }
             else {

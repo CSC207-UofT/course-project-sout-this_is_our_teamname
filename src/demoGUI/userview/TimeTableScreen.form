@@ -85,7 +85,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="9e274" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="9e274" binding="UnderTabsPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <tabbedpane title="Untitled"/>
@@ -99,12 +99,7 @@
                     </constraints>
                     <properties/>
                     <border type="none"/>
-                    <children>
-                      <component id="a6e43" class="javax.swing.JTable" binding="timeTable">
-                        <constraints/>
-                        <properties/>
-                      </component>
-                    </children>
+                    <children/>
                   </scrollpane>
                 </children>
               </grid>
