@@ -1,7 +1,6 @@
 package InterfaceAdaptors;
 
-import Commands.FunctionCommands.SolverCommand;
-import Commands.FunctionCommands.ExitProgramCommand;
+import Commands.FunctionCommands.*;
 import DataGetting.CourseGetter;
 import Commands.Command;
 import Commands.CreationCommands.GetAllTimeTablesCommand;
@@ -11,8 +10,6 @@ import Commands.CreationCommands.AddTimeTableCommand;
 import Commands.RemovalCommands.RemoveEventCommand;
 import Commands.RemovalCommands.RemoveTimeTable;
 import Commands.CreationCommands.PrintHistoryCommand;
-import Commands.FunctionCommands.DownloadDataCommand;
-import Commands.FunctionCommands.LoadDataCommand;
 import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
 
@@ -100,7 +97,7 @@ public class CommandFactory {
             case GET_ALL_TIMETABLE:
                 return new GetAllTimeTablesCommand(courseManager);
             case SOLVE_TIMETABLE:
-                return new SolverCommand(courseManager, dataSource);
+                return new SolverCommand2(courseManager, dataSource);
             case ADD_TIMETABLE:
                 return new AddTimeTableCommand(courseManager);
             case REMOVE_TIMETABLE:
