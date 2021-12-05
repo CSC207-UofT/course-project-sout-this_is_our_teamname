@@ -1,13 +1,15 @@
 package demoGUI.GUIcommands;
 
-import Commands.Command;
 import Commands.NeedsCoursesCommand;
+import DataGetting.CourseGetter;
+import Helpers.InputCheckers.InputChecker;
+import Helpers.InputCheckers.Predicate;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
-import demoGUI.userview.ScheduleCourseScreen;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  * A command to create a Course Object.
@@ -16,23 +18,21 @@ import java.util.ArrayList;
  * dataSource: The source where the data is from.
  * manager: The manager that will eventually schedule the object
  */
-public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command {
-
+public class GUIMakeCourseCommand extends NeedsCoursesCommand {
     private final ArrayList<Course> scheduledCourse;
-    private ScheduleCourseScreen scheduleCourseScreen;
+    private final CourseGetter dataSource;
+    private final TimeTableManager manager;
 
     /**
      * A constructor to initialize what this command is connected to
      *
-     *
+     * @param sendTo the Manager to send to
+     * @param dataSource the Source of the data of the course
      */
-    public GUIMakeCourseCommand(ScheduleCourseScreen scheduleCourseScreen){
-        ArrayList<Course> scheduledCourse = new ArrayList<>();
-        scheduledCourse.add(scheduleCourseScreen.getTut());
-        scheduledCourse.add(scheduleCourseScreen.getLec());
-
-        this.scheduledCourse = scheduledCourse;
-        this.scheduleCourseScreen = scheduleCourseScreen;
+    public GUIMakeCourseCommand(TimeTableManager sendTo, CourseGetter dataSource){
+        this.manager = sendTo;
+        this.dataSource = dataSource;
+        this.scheduledCourse = new ArrayList<>();
     }
 
     /**
@@ -40,13 +40,15 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
      */
     @Override
     public void execute() {
+        // Clears the dataSource so it doesn't build up.
+        dataSource.clearData();
+
+        LinkedHashMap<String, ArrayList<Course>> course_data = userInputs(dataSource);
+        promptUser(course_data);
 
         ArrayList<CourseSection> sections = new ArrayList<>();
 
-        TimeTableManager manager = scheduleCourseScreen.getController().getFactory().getCourseManager();
-
         boolean hasConflict = hasConflicts(sections);
-
 
         if (!hasConflict){
             // Pass this to the TimeTableManager.
@@ -58,6 +60,78 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
         }
     }
 
+    /**
+     * A String representation of the Command Object
+     *
+     * @return the string representation of the command object
+     */
+    @Override
+    public String toString(){
+        StringBuilder temporaryString = new StringBuilder("Scheduled the item" +
+                " ");
+        if (this.hasScheduled()){
+            for (Course item : this.scheduledCourse){
+                temporaryString.append(item.getSectionName()).append(" ");
+            }
+            return temporaryString.toString();
+        } else {
+            return "No Course Scheduled";
+        }
+    }
+
+    // ============================= Helpers ===================================
+    /**
+     * Prompts the user
+     * @param courseTypeToCourseMap HashMap of each type of course object to
+     *                              the course object
+     */
+    private void promptUser(LinkedHashMap<String, ArrayList<Course>> courseTypeToCourseMap) {
+        // For each type of course object
+        for (String typeOfCourse : courseTypeToCourseMap.keySet()) {
+
+            // Get list of all the course objects
+            ArrayList<Course> listOfCourses =
+                    courseTypeToCourseMap.get(typeOfCourse);
+
+            // Prompts the user with choices
+            for (Course course : listOfCourses) {
+                System.out.println(course.getSectionName() + ": " + course);
+            }
+
+            InputChecker sectionChoice = new InputChecker("Please " +
+                    "choose the section that you want (eg; LEC 0101. Only " +
+                    "enter the section code). Enter 'Null' if you do not want to " +
+                    "schedule any section: ",
+
+                    new isValidCourse(courseTypeToCourseMap.get(typeOfCourse)));
+            String selected = sectionChoice.checkCorrectness();
+
+            if (!selected.equals("Null")){
+                // Get the course to schedule
+                ArrayList<Course> section =
+                        courseTypeToCourseMap.get(typeOfCourse);
+                Course toSchedule = findAssociatedCourse(selected, section);
+                this.scheduledCourse.add(toSchedule);
+            }
+        }
+    }
+
+    /**
+     * A helper method to find the course object of a name from a list of
+     * course objects.
+     *
+     * @param prompt the Course name
+     * @param list the list of courses
+     * @return the Course with the name prompt
+     */
+    private Course findAssociatedCourse(String prompt, ArrayList<Course> list){
+        for (Course course : list){
+            if (course.getSectionName().equals(prompt)){
+                return course;
+            }
+        }
+        return null;
+    }
 
     /**
      * Checks if there is a conflict in scheduling a course. Add courseSection
@@ -68,7 +142,6 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
     private boolean hasConflicts(ArrayList<CourseSection> sections) {
         for (Course course : this.scheduledCourse){
             ArrayList<CourseSection> conflictCheckSections = course.split();
-            TimeTableManager manager = scheduleCourseScreen.getController().getFactory().getCourseManager();
             for (CourseSection sectionOfCourse : conflictCheckSections){
                 if (!manager.hasConflicts(sectionOfCourse)){
                     sections.add(sectionOfCourse);
@@ -78,6 +151,46 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
             }
         }
         return false;
+    }
+
+    // ======================== Predicates Classes =============================
+    /**
+     * A predicate to check if the course input is correct
+     *
+     * === Attributes ===
+     * courseNameToCourseMap: A map of the course name to the course object
+     */
+    private static class isValidCourse extends Predicate{
+        private final ArrayList<Course> courseNameToCourseMap;
+
+        /**
+         * Constructor.
+         *
+         * @param theMap the map to connect to. See above for description
+         */
+        private isValidCourse(ArrayList<Course> theMap){
+            this.courseNameToCourseMap = theMap;
+        }
+
+        /**
+         * Runs the predicate
+         *
+         * @param prompt the prompt to ask the user
+         * @return true iff the courseNameToCourseMap has the prompt as a key.
+         */
+        @Override
+        public boolean run(String prompt) {
+            if (prompt.equals("Null")){
+                return true;
+            } else {
+                for (Course course : courseNameToCourseMap){
+                    if (course.getSectionName().equals(prompt)){
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
     }
 
     // ============================ Predicates =================================

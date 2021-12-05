@@ -33,7 +33,7 @@ public class TimeTableScreenController implements ActionListener {
     private void runButton(DatabaseController controller, String buttonText){
         switch(buttonText){
             case "Schedule Course":
-                new ScheduleCourseScreen(controller, timeTableScreen);
+                new ScheduleCourseScreen(timeTableScreen);
                 break;
             case "Schedule Task/Activity":
                 new ScheduleEventScreen(controller, timeTableScreen);

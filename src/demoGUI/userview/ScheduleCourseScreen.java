@@ -1,6 +1,5 @@
 package demoGUI.userview;
 
-import InterfaceAdaptors.DatabaseController;
 import TimeTableObjects.Course;
 import demoGUI.handler.ScheduleCourseHandler;
 
@@ -37,14 +36,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
 
     ScheduleCourseHandler scheduleCourseHandler;
 
-    Course lec;
-    Course tut;
-
-    DatabaseController controller;
-
-    public ScheduleCourseScreen(DatabaseController controller, TimeTableScreen screen) {
+    public ScheduleCourseScreen(TimeTableScreen screen) {
         super("Schedule Course", screen);
-        this.controller = controller;
         scheduleCourseHandler = new ScheduleCourseHandler(this);
         Container contentPane = getContentPane();
 
@@ -146,10 +139,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
         setVisible(true);
     }
 
-    public void clearBoxes(){
-        tutBox.removeAllItems();
-        lectureBox.removeAllItems();
-    }
+
+
 
     private void addTerm(JComboBox<String> termBox){
         termBox.addItem("Fall");
@@ -188,40 +179,9 @@ public class ScheduleCourseScreen extends AbstractScreen{
         }
     }
 
-    public String gettutBox() {
-        return Objects.requireNonNull(tutBox.getSelectedItem()).toString();
-
-    }
-
-    public String getlecBox() {
-        return Objects.requireNonNull(lectureBox.getSelectedItem()).toString();
-
-    }
-
-    public DatabaseController getController() {
-        return controller;
-    }
-
-    public void setLecture(Course lec) {
-         this.lec = lec;
-    }
-
-    public void setTutorial(Course tut) {
-        this.tut = tut;
-    }
-
-    public Course getLec() {
-        return this.lec;
-    }
-
-    public Course getTut() {
-        return this.tut;
-    }
-
     public static void main(String[] args) {
-        DatabaseController controller = new DatabaseController("gui");
         TimeTableScreen screen = new TimeTableScreen();
-        new ScheduleCourseScreen(controller, screen);
+        new ScheduleCourseScreen(screen);
 
     }
 
