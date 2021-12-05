@@ -20,8 +20,8 @@ public class LoadScreen extends AbstractScreen{
 
     LoadScreenHandler loadscreenhandler;
 
-    public LoadScreen() {
-        super("Load");
+    public LoadScreen(TimeTableScreen screen) {
+        super("Load", screen);
 
         loadscreenhandler = new LoadScreenHandler(this);
 
@@ -93,7 +93,8 @@ public class LoadScreen extends AbstractScreen{
     public String getYearString() {return yearTxt.getText();}
 
     public static void main(String[] args) {
-        new LoadScreen();
+        TimeTableScreen screen = new TimeTableScreen();
+        new LoadScreen(screen);
 
     }
 }

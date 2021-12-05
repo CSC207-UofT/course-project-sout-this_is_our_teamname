@@ -173,7 +173,6 @@ public class DatabaseController {
     public boolean runCommand(String requestedCommand) throws InvalidInputException {
         assert this.Factory != null;
         Command theCommand = this.Factory.getCommand(requestedCommand);
-
         // If the command is to exit the program, it will return false to let
         // UserInterface know to exit the program
         if (theCommand instanceof ExitProgramCommand) {

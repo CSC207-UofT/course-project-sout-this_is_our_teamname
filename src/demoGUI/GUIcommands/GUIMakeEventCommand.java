@@ -139,6 +139,7 @@ public class GUIMakeEventCommand implements Command {
      * @param theLocation the location
      * @param theDate the date
      * @param term the term
+     * @param year the year
      * @param type the type of object
      * @return event "cast" to the correct type.
      */
@@ -148,6 +149,7 @@ public class GUIMakeEventCommand implements Command {
                                                    String theLocation,
                                                    String theDate,
                                                    String term,
+                                                   String year,
                                                    String type,
                                                    String description) {
         // Creates the Activity

@@ -31,13 +31,15 @@ public class ScheduleEventScreen extends AbstractScreen{
     JButton applyBtn = new JButton("Schedule");
     JTextField descriptionTxt = new JTextField();
     JLabel description = new JLabel("Description");
+    JLabel year = new JLabel("Year");
+    JTextField yearTxt = new JTextField();
 
     DatabaseController controller;
 
     ScheduleEventHandler scheduleEventHandler;
 
-    public ScheduleEventScreen(DatabaseController controller) {
-        super("Schedule NonCourse");
+    public ScheduleEventScreen(DatabaseController controller, TimeTableScreen screen) {
+        super("Schedule NonCourse", screen);
         scheduleEventHandler = new ScheduleEventHandler(this);
         this.controller = controller;
         Container contentPane = getContentPane();
@@ -46,35 +48,48 @@ public class ScheduleEventScreen extends AbstractScreen{
         eventName.setBounds(200, 40, 120, 40);
         nameTxt.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         nameTxt.setBounds(320, 40, 220, 40);
-        descriptionTxt.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-        descriptionTxt.setBounds(320, 460, 400, 40);
-        description.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        description.setBounds(200, 460, 120, 40);
+
         startTime.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         startTime.setBounds(200, 100, 120, 40);
         startTimeBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         startTimeBox.setBounds(320, 100, 120, 40);
+
         endTime.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         endTime.setBounds(200, 160, 120, 40);
         endTimeBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         endTimeBox.setBounds(320, 160, 120, 40);
+
         location.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         location.setBounds(200, 220, 120, 40);
         locationTxt.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         locationTxt.setPreferredSize(new Dimension(100, 30));
         locationTxt.setBounds(320, 220, 120, 40);
+
         day.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         day.setBounds(200, 280, 120, 40);
         dayBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         dayBox.setBounds(320, 280, 120, 40);
+
         term.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         term.setBounds(200, 340, 120, 40);
         termBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         termBox.setBounds(320, 340, 120, 40);
+
+        year.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        year.setBounds(200, 400, 120, 40);
+        yearTxt.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        yearTxt.setBounds(320, 400, 120, 40);
+
         type.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        type.setBounds(200, 400, 120, 40);
+        type.setBounds(200, 460, 120, 40);
         typeBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        typeBox.setBounds(320, 400, 120, 40);
+        typeBox.setBounds(320, 460, 120, 40);
+
+        description.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        description.setBounds(200, 520, 120, 40);
+        descriptionTxt.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        descriptionTxt.setBounds(320, 520, 400, 40);
+
         // Back button
         backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         backBtn.addActionListener(scheduleEventHandler);
@@ -108,6 +123,7 @@ public class ScheduleEventScreen extends AbstractScreen{
         centerPanel.add(description);
         centerPanel.add(descriptionTxt);
 
+
         southPanel.add(backBtn);
         southPanel.add(applyBtn);
 
@@ -130,7 +146,7 @@ public class ScheduleEventScreen extends AbstractScreen{
 
 
         // Set size
-        setSize(800, 600);
+        setSize(800, 650);
 
         // Show in the middle
         setLocationRelativeTo(null);
@@ -202,7 +218,8 @@ public class ScheduleEventScreen extends AbstractScreen{
 
     public static void main(String[] args) {
         DatabaseController controller = new DatabaseController("gui");
-        new ScheduleEventScreen(controller);
+        TimeTableScreen screen = new TimeTableScreen();
+        new ScheduleEventScreen(controller, screen);
 
     }
 

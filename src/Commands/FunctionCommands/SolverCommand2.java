@@ -57,7 +57,6 @@ public class SolverCommand2 extends NeedsCoursesCommand {
             if (!Boolean.parseBoolean(userCourse.nextLine())) {
                 courseCounter = false;
             }
-
             // Figure out how to catch exception
         }
 
