@@ -63,14 +63,15 @@ public class OperatorInterface {
             // Print all functions that the operator can choose to ban.
             LinkedHashMap<String, String> allowed =
                     Reformatters.hashMapIt(control.getAllowedFunctions());
+            allowed.put(String.valueOf(allowed.keySet().size()), "Restore All");
 
             for (String key : allowed.keySet()){
                 System.out.println(key + ": " + allowed.get(key));
             }
 
             // Ask operator which function to ban.
-            InputChecker requestCommand = new InputChecker("Which function do you want to ban?",
-                    new isValidCommand(allowed));
+            InputChecker requestCommand = new InputChecker("Which function do" +
+                    " you want to ban?", new isValidCommand(allowed));
             String requested = requestCommand.checkCorrectness();
 
             // Ban the function
@@ -94,6 +95,7 @@ public class OperatorInterface {
      */
     private static class isValidCommand extends Predicate {
         private final HashMap<String, String> allowed;
+
         public isValidCommand(HashMap<String, String> values){
             this.allowed = values;
         }

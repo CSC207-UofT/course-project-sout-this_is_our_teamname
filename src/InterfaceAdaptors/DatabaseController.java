@@ -117,7 +117,9 @@ public class DatabaseController {
      */
     public void setBanned(String ban) throws IOException {
         ArrayList<String> function = new ArrayList<>(Arrays.asList(this.Factory.getAllowedFunctions()));
-        function.remove(ban);
+        if (!ban.equals("Restore All")){
+            function.remove(ban);
+        }
 
         FileWriter file = new FileWriter("src/Interfaces/functions.txt");
         // Write the ALLOWED functions in functions.txt.
