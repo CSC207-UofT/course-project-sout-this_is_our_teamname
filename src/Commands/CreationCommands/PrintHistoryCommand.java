@@ -5,6 +5,11 @@ import InterfaceAdaptors.DatabaseController;
 
 import java.util.Stack;
 
+/**
+ * TODO REMOVE THIS SENTENCE
+ *
+ * Prints the history of the user's actions
+ */
 public class PrintHistoryCommand implements Command {
     private final DatabaseController TheController;
 

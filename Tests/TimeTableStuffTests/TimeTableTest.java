@@ -84,8 +84,8 @@ class TimeTableTest {
         table.schedule(lecture1);
         table.schedule(lecture2);
         table.schedule(activity);
-        table.addTasks(reminder1);
-        table.addTasks(reminder2);
+//        table.addTasks(reminder1);
+//        table.addTasks(reminder2);
         String actual = table.toString();
 
         String expectedCourse0 = "9:00 MAT257: LEC 0101 of Arts and Science with Professor.A by Online session at SS100";

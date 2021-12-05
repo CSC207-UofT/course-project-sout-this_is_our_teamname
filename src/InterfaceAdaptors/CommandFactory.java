@@ -23,6 +23,8 @@ import demoGUI.userview.AbstractScreen;
 import demoGUI.userview.ScheduleEventScreen;
 
 /**
+ * TODO REMOVE THIS SENTENCE!!!
+ *
  * A factory class to create the individual commands of the class.
  *
  * === Attributes ===
@@ -33,7 +35,7 @@ import demoGUI.userview.ScheduleEventScreen;
  *  by the OperatorInterface
  */
 public class CommandFactory {
-    private TimeTableManager courseManager;
+    private final TimeTableManager courseManager;
     private CourseGetter dataSource;
     private final DatabaseController controller;
     private String[] allowedFunctions;
@@ -79,9 +81,8 @@ public class CommandFactory {
      * @return The correct command object
      * @throws InvalidInputException If the inputCommand is invalid, throw this!
      */
-    //TODO change name cmdCommand
     public Command getCommand(String inputCommand) throws InvalidInputException {
-        assert this.dataSource != null && this.courseManager != null;
+        assert this.dataSource != null;
 
         if (controller.getCurrentUI().equals("cmd")) {
             return getCommand4CommandLine(inputCommand);

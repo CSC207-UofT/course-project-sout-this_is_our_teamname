@@ -5,6 +5,8 @@ import TimeTableObjects.Events;
 import java.util.ArrayList;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * Savable is an interface implemented by CourseSection/Activity
  * It takes a CourseSection/Activity object and returns an ArrayList based on the non-time/date attributes.
  */

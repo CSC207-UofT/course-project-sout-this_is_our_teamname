@@ -6,6 +6,11 @@ import Helpers.InputCheckers.InputChecker;
 
 import java.io.IOException;
 
+/**
+ * TODO REMOVE THIS SENTENCE
+ *
+ * Load the data to an external source
+ */
 public class LoadDataCommand implements Command {
     private final CSVUploader loader;
 

@@ -1,14 +1,22 @@
 package TimeTableObjects.EventObjects;
 
-import TimeTableObjects.Events;
+import TimeTableObjects.Interfaces.Reconstructable;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * Task is a reminder Events object.
  */
-public class Task extends Events {
+public class Task implements Reconstructable {
+    private final LocalTime startTime;
+    private final LocalTime endTime;
+    private final String date;
+    private final String term;
+    private String name;
+
     /**
      * Construct a task with time, location and a description.
      * @param theStartTime is the start time of the task.
@@ -20,7 +28,52 @@ public class Task extends Events {
                 LocalTime theEndTime,
                 String theDate,
                 String term) {
-        super(theStartTime, theEndTime, theDate, term);
+        this.startTime = theStartTime;
+        this.endTime = theEndTime;
+        this.date = theDate;
+        this.term = term;
+    }
+
+    /**
+     * If the Events object has an empty string for name attribute,
+     * then set name to: "Unnamed" + Activity/Task/CourseSection
+     */
+    public void nameIt(){
+        this.setName("Unnamed" + this.getClass().getSimpleName());
+    }
+
+    /**
+     * Add to the name of the event
+     *
+     * @param info is going to be added to the name of the Events object
+     */
+    public void addToName(String info) {
+        this.name += info;
+    }
+
+    /**
+     * Set the name for the event.
+     *
+     * @param name is going to be the name of the Events object
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Get the name of the object
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTerm() {
+        return term;
     }
 
     /**
@@ -43,7 +96,7 @@ public class Task extends Events {
         if (this.getName().equals("")) {
             return "N/A";
         }
-        else{
+        else {
             return this.getName();
         }
     }

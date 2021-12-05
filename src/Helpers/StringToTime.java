@@ -2,6 +2,9 @@ package Helpers;
 
 import java.time.LocalTime;
 
+/**
+ * TODO DELETE THIS SENTENCE
+ */
 public class StringToTime {
     /** Turns a string in the format "13:00PM" to 13:00:00
      *

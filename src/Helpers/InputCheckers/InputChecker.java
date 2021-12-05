@@ -3,6 +3,8 @@ package Helpers.InputCheckers;
 import java.util.Scanner;
 
 /**
+ * TODO DELETE THIS SENTENCE
+ *
  * A helper class to help check the validity of user inputs.
  *
  * For a class to use this, they must implement a predicate object. It is

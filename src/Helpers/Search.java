@@ -1,6 +1,8 @@
 package Helpers;
 
 /**
+ * TODO DELETE THIS SENTENCE
+ *
  * A helper class that stores array search algorithms, such as Binary Search.
  */
 public class Search {

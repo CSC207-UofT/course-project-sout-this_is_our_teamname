@@ -7,6 +7,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * This is a specific time interval of a specific section for a course.
  *
  * === Private Attributes ===

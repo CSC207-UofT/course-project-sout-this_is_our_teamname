@@ -12,6 +12,8 @@ import java.util.LinkedHashMap;
 
 
 /**
+ * TODO REMOVE THIS SENTENCE!!!
+ *
  * An UserInterface class
  * It sets the DatabaseController.
  *
@@ -74,7 +76,9 @@ public class UserInterface {
      * A predicate to determine if the command is a valid input
      */
     private static class isValidCommand extends Predicate {
+
         private final HashMap<String, String> allowed;
+
         public isValidCommand(HashMap<String, String> values){
             this.allowed = values;
         }

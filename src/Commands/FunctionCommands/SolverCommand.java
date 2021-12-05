@@ -10,6 +10,8 @@ import TimeTableObjects.Course;
 import java.util.*;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * A command to solve a TimeTable
  * === Private Attributes ===
  * dataSource: The source where the data is from.
