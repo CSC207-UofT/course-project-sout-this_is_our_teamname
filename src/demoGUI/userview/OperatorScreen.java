@@ -27,8 +27,8 @@ public class OperatorScreen extends AbstractScreen{
 
     OperatorScreenHandler operatorScreenHandler;
 
-    public OperatorScreen() {
-        super("Settings");
+    public OperatorScreen(TimeTableScreen screen) {
+        super("Settings", screen);
         //this.operator = operator;
         operatorScreenHandler = new OperatorScreenHandler(this);
 

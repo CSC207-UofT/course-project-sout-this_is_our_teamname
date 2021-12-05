@@ -40,7 +40,8 @@ public class MainMenuController implements ActionListener {
     }
 
     private void openOperator(){
-        new OperatorScreen();
+        TimeTableScreen screen = new TimeTableScreen();
+        new OperatorScreen(screen);
         mainMenu.dispose();
     }
 }

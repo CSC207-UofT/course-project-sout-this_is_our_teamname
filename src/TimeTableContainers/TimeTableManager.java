@@ -10,12 +10,12 @@ import java.util.*;
 
 
 /**
- * A manager that manages and holds different timetables.
+ * aA manager that manages and holds different timetables.
  * === Private Attributes ===
  * timetables contains different timetables as values and their corresponding names as keys.
  */
 public class TimeTableManager {
-    private final HashMap<String, TimeTable> timetables;
+    private HashMap<String, TimeTable> timetables;
 
     /**
      * Creates a new TimeTableManager with no timetables.
@@ -62,32 +62,39 @@ public class TimeTableManager {
      * Get an event from the user interface and schedule it to the corresponding timetable(s).
      *
      * @param event an Events passed from user interface
+     *
+     * @return true if there is a conflict, vice versa
      */
     public boolean hasConflicts(Events event){
         // Some Constants
         int TERM = 0;
         int YEAR = 1;
-
         String timeTableName = event.getTerm();
+
         String[] splitTImeTableName = timeTableName.split("\\s+");
 
         // Since the format is Term Year, the term is at index 0 and year index 1
         String term = splitTImeTableName[TERM];
         String year = splitTImeTableName[YEAR];
+        if (timetables.containsKey(term)){
+            // If we want to schedule a year event, we want every term in that year
+            // get scheduled.
 
-        // If we want to schedule a year event, we want every term in that year
-        // get scheduled.
-        if (term.equals(Constants.YEAR)) {
-            boolean theFall =
-                    this.getTimetable(Constants.FALL + " " + year).checkConflicts(event);
-            boolean theWinter =
-                    this.getTimetable(Constants.WINTER + " " + year).checkConflicts(event);
-            return theFall || theWinter;
+            if (term.equals(Constants.YEAR)) {
+                boolean theFall =
+                        this.getTimetable(Constants.FALL + " " + year).checkConflicts(event);
+                boolean theWinter =
+                        this.getTimetable(Constants.WINTER + " " + year).checkConflicts(event);
+                return theFall && theWinter;
+            }
+            // For all other events, schedule it in the proper timetable. Return
+            // true if successful.
+            else {
+                return this.getTimetable(timeTableName).checkConflicts(event);
+            }
         }
-        // For all other events, schedule it in the proper timetable. Return
-        // true if successful.
         else {
-            return this.getTimetable(timeTableName).checkConflicts(event);
+            return false;
         }
     }
 
@@ -136,7 +143,7 @@ public class TimeTableManager {
     }
 
     //============================ Getters =====================================
-
+//TODO better name for this getter, not just terms, names instead
     /**
      * Get the terms of the timetables
      *
@@ -173,6 +180,17 @@ public class TimeTableManager {
             timetables.put(name, new TimeTable());
         }
         return timetables.get(name);
+    }
+
+    public TimeTableManager get_copy(){
+        TimeTableManager copy = new TimeTableManager();
+        copy.setTimetables(this.timetables);
+        return copy;
+    }
+
+    public void setTimetables(HashMap<String, TimeTable> other){
+        // To prevent aliasing
+        this.timetables = new HashMap<>(other);
     }
 
     /**

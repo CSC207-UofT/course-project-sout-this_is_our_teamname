@@ -15,6 +15,7 @@ import Commands.FunctionCommands.DownloadDataCommand;
 import Commands.FunctionCommands.LoadDataCommand;
 import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
+import demoGUI.GUIcommands.GUIGetAllTimeTablesCommand;
 import demoGUI.GUIcommands.GUIMakeCourseCommand;
 import demoGUI.GUIcommands.GUIMakeEventCommand;
 import Helpers.Constants;
@@ -152,7 +153,7 @@ public class CommandFactory {
             case Constants.REMOVE_EVENT:
                 return new RemoveEventCommand(courseManager);
             case Constants.GET_ALL_TIMETABLE:
-                return new GetAllTimeTablesCommand(courseManager);
+                return new GUIGetAllTimeTablesCommand(screen);
             case Constants.SOLVE_TIMETABLE:
                 return new SolverCommand(courseManager, dataSource);
             case Constants.ADD_TIMETABLE:

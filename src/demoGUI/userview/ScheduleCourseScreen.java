@@ -36,8 +36,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
 
     ScheduleCourseHandler scheduleCourseHandler;
 
-    public ScheduleCourseScreen() {
-        super("Schedule Course");
+    public ScheduleCourseScreen(TimeTableScreen screen) {
+        super("Schedule Course", screen);
         scheduleCourseHandler = new ScheduleCourseHandler(this);
         Container contentPane = getContentPane();
 
@@ -180,7 +180,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
     }
 
     public static void main(String[] args) {
-        new ScheduleCourseScreen();
+        TimeTableScreen screen = new TimeTableScreen();
+        new ScheduleCourseScreen(screen);
 
     }
 

@@ -20,8 +20,8 @@ public class SaveScreen extends AbstractScreen{
 
     SaveScreenHandler savescreenhandler;
 
-    public SaveScreen() {
-        super("Save");
+    public SaveScreen(TimeTableScreen screen) {
+        super("Save", screen);
 
         savescreenhandler = new SaveScreenHandler(this);
 
@@ -92,7 +92,8 @@ public class SaveScreen extends AbstractScreen{
     public String getYearString() {return yearTxt.getText();}
 
     public static void main(String[] args) {
-        new SaveScreen();
+        TimeTableScreen screen = new TimeTableScreen();
+        new SaveScreen(screen);
 
     }
 }

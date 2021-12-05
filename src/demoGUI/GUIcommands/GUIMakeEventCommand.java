@@ -36,6 +36,7 @@ public class GUIMakeEventCommand implements Command {
     final String LOCATION = "Location";
     final String DATE = "Date";
     final String TERM = "Term";
+    final String YEAR = "Year";
     final String TYPE = "Type";
     final String DESCRIPTION = "description";
 
@@ -67,23 +68,16 @@ public class GUIMakeEventCommand implements Command {
                     responses.get(LOCATION),
                     responses.get(DATE),
                     responses.get(TERM),
+                    responses.get(YEAR),
                     responses.get(TYPE),
                     responses.get(DESCRIPTION));
 
 
             assert toSchedule != null;
             TimeTableManager manager = scheduleEventScreen.getController().getFactory().getCourseManager();
-            System.out.println(manager.toString());
-            boolean bool1 = manager.hasConflicts(toSchedule);
-            System.out.println(bool1);
-            System.out.println("if");
             if (!manager.hasConflicts(toSchedule)){
-                System.out.println("if not");
                 scheduledObject = toSchedule;
-                System.out.println("to be scheduled");
-                boolean bool = manager.schedule(toSchedule);
-                System.out.println(bool);
-                System.out.println(manager.toString());
+                manager.schedule(toSchedule);
                 running = false;
             }
             else {
@@ -107,6 +101,7 @@ public class GUIMakeEventCommand implements Command {
         prompts.put(LOCATION,scheduleEventScreen.getLocations());
         prompts.put(DATE,scheduleEventScreen.getDate());
         prompts.put(TERM,scheduleEventScreen.getTerm());
+        prompts.put(YEAR, scheduleEventScreen.getYear());
         prompts.put(TYPE,scheduleEventScreen.getEventType());
         prompts.put(DESCRIPTION,scheduleEventScreen.getDescription());
 ;
@@ -139,6 +134,7 @@ public class GUIMakeEventCommand implements Command {
      * @param theLocation the location
      * @param theDate the date
      * @param term the term
+     * @param year the year
      * @param type the type of object
      * @return event "cast" to the correct type.
      */
@@ -148,12 +144,14 @@ public class GUIMakeEventCommand implements Command {
                                                    String theLocation,
                                                    String theDate,
                                                    String term,
+                                                   String year,
                                                    String type,
                                                    String description) {
         // Creates the Activity
         switch (type){
             case Constants.ACTIVITY:
-                Activity activity = new Activity(startTime, endTime, theDate, term, description);
+                String theTerm = term + " " + year;
+                Activity activity = new Activity(startTime, endTime, theDate, theTerm, description);
                 activity.setName(name);
                 return activity;
 
