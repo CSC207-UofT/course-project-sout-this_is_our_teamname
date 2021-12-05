@@ -1,12 +1,12 @@
-package Commands.CreationCommands;
+package demoGUI.GUIcommands;
 
 import Commands.NeedsCoursesCommand;
 import DataGetting.CourseGetter;
+import Helpers.InputCheckers.InputChecker;
+import Helpers.InputCheckers.Predicate;
+import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
-import Helpers.InputCheckers.Predicate;
-import Helpers.InputCheckers.InputChecker;
-import TimeTableContainers.TimeTableManager;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -18,7 +18,7 @@ import java.util.LinkedHashMap;
  * dataSource: The source where the data is from.
  * manager: The manager that will eventually schedule the object
  */
-public class MakeCourseCommand extends NeedsCoursesCommand {
+public class GUIMakeCourseCommand extends NeedsCoursesCommand {
     private final ArrayList<Course> scheduledCourse;
     private final CourseGetter dataSource;
     private final TimeTableManager manager;
@@ -29,7 +29,7 @@ public class MakeCourseCommand extends NeedsCoursesCommand {
      * @param sendTo the Manager to send to
      * @param dataSource the Source of the data of the course
      */
-    public MakeCourseCommand(TimeTableManager sendTo, CourseGetter dataSource){
+    public GUIMakeCourseCommand(TimeTableManager sendTo, CourseGetter dataSource){
         this.manager = sendTo;
         this.dataSource = dataSource;
         this.scheduledCourse = new ArrayList<>();
@@ -143,7 +143,7 @@ public class MakeCourseCommand extends NeedsCoursesCommand {
         for (Course course : this.scheduledCourse){
             ArrayList<CourseSection> conflictCheckSections = course.split();
             for (CourseSection sectionOfCourse : conflictCheckSections){
-                if (manager.hasConflicts(sectionOfCourse)){
+                if (!manager.hasConflicts(sectionOfCourse)){
                     sections.add(sectionOfCourse);
                 } else {
                     return true;
