@@ -2,12 +2,10 @@ package TimeTableContainers;
 
 import Helpers.Constants;
 import TimeTableObjects.EventObjects.CourseSection;
-import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
 
 import java.util.ArrayList;
 
-// Importing HashMap class
 import java.util.*;
 
 
@@ -81,58 +79,16 @@ public class TimeTableManager {
         // get scheduled.
         if (term.equals(Constants.YEAR)) {
             boolean theFall =
-                    this.getTimetable(Constants.FALL + " " + year).hasConflicts(event);
+                    this.getTimetable(Constants.FALL + " " + year).checkConflicts(event);
             boolean theWinter =
-                    this.getTimetable(Constants.WINTER + " " + year).hasConflicts(event);
+                    this.getTimetable(Constants.WINTER + " " + year).checkConflicts(event);
             return theFall || theWinter;
         }
         // For all other events, schedule it in the proper timetable. Return
         // true if successful.
         else {
-            return this.getTimetable(timeTableName).hasConflicts(event);
+            return this.getTimetable(timeTableName).checkConflicts(event);
         }
-    }
-
-    /**
-     * Reformats a given timetable from a hashmap of Events objects to a
-     * hashmap of strings.
-     *
-     * - The keys are the weekdays.
-     * - The value is an arraylist of arraylists of strings.
-     * - The outer-layer of the arraylist contains 25 elements, index 0 to 23
-     *      corresponds to hours of the day,
-     * - each hour contains an arraylist of strings representing the
-     *      corresponding Event object scheduled in the timetable
-     * - index 24 contains an arraylist of task objects which are all day
-     * events.
-     *
-     *  TODO This class is never used
-     *
-     * @param timetable is a timetable object
-     * @return hashmap of strings representation of the  given timetable.
-     */
-    public LinkedHashMap<String, ArrayList<ArrayList<String>>> reformat(TimeTable timetable) {
-        // creates the value of hashmap: hoursOfDay is an empty list with 24
-        // null elements
-        ArrayList<ArrayList<String>> hoursOfDay = new ArrayList<>(24);
-        for (int i = 0; i < 25; i++) {
-            hoursOfDay.add(i, null);
-        }
-        //Creates the hashmap with hoursOfDay as values (not aliased).
-        LinkedHashMap<String, ArrayList<ArrayList<String>>> stringCalendar = new LinkedHashMap<>() {{
-            put(Constants.MONDAY, new ArrayList<>(hoursOfDay));
-            put(Constants.TUESDAY, new ArrayList<>(hoursOfDay));
-            put(Constants.WEDNESDAY, new ArrayList<>(hoursOfDay));
-            put(Constants.THURSDAY, new ArrayList<>(hoursOfDay));
-            put(Constants.FRIDAY, new ArrayList<>(hoursOfDay));
-            put(Constants.SATURDAY, new ArrayList<>(hoursOfDay));
-            put(Constants.SUNDAY, new ArrayList<>(hoursOfDay));
-        }};
-        //add string representations of non-Task Events objects to stringCalendar
-        reformatNonTaskEvents(timetable, stringCalendar);
-        //add string representations of Task objects to stringCalendar
-        reformatTaskEvents(timetable, stringCalendar);
-        return stringCalendar;
     }
 
     /**
@@ -166,65 +122,17 @@ public class TimeTableManager {
         }
     }
 
-    //============================ Helpers =====================================
-
     /**
-     * A helper for the reformat method, uses a TimeTable (linkedhashmap of Events objectrs) to add
-     * string representations of Task object to a LinkedHashmap
+     * Presents the TimeTableManager in string
      *
-     * @param timetable is a TimeTable object filled with Task object
-     * @param calendar  is a LinkedHashmap waiting to be filled with string representations of Task object
+     * @return a string representation of the TimeTableManager
      */
-    private void reformatTaskEvents(TimeTable timetable, LinkedHashMap<String, ArrayList<ArrayList<String>>> calendar) {
-        LinkedHashMap<String, ArrayList<Task>> taskSchedule =
-                timetable.getTaskCalendar();
-        Set<String> taskKeys = taskSchedule.keySet();
-        //iterate through taskCalendar for Task objects.
-        //iterate through weekdays.
-        for (String key : taskKeys) {
-            ArrayList<Task> reminderList = taskSchedule.get(key);
-            // finds task objs in taskList if it's not empty
-            if (!reminderList.isEmpty()) {
-                // initialize the arraylist in the appropriate calendar date to store task strings.
-                ArrayList<String> emptyList = new ArrayList<>();
-                calendar.get(key).set(24, emptyList);
-                for (Task reminder : reminderList) {
-                    //reconstruct task obj into string
-                    String taskString = reminder.reconstruct().get(0);
-                    //add tasks to calendar
-                    calendar.get(key).get(24).add(taskString);
-                }
-            }
+    public String toString() {
+        LinkedHashMap<String, String> times = new LinkedHashMap<>();
+        for (String term : this.timetables.keySet()) {
+            times.put(term, this.timetables.get(term).toString());
         }
-    }
-
-    /**
-     * A helper for the reformat method, uses a TimeTable (linkedhashmap of Events objectrs) to add
-     * string representations of non-Task Events object to a LinkedHashmap
-     *
-     * @param timetable is a TimeTable object filled with non-Task Events object
-     * @param calendar  is a LinkedHashmap waiting to be filled with string representations of non-Task Events object
-     */
-
-    private void reformatNonTaskEvents(TimeTable timetable, LinkedHashMap<String,
-            ArrayList<ArrayList<String>>> calendar) {
-        //iterate through timetable for event objects.
-        LinkedHashMap<String, Events[]> schedule = timetable.getCalendar();
-        Set<String> keys = schedule.keySet();
-        //iterate through weekdays.
-        for (String key : keys) {
-            Events[] list = schedule.get(key);
-            //iterate through all time intervals in a day.
-            for (int i = 0; i < 24; i++) {
-                // finds an Events obj.
-                if (list[i] != null) {
-                    //reconstruct Event obj
-                    ArrayList<String> newlist = list[i].reconstruct();
-                    //add the reconstructed Event obj to an appropriate location on calendar
-                    calendar.get(list[i].getDate()).set(i, newlist);
-                }
-            }
-        }
+        return times.toString();
     }
 
     //============================ Getters =====================================
@@ -297,7 +205,7 @@ public class TimeTableManager {
      *
      * @return An ArrayList of all the CourseSections in this TimeTable
      */
-    public ArrayList<CourseSection> returnCourses() {
+    public ArrayList<CourseSection> getCourses() {
         ArrayList<CourseSection> courses = new ArrayList<>();
         for (TimeTable timeTable : this.getAllTimeTables())
             for (String day: timeTable.getCalendar().keySet()) {

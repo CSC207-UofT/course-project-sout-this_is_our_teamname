@@ -17,7 +17,6 @@ import java.util.HashMap;
  * deliveryMethod The delivery method for this course section
  * timeLocation The time and corresponding location for this course
  * term The term for this course
- * wait_list Whether the course is waitlisted
  * courseName is the course code
  */
 public class Course implements Splittable<CourseSection> {
@@ -65,6 +64,8 @@ public class Course implements Splittable<CourseSection> {
         this.term = term;
     }
 
+    // ========================= Basic Operations ==============================
+
     /** Split the course into section objects
      *
      * @return A list of section objects
@@ -104,6 +105,25 @@ public class Course implements Splittable<CourseSection> {
     }
 
     /**
+     * Return the details of this Course
+     *
+     * @return the details of this course
+     */
+    public String toString() {
+        StringBuilder CourseString = new StringBuilder();
+        for (Object[] location : this.timeLocation.keySet()){
+            CourseString.append(location[THE_DATE]).append(" ");
+            CourseString.append(location[THE_START]).append(" - ");
+            CourseString.append(location[THE_END]).append(" at ");
+            CourseString.append(timeLocation.get(location)).append(", ");
+        }
+        CourseString.append("with ").append(this.professor);
+        return CourseString.toString();
+    }
+
+    //============================ Getters =====================================
+
+    /**
      * Get the Course code for this Course
      *
      * @return the course code
@@ -120,36 +140,12 @@ public class Course implements Splittable<CourseSection> {
     public String getSectionName() {return this.sectionName; }
 
     /**
-     * Get the times and corresponding locations for this Course
-     *
-     * @return the times and corresponding locations
-     */
-    public HashMap<Object[], String> getTimeLocation() {return this.timeLocation;}
-
-    /**
      * Get the term for this course
      *
      * @return the term of this course
      */
     public String getTerm() {
         return term;
-    }
-
-    /**
-     * Return the details of this Course
-     *
-     * @return the details of this course
-     */
-    public String toString() {
-        StringBuilder CourseString = new StringBuilder();
-        for (Object[] location : this.timeLocation.keySet()){
-            CourseString.append(location[THE_DATE]).append(" ");
-            CourseString.append(location[THE_START]).append(" - ");
-            CourseString.append(location[THE_END]).append(" at ");
-            CourseString.append(timeLocation.get(location)).append(", ");
-        }
-        CourseString.append("with ").append(this.professor);
-        return CourseString.toString();
     }
 
     public static void main(String[] args) {

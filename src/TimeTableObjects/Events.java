@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Events class is a class that can be stored in a TimeTable class.
+ *
  * === Private Attributes ===
  * startTime is the starting time of the event
  * endTime is the ending time of the event
@@ -41,7 +42,7 @@ public abstract class Events implements Reconstructable {
     }
 
     /**
-     * reconstruct takes an Events object and returns an Arraylist based on the non-time/date attributes.
+     * Reconstruct takes an Events object and returns an Arraylist based on the non-time/date attributes.
      */
     public abstract ArrayList<String> reconstruct();
 
