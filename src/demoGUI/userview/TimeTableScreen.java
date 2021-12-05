@@ -56,15 +56,10 @@ public class TimeTableScreen extends JFrame{
     public void refreshTimetableTabs(TimeTableManager manager){
         timeTableTabs.removeAll();
         for (String term : manager.getTerms()) {
-//            JTable table = createEmptyTable();
             JTable table = fillTimeTable(manager.getTimetable(term));
             table.setPreferredScrollableViewportSize(table.getPreferredSize());
             table.setFillsViewportHeight(true);
             timeTableTabs.addTab(term, table);
-//            JComponent panel = new JPanel();
-//            panel.add(fillTimeTable(manager.getTimetable(term)));
-//            timeTableTabs.addTab(term, panel);
-
         }
     }
 
@@ -101,7 +96,7 @@ public class TimeTableScreen extends JFrame{
                 Events event = table.getCalendar().get(day)[i];
                 if (event != null) {
                     int rowIndex = i+1;
-                    jtable.getModel().setValueAt(event.getName() + ": " + event, rowIndex, columnIndex);
+                    jtable.getModel().setValueAt(event, rowIndex, columnIndex);
                 }
             }
         }
