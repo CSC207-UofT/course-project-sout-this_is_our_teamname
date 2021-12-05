@@ -141,6 +141,7 @@ public class TimeTablePuzzle2 {
             for (CourseSection section : course.split()){
                 copy_schedule.schedule(section);
             }
+
             TimeTablePuzzle2 next = new TimeTablePuzzle2(new HashMap<>(courses),
                     copy_schedule,
                     new ArrayList<>(this.unscheduled),
