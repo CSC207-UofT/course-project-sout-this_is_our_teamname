@@ -1,6 +1,7 @@
 package TimeTableStuffTests;
 
 import Helpers.Constants;
+import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.CourseSection;
@@ -79,5 +80,28 @@ class TimeTableManagerTest {
         manager.addTimeTable("Summer 2021");
         manager.addTimeTable("Fall 2021");
         assertEquals(3, manager.getAllTimeTables().length);
+    }
+
+    @Test
+    public void hasConflict() {
+        LocalTime time9 = LocalTime.of(9, 0, 0);
+        LocalTime time10 = LocalTime.of(10, 0, 0);
+
+        CourseSection lecture1 = new CourseSection("MAT257", time9, time10, Constants.MONDAY,
+                (Constants.YEAR + " 2021"), "LEC 0101");
+        String description = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
+                + " session" + " at " + "SS100";
+        lecture1.setDescription(description);
+
+        CourseSection lecture2 = new CourseSection("MAT157", time9, time10, Constants.MONDAY,
+                (Constants.FALL + " 2021"), "LEC 0201");
+        String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
+                + " session" + " at " + "SS101";
+
+        TimeTableManager manager = new TimeTableManager();
+        manager.addTimeTable(Constants.FALL + " 2021");
+        manager.addTimeTable(Constants.WINTER + " 2021");
+        manager.schedule(lecture1);
+        assertFalse(manager.hasConflicts(lecture2));
     }
 }

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * A DataGetter Superclass that connects to external sources to retrieve data
  *
  * === Private Attributes ===

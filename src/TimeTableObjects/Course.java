@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * This is a course section (LEC/TUT/PRA) chosen by the user
  *
  * === Private Attributes ===

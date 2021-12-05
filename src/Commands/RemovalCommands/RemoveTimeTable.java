@@ -7,6 +7,8 @@ import TimeTableContainers.TimeTableManager;
 import java.util.Set;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * A command to remove a TimeTable Object.
  *
  * === Private Attributes ===

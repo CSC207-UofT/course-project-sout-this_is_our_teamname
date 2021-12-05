@@ -2,6 +2,9 @@ package Helpers;
 
 import java.util.LinkedHashMap;
 
+/**
+ * TODO DELETE THIS SENTENCE
+ */
 public class Reformatters {
     /**
      * Returns a hashmap of the entries in the string array strings with

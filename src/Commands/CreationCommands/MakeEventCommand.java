@@ -18,6 +18,8 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * A command to create a Non-Course Object.
  *
  * === Private Attributes ===
@@ -37,7 +39,7 @@ public class MakeEventCommand implements Command {
     static final String YEAR = "Year";
 
     private final TimeTableManager manager;
-    private Events scheduledObject;
+    private Object scheduledObject;
 
     /**
      * A constructor to set the command
@@ -58,7 +60,7 @@ public class MakeEventCommand implements Command {
         while (running) {
             HashMap<String, String> responses = promptUser();
 
-            Events toSchedule = getCorrectTimeTableObject(
+            Object toSchedule = getCorrectTimeTableObject(
                     StringToTime.makeTime(responses.get(START_TIME)),
                     StringToTime.makeTime(responses.get(END_TIME)),
                     responses.get(LOCATION),
@@ -67,13 +69,20 @@ public class MakeEventCommand implements Command {
                     responses.get(YEAR),
                     responses.get(TYPE));
 
-            assert toSchedule != null;
-            if (!manager.hasConflicts(toSchedule)){
-                scheduledObject = toSchedule;
-                manager.schedule(toSchedule);
-                running = false;
+            assert toSchedule instanceof Events || toSchedule instanceof Task;
+            if (toSchedule instanceof Events){
+                Events obj = (Events) toSchedule;
+                if (!manager.hasConflicts(obj)){
+                    manager.schedule(obj);
+                    scheduledObject = obj;
+                    running = false;
+                } else {
+                    System.out.println("Conflict Found. Try again!");
+                }
             } else {
-                System.out.println("Conflict Found. Try again!");
+                Task obj = (Task) toSchedule;
+                manager.schedule(obj);
+                running = false;
             }
         }
 
@@ -141,16 +150,17 @@ public class MakeEventCommand implements Command {
      * @param theLocation the location
      * @param theDate the date
      * @param term the term
+     * @param year the year
      * @param type the type of object
      * @return event "cast" to the correct type.
      */
-    public static Events getCorrectTimeTableObject(LocalTime startTime,
-                                                   LocalTime endTime,
-                                                   String theLocation,
-                                                   String theDate,
-                                                   String term,
-                                                   String year,
-                                                   String type) {
+    public static Object getCorrectTimeTableObject(LocalTime startTime,
+                                                         LocalTime endTime,
+                                                         String theLocation,
+                                                         String theDate,
+                                                         String term,
+                                                         String year,
+                                                         String type) {
         // Creates the Activity
         switch (type){
             case Constants.ACTIVITY:
