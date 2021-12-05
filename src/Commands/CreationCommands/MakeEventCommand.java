@@ -27,13 +27,13 @@ import java.util.regex.Pattern;
  */
 public class MakeEventCommand implements Command {
     // Some Constants:
-    final String NAME = "Name";
-    final String START_TIME = "Start Time";
-    final String END_TIME = "End Time";
-    final String LOCATION = "Location";
-    final String DATE = "Date";
-    final String TERM = "Term";
-    final String TYPE = "Type";
+    static final String NAME = "Name";
+    static final String START_TIME = "Start Time";
+    static final String END_TIME = "End Time";
+    static final String LOCATION = "Location";
+    static final String DATE = "Date";
+    static final String TERM = "Term";
+    static final String TYPE = "Type";
     static final String YEAR = "Year";
 
     private final TimeTableManager manager;
