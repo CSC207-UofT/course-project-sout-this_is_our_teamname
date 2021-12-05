@@ -1,6 +1,9 @@
 package demoGUI.userview;
 
 import Helpers.Constants;
+import TimeTableContainers.TimeTable;
+import TimeTableContainers.TimeTableManager;
+import TimeTableObjects.Events;
 import demoGUI.handler.TimeTableScreenController;
 import demoGUI.util.DimensionUtil;
 import java.util.Arrays;
@@ -10,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.net.URL;
+import java.time.LocalTime;
+import java.util.Locale;
 
 public class TimeTableScreen extends JFrame{
     private JPanel TimeTableRootPanel;
@@ -20,10 +25,11 @@ public class TimeTableScreen extends JFrame{
     private JButton saveButton;
     private JButton loadButton;
     private JButton settingsButton;
-    private JPanel TitilePanel;
+    private JPanel TitlePanel;
     private JLabel titleLable;
     private JTable timeTable;
     private JScrollPane TimeTableScrollPane;
+    private JTabbedPane timeTableTabs;
     TimeTableScreenController timeTableScreenController;
 
     public TimeTableScreen() {
@@ -74,7 +80,7 @@ public class TimeTableScreen extends JFrame{
             jtable.getModel().setValueAt(day, 0, i+1);
         }
         //set the hour column width
-        TableColumnModel columns = timeTable.getColumnModel();
+        TableColumnModel columns = jtable.getColumnModel();
         columns.getColumn(0).setPreferredWidth(20);
         //Center the text on all columns
         DefaultTableCellRenderer centreRenderer = new DefaultTableCellRenderer();

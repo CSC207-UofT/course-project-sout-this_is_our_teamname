@@ -71,7 +71,7 @@ public class TimeTable {
      * Check if there is a conflict in the timetable with given activity.
      *
      * @param activity the given activity
-     * @return true if there is no conflict, false otherwise
+     * @return true if there is a conflict, false otherwise
      */
     public boolean checkConflicts(Events activity) {
         // Get all events on that day of the week

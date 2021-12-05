@@ -26,10 +26,13 @@ public class ScheduleEventHandler implements ActionListener {
         }
         else if ("Schedule".equals(text)) {
             try{
+                //schedule events
                 scheduleEventScreen.getController().getFactory().setScreen(scheduleEventScreen);
                 scheduleEventScreen.getController().runCommand(Constants.SCHEDULE_EVENT);
-                System.out.println(scheduleEventScreen.getController().getFactory().getCourseManager().toString());
             } catch (Exception ignore){}
+            //refresh timetables
+            scheduleEventScreen.getScreen().refreshTimetableTabs(
+                    scheduleEventScreen.getController().getFactory().getCourseManager());
             scheduleEventScreen.dispose();
 
         }

@@ -118,6 +118,8 @@ public class ScheduleEventScreen extends AbstractScreen{
         centerPanel.add(dayBox);
         centerPanel.add(term);
         centerPanel.add(termBox);
+        centerPanel.add(year);
+        centerPanel.add(yearTxt);
         centerPanel.add(type);
         centerPanel.add(typeBox);
         centerPanel.add(description);
@@ -207,6 +209,8 @@ public class ScheduleEventScreen extends AbstractScreen{
     public String getTerm(){
         return Objects.requireNonNull(termBox.getSelectedItem()).toString();
     }
+
+    public String getYear() {return Objects.requireNonNull(yearTxt.getText());}
 
     public String getEventType() {
         return Objects.requireNonNull(typeBox.getSelectedItem()).toString();
