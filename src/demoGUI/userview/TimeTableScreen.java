@@ -68,7 +68,7 @@ public class TimeTableScreen extends JFrame{
         }
     }
 
-//TODO conflict window pop up
+//TODO needs window pop up when there is a conflict
     private JTable createEmptyTable(){
         JTable jtable = new JTable(25, 8);
         for (int i=0; i<=23; i++) {
@@ -118,9 +118,9 @@ public class TimeTableScreen extends JFrame{
         setBounds(bounds);
 
         // Full screen
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setLocationRelativeTo(null);
-//        setSize(1200, 600);
+//        setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        setLocationRelativeTo(null);
+        setSize(1200, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(true);
         setVisible(true);
