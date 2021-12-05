@@ -78,14 +78,15 @@ public class CommandFactory {
      * @return The correct command object
      * @throws InvalidInputException If the inputCommand is invalid, throw this!
      */
+    //TODO change name cmdCommand
     public Command getCommand(String inputCommand) throws InvalidInputException {
         assert this.dataSource != null && this.courseManager != null;
 
         if (controller.getCurrentUI().equals("cmd")) {
-            return getCmdCommand(inputCommand);
+            return getCommand4CommandLine(inputCommand);
         }
         else {
-            return getGUICommand(inputCommand);
+            return getCommand4GUI(inputCommand);
         }
     }
 
@@ -101,7 +102,7 @@ public class CommandFactory {
      * @return The correct command object
      * @throws InvalidInputException If the inputCommand is invalid, throw this!
      */
-    private Command getCmdCommand(String inputCommand) throws InvalidInputException {
+    private Command getCommand4CommandLine(String inputCommand) throws InvalidInputException {
         switch (inputCommand) {
             case Constants.SCHEDULE_COURSE:
                 return new MakeCourseCommand(courseManager, dataSource);
@@ -142,7 +143,7 @@ public class CommandFactory {
      * @return The correct command object
      * @throws InvalidInputException If the inputCommand is invalid, throw this!
      */
-    private Command getGUICommand(String inputCommand) throws InvalidInputException {
+    private Command getCommand4GUI(String inputCommand) throws InvalidInputException {
         switch (inputCommand) {
             case Constants.SCHEDULE_COURSE:
                 return new GUIMakeCourseCommand(courseManager, dataSource);
