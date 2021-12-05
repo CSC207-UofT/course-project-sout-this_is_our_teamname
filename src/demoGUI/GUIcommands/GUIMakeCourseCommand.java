@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
+ * TODO DELETE THIS SENTENCE
+ *
  * A command to create a Course Object.
  *
  * === Private Attributes ===

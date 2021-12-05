@@ -8,6 +8,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
  /**
+  * TODO REMOVE THIS SENTENCE
+  *
   * Activity is an extracurricular or social Events object.
   *
   * === Private Attributes ===

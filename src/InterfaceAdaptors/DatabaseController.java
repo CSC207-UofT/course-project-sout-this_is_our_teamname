@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.*;
 
 /**
+ * TODO REMOVE THIS SENTENCE!!!
+ *
  * A database controller class that serves as the Invoker in the command
  * pattern. It sets the command and executes them.
  *
@@ -242,7 +244,11 @@ public class DatabaseController {
         return this.Factory.getAllowedFunctions();
     }
 
-    //TODO: add docstring
+    /**
+     * Get the dataSource from the factory
+     *
+     * @return a string representation of the datasources in the factory
+     */
     public String getDataSource(){
         return this.Factory.getDataSource().toString();
     }

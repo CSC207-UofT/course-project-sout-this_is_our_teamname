@@ -7,6 +7,8 @@ import TimeTableContainers.TimeTableManager;
 import java.util.*;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * A command to add a TimeTable Object.
  *
  * === Private Attributes ===

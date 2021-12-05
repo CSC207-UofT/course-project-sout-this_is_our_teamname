@@ -1,7 +1,5 @@
 package TimeTableContainers;
 
-import TimeTableObjects.EventObjects.Activity;
-import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
 import Helpers.Constants;
@@ -51,7 +49,8 @@ public class TimeTable {
         if (event.getName().isEmpty()) {
             event.nameIt();
         }
-        if (!checkConflicts(event) && (event instanceof Activity || event instanceof CourseSection)) {
+
+        if (!hasConflicts(event)) {
             int start = event.getStartTime().getHour();
             int end = event.getEndTime().getHour();
 
@@ -60,41 +59,34 @@ public class TimeTable {
                 this.calendar.get(event.getDate())[i] = event;
             }
             return true;
-        } else if (!checkConflicts(event) && event instanceof Task) {
-            this.taskCalendar.get(event.getDate()).add((Task) event);
-            return true;
         }
         return false;
     }
 
+    public boolean schedule(Task task){
+        this.taskCalendar.get(task.getDate()).add(task);
+        return true;
+    }
+
     /**
-     * Check if there is a conflict in the timetable with given activity.
+     * Check if there is a conflict in the timetable with given event.
      *
-     * @param activity the given activity
+     * @param event the given event
      * @return true if there is a conflict, false otherwise
      */
-    public boolean hasConflicts(Events activity) {
+    public boolean hasConflicts(Events event) {
         // Get all events on that day of the week
-        Events[] activitiesOnDay = calendar.get(activity.getDate());
+        Events[] eventsOnDay = calendar.get(event.getDate());
 
-        int start = activity.getStartTime().getHour();
-        int end = activity.getEndTime().getHour();
+        int start = event.getStartTime().getHour();
+        int end = event.getEndTime().getHour();
 
         for (int i = start; i < end; i++) {
-            if (activitiesOnDay[i] != null) {
+            if (eventsOnDay[i] != null) {
                 return true;
             }
         }
         return false;
-    }
-
-    /**
-     * Adds a Task object to the taskCalendar
-     *
-     * @param reminder is a Task object
-     */
-    public void addTasks(Task reminder) {
-        this.taskCalendar.get(reminder.getDate()).add(reminder);
     }
 
     /**

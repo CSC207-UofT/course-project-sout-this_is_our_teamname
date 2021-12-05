@@ -9,6 +9,8 @@ import Helpers.InputCheckers.Predicate;
 
 
 /**
+ * TODO REMOVE THIS SENTENCE!!!
+ *
  * A InterfaceFacade class that serves as the Invoker in the facade
  * pattern. It sets the UserInterface and OperatorInterface and executes them according to input.
  *
@@ -49,6 +51,7 @@ public class InterfaceFacade {
             } else if (role.equals(Constants.OPERATOR)){
                 this.operatorInterface.run();
             }
+
             InputChecker requestContinue =
                     new InputChecker("Do you want to exit? (true/false):",
                             new isValidBoolean());

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * A Puzzle class for TimeTable Manager, schedules the given courses in the appropriate timetables
  * without any conflicts
  *

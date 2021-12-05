@@ -5,6 +5,8 @@ import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * A command object to get all the timetables
  */
 public class GetAllTimeTablesCommand implements Command {

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * A command to create a Course Object.
  *
  * === Private Attributes ===
@@ -40,7 +42,6 @@ public class MakeCourseCommand extends NeedsCoursesCommand {
      */
     @Override
     public void execute() {
-        // Clears the dataSource so it doesn't build up.
         dataSource.clearData();
 
         LinkedHashMap<String, ArrayList<Course>> course_data = userInputs(dataSource);
@@ -143,7 +144,7 @@ public class MakeCourseCommand extends NeedsCoursesCommand {
         for (Course course : this.scheduledCourse){
             ArrayList<CourseSection> conflictCheckSections = course.split();
             for (CourseSection sectionOfCourse : conflictCheckSections){
-                if (manager.hasConflicts(sectionOfCourse)){
+                if (!manager.hasConflicts(sectionOfCourse)){
                     sections.add(sectionOfCourse);
                 } else {
                     return true;
