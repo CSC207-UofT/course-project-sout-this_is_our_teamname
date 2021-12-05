@@ -82,7 +82,7 @@ public class TimeTableManager {
                     this.getTimetable(Constants.FALL + " " + year).checkConflicts(event);
             boolean theWinter =
                     this.getTimetable(Constants.WINTER + " " + year).checkConflicts(event);
-            return theFall || theWinter;
+            return theFall && theWinter;
         }
         // For all other events, schedule it in the proper timetable. Return
         // true if successful.
@@ -173,19 +173,6 @@ public class TimeTableManager {
             timetables.put(name, new TimeTable());
         }
         return timetables.get(name);
-    }
-
-    /**
-     * Presents the TimeTableManager in string
-     *
-     * @return a string representation of the TimeTableManager
-     */
-    public String toString() {
-        LinkedHashMap<String, String> times = new LinkedHashMap<>();
-        for (String term : this.timetables.keySet()) {
-            times.put(term, this.timetables.get(term).toString());
-        }
-        return times.toString();
     }
 
     public TimeTableManager get_copy(){

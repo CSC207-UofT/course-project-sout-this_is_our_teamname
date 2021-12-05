@@ -159,8 +159,8 @@ public class TimeTablePuzzle2 {
      * @param solved a solved TimeTablePuzzle.
      */
     public void schedulePuzzle(TimeTablePuzzle2 solved) {
-        ArrayList<CourseSection> thisCourses = this.manager.returnCourses();
-        ArrayList<CourseSection> otherCourses = solved.getManager().returnCourses();
+        ArrayList<CourseSection> thisCourses = this.manager.getCourses();
+        ArrayList<CourseSection> otherCourses = solved.getManager().getCourses();
 
         ArrayList<CourseSection> difference = new ArrayList<>(otherCourses);
         difference.removeAll(thisCourses);
