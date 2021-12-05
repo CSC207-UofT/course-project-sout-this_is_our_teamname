@@ -76,6 +76,7 @@ public class TimeTableManager {
         // Since the format is Term Year, the term is at index 0 and year index 1
         String term = splitTImeTableName[TERM];
         String year = splitTImeTableName[YEAR];
+      
         if (timetables.containsKey(term)){
             // If we want to schedule a year event, we want every term in that year
             // get scheduled.
@@ -114,7 +115,7 @@ public class TimeTableManager {
     }
 
     /**
-     * Remove an existing TimeTable with the given name. If the timetable doesn't exists,
+     * Remove an existing TimeTable with the given name. If the timetable doesn't exist,
      * create a new one with the given name.
      *
      * @param name the given name of timetable

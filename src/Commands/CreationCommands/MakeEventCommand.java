@@ -68,7 +68,7 @@ public class MakeEventCommand implements Command {
                     responses.get(TYPE));
 
             assert toSchedule != null;
-            if (!manager.hasConflicts(toSchedule)){
+            if (manager.hasConflicts(toSchedule)){
                 scheduledObject = toSchedule;
                 manager.schedule(toSchedule);
                 running = false;
@@ -141,6 +141,7 @@ public class MakeEventCommand implements Command {
      * @param theLocation the location
      * @param theDate the date
      * @param term the term
+     * @param year the year
      * @param type the type of object
      * @return event "cast" to the correct type.
      */

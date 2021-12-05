@@ -73,7 +73,7 @@ public class TimeTable {
      * @param activity the given activity
      * @return true if there is a conflict, false otherwise
      */
-    public boolean checkConflicts(Events activity) {
+    public boolean hasConflicts(Events activity) {
         // Get all events on that day of the week
         Events[] activitiesOnDay = calendar.get(activity.getDate());
 
