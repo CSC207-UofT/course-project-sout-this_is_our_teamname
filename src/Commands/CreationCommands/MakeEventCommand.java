@@ -27,13 +27,13 @@ import java.util.regex.Pattern;
  */
 public class MakeEventCommand implements Command {
     // Some Constants:
-    static final String NAME = "Name";
-    static final String START_TIME = "Start Time";
-    static final String END_TIME = "End Time";
-    static final String LOCATION = "Location";
-    static final String DATE = "Date";
-    static final String TERM = "Term";
-    static final String TYPE = "Type";
+    final String NAME = "Name";
+    final String START_TIME = "Start Time";
+    final String END_TIME = "End Time";
+    final String LOCATION = "Location";
+    final String DATE = "Date";
+    final String TERM = "Term";
+    final String TYPE = "Type";
     static final String YEAR = "Year";
 
     private final TimeTableManager manager;
@@ -68,7 +68,7 @@ public class MakeEventCommand implements Command {
                     responses.get(TYPE));
 
             assert toSchedule != null;
-            if (!manager.hasConflicts(toSchedule)){
+            if (manager.hasConflicts(toSchedule)){
                 scheduledObject = toSchedule;
                 manager.schedule(toSchedule);
                 running = false;
@@ -141,6 +141,7 @@ public class MakeEventCommand implements Command {
      * @param theLocation the location
      * @param theDate the date
      * @param term the term
+     * @param year the year
      * @param type the type of object
      * @return event "cast" to the correct type.
      */

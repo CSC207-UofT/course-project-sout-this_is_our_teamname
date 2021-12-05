@@ -79,15 +79,15 @@ public class TimeTableManager {
         // get scheduled.
         if (term.equals(Constants.YEAR)) {
             boolean theFall =
-                    this.getTimetable(Constants.FALL + " " + year).checkConflicts(event);
+                    this.getTimetable(Constants.FALL + " " + year).hasConflicts(event);
             boolean theWinter =
-                    this.getTimetable(Constants.WINTER + " " + year).checkConflicts(event);
+                    this.getTimetable(Constants.WINTER + " " + year).hasConflicts(event);
             return theFall || theWinter;
         }
         // For all other events, schedule it in the proper timetable. Return
         // true if successful.
         else {
-            return this.getTimetable(timeTableName).checkConflicts(event);
+            return this.getTimetable(timeTableName).hasConflicts(event);
         }
     }
 
@@ -107,7 +107,7 @@ public class TimeTableManager {
     }
 
     /**
-     * Remove an existing TimeTable with the given name. If the timetable doesn't exists,
+     * Remove an existing TimeTable with the given name. If the timetable doesn't exist,
      * create a new one with the given name.
      *
      * @param name the given name of timetable

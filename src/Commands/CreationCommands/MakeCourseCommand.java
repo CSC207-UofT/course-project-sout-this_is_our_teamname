@@ -142,7 +142,7 @@ public class MakeCourseCommand extends NeedsCoursesCommand {
         for (Course course : this.scheduledCourse){
             ArrayList<CourseSection> conflictCheckSections = course.split();
             for (CourseSection sectionOfCourse : conflictCheckSections){
-                if (!manager.hasConflicts(sectionOfCourse)){
+                if (manager.hasConflicts(sectionOfCourse)){
                     sections.add(sectionOfCourse);
                 } else {
                     return true;
