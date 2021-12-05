@@ -27,13 +27,14 @@ import java.util.regex.Pattern;
  */
 public class MakeEventCommand implements Command {
     // Some Constants:
-    final String NAME = "Name";
-    final String START_TIME = "Start Time";
-    final String END_TIME = "End Time";
-    final String LOCATION = "Location";
-    final String DATE = "Date";
-    final String TERM = "Term";
-    final String TYPE = "Type";
+    static final String NAME = "Name";
+    static final String START_TIME = "Start Time";
+    static final String END_TIME = "End Time";
+    static final String LOCATION = "Location";
+    static final String DATE = "Date";
+    static final String TERM = "Term";
+    static final String TYPE = "Type";
+    static final String YEAR = "Year";
 
     private final TimeTableManager manager;
     private Events scheduledObject;
@@ -63,6 +64,7 @@ public class MakeEventCommand implements Command {
                     responses.get(LOCATION),
                     responses.get(DATE),
                     responses.get(TERM),
+                    responses.get(YEAR),
                     responses.get(TYPE));
 
             assert toSchedule != null;
@@ -99,6 +101,8 @@ public class MakeEventCommand implements Command {
                 " Monday, Tuesday, Wednesday, etc.)", new isDate()));
         prompts.put(TERM, new InputChecker("Enter the Term (Fall/Winter)",
                 new isTerm()));
+        prompts.put(YEAR, new InputChecker("Enter the Year (2021/2022):",
+                new isTrivial()));
         prompts.put(TYPE, new InputChecker("Enter the Type of the Object " +
                 "(Activity/Task)", new isTrivial()));
 
@@ -145,16 +149,20 @@ public class MakeEventCommand implements Command {
                                                    String theLocation,
                                                    String theDate,
                                                    String term,
+                                                   String year,
                                                    String type) {
         // Creates the Activity
         switch (type){
             case Constants.ACTIVITY:
                 Scanner descriptionScanner = new Scanner(System.in);
                 System.out.println("Enter Description: ");
-                return new Activity(startTime, endTime, theDate, term,
-                        descriptionScanner.nextLine());
+                String description = descriptionScanner.nextLine();
+
+                return new Activity(startTime, endTime, theDate,
+                        term + " " + year, description);
             case Constants.TASK:
-                Task task = new Task(startTime, endTime, theDate, term);
+                Task task = new Task(startTime, endTime, theDate,
+                        term + " " + year);
                 task.addToName(theLocation);
                 return task;
             // ...
@@ -218,6 +226,21 @@ public class MakeEventCommand implements Command {
         @Override
         public boolean run(String prompt) {
             return prompt.equals("true") || prompt.equals("false");
+        }
+    }
+
+    private static class isYear extends Predicate{
+        @Override
+        public boolean run(String prompt) {
+            if (prompt.length() != 4){
+                return false;
+            }
+            for (char ch : prompt.toCharArray()){
+                if (!Character.isDigit(ch)){
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
