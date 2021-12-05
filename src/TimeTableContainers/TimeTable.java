@@ -51,7 +51,7 @@ public class TimeTable {
         if (event.getName().isEmpty()) {
             event.nameIt();
         }
-        if (checkConflicts(event) && (event instanceof Activity || event instanceof CourseSection)) {
+        if (!checkConflicts(event) && (event instanceof Activity || event instanceof CourseSection)) {
             int start = event.getStartTime().getHour();
             int end = event.getEndTime().getHour();
 
@@ -60,7 +60,7 @@ public class TimeTable {
                 this.calendar.get(event.getDate())[i] = event;
             }
             return true;
-        } else if (checkConflicts(event) && event instanceof Task) {
+        } else if (!checkConflicts(event) && event instanceof Task) {
             this.taskCalendar.get(event.getDate()).add((Task) event);
             return true;
         }
@@ -71,7 +71,7 @@ public class TimeTable {
      * Check if there is a conflict in the timetable with given activity.
      *
      * @param activity the given activity
-     * @return true if there is no conflict, false otherwise
+     * @return true if there is a conflict, false otherwise
      */
     public boolean checkConflicts(Events activity) {
         // Get all events on that day of the week
@@ -82,10 +82,10 @@ public class TimeTable {
 
         for (int i = start; i < end; i++) {
             if (activitiesOnDay[i] != null) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     /**

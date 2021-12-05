@@ -53,6 +53,6 @@ public class Activity extends Events implements Reconstructable {
      */
     @Override
     public String toString() {
-        return this.description;
+        return this.getName() + ": " + this.description;
     }
 }
