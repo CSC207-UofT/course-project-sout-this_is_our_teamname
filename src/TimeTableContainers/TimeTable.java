@@ -13,7 +13,8 @@ import java.util.LinkedHashMap;
 
 
 /**
- * TimeTable class stores all the activities from Monday to Sunday. If there is a conflict when storing a new activity,
+ * aTimeTable class stores all the activities from Monday to Sunday. If there
+ * is a conflict when storing a new activity,
  * it will still be stored, and a conflict warning will be sent back prompting user to take action or ignore it.
  *
  * === Private Attributes ===

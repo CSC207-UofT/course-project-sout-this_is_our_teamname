@@ -12,7 +12,7 @@ import java.util.*;
 
 
 /**
- * A manager that manages and holds different timetables.
+ * aA manager that manages and holds different timetables.
  * === Private Attributes ===
  * timetables contains different timetables as values and their corresponding names as keys.
  */
