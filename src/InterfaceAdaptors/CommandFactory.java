@@ -1,6 +1,7 @@
 package InterfaceAdaptors;
 
-import Commands.FunctionCommands.*;
+import Commands.FunctionCommands.SolverCommand;
+import Commands.FunctionCommands.ExitProgramCommand;
 import DataGetting.CourseGetter;
 import Commands.Command;
 import Commands.CreationCommands.GetAllTimeTablesCommand;
@@ -10,8 +11,16 @@ import Commands.CreationCommands.AddTimeTableCommand;
 import Commands.RemovalCommands.RemoveEventCommand;
 import Commands.RemovalCommands.RemoveTimeTable;
 import Commands.CreationCommands.PrintHistoryCommand;
+import Commands.FunctionCommands.DownloadDataCommand;
+import Commands.FunctionCommands.LoadDataCommand;
 import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
+import demoGUI.GUIcommands.GUIGetAllTimeTablesCommand;
+import demoGUI.GUIcommands.GUIMakeCourseCommand;
+import demoGUI.GUIcommands.GUIMakeEventCommand;
+import Helpers.Constants;
+import demoGUI.userview.AbstractScreen;
+import demoGUI.userview.ScheduleEventScreen;
 
 /**
  * A factory class to create the individual commands of the class.
@@ -24,24 +33,12 @@ import TimeTableContainers.TimeTableManager;
  *  by the OperatorInterface
  */
 public class CommandFactory {
-    private final TimeTableManager courseManager;
+    private TimeTableManager courseManager;
     private CourseGetter dataSource;
     private final DatabaseController controller;
     private String[] allowedFunctions;
+    private AbstractScreen screen;
 
-    // Commands
-    static final String SCHEDULE_COURSE = "Schedule Course";
-    static final String SCHEDULE_EVENT = "Schedule Event";
-    static final String REMOVE_EVENT = "Remove Event";
-    static final String GET_ALL_TIMETABLE = "Show TimeTables";
-    static final String SOLVE_TIMETABLE = "Solve Timetable";
-    static final String ADD_TIMETABLE = "Add Timetable";
-    static final String REMOVE_TIMETABLE = "Remove Timetable";
-    static final String PRINT_HISTORY = "Get History";
-    static final String LOAD_DATA = "Load Data";
-    static final String SAVE_DATA = "Save";
-    static final String DOWNLOAD_TIMETABLE = "Download Timetable";
-    static final String EXIT = "Log Out";
 
     /**
      * Constructor. Sets the TimeTable Manager and DataSource of the file
@@ -55,17 +52,17 @@ public class CommandFactory {
         this.controller = theController;
 
         this.allowedFunctions = new String[]{
-                SCHEDULE_COURSE,
-                SCHEDULE_EVENT,
-                REMOVE_EVENT,
-                LOAD_DATA,
-                DOWNLOAD_TIMETABLE,
-                GET_ALL_TIMETABLE,
-                SOLVE_TIMETABLE,
-                ADD_TIMETABLE,
-                REMOVE_TIMETABLE,
-                PRINT_HISTORY,
-                EXIT
+                Constants.SCHEDULE_COURSE,
+                Constants.SCHEDULE_EVENT,
+                Constants.REMOVE_EVENT,
+                Constants.LOAD_DATA,
+                Constants.DOWNLOAD_TIMETABLE,
+                Constants.GET_ALL_TIMETABLE,
+                Constants.SOLVE_TIMETABLE,
+                Constants.ADD_TIMETABLE,
+                Constants.REMOVE_TIMETABLE,
+                Constants.PRINT_HISTORY,
+                Constants.EXIT
         };
     }
 
@@ -82,31 +79,53 @@ public class CommandFactory {
      * @return The correct command object
      * @throws InvalidInputException If the inputCommand is invalid, throw this!
      */
+    //TODO change name cmdCommand
     public Command getCommand(String inputCommand) throws InvalidInputException {
         assert this.dataSource != null && this.courseManager != null;
 
+        if (controller.getCurrentUI().equals("cmd")) {
+            return getCommand4CommandLine(inputCommand);
+        }
+        else {
+            return getCommand4GUI(inputCommand);
+        }
+    }
+
+
+    // ========================= helper functions ===========================
+    /**
+     * Helper method to return the corresponding command object
+     * to whatever has been inputted by the user in command line. Please see
+     * `DatabaseController` for how the command objects will be used
+     *
+     * @param inputCommand The STRING input command of the user. IT MUST
+     *                     CORRESPOND TO THE STATIC CONSTANTS ABOVE
+     * @return The correct command object
+     * @throws InvalidInputException If the inputCommand is invalid, throw this!
+     */
+    private Command getCommand4CommandLine(String inputCommand) throws InvalidInputException {
         switch (inputCommand) {
-            case SCHEDULE_COURSE:
+            case Constants.SCHEDULE_COURSE:
                 return new MakeCourseCommand(courseManager, dataSource);
-            case SCHEDULE_EVENT:
+            case Constants.SCHEDULE_EVENT:
                 return new MakeEventCommand(courseManager);
-            case REMOVE_EVENT:
+            case Constants.REMOVE_EVENT:
                 return new RemoveEventCommand(courseManager);
-            case GET_ALL_TIMETABLE:
+            case Constants.GET_ALL_TIMETABLE:
                 return new GetAllTimeTablesCommand(courseManager);
-            case SOLVE_TIMETABLE:
+            case Constants.SOLVE_TIMETABLE:
                 return new SolverCommand(courseManager, dataSource);
-            case ADD_TIMETABLE:
+            case Constants.ADD_TIMETABLE:
                 return new AddTimeTableCommand(courseManager);
-            case REMOVE_TIMETABLE:
+            case Constants.REMOVE_TIMETABLE:
                 return new RemoveTimeTable(courseManager);
-            case PRINT_HISTORY:
+            case Constants.PRINT_HISTORY:
                 return new PrintHistoryCommand(controller);
-            case LOAD_DATA:
+            case Constants.LOAD_DATA:
                 return new LoadDataCommand();
-            case DOWNLOAD_TIMETABLE:
+            case Constants.DOWNLOAD_TIMETABLE:
                 return new DownloadDataCommand(courseManager);
-            case EXIT:
+            case Constants.EXIT:
                 return new ExitProgramCommand();
             // ... ADD YOUR NEW OBJECTS HERE!
 
@@ -115,8 +134,55 @@ public class CommandFactory {
                 throw new InvalidInputException();
         }
     }
+    /**
+     * Helper method to return the corresponding command object
+     * to whatever has been inputted by the user in GUI. Please see
+     * `DatabaseController` for how the command objects will be used
+     *
+     * @param inputCommand The STRING input command of the user. IT MUST
+     *                     CORRESPOND TO THE STATIC CONSTANTS ABOVE
+     * @return The correct command object
+     * @throws InvalidInputException If the inputCommand is invalid, throw this!
+     */
+    private Command getCommand4GUI(String inputCommand) throws InvalidInputException {
+        switch (inputCommand) {
+            case Constants.SCHEDULE_COURSE:
+                return new GUIMakeCourseCommand(courseManager, dataSource);
+            case Constants.SCHEDULE_EVENT:
+                return new GUIMakeEventCommand((ScheduleEventScreen) screen);
+            case Constants.REMOVE_EVENT:
+                return new RemoveEventCommand(courseManager);
+            case Constants.GET_ALL_TIMETABLE:
+                return new GUIGetAllTimeTablesCommand(screen);
+            case Constants.SOLVE_TIMETABLE:
+                return new SolverCommand(courseManager, dataSource);
+            case Constants.ADD_TIMETABLE:
+                return new AddTimeTableCommand(courseManager);
+            case Constants.REMOVE_TIMETABLE:
+                return new RemoveTimeTable(courseManager);
+//            case Constants.LOAD_DATA:
+//                return new LoadDataCommand();
+//            case Constants.DOWNLOAD_TIMETABLE:
+//                return new DownloadDataCommand(courseManager);
+                //no return statement error blocker, default return will never be reached.
+            default:
+                throw new InvalidInputException();
+        }
+    }
+
 
     // ========================= Setters and Getters ===========================
+
+    /** Set the screen to one of AbstractScreen's subclasses.
+     *
+     * @param screen is a subclass object of AbstracScreen, it is a user viewable window.
+     */
+    public void setScreen(AbstractScreen screen) {this.screen = screen;}
+
+    public TimeTableManager getCourseManager() {
+        return courseManager;
+    }
+
     /**
      * Returns a string array of all the allowable functions of the program
      *
@@ -144,6 +210,7 @@ public class CommandFactory {
         this.allowedFunctions = newAllowedFunction.clone();
     }
 
+    //TODO: add docstring
     public CourseGetter getDataSource(){
         return this.dataSource;
     }

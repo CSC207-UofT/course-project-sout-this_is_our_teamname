@@ -24,7 +24,7 @@ public class DatabaseControllerTest {
 
     @Before
     public void TestSetup(){
-        controller = new DatabaseController();
+        controller = new DatabaseController("cmd");
         CommandFactory theFactory = new CommandFactory(controller);
         theFactory.setDataSource(new CSVScraper());
         controller.setFactory(theFactory);

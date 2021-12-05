@@ -20,22 +20,26 @@ import java.util.*;
  *  since the program was run (For Phase 2, maybe serialize it so that it can
  *  have a history of all commands ever made)
  *
- * possibleCommands: The factory that generates the commands to be executed
+ * Factory: A commandFactory that generates the commands to be executed
+ *
+ * currentUI: the currentUI the program is running in. cmd: Commandline, gui: GUI.
  */
 public class DatabaseController {
     private final Stack<Command> CommandHistory;
     private CommandFactory Factory;
+    private final String currentUI;
 
     /**
      * A constructor. Sets the commandHistory and Factory
      */
-    public DatabaseController(){
+    public DatabaseController(String currentUI){
         this.CommandHistory = new Stack<>();
+        this.currentUI = currentUI;
         this.Factory = new CommandFactory(this);
     }
 
-    // ======================== Control UserInterface ==========================
 
+    // ======================== Control UserInterface ==========================
     /**
      * Configures the UserInterface
      * @throws IOException if the file cannot be found to get the information
@@ -108,6 +112,7 @@ public class DatabaseController {
         return newString.split(",\\s+");
     }
 
+
     // ======================= Control OperatorInterface =======================
     /**
      * Ban the function in the CommandFactory according to the operator's choice.
@@ -132,7 +137,6 @@ public class DatabaseController {
         // Set the factory so that it persists even before the program exits
         this.Factory.setAllowedFunctions(function.toArray(new String[0]));
     }
-
     /**
      * Set the datasource to the CommandFactory according to the operator's choice.
      *
@@ -152,6 +156,7 @@ public class DatabaseController {
         file.close();
     }
 
+
     // ===================== Command Pattern Infrastructure ====================
     /**
      * Sets the command into the Command History.
@@ -168,7 +173,6 @@ public class DatabaseController {
     public boolean runCommand(String requestedCommand) throws InvalidInputException {
         assert this.Factory != null;
         Command theCommand = this.Factory.getCommand(requestedCommand);
-
         // If the command is to exit the program, it will return false to let
         // UserInterface know to exit the program
         if (theCommand instanceof ExitProgramCommand) {
@@ -180,7 +184,6 @@ public class DatabaseController {
         executeCommand(theCommand);
         return true;
     }
-
     /**
      * Sends the command into the commandHistory and executes the command.
      *
@@ -194,7 +197,17 @@ public class DatabaseController {
         theCommand.execute();
     }
 
+
     // ============================ Setters and Getters ========================
+
+    /** Get the commandFactory attribute: Factory
+     *
+     * @return Factory attribute
+     */
+    public CommandFactory getFactory() {
+        return Factory;
+    }
+
     /**
      * Set the factory attached to this controller
      *
@@ -213,6 +226,12 @@ public class DatabaseController {
     }
 
     /**
+     * Gets the type of UI currently in use.
+     * @return string representation of UI currently in use
+     */
+    public String getCurrentUI() { return currentUI; }
+
+    /**
      * Returns a hashmap of the entries in the string array commandList with
      * corresponding integer values from least to greatest.
      *
@@ -223,6 +242,7 @@ public class DatabaseController {
         return this.Factory.getAllowedFunctions();
     }
 
+    //TODO: add docstring
     public String getDataSource(){
         return this.Factory.getDataSource().toString();
     }

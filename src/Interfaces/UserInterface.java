@@ -28,7 +28,7 @@ public class UserInterface {
      * Sets presenter, control and operator.
      */
     public UserInterface() {
-        this.control = new DatabaseController();
+        this.control = new DatabaseController("cmd");
     }
 
     /**
