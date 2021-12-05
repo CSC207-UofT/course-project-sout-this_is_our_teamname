@@ -1,24 +1,24 @@
 package Functions;
 
-import TimeTableObjects.Course;
-
 import java.util.ArrayList;
 import java.util.Set;
 
 /**
  * A Depth first search program
  *
- * TRANSCRIBED FROM CODE WRITTEN USED IN CSC148H1 202101 TERM. PERMISSION TO
- * USE GRANTED BY JONATHAN CALVER (RT #363)
- *
  */
 public class DfsSearch {
+    /**
+     * A Depth first search program
+     *
+     */
     ArrayList<TimeTablePuzzle> path;
 
     /**
-     * Constructor. Initializes a FunctionsAndCommands.DfsSearch object
+     * Constructor. Initializes a DfsSearch object
      */
     public DfsSearch(){
+        super();
         this.path = new ArrayList<>();
     }
 
@@ -38,16 +38,56 @@ public class DfsSearch {
     }
 
     /**
+     * A helper class to get the next move of the solver
+     *
+     * @param puzzle the current puzzle
+     * @param seen a set of all the puzzle states seen.
+     *
+     * @return the puzzle state of the next move. Returns null if puzzle
+     * cannot be solved.
+     */
+    private TimeTablePuzzle getNextMove(TimeTablePuzzle puzzle, Set<String> seen){
+        ArrayList<TimeTablePuzzle> configs = puzzle.extensions();
+
+        // If there are no extensions to the puzzle, or the puzzle cannot be
+        // solved.
+        if (configs.size() == 0 || puzzle.fail_fast()){
+            seen.add(puzzle.toString());
+            return null;
+        }
+
+        for (TimeTablePuzzle possible_move : configs){
+            if (possible_move.isSolved()){
+                return possible_move;
+            }
+            // If the puzzle:
+            // - is not in seen
+            // - the puzzle is possible
+            // - is not in the path
+            if (!seen.contains(puzzle.toString()) && !possible_move.fail_fast()
+                    && !SearchPath(possible_move)){
+                return possible_move;
+            }
+        }
+        // If all possible moves are not valid
+        return null;
+    }
+
+    /**
      * Solves the puzzle
      * @param puzzle The puzzle that needs to be solved
      * @param seen The set of all puzzle configurations that has been seen
      * @return An array of all the moves that led up to the solution.
      */
-
-    public ArrayList<TimeTablePuzzle> solve(TimeTablePuzzle puzzle, Set<TimeTablePuzzle> seen) {
+    public ArrayList<TimeTablePuzzle> solve(TimeTablePuzzle puzzle, Set<String> seen) {
+        // If the puzzle is not possible
+        if (puzzle.fail_fast()) {
+            seen.add(puzzle.toString());
+            return new ArrayList<>();
+        }
 
         // If the puzzle is already solved
-        if (puzzle.isSolved()){
+        else if (puzzle.isSolved()){
             this.path.add(puzzle);
             return this.path;
         }
@@ -56,7 +96,6 @@ public class DfsSearch {
         else {
             TimeTablePuzzle next_item = puzzle;
             path.add(next_item);
-
 
             // While the puzzle is not solved.
             while (!next_item.isSolved()){
@@ -77,56 +116,15 @@ public class DfsSearch {
                 // than one puzzle config in the path
                 else if (next_item == null){
                     next_item = path.remove(path.size() - 1);
-                    seen.add(next_item);
+                    seen.add(next_item.toString());
                 }
 
                 // Add the next move to the puzzle if it is not null.
                 else {
                     path.add(next_item);
-                    // Add the next move(scheduled course) to the puzzle accumulator
-                    Course next_course = next_item.getExtendedCourse();
-                    puzzle.addScheduledCourse(next_course);
-                    next_item.addScheduledCourse(next_course);
                 }
             }
         }
         return path;
-    }
-
-    // ============================= Helpers ===================================
-
-    /**
-     * A helper class to get the next move of the solver
-     *
-     * @param puzzle the current puzzle
-     * @param seen a set of all the puzzle states seen.
-     *
-     * @return the puzzle state of the next move. Returns null if puzzle
-     * cannot be solved.
-     */
-    private TimeTablePuzzle getNextMove(TimeTablePuzzle puzzle, Set<TimeTablePuzzle> seen) {
-        ArrayList<TimeTablePuzzle> configs = puzzle.extensions();
-
-        // If there are no extensions to the puzzle, or the puzzle cannot be solved.
-        // if (configs.length == 0 || puzzle.failFast()){
-        if (configs.size() == 0){
-            seen.add(puzzle);
-            return null;
-        }
-
-        for (TimeTablePuzzle possible_move : configs){
-            if (possible_move.isSolved()){
-                return possible_move;
-            }
-            // If the puzzle:
-            // - is not in seen
-            // - the puzzle is possible
-            // - is not in the path
-            else if (!seen.contains(possible_move) && !SearchPath(possible_move)){
-                return possible_move;
-            }
-        }
-        // If all possible moves are not valid
-        return null;
     }
 }

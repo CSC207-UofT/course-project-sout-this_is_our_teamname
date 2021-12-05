@@ -175,19 +175,6 @@ public class TimeTableManager {
         return timetables.get(name);
     }
 
-    /**
-     * Presents the TimeTableManager in string
-     *
-     * @return a string representation of the TimeTableManager
-     */
-    public String toString() {
-        LinkedHashMap<String, String> times = new LinkedHashMap<>();
-        for (String term : this.timetables.keySet()) {
-            times.put(term, this.timetables.get(term).toString());
-        }
-        return times.toString();
-    }
-
     public TimeTableManager get_copy(){
         TimeTableManager copy = new TimeTableManager();
         copy.setTimetables(this.timetables);

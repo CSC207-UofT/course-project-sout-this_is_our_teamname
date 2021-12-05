@@ -40,7 +40,9 @@ public class SolverCommand extends NeedsCoursesCommand {
         boolean courseCounter = true;
         while (courseCounter) {
             // Get user input and course info
+            dataSource.clearData();
             LinkedHashMap<String, ArrayList<Course>>indivCourse = userInputs(dataSource);
+
             // Get course code
             ArrayList<String> keyList = new ArrayList<>(indivCourse.keySet());
             Course course = indivCourse.get(keyList.get(0)).get(0);
@@ -57,9 +59,10 @@ public class SolverCommand extends NeedsCoursesCommand {
             // Figure out how to catch exception
         }
 
-        TimeTablePuzzle puzzle = new TimeTablePuzzle(courses, manager);
+        TimeTablePuzzle puzzle = new TimeTablePuzzle(courses, manager,
+                something(courses), new ArrayList<>());
         DfsSearch solver = new DfsSearch();
-        Set<TimeTablePuzzle> seen = new HashSet<>();
+        Set<String> seen = new HashSet<>();
         ArrayList<TimeTablePuzzle> solved = solver.solve(puzzle, seen);
 
         scheduleSolved(puzzle, solved.get(solved.size() - 1));
@@ -84,15 +87,27 @@ public class SolverCommand extends NeedsCoursesCommand {
      * @param puzzle the TimeTablePuzzle with the TimeTables to be scheduled
      * @param solved the solved TimeTablePuzzle to be scheduled
      */
-    public void scheduleSolved(TimeTablePuzzle puzzle, TimeTablePuzzle solved) {
+    public void scheduleSolved(TimeTablePuzzle puzzle,
+                               TimeTablePuzzle solved) {
 
         Scanner userTimeTableChoice = new Scanner(System.in);
 
         // Return Timetables to User
-        String timeTables = (solved.getManager().toString());
+        String timeTables = solved.getManager().toString();
         System.out.println(timeTables + " Do you like this schedule? (true/false)");
         if (Boolean.parseBoolean(userTimeTableChoice.nextLine())) {
             puzzle.schedulePuzzle(solved);
         }
+    }
+
+    /**
+     * TODO This needs to be named better. I was short on time! - MATT
+     */
+    private ArrayList<ArrayList<Course>> something(HashMap<String, HashMap<String, ArrayList<Course>>> courses){
+        ArrayList<ArrayList<Course>> something = new ArrayList<>();
+        for (HashMap<String, ArrayList<Course>> cor : courses.values()){
+            something.addAll(cor.values());
+        }
+        return something;
     }
 }

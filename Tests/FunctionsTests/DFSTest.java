@@ -12,6 +12,16 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class DFSTest {
+    /**
+     * TODO This needs to be named better. I was short on time! - MATT
+     */
+    private ArrayList<ArrayList<Course>> something(HashMap<String, HashMap<String, ArrayList<Course>>> courses){
+        ArrayList<ArrayList<Course>> something = new ArrayList<>();
+        for (HashMap<String, ArrayList<Course>> cor : courses.values()){
+            something.addAll(cor.values());
+        }
+        return something;
+    }
 
     @Test
     public void solve() {
@@ -141,11 +151,12 @@ public class DFSTest {
 
         TimeTableManager manager = new TimeTableManager();
 
-        TimeTablePuzzle puzzle = new TimeTablePuzzle(courses, manager);
+        TimeTablePuzzle puzzle = new TimeTablePuzzle(courses, manager,
+                something(courses), new ArrayList<>());
 
         DfsSearch solver = new DfsSearch();
 
-        HashSet<TimeTablePuzzle> seen = new HashSet<>();
+        HashSet<String> seen = new HashSet<>();
         ArrayList<TimeTablePuzzle> solved = solver.solve(puzzle, seen);
         int lastIndex = solved.size() - 1;
         Assertions.assertNotSame(solved.get(lastIndex), puzzle);

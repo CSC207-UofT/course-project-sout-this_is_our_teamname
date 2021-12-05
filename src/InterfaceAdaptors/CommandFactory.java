@@ -13,8 +13,6 @@ import Commands.CreationCommands.PrintHistoryCommand;
 import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
 
-import java.util.ArrayList;
-
 /**
  * A factory class to create the individual commands of the class.
  *
@@ -26,7 +24,7 @@ import java.util.ArrayList;
  *  by the OperatorInterface
  */
 public class CommandFactory {
-    private TimeTableManager courseManager;
+    private final TimeTableManager courseManager;
     private CourseGetter dataSource;
     private final DatabaseController controller;
     private String[] allowedFunctions;
@@ -97,7 +95,7 @@ public class CommandFactory {
             case GET_ALL_TIMETABLE:
                 return new GetAllTimeTablesCommand(courseManager);
             case SOLVE_TIMETABLE:
-                return new SolverCommand2(courseManager, dataSource);
+                return new SolverCommand(courseManager, dataSource);
             case ADD_TIMETABLE:
                 return new AddTimeTableCommand(courseManager);
             case REMOVE_TIMETABLE:
