@@ -86,6 +86,7 @@ public class GUIMakeEventCommand implements Command {
             } else {
                 Task obj = (Task) toSchedule;
                 manager.schedule(obj);
+                System.out.println(manager);
                 running = false;
             }
         }
@@ -155,15 +156,16 @@ public class GUIMakeEventCommand implements Command {
         // Creates the Activity
         switch (type){
             case Constants.ACTIVITY:
-                String theTerm = term + " " + year;
-                Activity activity = new Activity(startTime, endTime, theDate, theTerm, description);
+                String activityTerm = term + " " + year;
+                Activity activity = new Activity(startTime, endTime, theDate, activityTerm, description);
                 activity.setName(name);
                 return activity;
 
             //need to change
             case Constants.TASK:
-                Task task = new Task(startTime, endTime, theDate, term);
-                task.addToName(theLocation);
+                String taskTerm = term + " " + year;
+                Task task = new Task(startTime, endTime, theDate, taskTerm);
+                task.setName(name);
                 return task;
             // ...
             // Add more types of events here!
