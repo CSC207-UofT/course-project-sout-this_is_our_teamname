@@ -30,10 +30,18 @@ public class TimeTableScreen extends JFrame{
     private JButton settingsButton;
     private JPanel TitlePanel;
     private JLabel titleLable;
-    private JScrollPane TimeTableScrollPane;
     private JTabbedPane timeTableTabs;
     private JPanel UnderTabsPanel;
     private DefaultTableModel defaultTableModel;
+    private JScrollPane TimeTableScrollPane;
+    private JComboBox<String> comboBox1;
+    private JComboBox<String> comboBox2;
+    private JComboBox<String> comboBox3;
+    private JComboBox<String> comboBox4;
+    private JComboBox<String> comboBox5;
+    private JComboBox<String> comboBox6;
+    private JComboBox<String> comboBox7;
+    private JLabel reminderLabel;
     TimeTableScreenController timeTableScreenController;
 
     public TimeTableScreen() {
@@ -57,7 +65,6 @@ public class TimeTableScreen extends JFrame{
 
         Rectangle bounds = DimensionUtil.getBounds();
         setFrame(bounds);
-        createEmptyTable();
     }
 
     public void refreshTimetableTabs(TimeTableManager manager){
@@ -70,45 +77,97 @@ public class TimeTableScreen extends JFrame{
         }
     }
 
-//TODO needs window pop up when there is a conflict
-    private JTable createEmptyTable(){
-        //JTable jtable = new JTable(26, 8);
-        //TODO might be problem here
-        JTable jtable = new JTable();
-        jtable.setModel(defaultTableModel);
+////TODO needs window pop up when there is a conflict
 
-        //TODO set header with defaultTableModel?
+//    private JTable createEmptyTable(){
+//        JTable jtable = new JTable();
+//        //set times
+//        for (int i=0; i<=23; i++) {
+//            String time = Constants.TIME[i];
+//            jtable.getModel().setValueAt(time, i+2, 0);
+//        }
+//        jtable.getModel().setValueAt("Reminder",1,0);
+//        for (int i=0;i<=6;i++){
+//            //set days
+//            String day = Constants.DAYS_OF_THE_WEEK[i];
+//            jtable.getModel().setValueAt(day, 0, i+1);
+//        }
+//
+//        //set the hour column width
+//        TableColumnModel columns = jtable.getColumnModel();
+//        columns.getColumn(0).setPreferredWidth(20);
+//
+//        //Center the text on all columns
+//        DefaultTableCellRenderer centreRenderer = new DefaultTableCellRenderer();
+//        centreRenderer.setHorizontalAlignment(JLabel.CENTER);
+//        for (int i = 0; i < 8; i ++) {
+//            columns.getColumn(i).setCellRenderer(centreRenderer);
+//        }
+//        return jtable;
+//    }
 
+    //TODO extract method here
+    private JTable fillTimeTable(TimeTable table) {
+////        for (int i=0;i<=6;i++) {
+////            //set reminders
+//        for (String day : table.getTaskCalendar().keySet()) {
+//
+//            ArrayList<String> tasks = new ArrayList<>();
+//            for (Task task : table.getTaskCalendar().get(day)) {
+//                tasks.add(task.getName());
+//            }
+//            System.out.println(tasks);
+//            String[] array = tasks.toArray(new String[0]);
+////            String[] strlist = new String[tasks.size()];
+////            for (int i = 0; i < tasks.size(); i++) {
+////                strlist[i] = tasks.get(i);
+////            }
+////            for (String s : strlist) {
+////                System.out.println(s);
+////                }
+//
+//                String[] newlst = new String[]{"sd"};
+//
+//                JComboBox<String> reminder = new JComboBox<String>(array);
+//                reminder.setVisible(true);
+//
+////                reminder.addActionListener(new ActionListener() {
+////                    public void actionPerformed(ActionEvent e) {
+////                        String selected = (String) reminder.getSelectedItem();
+////                        System.out.println(selected);
+////                    }
+////                });
+//                reminder.addItem("index 1");
+//                System.out.println(reminder.getItemAt(0));
+//
+//
+////                reminder.addItem(table.getTaskCalendar().get("Monday").get(0).getName());
+////                for (Task task : table.getTaskCalendar().get(day)) {
+////                    reminder.addItem(task.getName());
+////                }
+////                    for (int j = 0; j < table.getTaskCalendar().get(day).size(); j++) {
+////                        String name =  table.getTaskCalendar().get(day).get(j).getName();
+////                        reminder.addItem(name);
+////                        reminder.addItem("adsfa");
+////                    }
+////            reminder.addItem();
+//
+//                DefaultCellEditor defaultCellEditor = new DefaultCellEditor(reminder);
+//                editors.add(defaultCellEditor);
+//            }
 
-        JComboBox reminder = new JComboBox();
-        DefaultCellEditor dce = new DefaultCellEditor(reminder);
-
-
-        //set times
-        for (int i=0; i<=23; i++) {
-            String time = Constants.TIME[i];
-            jtable.getModel().setValueAt(time, i+1, 0);
-        }
-
-        for (int i=0;i<=6;i++){
-            String day = Constants.DAYS_OF_THE_WEEK[i];
-            jtable.getModel().setValueAt(day, 0, i+1);
-        }
-
-        //set the hour column width
-        TableColumnModel columns = jtable.getColumnModel();
-        columns.getColumn(0).setPreferredWidth(20);
-
-        //Center the text on all columns
-        DefaultTableCellRenderer centreRenderer = new DefaultTableCellRenderer();
-        centreRenderer.setHorizontalAlignment(JLabel.CENTER);
-        for (int i = 0; i < 8; i ++) {
-            columns.getColumn(i).setCellRenderer(centreRenderer);
-        }
-        return jtable;
-    }
-
-    private JTable fillTimeTable(TimeTable table){
+            JTable jtable = new JTable(defaultTableModel);
+//            {
+//                //  Determine editor to be used by row
+//                public TableCellEditor getCellEditor(int row, int column) {
+//                    int modelColumn = convertColumnIndexToModel(column);
+//
+//                    if (modelColumn >= 1 && row == 1)
+//                        return editors.get(row);
+//                    else
+//                        return super.getCellEditor(row, column);
+//                }
+//            };
 
         JTable jtable = createEmptyTable();
         //schedule no task objects
@@ -124,51 +183,6 @@ public class TimeTableScreen extends JFrame{
             }
         }
 
-//        //schedule task objects
-//        // set reminder rows according to the longest list in taskCalendar
-//        // get reminder row height
-//        int reminderHeight = timeTable.getRowCount() - 25;
-//
-//        //check each day in taskCalendar for the largest list size
-//        // default size is 0
-//        int tasksQuantity = 0;
-//        for (String day : table.getTaskCalendar().keySet()) {
-//            if (tasksQuantity < table.getTaskCalendar().get(day).size()){
-//                tasksQuantity = table.getTaskCalendar().get(day).size();
-//            }
-//        }
-//        // see how many new rows are needed
-//        int increaseRows = tasksQuantity + 25 - timeTable.getRowCount();
-//        // increase rows if needed
-//        if (increaseRows > 0){
-//            for (int i = 1, )
-//        }
-//        //TODO when a task is deleted, shift cells below upwards, and delete any unneeded rows.
-//        for (String weekday : table.getTaskCalendar().keySet()) {
-//            int columnIndex =Arrays.asList(Constants.DAYS_OF_THE_WEEK).indexOf(weekday)+1;
-//            if (tasksQuantity < table.getTaskCalendar().get(weekday).size()){
-//                tasksQuantity = table.getTaskCalendar().get(weekday).size();
-//            }
-//            // compare list size to current row height, if row height is smaller, get the difference,
-//            // and set new row height
-//            if (tasksQuantity > reminderHeight){
-//                int increaseLength = table.getTaskCalendar().get(weekday).size() - reminderHeight;
-//                Object[] newRow= new Object[] {"Reminder",null,null,null,null,null,null,null};
-//                for (int i =1; i <= increaseLength; i++){
-//                    defaultTableModel.addRow(newRow);
-//                }
-//                reminderHeight = tasksQuantity;
-//            }
-//
-//            for (int i=0;i <= reminderHeight; i++){
-//                Task task = table.getTaskCalendar().get(weekday).get(i);
-//                int rowIndex = 1;
-//                jtable.getModel().setValueAt(task, rowIndex, columnIndex);
-//
-//            }
-//        }
-        return jtable;
-    }
 
     private void setFrame(Rectangle bounds) {
         // Window's icon
@@ -200,4 +214,3 @@ public class TimeTableScreen extends JFrame{
     public static void main(String[] args) throws AWTException {
         new TimeTableScreen();
     }
-}
