@@ -84,6 +84,8 @@ public class ScheduleEventScreen extends AbstractScreen{
         type.setBounds(200, 460, 120, 40);
         typeBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         typeBox.setBounds(320, 460, 120, 40);
+        typeBox.setToolTipText("Activity is an event with start time and end time, " +
+                "reminder is not since it is a whole day event.");
 
         description.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         description.setBounds(200, 520, 120, 40);

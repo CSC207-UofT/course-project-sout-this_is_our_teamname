@@ -35,14 +35,6 @@ public class TimeTableScreen extends JFrame {
     private JTabbedPane timeTableTabs;
     private JPanel UnderTabsPanel;
     private JScrollPane TimeTableScrollPane;
-    private JComboBox<String> comboBox1;
-    private JComboBox<String> comboBox2;
-    private JComboBox<String> comboBox3;
-    private JComboBox<String> comboBox4;
-    private JComboBox<String> comboBox5;
-    private JComboBox<String> comboBox6;
-    private JComboBox<String> comboBox7;
-    private JLabel reminderLabel;
     TimeTableScreenController timeTableScreenController;
     List<TableCellEditor> editors = new ArrayList<>(7);
 
@@ -112,7 +104,8 @@ public class TimeTableScreen extends JFrame {
     private JTable fillTimeTable(TimeTable table) {
             JTable jtable = new JTable(25, 8){
 
-                //Citation 1: Implement table cell tool tips.
+                // Implement table cell tool tips.
+                //Citation: https://stackoverflow.com/questions/9467093/how-to-add-a-tooltip-to-a-cell-in-a-jtable
                 public String getToolTipText(MouseEvent e) {
                     String tip = null;
                     java.awt.Point p = e.getPoint();
@@ -126,7 +119,7 @@ public class TimeTableScreen extends JFrame {
                     }
 
                     return tip;
-                }//Citation 1 ends
+                }//Citation ends
             };
             //set times
             for (int i = 0; i <= 23; i++) {
