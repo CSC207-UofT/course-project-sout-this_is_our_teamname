@@ -1,5 +1,6 @@
 package demoGUI.userview;
 
+import InterfaceAdaptors.DatabaseController;
 import demoGUI.handler.LoadScreenHandler;
 
 import javax.swing.*;
@@ -18,10 +19,14 @@ public class LoadScreen extends AbstractScreen{
     JTextField nameTxt = new JTextField(20);
     JTextField yearTxt = new JTextField(4);
 
+    DatabaseController controller;
+
     LoadScreenHandler loadscreenhandler;
 
-    public LoadScreen(TimeTableScreen screen) {
+    public LoadScreen(DatabaseController controller, TimeTableScreen screen) {
         super("Load", screen);
+
+        this.controller = controller;
 
         loadscreenhandler = new LoadScreenHandler(this);
 
@@ -88,13 +93,18 @@ public class LoadScreen extends AbstractScreen{
         setResizable(false);
     }
 
+    public DatabaseController getController() {
+        return controller;
+    }
+
     public String getNameString() {return nameTxt.getText();}
 
     public String getYearString() {return yearTxt.getText();}
 
     public static void main(String[] args) {
+        DatabaseController controller = new DatabaseController("gui");
         TimeTableScreen screen = new TimeTableScreen();
-        new LoadScreen(screen);
+        new LoadScreen(controller, screen);
 
     }
 }

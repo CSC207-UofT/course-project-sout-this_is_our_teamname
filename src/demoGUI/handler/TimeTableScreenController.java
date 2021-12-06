@@ -39,10 +39,10 @@ public class TimeTableScreenController implements ActionListener {
                 new ScheduleEventScreen(controller, timeTableScreen);
                 break;
             case "Save":
-                new SaveScreen(timeTableScreen);
+                new SaveScreen(controller, timeTableScreen);
                 break;
             case "Load":
-                new LoadScreen(timeTableScreen);
+                new LoadScreen(controller, timeTableScreen);
                 break;
             case "Settings":
                 new OperatorScreen(timeTableScreen);
