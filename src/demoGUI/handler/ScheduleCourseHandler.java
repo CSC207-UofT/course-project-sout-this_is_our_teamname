@@ -3,6 +3,8 @@ package demoGUI.handler;
 
 import DataGetting.DataGetter;
 import DataGetting.WebScraper;
+import Helpers.Constants;
+import Helpers.InvalidInputException;
 import TimeTableObjects.Course;
 import demoGUI.userview.*;
 
@@ -41,6 +43,8 @@ public class ScheduleCourseHandler implements ActionListener {
             String name = scheduleCourseScreen.getCourseName();
             WebScraper webscraper = new WebScraper();
             try {
+                scheduleCourseScreen.clearBoxes();
+
                 LinkedHashMap<String, Course> map = webscraper.retrieveData(name, term, year);
 
                 ArrayList<String> lecture = new ArrayList<>();
@@ -60,6 +64,31 @@ public class ScheduleCourseHandler implements ActionListener {
             }
 
 
+        } else if ("Schedule".equals(text)){
+            String term = scheduleCourseScreen.getTerm();
+            String year = scheduleCourseScreen.getYear();
+            String name = scheduleCourseScreen.getCourseName();
+            WebScraper webscraper = new WebScraper();
+            try {
+
+                LinkedHashMap<String, Course> map = webscraper.retrieveData(name, term, year);
+                String lecture = scheduleCourseScreen.getlecBox();
+                String tut = scheduleCourseScreen.gettutBox();
+                String lecCode = lecture.split(":")[0];
+                String tutCode = tut.split(":")[0];
+                Course lecSection = map.get(lecCode);
+                Course tutSection = map.get(tutCode);
+                scheduleCourseScreen.setLecture(lecSection);
+                scheduleCourseScreen.setTutorial(tutSection);
+                scheduleCourseScreen.getController().getFactory().setScreen(scheduleCourseScreen);
+                scheduleCourseScreen.getController().runCommand(Constants.SCHEDULE_COURSE);
+
+            } catch (FileNotFoundException | InvalidInputException ex) {
+                ex.printStackTrace();
+            }
+            scheduleCourseScreen.getScreen().refreshTimetableTabs(
+                    scheduleCourseScreen.getController().getFactory().getCourseManager());
+            scheduleCourseScreen.dispose();
         }
 
 

@@ -21,6 +21,7 @@ import Helpers.Constants;
 import demoGUI.userview.AbstractScreen;
 import demoGUI.userview.LoadScreen;
 import demoGUI.userview.SaveScreen;
+import demoGUI.userview.ScheduleCourseScreen;
 import demoGUI.userview.ScheduleEventScreen;
 
 /**
@@ -149,7 +150,7 @@ public class CommandFactory {
     private Command getCommand4GUI(String inputCommand) throws InvalidInputException {
         switch (inputCommand) {
             case Constants.SCHEDULE_COURSE:
-                return new GUIMakeCourseCommand(courseManager, dataSource);
+                return new GUIMakeCourseCommand((ScheduleCourseScreen) screen);
             case Constants.SCHEDULE_EVENT:
                 return new GUIMakeEventCommand((ScheduleEventScreen) screen);
             case Constants.REMOVE_EVENT:

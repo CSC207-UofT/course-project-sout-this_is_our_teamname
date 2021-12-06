@@ -72,16 +72,14 @@ public class TimeTableManager {
         // Some Constants
         int TERM = 0;
         int YEAR = 1;
-
         String timeTableName = task.getTerm();
         String[] splitTImeTableName = timeTableName.split("\\s+");
-
         // Since the format is Term Year, the term is at index 0 and year index 1
         String term = splitTImeTableName[TERM];
         String year = splitTImeTableName[YEAR];
-
         // If we want to schedule a year task, we want every term in that year
         // get scheduled.
+
         if (term.equals(Constants.YEAR)) {
             this.getTimetable(Constants.FALL + " " + year).schedule(task);
             this.getTimetable(Constants.WINTER + " " + year).schedule(task);
