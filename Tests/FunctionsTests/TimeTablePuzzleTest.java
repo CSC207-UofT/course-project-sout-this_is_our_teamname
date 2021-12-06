@@ -16,6 +16,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class TimeTablePuzzleTest {
+    /**
+     * TODO This needs to be named better. I was short on time! - MATT
+     */
+    private ArrayList<ArrayList<Course>> something(HashMap<String, HashMap<String, ArrayList<Course>>> courses){
+        ArrayList<ArrayList<Course>> something = new ArrayList<>();
+        for (HashMap<String, ArrayList<Course>> cor : courses.values()){
+            something.addAll(cor.values());
+        }
+        return something;
+    }
 
     @Test
     public void isSolved() {
@@ -99,7 +109,8 @@ public class TimeTablePuzzleTest {
             manager.getTimetable(Constants.FALL).schedule(section);
         }
 
-        TimeTablePuzzle ttPuzzle = new TimeTablePuzzle(courses, manager);
+        TimeTablePuzzle ttPuzzle = new TimeTablePuzzle(courses, manager,
+                something(courses),new ArrayList<>());
         ttPuzzle.addScheduledCourse(A);
         ttPuzzle.addScheduledCourse(C);
         ttPuzzle.addScheduledCourse(E);
@@ -187,10 +198,12 @@ public class TimeTablePuzzleTest {
 
         courses.put("CSC207", csc);
         courses.put("MAT157", mat);
-        TimeTablePuzzle ttPuzzle = new TimeTablePuzzle(courses, manager);
+        TimeTablePuzzle ttPuzzle = new TimeTablePuzzle(courses, manager,
+                something(courses), new ArrayList<>());
         ttPuzzle.addScheduledCourse(A);
 
-        TimeTablePuzzle ttPuzzleC = new TimeTablePuzzle(courses, managerC);
+        TimeTablePuzzle ttPuzzleC = new TimeTablePuzzle(courses, managerC,
+                something(courses), new ArrayList<>());
         ttPuzzleC.addScheduledCourse(A);
         ArrayList<CourseSection> splitC = C.split();
         for (CourseSection section : splitC) {
@@ -198,7 +211,8 @@ public class TimeTablePuzzleTest {
             ttPuzzleC.getManager().getTimetable(term).schedule(section);
         }
 
-        TimeTablePuzzle ttPuzzleD = new TimeTablePuzzle(courses, managerD);
+        TimeTablePuzzle ttPuzzleD = new TimeTablePuzzle(courses, managerD,
+                something(courses), new ArrayList<>());
         ttPuzzleD.addScheduledCourse(A);
         ArrayList<CourseSection> splitD = D.split();
         for (CourseSection section : splitD) {
@@ -206,7 +220,8 @@ public class TimeTablePuzzleTest {
             ttPuzzleD.getManager().getTimetable(term).schedule(section);
         }
 
-        TimeTablePuzzle ttPuzzleE = new TimeTablePuzzle(courses, managerE);
+        TimeTablePuzzle ttPuzzleE = new TimeTablePuzzle(courses, managerE,
+                something(courses), new ArrayList<>());
         ttPuzzleE.addScheduledCourse(A);
         ArrayList<CourseSection> splitE = E.split();
         for (CourseSection section : splitE) {
@@ -214,7 +229,8 @@ public class TimeTablePuzzleTest {
             ttPuzzleE.getManager().getTimetable(term).schedule(section);
         }
 
-        TimeTablePuzzle ttPuzzleF = new TimeTablePuzzle(courses, managerF);
+        TimeTablePuzzle ttPuzzleF = new TimeTablePuzzle(courses, managerF,
+                something(courses), new ArrayList<>());
         ttPuzzleF.addScheduledCourse(A);
         ArrayList<CourseSection> splitF = F.split();
         for (CourseSection section : splitF) {
@@ -279,8 +295,10 @@ public class TimeTablePuzzleTest {
 
         HashMap<String, HashMap<String, ArrayList<Course>>> courses = new HashMap<>();
 
-        TimeTablePuzzle puzzle1 = new TimeTablePuzzle(courses, manager1);
-        TimeTablePuzzle puzzle2 = new TimeTablePuzzle(courses, manager2);
+        TimeTablePuzzle puzzle1 = new TimeTablePuzzle(courses, manager1,
+                something(courses), new ArrayList<>());
+        TimeTablePuzzle puzzle2 = new TimeTablePuzzle(courses, manager2,
+                something(courses), new ArrayList<>());
         puzzle2.schedulePuzzle(puzzle1);
         // Get all courses for both TimeTablePuzzles
         ArrayList<CourseSection> allCourses1 = puzzle1.getManager().getCourses();

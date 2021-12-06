@@ -84,8 +84,8 @@ class TimeTableTest {
         table.schedule(lecture1);
         table.schedule(lecture2);
         table.schedule(activity);
-        table.addTasks(reminder1);
-        table.addTasks(reminder2);
+//        table.addTasks(reminder1);
+//        table.addTasks(reminder2);
         String actual = table.toString();
 
         String expectedCourse0 = "9:00 MAT257: LEC 0101 of Arts and Science with Professor.A by Online session at SS100";
@@ -121,5 +121,26 @@ class TimeTableTest {
 
         assertNull(timeTable.getCalendar().get(Constants.MONDAY)[intStart1]);
         assertSame(timeTable.getCalendar().get(Constants.WEDNESDAY)[intStart2], walk);
+    }
+
+    @Test
+    public void checkConflict() {
+        LocalTime time9 =  LocalTime.of(9,0,0);
+        LocalTime time10 = LocalTime.of(10, 0,0);
+
+        CourseSection lecture1 = new CourseSection("MAT257", time9, time10, Constants.MONDAY, Constants.YEAR,
+                "LEC 0101");
+        String description = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
+                + " session" + " at " + "SS100";
+        lecture1.setDescription(description);
+
+        CourseSection lecture2 = new CourseSection("MAT157", time9, time10,Constants.MONDAY,Constants.FALL,
+                "LEC 0201");
+        String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
+                + " session" + " at " + "SS101";
+
+        TimeTable tt = new TimeTable();
+        tt.schedule(lecture1);
+        assertFalse(tt.hasConflicts(lecture2));
     }
 }

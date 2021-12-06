@@ -3,6 +3,8 @@ package Commands.FunctionCommands;
 import Commands.Command;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * A command whose sole responsibility is to signal to the DatabaseController
  * to exit the program
  */

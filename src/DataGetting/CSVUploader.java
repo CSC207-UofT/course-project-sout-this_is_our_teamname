@@ -7,13 +7,14 @@ import TimeTableObjects.Events;
 import java.io.*;
 import java.time.LocalTime;
 import java.util.LinkedHashMap;
-import java.util.Objects;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * A class that uploads a properly formatted reloadable
  * csv file to a timetable manager object
  */
-public class CSVUploader extends DataGetter<Events> {
+public class CSVUploader extends DataGetter<Object> {
 
     /**
      * Constructor of the CSVUploader. Reads and filters the data correctly
@@ -43,11 +44,7 @@ public class CSVUploader extends DataGetter<Events> {
         for (String[] row : meaningfulData) {
             if (!row[1].equals("Tasks")) {
                 String[] times = row[1].split("-");
-                if (Objects.equals(row[2], "Activity")) {
-                    // TODO Yikes! I have no idea what you are doing here!
-                    //  That is really long. I assume it's correct but I
-                    //  suggest breaking it off into constants to make it
-                    //  more readable?
+                if (row[2].equals("Activity")) {
                     Activity event = new Activity(LocalTime.of(Integer.parseInt(times[0].substring(0, 2)), 0, 0),
                             LocalTime.of(Integer.parseInt(times[1].substring(0, 2)), 0, 0), row[0], term, row[5]);
                     event.setName(row[3]);
@@ -74,7 +71,8 @@ public class CSVUploader extends DataGetter<Events> {
      * @throws FileNotFoundException if the file is not found
      */
     @Override
-    LinkedHashMap<String, Events> retrieveData(String courseName, String term, String year) throws FileNotFoundException {
+    LinkedHashMap<String, Object> retrieveData(String courseName, String term,
+                                               String year) throws FileNotFoundException {
         CalibrateData(courseName, term, year);
         return super.getData();
     }
