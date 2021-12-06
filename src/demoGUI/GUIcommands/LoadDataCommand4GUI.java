@@ -1,35 +1,34 @@
-package Commands.FunctionCommands;
+package demoGUI.GUIcommands;
 
 import Commands.Command;
 import DataGetting.CSVUploader;
 import Helpers.Constants;
-import Helpers.InputCheckers.InputChecker;
+import demoGUI.userview.LoadScreen;
 
 import java.io.IOException;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * Load the data to an external source
  */
-public class LoadDataCommand implements Command {
+public class LoadDataCommand4GUI implements Command {
+    private final LoadScreen screen;
     private final CSVUploader loader;
 
-    public LoadDataCommand(){
+    public LoadDataCommand4GUI(LoadScreen screen){
+        this.screen = screen;
         this.loader = new CSVUploader();
     }
 
     @Override
     public void execute() {
-        String[] prompts = {"Enter the Filename (Example: My_TimeTable for My_TimeTable for My_TimeTable_2021_WINTER)",
-                "Enter the year (Example: 2021 for My_TimeTable for My_TimeTable_2021_WINTER)"};
+        String filename = screen.getNameString();
+        String year = screen.getYearString();
         boolean running = true;
         while (running){
-            String[] responses = InputChecker.getQuestionsAnswers(prompts);
-
             try {
                 for (String term : new String[]{Constants.WINTER, Constants.SUMMER}){
-                    this.loader.CalibrateData(responses[0], term, responses[1]);
+                    this.loader.CalibrateData(filename, term, year);
                 }
                 running = false;
             } catch (IOException e){

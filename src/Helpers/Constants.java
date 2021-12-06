@@ -1,6 +1,5 @@
 package Helpers;
 
-import java.util.Arrays;
 
 /**
  * TODO DELETE THIS SENTENCE
@@ -40,8 +39,6 @@ public class Constants {
     public static final String REMOVE_TIMETABLE = "Remove Timetable";
     public static final String PRINT_HISTORY = "Get History";
     public static final String LOAD_DATA = "Load Data";
-    //TODO delete save_data?
-    public static final String SAVE_DATA = "Save";
     public static final String DOWNLOAD_TIMETABLE = "Download Timetable";
     public static final String EXIT = "Log Out";
 }
