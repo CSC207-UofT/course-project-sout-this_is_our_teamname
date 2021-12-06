@@ -1,30 +1,31 @@
-package Commands.FunctionCommands;
+package demoGUI.GUIcommands;
 
-import DataLoading.CSVDownloader;
 import Commands.Command;
+import DataLoading.CSVDownloader;
 import Helpers.Constants;
 import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
+import demoGUI.userview.SaveScreen;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * Downloads the data for the user to see
  */
-public class DownloadDataCommand implements Command {
+public class DownloadDataCommand4GUI implements Command {
+    private final SaveScreen screen;
     private final TimeTableManager manager;
     private final CSVDownloader loader;
 
-    public DownloadDataCommand(TimeTableManager manager){
-        this.manager = manager;
+    public DownloadDataCommand4GUI(SaveScreen screen){
+        this.screen = screen;
+        this.manager = screen.getController().getFactory().getCourseManager();
         this.loader = new CSVDownloader();
     }
 
@@ -32,13 +33,9 @@ public class DownloadDataCommand implements Command {
     public void execute() {
         boolean running = true;
         while (running){
-            Scanner ask = new Scanner(System.in);
-            System.out.println("Enter the name for the timetables to save with (Example: My_TimeTable 2021)");
-            String chosen = ask.nextLine();
 
-            String[] keyInfo = chosen.split(" ");
-            String filename = keyInfo[0];
-            String year = keyInfo[1];
+            String filename = screen.getNameString();
+            String year = screen.getYearString();
 
             HashMap<String, List<List<String>>> dataMap = getData();
             try {

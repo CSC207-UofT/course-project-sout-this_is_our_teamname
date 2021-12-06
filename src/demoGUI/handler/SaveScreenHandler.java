@@ -1,5 +1,6 @@
 package demoGUI.handler;
 
+import Helpers.Constants;
 import demoGUI.userview.SaveScreen;
 
 import javax.swing.*;
@@ -7,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SaveScreenHandler implements ActionListener{
-    private SaveScreen savescreen;
+    private final SaveScreen savescreen;
 
     public SaveScreenHandler(SaveScreen savescreen){
         this.savescreen = savescreen;
@@ -21,10 +22,15 @@ public class SaveScreenHandler implements ActionListener{
             backChoosing();
 
         } else if ("Save".equals(text)){
-            String name = savescreen.getNameString();
-            String year = savescreen.getYearString();
-            //CSVDownloader loader = new CSVDownloader();
-            //loader.download((...), name, year);
+            try{
+                //save timetables
+                savescreen.getController().getFactory().setScreen(savescreen);
+                savescreen.getController().runCommand(Constants.DOWNLOAD_TIMETABLE);
+            } catch (Exception ignore){}
+            //refresh timetables
+            savescreen.getScreen().refreshTimetableTabs(
+                    savescreen.getController().getFactory().getCourseManager());
+            savescreen.dispose();
         }
     }
 
