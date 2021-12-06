@@ -179,7 +179,7 @@ public class ScheduleEventScreen extends AbstractScreen{
 
     private void addType(JComboBox<String> typeBox){
         typeBox.addItem("Activity");
-        typeBox.addItem("Task");
+        typeBox.addItem("Reminder");
     }
 
     public DatabaseController getController() {
