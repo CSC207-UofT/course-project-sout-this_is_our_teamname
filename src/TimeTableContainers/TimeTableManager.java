@@ -212,14 +212,21 @@ public class TimeTableManager {
      */
     public TimeTable getTimetable(String name) {
         if (!this.timetables.containsKey(name)) {
-            timetables.put(name, new TimeTable());
+            this.timetables.put(name, new TimeTable());
         }
-        return timetables.get(name);
+        return this.timetables.get(name);
     }
 
     public TimeTableManager get_copy(){
         TimeTableManager copy = new TimeTableManager();
-        copy.setTimetables(this.timetables);
+
+        HashMap<String, TimeTable> copy_timetables = new HashMap<>();
+
+        for (String key : timetables.keySet()){
+            copy_timetables.put(key, timetables.get(key).make_copy());
+        }
+
+        copy.setTimetables(copy_timetables);
         return copy;
     }
 
