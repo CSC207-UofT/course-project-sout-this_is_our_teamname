@@ -6,6 +6,8 @@ import TimeTableContainers.TimeTableManager;
 import demoGUI.userview.AbstractScreen;
 
 /**
+ * TODO DELETE THIS SENTENCE
+ *
  * A command object to get all the timetables
  */
 public class GUIGetAllTimeTablesCommand implements Command {

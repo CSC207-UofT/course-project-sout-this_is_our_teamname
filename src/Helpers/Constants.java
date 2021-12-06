@@ -2,6 +2,9 @@ package Helpers;
 
 import java.util.Arrays;
 
+/**
+ * TODO DELETE THIS SENTENCE
+ */
 public class Constants {
     public static final String MONDAY = "Monday";
     public static final String TUESDAY = "Tuesday";

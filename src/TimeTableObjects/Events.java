@@ -5,6 +5,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * Events class is a class that can be stored in a TimeTable class.
  *
  * === Private Attributes ===

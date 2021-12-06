@@ -11,9 +11,10 @@ import java.time.LocalTime;
 import java.util.*;
 
 /**
+ * TODO REMOVE THIS SENTENCE
+ *
  * A WebScraper class. It is a DataGetter class that gets the data from a the course finder
  * website.
- *
  */
 public class WebScraper extends CourseGetter {
 

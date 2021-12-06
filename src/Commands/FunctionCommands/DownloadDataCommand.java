@@ -14,6 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * TODO REMOVE THIS SENTENCE
+ *
+ * Downloads the data for the user to see
+ */
 public class DownloadDataCommand implements Command {
     private final TimeTableManager manager;
     private final CSVDownloader loader;

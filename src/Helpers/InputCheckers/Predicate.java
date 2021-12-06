@@ -1,6 +1,8 @@
 package Helpers.InputCheckers;
 
 /**
+ * TODO DELETE THIS SENTENCE
+ *
  * A predicate class for the validityChecker helper. Defines what is an
  * accepting input.
  *

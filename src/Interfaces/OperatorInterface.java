@@ -11,6 +11,8 @@ import java.util.*;
 
 
 /**
+ * TODO REMOVE THIS SENTENCE!!!
+ *
  * An OperatorInterface class, sets the DataGetter and bans functions by operator.
  *
  * === Private Attributes ===
@@ -18,7 +20,6 @@ import java.util.*;
  * datasource: A String of the selected datasource's name
  */
 public class OperatorInterface {
-    private String datasource;
     private final DatabaseController control;
 
     /**
@@ -26,7 +27,6 @@ public class OperatorInterface {
      * Set control and datasource.
      */
     public OperatorInterface() {
-        this.datasource = null;
         this.control = new DatabaseController("cmd");
     }
 

@@ -23,7 +23,6 @@ public abstract class NeedsCoursesCommand implements Command {
      */
     private static LinkedHashMap<String, ArrayList<Course>> splitByType(
             HashMap<String, Course> nameToObject){
-
         // A hashMap of type of item (LEC, TUT, PRA) to the course object
         LinkedHashMap<String, ArrayList<Course>> typeToItems =
                 new LinkedHashMap<>();

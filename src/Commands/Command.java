@@ -1,5 +1,10 @@
 package Commands;
 
+/**
+ * TODO REMOVE THIS SENTENCE
+ *
+ * An interface for a command in the command design pattern
+ */
 public interface Command {
     /**
      * Execute the command
