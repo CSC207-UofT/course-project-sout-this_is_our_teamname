@@ -86,7 +86,6 @@ public class GUIMakeEventCommand implements Command {
             } else {
                 Task obj = (Task) toSchedule;
                 manager.schedule(obj);
-                System.out.println(manager);
                 running = false;
             }
         }
