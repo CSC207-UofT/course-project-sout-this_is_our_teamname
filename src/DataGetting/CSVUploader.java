@@ -2,14 +2,12 @@ package DataGetting;
 
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.Task;
-import TimeTableObjects.Events;
 
 import java.io.*;
 import java.time.LocalTime;
 import java.util.LinkedHashMap;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A class that uploads a properly formatted reloadable
  * csv file to a timetable manager object
@@ -19,9 +17,6 @@ public class CSVUploader extends DataGetter<Object> {
     /**
      * Constructor of the CSVUploader. Reads and filters the data correctly
      * into the data hashmap.
-     *
-     * TODO Can you rename your variables? They are really weirdly named and
-     * TODO does not convey to the reader what you are trying to say...
      *
      * @param filename the name of the file
      * @param term the term of the timetable
@@ -35,7 +30,7 @@ public class CSVUploader extends DataGetter<Object> {
         String filepath = "src\\OutputFiles\\" + filename + "_" + year + "_"  + term + ".csv";
         String[][] data;
         try {
-            data = read(filepath);
+            data = ReadThroughFile(filepath);
         } catch (IOException e){
             throw new FileNotFoundException();
         }
@@ -108,19 +103,15 @@ public class CSVUploader extends DataGetter<Object> {
      * Read and return the data contained in a csv file at specific location as
      * an array of arrays of strings
      *
-     * TODO rename the variables see naming conventions in
-     * TODO JavaAndExceptions.pdf in Week 4.!
-     *
      * @param filepath the path of the csv file that needs to be read
      */
-    private String[][] read(String filepath) throws IOException {
-        // TODO Why not use an ArrayList<String[]>?
+    private String[][] ReadThroughFile(String filepath) throws IOException {
         String[][] dataplus = {};
         BufferedReader reader = new BufferedReader(new FileReader(filepath));
         String row;
         while ((row = reader.readLine()) != null) {
             String[] data = row.split(",");
-            dataplus = (String[][]) add(dataplus, data);
+            dataplus = (String[][]) AddOneMore(dataplus, data);
         }
         reader.close();
         return dataplus;
@@ -129,12 +120,10 @@ public class CSVUploader extends DataGetter<Object> {
     /**
      * Return a new array with one more object added to the original array
      *
-     * TODO See comment in method `read`. Can delete this method
-     *
      * @param objects the original object array
      * @param object the object that needs to be added
      */
-    private Object[] add(Object[] objects, Object object) {
+    private Object[] AddOneMore(Object[] objects, Object object) {
         Object[] newList = new Object[objects.length + 1];
         System.arraycopy(objects, 0, newList, 0, objects.length);
         newList[objects.length] = object;

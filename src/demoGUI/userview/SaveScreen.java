@@ -1,5 +1,6 @@
 package demoGUI.userview;
 
+import InterfaceAdaptors.DatabaseController;
 import demoGUI.handler.SaveScreenHandler;
 
 import javax.swing.*;
@@ -18,10 +19,14 @@ public class SaveScreen extends AbstractScreen{
     JTextField nameTxt = new JTextField(20);
     JTextField yearTxt = new JTextField(4);
 
+    DatabaseController controller;
+
     SaveScreenHandler savescreenhandler;
 
-    public SaveScreen(TimeTableScreen screen) {
+    public SaveScreen(DatabaseController controller, TimeTableScreen screen) {
         super("Save", screen);
+
+        this.controller = controller;
 
         savescreenhandler = new SaveScreenHandler(this);
 
@@ -73,6 +78,7 @@ public class SaveScreen extends AbstractScreen{
     protected void setFrame() {
         // Window's icon
         URL resource = SaveScreen.class.getClassLoader().getResource("pic2.jpg");
+        assert resource != null;
         Image image = new ImageIcon(resource).getImage();
         setIconImage(image);
 
@@ -87,13 +93,18 @@ public class SaveScreen extends AbstractScreen{
         setResizable(false);
     }
 
+    public DatabaseController getController() {
+        return controller;
+    }
+
     public String getNameString() {return nameTxt.getText();}
 
     public String getYearString() {return yearTxt.getText();}
 
     public static void main(String[] args) {
+        DatabaseController controller = new DatabaseController("gui");
         TimeTableScreen screen = new TimeTableScreen();
-        new SaveScreen(screen);
+        new SaveScreen(controller, screen);
 
     }
 }

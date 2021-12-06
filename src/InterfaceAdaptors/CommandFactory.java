@@ -1,7 +1,6 @@
 package InterfaceAdaptors;
 
-import Commands.FunctionCommands.SolverCommand;
-import Commands.FunctionCommands.ExitProgramCommand;
+import Commands.FunctionCommands.*;
 import DataGetting.CourseGetter;
 import Commands.Command;
 import Commands.CreationCommands.GetAllTimeTablesCommand;
@@ -11,15 +10,17 @@ import Commands.CreationCommands.AddTimeTableCommand;
 import Commands.RemovalCommands.RemoveEventCommand;
 import Commands.RemovalCommands.RemoveTimeTable;
 import Commands.CreationCommands.PrintHistoryCommand;
-import Commands.FunctionCommands.DownloadDataCommand;
-import Commands.FunctionCommands.LoadDataCommand;
 import Helpers.InvalidInputException;
 import TimeTableContainers.TimeTableManager;
 import demoGUI.GUIcommands.GUIGetAllTimeTablesCommand;
 import demoGUI.GUIcommands.GUIMakeCourseCommand;
 import demoGUI.GUIcommands.GUIMakeEventCommand;
+import demoGUI.GUIcommands.DownloadDataCommand4GUI;
+import demoGUI.GUIcommands.LoadDataCommand4GUI;
 import Helpers.Constants;
 import demoGUI.userview.AbstractScreen;
+import demoGUI.userview.LoadScreen;
+import demoGUI.userview.SaveScreen;
 import demoGUI.userview.ScheduleEventScreen;
 
 /**
@@ -161,11 +162,10 @@ public class CommandFactory {
                 return new AddTimeTableCommand(courseManager);
             case Constants.REMOVE_TIMETABLE:
                 return new RemoveTimeTable(courseManager);
-//            case Constants.LOAD_DATA:
-//                return new LoadDataCommand();
-//            case Constants.DOWNLOAD_TIMETABLE:
-//                return new DownloadDataCommand(courseManager);
-                //no return statement error blocker, default return will never be reached.
+            case Constants.LOAD_DATA:
+                return new LoadDataCommand4GUI((LoadScreen) screen);
+            case Constants.DOWNLOAD_TIMETABLE:
+                return new DownloadDataCommand4GUI((SaveScreen) screen);
             default:
                 throw new InvalidInputException();
         }
