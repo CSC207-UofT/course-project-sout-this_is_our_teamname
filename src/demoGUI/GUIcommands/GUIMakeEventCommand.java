@@ -76,7 +76,7 @@ public class GUIMakeEventCommand implements Command {
             TimeTableManager manager = scheduleEventScreen.getController().getFactory().getCourseManager();
             if (toSchedule instanceof Events){
                 Events obj = (Events) toSchedule;
-                if (manager.hasConflicts(obj)){
+                if (!manager.hasConflicts(obj)){
                     manager.schedule(obj);
                     scheduledObject = obj;
                     running = false;
@@ -86,6 +86,8 @@ public class GUIMakeEventCommand implements Command {
             } else {
                 Task obj = (Task) toSchedule;
                 manager.schedule(obj);
+                System.out.println(manager);
+                running = false;
             }
         }
 
@@ -154,15 +156,17 @@ public class GUIMakeEventCommand implements Command {
         // Creates the Activity
         switch (type){
             case Constants.ACTIVITY:
-                String theTerm = term + " " + year;
-                Activity activity = new Activity(startTime, endTime, theDate, theTerm, description);
+                String activityTerm = term + " " + year;
+                Activity activity = new Activity(startTime, endTime, theDate, activityTerm, description);
                 activity.setName(name);
                 return activity;
 
             //need to change
-            case Constants.TASK:
-                Task task = new Task(startTime, endTime, theDate, term);
-                task.addToName(theLocation);
+            //TODO need to change CONSTANT and rename task to Reminder!
+            case "Reminder":
+                String taskTerm = term + " " + year;
+                Task task = new Task(startTime, endTime, theDate, taskTerm);
+                task.setName(name);
                 return task;
             // ...
             // Add more types of events here!
