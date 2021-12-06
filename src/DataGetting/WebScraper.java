@@ -120,7 +120,8 @@ public class WebScraper extends CourseGetter {
             if (locations.size() < times.size()){
                 int diff = times.size() - locations.size();
                 for (int k = 0; k < diff; k++){
-                    locations.add(diff / 2, Constants.TBA);
+                    locations.add((int) Math.ceil((double) diff / 2),
+                            Constants.TBA);
                 }
             }
 
