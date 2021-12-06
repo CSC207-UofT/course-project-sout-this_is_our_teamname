@@ -35,7 +35,7 @@ public class TimeTableScreenController implements ActionListener {
             case "Schedule Course":
                 new ScheduleCourseScreen(controller, timeTableScreen);
                 break;
-            case "Schedule Task/Activity":
+            case "Schedule Activity/Reminder":
                 new ScheduleEventScreen(controller, timeTableScreen);
                 break;
             case "Save":

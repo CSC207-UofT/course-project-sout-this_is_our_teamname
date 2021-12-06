@@ -33,7 +33,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value="Schedule Task/Activity"/>
+              <text value="Schedule Activity/Reminder"/>
             </properties>
           </component>
           <component id="703ca" class="javax.swing.JButton" binding="saveButton">
