@@ -117,6 +117,13 @@ public class WebScraper extends CourseGetter {
             // create the location time map.
             HashMap<Object[], String> locationTimeMap = new HashMap<>();
 
+            if (locations.size() < times.size()){
+                int diff = times.size() - locations.size();
+                for (int k = 0; k < diff; k++){
+                    locations.add(diff / 2, Constants.TBA);
+                }
+            }
+
             for (int j = 0; j < locations.size(); j++){
                 locationTimeMap.put(times.get(j), locations.get(j));
             }
@@ -284,6 +291,20 @@ public class WebScraper extends CourseGetter {
 
     public String toString(){
         return "WebScraper";
+    }
+
+    public static void main(String[] args) {
+        CourseGetter scraper = new WebScraper();
+        try {
+            LinkedHashMap<String, Course> data = scraper.retrieveData(
+                    "MAT137Y1", "Fall", "2021");
+            for (String course : data.keySet()){
+                System.out.print(course + ": ");
+                System.out.println(data.get(course));
+            }
+        } catch (FileNotFoundException e){
+            System.out.println(":(");
+        }
     }
 }
 
