@@ -37,7 +37,7 @@ public class DatabaseController {
     public DatabaseController(String currentUI){
         this.CommandHistory = new Stack<>();
         this.currentUI = currentUI;
-        this.Factory = null;
+        this.Factory = setFactory();
     }
 
     // ======================== Control UserInterface ==========================
@@ -112,13 +112,14 @@ public class DatabaseController {
         return newString.split(",\\s+");
     }
 
-    private void setFactory(){
+    private CommandFactory setFactory(){
         if (currentUI.equals("cmd")){
-            this.Factory = new CommandLineCommandFactory(this);
+            return new CommandLineCommandFactory(this);
         } else {
-            this.Factory = new GUICommandFactory(this);
+            return new GUICommandFactory(this);
         }
     }
+
     // ======================= Control OperatorInterface =======================
     /**
      * Ban the function in the CommandFactory according to the operator's choice.
