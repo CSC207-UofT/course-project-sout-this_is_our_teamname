@@ -71,7 +71,7 @@ public class TimeTableScreen extends JFrame {
             panel.add(reminderLabel);
             //add comboxBox
             for (int i=0; i <=6; i++){
-                JComboBox<String> comboBox = new JComboBox<String>();
+                JComboBox<String> comboBox = new JComboBox<>();
                 for (Task task : manager.getTimetable(term).getTaskCalendar().
                                 get(Constants.DAYS_OF_THE_WEEK[i]).toArray(new Task[0])) {
                     comboBox.addItem(task.getName());
@@ -166,7 +166,7 @@ public class TimeTableScreen extends JFrame {
             // Full screen
 //        setExtendedState(JFrame.MAXIMIZED_BOTH);
 //        setLocationRelativeTo(null);
-            setSize(1200, 900);
+            setSize(1200, 700);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setResizable(true);
             setVisible(true);

@@ -33,7 +33,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
     JButton backBtn = new JButton("Back");
     JButton searchBtn = new JButton("Search");
     JButton applyBtn = new JButton("Schedule");
-    JButton solverBtn = new JButton("Solver");
     ScheduleCourseHandler scheduleCourseHandler;
     Boolean conflict;
 
@@ -78,7 +77,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
 
         searchBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         searchBtn.addActionListener(scheduleCourseHandler);
-        searchBtn.setBounds(250, 220, 120, 40);
+        searchBtn.setBounds(320, 220, 120, 40);
 
         lecture.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         lecture.setBounds(40, 280, 120, 40);
@@ -106,11 +105,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
         applyBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         applyBtn.addActionListener(scheduleCourseHandler);
 
-        // Solver button
-        solverBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        solverBtn.addActionListener(scheduleCourseHandler);
-        solverBtn.setBounds(450, 220, 120, 40);
-
         // set the year Box and term Box
         addYear(yearBox);
         addTerm(termBox);
@@ -118,7 +112,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
         // add to the panel
         centerPanel.add(courseName);
         centerPanel.add(nameTxt);
-        centerPanel.add(solverBtn);
         centerPanel.add(year);
         centerPanel.add(yearBox);
         centerPanel.add(term);
