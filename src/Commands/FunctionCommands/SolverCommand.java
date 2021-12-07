@@ -2,11 +2,13 @@ package Commands.FunctionCommands;
 
 import Commands.NeedsCoursesCommand;
 import DataGetting.CourseGetter;
+import DataGetting.WebScraper;
 import Functions.DfsSearch;
 import Functions.TimeTablePuzzle;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -111,5 +113,10 @@ public class SolverCommand extends NeedsCoursesCommand {
             something.addAll(cor.values());
         }
         return something;
+    }
+
+    public static void main(String[] args) {
+        SolverCommand cmd = new SolverCommand(new TimeTableManager(), new WebScraper());
+        cmd.execute();
     }
 }

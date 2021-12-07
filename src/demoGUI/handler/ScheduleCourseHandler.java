@@ -5,6 +5,8 @@ import DataGetting.DataGetter;
 import DataGetting.WebScraper;
 import Helpers.Constants;
 import Helpers.InvalidInputException;
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.GUICommandFactory;
 import TimeTableObjects.Course;
 import demoGUI.userview.*;
 
@@ -18,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ScheduleCourseHandler implements ActionListener {
-    private ScheduleCourseScreen scheduleCourseScreen;
+    private final ScheduleCourseScreen scheduleCourseScreen;
 
     public ScheduleCourseHandler(ScheduleCourseScreen scheduleCourseScreen){
         this.scheduleCourseScreen = scheduleCourseScreen;
@@ -80,7 +82,8 @@ public class ScheduleCourseHandler implements ActionListener {
                 Course tutSection = map.get(tutCode);
                 scheduleCourseScreen.setLecture(lecSection);
                 scheduleCourseScreen.setTutorial(tutSection);
-                scheduleCourseScreen.getController().getFactory().setScreen(scheduleCourseScreen);
+                GUICommandFactory factory = ((GUICommandFactory)scheduleCourseScreen.getController().getFactory());
+                factory.setScreen(scheduleCourseScreen);
                 scheduleCourseScreen.getController().runCommand(Constants.SCHEDULE_COURSE);
 
             } catch (FileNotFoundException | InvalidInputException ex) {
@@ -88,6 +91,10 @@ public class ScheduleCourseHandler implements ActionListener {
             }
             scheduleCourseScreen.getScreen().refreshTimetableTabs(
                     scheduleCourseScreen.getController().getFactory().getCourseManager());
+            //opens conflict dialog when there is a conflict in scheduling
+            if (scheduleCourseScreen.getConflict()){
+                ConflictDialog.main(new String[]{""});
+            }
             scheduleCourseScreen.dispose();
         }
 

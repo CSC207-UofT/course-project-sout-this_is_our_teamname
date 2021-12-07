@@ -1,20 +1,18 @@
 package demoGUI.handler;
 
-import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.DatabaseController;
 import demoGUI.userview.TimeTableScreen;
 import demoGUI.userview.*;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TimeTableScreenController implements ActionListener {
+public class TimeTableScreenHandler implements ActionListener {
     private TimeTableScreen timeTableScreen;
     private DatabaseController controller;
 
-    public TimeTableScreenController(TimeTableScreen timeTableScreen) {
+    public TimeTableScreenHandler(TimeTableScreen timeTableScreen) {
 
         this.timeTableScreen = timeTableScreen;
         this.controller = new DatabaseController("gui");
@@ -43,9 +41,6 @@ public class TimeTableScreenController implements ActionListener {
                 break;
             case "Load":
                 new LoadScreen(controller, timeTableScreen);
-                break;
-            case "Settings":
-                new OperatorScreen(timeTableScreen);
                 break;
             default:
                 break;

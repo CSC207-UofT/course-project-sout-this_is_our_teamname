@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public abstract class AbstractScreen extends JFrame {
     private DatabaseController controller;
-    private TimeTableScreen screen;
+    private final TimeTableScreen screen;
 
     AbstractScreen(String str, TimeTableScreen screen){
 

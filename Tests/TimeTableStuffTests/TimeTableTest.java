@@ -42,15 +42,18 @@ class TimeTableTest {
         lecture3.setDescription(description3);
 
         Activity activity = new Activity(time6,time9,Constants.MONDAY,Constants.FALL,"nap");
+        activity.setName("Takes a nap");
         Task reminder = new Task(time5,time6,Constants.MONDAY,
                 Constants.FALL);
-        reminder.addToName("home");
+        reminder.setName("buy milk");
         TimeTable table = new TimeTable();
-//        assertTrue(table.schedule(lecture1));
-//        assertFalse(table.schedule(lecture2));
-//        assertTrue(table.schedule(lecture3));
+        assertTrue(table.schedule(lecture1));
+        assertFalse(table.schedule(lecture2));
+        assertTrue(table.schedule(lecture3));
         assertTrue(table.schedule(activity));
-//        assertTrue(table.schedule(reminder));
+        assertTrue(table.schedule(reminder));
+        assertTrue(table.toString().contains("Takes a nap"));
+        assertTrue(table.toString().contains("buy milk"));
     }
 
     @Test

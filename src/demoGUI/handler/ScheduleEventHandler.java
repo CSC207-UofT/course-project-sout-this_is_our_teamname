@@ -2,6 +2,8 @@ package demoGUI.handler;
 
 import Helpers.Constants;
 import Helpers.StringToTime;
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.GUICommandFactory;
 import demoGUI.GUIcommands.GUIMakeEventCommand;
 import demoGUI.userview.*;
 
@@ -11,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalTime;
 
 public class ScheduleEventHandler implements ActionListener {
-    private ScheduleEventScreen scheduleEventScreen;
+    private final ScheduleEventScreen scheduleEventScreen;
 
     public ScheduleEventHandler(ScheduleEventScreen scheduleEventScreen){
         this.scheduleEventScreen = scheduleEventScreen;
@@ -27,12 +29,17 @@ public class ScheduleEventHandler implements ActionListener {
         else if ("Schedule".equals(text)) {
             try{
                 //schedule events
-                scheduleEventScreen.getController().getFactory().setScreen(scheduleEventScreen);
+                CommandFactory factory = scheduleEventScreen.getController().getFactory();
+                ((GUICommandFactory) factory).setScreen(scheduleEventScreen);
                 scheduleEventScreen.getController().runCommand(Constants.SCHEDULE_EVENT);
             } catch (Exception ignore){}
             //refresh timetables
             scheduleEventScreen.getScreen().refreshTimetableTabs(
                     scheduleEventScreen.getController().getFactory().getCourseManager());
+            //opens conflict dialog when there is a conflict in scheduling
+            if (scheduleEventScreen.getConflict()){
+            ConflictDialog.main(new String[]{""});
+            }
             scheduleEventScreen.dispose();
 
         }

@@ -140,16 +140,25 @@ public class TimeTablePuzzle {
 
             TimeTableManager copy_schedule = initial_schedule.get_copy();
 
+            boolean toSchedule = true;
             for (CourseSection section : course.split()){
-                copy_schedule.schedule(section);
+                if (copy_schedule.hasConflicts(section)){
+                    toSchedule = false;
+                }
             }
 
-            TimeTablePuzzle next = new TimeTablePuzzle(new HashMap<>(courses),
-                    copy_schedule,
-                    new ArrayList<>(this.unscheduled),
-                    new ArrayList<>(this.scheduled));
-            next.scheduled.add(course);
-            extensions.add(next);
+            if (toSchedule){
+                for (CourseSection section : course.split()){
+                    copy_schedule.schedule(section);
+                }
+
+                TimeTablePuzzle next = new TimeTablePuzzle(new HashMap<>(courses),
+                        copy_schedule.get_copy(),
+                        new ArrayList<>(this.unscheduled),
+                        new ArrayList<>(this.scheduled));
+                next.scheduled.add(course);
+                extensions.add(next);
+            }
         }
 
         return extensions;

@@ -111,22 +111,32 @@ public class TimeTableManager {
         String term = splitTImeTableName[TERM];
         String year = splitTImeTableName[YEAR];
 
-        if (timetables.containsKey(term)){
+        if (term.equals(Constants.YEAR)) {
+            boolean theFall;
+            if (timetables.containsKey(Constants.FALL + " " + year)) {
+                 theFall =
+                         this.getTimetable(Constants.FALL + " " + year).hasConflicts(event);
+            } else {
+                theFall = false;
+            }
+
+            boolean theWinter;
+            if (timetables.containsKey(Constants.WINTER + " " + year)) {
+                theWinter =
+                        this.getTimetable(Constants.WINTER + " " + year).hasConflicts(event);
+            } else {
+                theWinter = false;
+            }
+
+            return theFall || theWinter;
+        }
+
+        // For all other events, schedule it in the proper timetable. Return
+        // true if successful.
+        else if (timetables.containsKey(timeTableName)){
             // If we want to schedule a year event, we want every term in that year
             // get scheduled.
-
-            if (term.equals(Constants.YEAR)) {
-                boolean theFall =
-                        this.getTimetable(Constants.FALL + " " + year).hasConflicts(event);
-                boolean theWinter =
-                        this.getTimetable(Constants.WINTER + " " + year).hasConflicts(event);
-                return theFall && theWinter;
-            }
-            // For all other events, schedule it in the proper timetable. Return
-            // true if successful.
-            else {
-                return this.getTimetable(timeTableName).hasConflicts(event);
-            }
+            return this.getTimetable(timeTableName).hasConflicts(event);
         }
         else {
             return false;
@@ -212,14 +222,21 @@ public class TimeTableManager {
      */
     public TimeTable getTimetable(String name) {
         if (!this.timetables.containsKey(name)) {
-            timetables.put(name, new TimeTable());
+            this.timetables.put(name, new TimeTable());
         }
-        return timetables.get(name);
+        return this.timetables.get(name);
     }
 
     public TimeTableManager get_copy(){
         TimeTableManager copy = new TimeTableManager();
-        copy.setTimetables(this.timetables);
+
+        HashMap<String, TimeTable> copy_timetables = new HashMap<>();
+
+        for (String key : timetables.keySet()){
+            copy_timetables.put(key, timetables.get(key).make_copy());
+        }
+
+        copy.setTimetables(copy_timetables);
         return copy;
     }
 

@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 /**
@@ -44,7 +45,7 @@ public class CSVScraper extends CourseGetter {
                               String theYear) throws FileNotFoundException {
         // Opens the file and gets an arraylist of all the lines of the file.
         String fileName =
-                "src\\DataCollection\\SampleDirectory\\" + theTerm + theYear
+                "src\\DataGetting\\SampleDirectory\\" + theTerm + theYear
                         + "\\" + courseName + ".csv";
         ArrayList<String> fileData = readFile(fileName);
 
@@ -231,5 +232,19 @@ public class CSVScraper extends CourseGetter {
 
     public String toString(){
         return "CSVScraper";
+    }
+
+    public static void main(String[] args) {
+        CourseGetter scraper = new CSVScraper();
+        try {
+            LinkedHashMap<String, Course> data = scraper.retrieveData(
+                    "CSC207H1", "Fall", "2021");
+            for (String course : data.keySet()){
+                System.out.print(course + ": ");
+                System.out.println(data.get(course));
+            }
+        } catch (FileNotFoundException e){
+            System.out.println(":(");
+        }
     }
 }
