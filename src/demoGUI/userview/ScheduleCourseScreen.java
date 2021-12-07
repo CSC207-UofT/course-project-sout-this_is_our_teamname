@@ -6,10 +6,8 @@ import demoGUI.handler.ScheduleCourseHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.PortUnreachableException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Objects;
 
 public class ScheduleCourseScreen extends AbstractScreen{
@@ -26,8 +24,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
     JComboBox<String> lectureBox = new JComboBox<>();
     JLabel tutorial = new JLabel("Tutorial");
     JComboBox<String> tutBox = new JComboBox<>();
-
-
+    JLabel practical = new JLabel("Practical");
+    JComboBox<String> pracBox = new JComboBox<>();
 
 
     JButton backBtn = new JButton("Back");
@@ -82,6 +80,12 @@ public class ScheduleCourseScreen extends AbstractScreen{
         tutBox.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         tutBox.setBounds(120, 340, 600, 40);
 
+        practical.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        practical.setBounds(40, 400, 600, 40);
+
+        pracBox.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        pracBox.setBounds(120, 4000, 600, 40);
+
         // Back button
         backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         backBtn.addActionListener(scheduleCourseHandler);
@@ -112,6 +116,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
         centerPanel.add(lectureBox);
         centerPanel.add(tutorial);
         centerPanel.add(tutBox);
+        contentPane.add(practical);
+        contentPane.add(pracBox);
         southPanel.add(backBtn);
         southPanel.add(applyBtn);
 
@@ -189,14 +195,29 @@ public class ScheduleCourseScreen extends AbstractScreen{
         }
     }
 
-    public String gettutBox() {
-        return Objects.requireNonNull(tutBox.getSelectedItem()).toString();
+    public void setpracBox(ArrayList<String> input){
+        for (int i = 0; i < input.size(); i++){
+            this.pracBox.addItem(input.get(i));
+        }
+    }
 
+    public String gettutBox() {
+        if (tutBox.getSelectedItem() != null){
+            return Objects.requireNonNull(tutBox.getSelectedItem()).toString();
+        }
+        return "";
     }
 
     public String getlecBox() {
         return Objects.requireNonNull(lectureBox.getSelectedItem()).toString();
 
+    }
+
+    public String getpracBox() {
+        if (pracBox.getSelectedItem() != null){
+            return Objects.requireNonNull(pracBox.getSelectedItem()).toString();
+        }
+        return "";
     }
 
     public DatabaseController getController() {

@@ -67,13 +67,15 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
      */
     private boolean hasConflicts(ArrayList<CourseSection> sections) {
         for (Course course : this.scheduledCourse){
-            ArrayList<CourseSection> conflictCheckSections = course.split();
-            TimeTableManager manager = scheduleCourseScreen.getController().getFactory().getCourseManager();
-            for (CourseSection sectionOfCourse : conflictCheckSections){
-                if (!manager.hasConflicts(sectionOfCourse)){
-                    sections.add(sectionOfCourse);
-                } else {
-                    return true;
+            if (course != null) {
+                ArrayList<CourseSection> conflictCheckSections = course.split();
+                TimeTableManager manager = scheduleCourseScreen.getController().getFactory().getCourseManager();
+                for (CourseSection sectionOfCourse : conflictCheckSections){
+                    if (!manager.hasConflicts(sectionOfCourse)){
+                        sections.add(sectionOfCourse);
+                    } else {
+                        return true;
+                    }
                 }
             }
         }
