@@ -90,8 +90,6 @@ public class GUIMakeEventCommand implements Command {
                 running = false;
             }
         }
-
-        System.out.println("Event Scheduled");
     }
 
     /**
