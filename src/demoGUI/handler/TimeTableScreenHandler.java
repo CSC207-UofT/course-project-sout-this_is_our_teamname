@@ -9,8 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TimeTableScreenHandler implements ActionListener {
-    private TimeTableScreen timeTableScreen;
-    private DatabaseController controller;
+    private final TimeTableScreen timeTableScreen;
+    private final DatabaseController controller;
 
     public TimeTableScreenHandler(TimeTableScreen timeTableScreen) {
 
