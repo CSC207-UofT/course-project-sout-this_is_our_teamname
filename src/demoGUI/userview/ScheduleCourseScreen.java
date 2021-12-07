@@ -27,15 +27,13 @@ public class ScheduleCourseScreen extends AbstractScreen{
     JLabel tutorial = new JLabel("Tutorial");
     JComboBox<String> tutBox = new JComboBox<>();
 
-
-
-
     JButton backBtn = new JButton("Back");
     JButton searchBtn = new JButton("Search");
     JButton applyBtn = new JButton("Schedule");
     JButton solverBtn = new JButton("Solver");
 
     ScheduleCourseHandler scheduleCourseHandler;
+    Boolean conflit;
 
     Course lec;
     Course tut;
@@ -47,6 +45,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
         this.controller = controller;
         scheduleCourseHandler = new ScheduleCourseHandler(this);
         Container contentPane = getContentPane();
+
+        conflit = false;
 
         courseName.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         courseName.setBounds(200, 40, 120, 40);
@@ -218,6 +218,10 @@ public class ScheduleCourseScreen extends AbstractScreen{
     public Course getTut() {
         return this.tut;
     }
+
+    public Boolean getConflict() {return conflit;}
+
+    public void setConflit(Boolean conflit) {this.conflit = conflit;}
 
     public static void main(String[] args) {
         DatabaseController controller = new DatabaseController("gui");

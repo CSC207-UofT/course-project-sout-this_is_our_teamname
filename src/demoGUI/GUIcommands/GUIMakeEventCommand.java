@@ -41,7 +41,7 @@ public class GUIMakeEventCommand implements Command {
     final String DESCRIPTION = "description";
 
     private Events scheduledObject;
-    private ScheduleEventScreen scheduleEventScreen;
+    private final ScheduleEventScreen scheduleEventScreen;
 
     /**
      * A constructor to set the command
@@ -82,6 +82,7 @@ public class GUIMakeEventCommand implements Command {
                     running = false;
                 } else {
                     scheduleEventScreen.setConflict(true);
+                    running = false;
                 }
             } else {
                 Task obj = (Task) toSchedule;
