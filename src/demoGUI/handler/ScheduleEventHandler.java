@@ -2,6 +2,8 @@ package demoGUI.handler;
 
 import Helpers.Constants;
 import Helpers.StringToTime;
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.GUICommandFactory;
 import demoGUI.GUIcommands.GUIMakeEventCommand;
 import demoGUI.userview.*;
 
@@ -27,7 +29,8 @@ public class ScheduleEventHandler implements ActionListener {
         else if ("Schedule".equals(text)) {
             try{
                 //schedule events
-                scheduleEventScreen.getController().getFactory().setScreen(scheduleEventScreen);
+                CommandFactory factory = scheduleEventScreen.getController().getFactory();
+                ((GUICommandFactory) factory).setScreen(scheduleEventScreen);
                 scheduleEventScreen.getController().runCommand(Constants.SCHEDULE_EVENT);
             } catch (Exception ignore){}
             //refresh timetables
