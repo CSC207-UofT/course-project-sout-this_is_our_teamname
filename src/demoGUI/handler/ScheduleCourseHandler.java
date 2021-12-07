@@ -5,6 +5,8 @@ import DataGetting.DataGetter;
 import DataGetting.WebScraper;
 import Helpers.Constants;
 import Helpers.InvalidInputException;
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.GUICommandFactory;
 import TimeTableObjects.Course;
 import demoGUI.userview.*;
 
@@ -80,7 +82,8 @@ public class ScheduleCourseHandler implements ActionListener {
                 Course tutSection = map.get(tutCode);
                 scheduleCourseScreen.setLecture(lecSection);
                 scheduleCourseScreen.setTutorial(tutSection);
-                scheduleCourseScreen.getController().getFactory().setScreen(scheduleCourseScreen);
+                GUICommandFactory factory = ((GUICommandFactory)scheduleCourseScreen.getController().getFactory());
+                factory.setScreen(scheduleCourseScreen);
                 scheduleCourseScreen.getController().runCommand(Constants.SCHEDULE_COURSE);
 
             } catch (FileNotFoundException | InvalidInputException ex) {

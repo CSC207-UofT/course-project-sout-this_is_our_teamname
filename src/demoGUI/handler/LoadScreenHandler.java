@@ -1,6 +1,8 @@
 package demoGUI.handler;
 
 import Helpers.Constants;
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.GUICommandFactory;
 import demoGUI.userview.LoadScreen;
 
 import javax.swing.*;
@@ -24,7 +26,8 @@ public class LoadScreenHandler implements ActionListener{
         } else if ("Load".equals(text)){
             try{
                 //load timetables
-                loadscreen.getController().getFactory().setScreen(loadscreen);
+                CommandFactory factory = loadscreen.getController().getFactory();
+                ((GUICommandFactory) factory).setScreen(loadscreen);
                 loadscreen.getController().runCommand(Constants.LOAD_DATA);
             } catch (Exception ignore){}
             //refresh timetables

@@ -1,6 +1,8 @@
 package demoGUI.handler;
 
 import Helpers.Constants;
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.GUICommandFactory;
 import demoGUI.userview.SaveScreen;
 
 import javax.swing.*;
@@ -24,7 +26,8 @@ public class SaveScreenHandler implements ActionListener{
         } else if ("Save".equals(text)){
             try{
                 //save timetables
-                savescreen.getController().getFactory().setScreen(savescreen);
+                CommandFactory factory = savescreen.getController().getFactory();
+                ((GUICommandFactory) factory).setScreen(savescreen);
                 savescreen.getController().runCommand(Constants.DOWNLOAD_TIMETABLE);
             } catch (Exception ignore){}
             //refresh timetables

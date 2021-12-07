@@ -7,7 +7,7 @@ import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
 import demoGUI.handler.TimeTableScreenController;
 import demoGUI.util.DimensionUtil;
-
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 
+
 public class TimeTableScreen extends JFrame {
     private JPanel TimeTableRootPanel;
     private JPanel ButtonsPanel;
@@ -29,20 +30,11 @@ public class TimeTableScreen extends JFrame {
     private JButton taskActivityButton;
     private JButton saveButton;
     private JButton loadButton;
-    private JButton settingsButton;
     private JPanel TitlePanel;
     private JLabel titleLable;
     private JTabbedPane timeTableTabs;
     private JPanel UnderTabsPanel;
     private JScrollPane TimeTableScrollPane;
-    private JComboBox<String> comboBox1;
-    private JComboBox<String> comboBox2;
-    private JComboBox<String> comboBox3;
-    private JComboBox<String> comboBox4;
-    private JComboBox<String> comboBox5;
-    private JComboBox<String> comboBox6;
-    private JComboBox<String> comboBox7;
-    private JLabel reminderLabel;
     TimeTableScreenController timeTableScreenController;
     List<TableCellEditor> editors = new ArrayList<>(7);
 
@@ -57,7 +49,6 @@ public class TimeTableScreen extends JFrame {
         taskActivityButton.addActionListener(timeTableScreenController);
         saveButton.addActionListener(timeTableScreenController);
         loadButton.addActionListener(timeTableScreenController);
-        settingsButton.addActionListener(timeTableScreenController);
 
         // Terminate program
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -111,7 +102,25 @@ public class TimeTableScreen extends JFrame {
 
     //TODO extract method here
     private JTable fillTimeTable(TimeTable table) {
-            JTable jtable = new JTable(25, 8);
+            JTable jtable = new JTable(25, 8){
+
+                // Implement table cell tool tips.
+                //Citation: https://stackoverflow.com/questions/9467093/how-to-add-a-tooltip-to-a-cell-in-a-jtable
+                public String getToolTipText(MouseEvent e) {
+                    String tip = null;
+                    java.awt.Point p = e.getPoint();
+                    int rowIndex = rowAtPoint(p);
+                    int colIndex = columnAtPoint(p);
+
+                    try {
+                        tip = getValueAt(rowIndex, colIndex).toString();
+                    } catch (RuntimeException e1) {
+                        //catch null pointer exception if mouse is over an empty line
+                    }
+
+                    return tip;
+                }//Citation ends
+            };
             //set times
             for (int i = 0; i <= 23; i++) {
                 String time = Constants.TIME[i];

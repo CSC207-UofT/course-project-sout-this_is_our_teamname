@@ -42,9 +42,6 @@ public class TimeTableScreenController implements ActionListener {
             case "Load":
                 new LoadScreen(controller, timeTableScreen);
                 break;
-            case "Settings":
-                new OperatorScreen(timeTableScreen);
-                break;
             default:
                 break;
         }
