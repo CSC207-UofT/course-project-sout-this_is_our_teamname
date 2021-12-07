@@ -1,11 +1,10 @@
 package InterfaceAdaprotsTests;
 
 import Commands.Command;
-import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.CommandLineCommandFactory;
 import InterfaceAdaptors.DatabaseController;
 import DataGetting.CSVScraper;
 import Helpers.InvalidInputException;
-import TimeTableContainers.TimeTableManager;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +24,7 @@ public class DatabaseControllerTest {
     @Before
     public void TestSetup(){
         controller = new DatabaseController("cmd");
-        CommandFactory theFactory = new CommandFactory(controller);
+        CommandLineCommandFactory theFactory = new CommandLineCommandFactory(controller);
         theFactory.setDataSource(new CSVScraper());
         controller.setFactory(theFactory);
     }

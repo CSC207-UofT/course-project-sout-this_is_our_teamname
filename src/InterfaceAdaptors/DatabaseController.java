@@ -37,9 +37,8 @@ public class DatabaseController {
     public DatabaseController(String currentUI){
         this.CommandHistory = new Stack<>();
         this.currentUI = currentUI;
-        this.Factory = new CommandFactory(this);
+        this.Factory = null;
     }
-
 
     // ======================== Control UserInterface ==========================
     /**
@@ -55,7 +54,6 @@ public class DatabaseController {
         String[] banFunctions = this.readFunctions();
 
         this.Factory.setAllowedFunctions(banFunctions);
-
     }
 
     /**
@@ -114,7 +112,13 @@ public class DatabaseController {
         return newString.split(",\\s+");
     }
 
-
+    private void setFactory(){
+        if (currentUI.equals("cmd")){
+            this.Factory = new CommandLineCommandFactory(this);
+        } else {
+            this.Factory = new GUICommandFactory(this);
+        }
+    }
     // ======================= Control OperatorInterface =======================
     /**
      * Ban the function in the CommandFactory according to the operator's choice.
@@ -139,6 +143,7 @@ public class DatabaseController {
         // Set the factory so that it persists even before the program exits
         this.Factory.setAllowedFunctions(function.toArray(new String[0]));
     }
+
     /**
      * Set the datasource to the CommandFactory according to the operator's choice.
      *
@@ -157,7 +162,6 @@ public class DatabaseController {
         // After writing, close the file.
         file.close();
     }
-
 
     // ===================== Command Pattern Infrastructure ====================
     /**
@@ -186,6 +190,7 @@ public class DatabaseController {
         executeCommand(theCommand);
         return true;
     }
+
     /**
      * Sends the command into the commandHistory and executes the command.
      *
@@ -198,7 +203,6 @@ public class DatabaseController {
         this.CommandHistory.push(theCommand);
         theCommand.execute();
     }
-
 
     // ============================ Setters and Getters ========================
 
@@ -215,7 +219,7 @@ public class DatabaseController {
      *
      * @param theFactory the factory to be set
      */
-    public void setFactory(CommandFactory theFactory){
+    public void setFactory(CommandLineCommandFactory theFactory){
         this.Factory = theFactory;
     }
 
@@ -231,7 +235,9 @@ public class DatabaseController {
      * Gets the type of UI currently in use.
      * @return string representation of UI currently in use
      */
-    public String getCurrentUI() { return currentUI; }
+    public String getCurrentUI() {
+        return currentUI;
+    }
 
     /**
      * Returns a hashmap of the entries in the string array commandList with

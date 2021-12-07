@@ -1,18 +1,11 @@
 package demoGUI.handler;
 
 
-import DataGetting.CSVScraper;
-import DataGetting.WebScraper;
-import InterfaceAdaptors.CommandFactory;
-import InterfaceAdaptors.DatabaseController;
-import Interfaces.InterfaceFacade;
 import Interfaces.OperatorInterface;
-import TimeTableContainers.TimeTableManager;
 import demoGUI.userview.OperatorScreen;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 /**
  * Handle's schedule course button when clicked
