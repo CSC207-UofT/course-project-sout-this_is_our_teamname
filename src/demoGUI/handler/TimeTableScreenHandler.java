@@ -8,11 +8,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TimeTableScreenController implements ActionListener {
+public class TimeTableScreenHandler implements ActionListener {
     private TimeTableScreen timeTableScreen;
     private DatabaseController controller;
 
-    public TimeTableScreenController(TimeTableScreen timeTableScreen) {
+    public TimeTableScreenHandler(TimeTableScreen timeTableScreen) {
 
         this.timeTableScreen = timeTableScreen;
         this.controller = new DatabaseController("gui");

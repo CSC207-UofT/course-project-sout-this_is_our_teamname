@@ -61,6 +61,7 @@ public class MakeEventCommand implements Command {
             HashMap<String, String> responses = promptUser();
 
             Object toSchedule = getCorrectTimeTableObject(
+                    responses.get(NAME),
                     StringToTime.makeTime(responses.get(START_TIME)),
                     StringToTime.makeTime(responses.get(END_TIME)),
                     responses.get(LOCATION),
@@ -154,13 +155,14 @@ public class MakeEventCommand implements Command {
      * @param type the type of object
      * @return event "cast" to the correct type.
      */
-    public static Object getCorrectTimeTableObject(LocalTime startTime,
-                                                         LocalTime endTime,
-                                                         String theLocation,
-                                                         String theDate,
-                                                         String term,
-                                                         String year,
-                                                         String type) {
+    public static Object getCorrectTimeTableObject(String name,
+                                                   LocalTime startTime,
+                                                   LocalTime endTime,
+                                                   String theLocation,
+                                                   String theDate,
+                                                   String term,
+                                                   String year,
+                                                   String type) {
         // Creates the Activity
         switch (type){
             case Constants.ACTIVITY:
@@ -168,12 +170,15 @@ public class MakeEventCommand implements Command {
                 System.out.println("Enter Description: ");
                 String description = descriptionScanner.nextLine();
 
-                return new Activity(startTime, endTime, theDate,
+                Activity activity = new Activity(startTime, endTime, theDate,
                         term + " " + year, description);
+                activity.setName(name);
+                return activity;
             case Constants.TASK:
                 Task task = new Task(startTime, endTime, theDate,
                         term + " " + year);
-                task.addToName(theLocation);
+                task.setName(name);
+                task.addToName(" at " + theLocation);
                 return task;
             // ...
             // Add more types of events here!

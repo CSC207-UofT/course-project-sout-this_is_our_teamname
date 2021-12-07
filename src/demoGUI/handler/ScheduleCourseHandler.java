@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ScheduleCourseHandler implements ActionListener {
-    private ScheduleCourseScreen scheduleCourseScreen;
+    private final ScheduleCourseScreen scheduleCourseScreen;
 
     public ScheduleCourseHandler(ScheduleCourseScreen scheduleCourseScreen){
         this.scheduleCourseScreen = scheduleCourseScreen;
@@ -91,6 +91,10 @@ public class ScheduleCourseHandler implements ActionListener {
             }
             scheduleCourseScreen.getScreen().refreshTimetableTabs(
                     scheduleCourseScreen.getController().getFactory().getCourseManager());
+            //opens conflict dialog when there is a conflict in scheduling
+            if (scheduleCourseScreen.getConflict()){
+                ConflictDialog.main(new String[]{""});
+            }
             scheduleCourseScreen.dispose();
         }
 

@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalTime;
 
 public class ScheduleEventHandler implements ActionListener {
-    private ScheduleEventScreen scheduleEventScreen;
+    private final ScheduleEventScreen scheduleEventScreen;
 
     public ScheduleEventHandler(ScheduleEventScreen scheduleEventScreen){
         this.scheduleEventScreen = scheduleEventScreen;
@@ -36,6 +36,10 @@ public class ScheduleEventHandler implements ActionListener {
             //refresh timetables
             scheduleEventScreen.getScreen().refreshTimetableTabs(
                     scheduleEventScreen.getController().getFactory().getCourseManager());
+            //opens conflict dialog when there is a conflict in scheduling
+            if (scheduleEventScreen.getConflict()){
+            ConflictDialog.main(new String[]{""});
+            }
             scheduleEventScreen.dispose();
 
         }
