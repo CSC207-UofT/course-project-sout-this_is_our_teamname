@@ -81,7 +81,7 @@ public class GUIMakeEventCommand implements Command {
                     scheduledObject = obj;
                     running = false;
                 } else {
-                    System.out.println("Conflict Found. Try again!");
+                    scheduleEventScreen.setConflict(true);
                 }
             } else {
                 Task obj = (Task) toSchedule;

@@ -3,6 +3,7 @@ package demoGUI.handler;
 import Helpers.Constants;
 import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.GUICommandFactory;
+import demoGUI.userview.ConflictDialog;
 import demoGUI.userview.SaveScreen;
 
 import javax.swing.*;
@@ -31,8 +32,7 @@ public class SaveScreenHandler implements ActionListener{
                 savescreen.getController().runCommand(Constants.DOWNLOAD_TIMETABLE);
             } catch (Exception ignore){}
             //refresh timetables
-            savescreen.getScreen().refreshTimetableTabs(
-                    savescreen.getController().getFactory().getCourseManager());
+            savescreen.getScreen().refreshTimetableTabs(savescreen.getController().getFactory().getCourseManager());
             savescreen.dispose();
         }
     }

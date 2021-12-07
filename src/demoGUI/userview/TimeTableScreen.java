@@ -5,21 +5,16 @@ import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
-import demoGUI.handler.TimeTableScreenController;
+import demoGUI.handler.TimeTableScreenHandler;
 import demoGUI.util.DimensionUtil;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.table.*;
-import javax.swing.text.TableView;
 import java.awt.*;
 import java.net.URL;
-import java.time.LocalTime;
 import java.util.List;
-import java.util.Locale;
 
 
 public class TimeTableScreen extends JFrame {
@@ -35,20 +30,20 @@ public class TimeTableScreen extends JFrame {
     private JTabbedPane timeTableTabs;
     private JPanel UnderTabsPanel;
     private JScrollPane TimeTableScrollPane;
-    TimeTableScreenController timeTableScreenController;
+    TimeTableScreenHandler timeTableScreenHandler;
     List<TableCellEditor> editors = new ArrayList<>(7);
 
     public TimeTableScreen() {
         super();
 
-        timeTableScreenController = new TimeTableScreenController(this);
+        timeTableScreenHandler = new TimeTableScreenHandler(this);
         this.setContentPane(TimeTableRootPanel);
 
         // add button functions
-        courseButton.addActionListener(timeTableScreenController);
-        taskActivityButton.addActionListener(timeTableScreenController);
-        saveButton.addActionListener(timeTableScreenController);
-        loadButton.addActionListener(timeTableScreenController);
+        courseButton.addActionListener(timeTableScreenHandler);
+        taskActivityButton.addActionListener(timeTableScreenHandler);
+        saveButton.addActionListener(timeTableScreenHandler);
+        loadButton.addActionListener(timeTableScreenHandler);
 
         // Terminate program
         setDefaultCloseOperation(EXIT_ON_CLOSE);

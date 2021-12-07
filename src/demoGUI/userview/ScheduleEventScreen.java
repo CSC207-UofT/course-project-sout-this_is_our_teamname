@@ -38,11 +38,15 @@ public class ScheduleEventScreen extends AbstractScreen{
 
     ScheduleEventHandler scheduleEventHandler;
 
+    Boolean conflict;
+
     public ScheduleEventScreen(DatabaseController controller, TimeTableScreen screen) {
         super("Schedule NonCourse", screen);
         scheduleEventHandler = new ScheduleEventHandler(this);
         this.controller = controller;
         Container contentPane = getContentPane();
+
+        conflict = false;
 
         eventName.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         eventName.setBounds(200, 40, 120, 40);
@@ -221,6 +225,10 @@ public class ScheduleEventScreen extends AbstractScreen{
     public String getDescription() {
         return Objects.requireNonNull(descriptionTxt.getText());
     }
+
+    public Boolean getConflict() {return conflict;}
+
+    public void setConflict(Boolean conflict) {this.conflict = conflict;}
 
     public static void main(String[] args) {
         DatabaseController controller = new DatabaseController("gui");

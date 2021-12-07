@@ -36,6 +36,10 @@ public class ScheduleEventHandler implements ActionListener {
             //refresh timetables
             scheduleEventScreen.getScreen().refreshTimetableTabs(
                     scheduleEventScreen.getController().getFactory().getCourseManager());
+            //set conflict dialog window for when there is a conflict in scheduling
+//            if (scheduleEventScreen.getConflict()){
+//            ConflictDialog.main(new String[]{""});
+//            }
             scheduleEventScreen.dispose();
 
         }
