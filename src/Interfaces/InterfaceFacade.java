@@ -9,8 +9,6 @@ import Helpers.InputCheckers.Predicate;
 
 
 /**
- * TODO REMOVE THIS SENTENCE!!!
- *
  * A InterfaceFacade class that serves as the Invoker in the facade
  * pattern. It sets the UserInterface and OperatorInterface and executes them according to input.
  *
