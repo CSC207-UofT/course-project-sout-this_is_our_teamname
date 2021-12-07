@@ -124,6 +124,17 @@ public class ScheduleCourseScreen extends AbstractScreen{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
+    
+    /**
+     * The main method of the ScheduleCourseScreen.
+     *
+     */
+    public static void main(String[] args) {
+        DatabaseController controller = new DatabaseController("gui");
+        TimeTableScreen screen = new TimeTableScreen();
+        new ScheduleCourseScreen(controller, screen);
+
+    }
 
     protected void setFrame() {
         // Window's icon
@@ -176,8 +187,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
     }
 
     public void setLeturebox(ArrayList<String> input){
-       for(int i = 0; i < input.size(); i++){
-           this.lectureBox.addItem(input.get(i));
+        for (String s : input) {
+            this.lectureBox.addItem(s);
         }
     }
 

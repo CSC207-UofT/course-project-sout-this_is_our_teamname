@@ -9,12 +9,13 @@ import java.net.URL;
 import java.util.Objects;
 
 /**
- * This is the homeScreen of the GUI
+ * This is the setting screen of the GUI.
  */
-
-// TODO Tray Icon P8, Get text by click enter P9 9:50. jTable for timetable at P10 8:50
 public class OperatorScreen extends AbstractScreen{
+
     OperatorInterface operator;
+    OperatorScreenHandler operatorScreenHandler;
+
     JLabel title = new JLabel("Setting", JLabel.CENTER);
     JLabel datasource = new JLabel("Data source");
     JPanel centerPanel = new JPanel(null);
@@ -24,22 +25,26 @@ public class OperatorScreen extends AbstractScreen{
     JButton applyBtn = new JButton("Apply");
     JComboBox<String> dataBox = new JComboBox<>();
 
-
-    OperatorScreenHandler operatorScreenHandler;
-
+    /**
+     * Construct an OperatorScreen with the given screen.
+     * @param screen A TimeTableScreen that stores controller.
+     */
     public OperatorScreen(TimeTableScreen screen) {
+
         super("Settings", screen);
-        //this.operator = operator;
+
         operatorScreenHandler = new OperatorScreenHandler(this);
 
         Container contentPane = getContentPane();
 
+        // Title
         title.setFont(new Font("Times New Roman", Font.PLAIN, 40));
         title.setPreferredSize(new Dimension(0, 80));
 
         datasource.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         datasource.setBounds(240, 30,120, 30);
-        // Schedule event
+
+        // Ban button
         banBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         banBtn.addActionListener(operatorScreenHandler);
 
@@ -58,18 +63,19 @@ public class OperatorScreen extends AbstractScreen{
         dataBox.addItem("Default");
         dataBox.setBounds(400, 30,120, 30);
 
+        // Add the components to panel.
         centerPanel.add(dataBox);
         centerPanel.add(datasource);
         southPanel.add(applyBtn);
         southPanel.add(backBtn);
 
+        // Add panel to contentpane
         contentPane.add(title, BorderLayout.NORTH);
         contentPane.add(centerPanel);
-
         contentPane.add(southPanel, BorderLayout.SOUTH);
 
-
         setFrame();
+
         // Visibility
         setVisible(true);
 
@@ -77,8 +83,12 @@ public class OperatorScreen extends AbstractScreen{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
-
+    
+    /** 
+     * Screen size, icon and display settings.
+     */
     protected void setFrame() {
+
         // Window's icon
         URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
         assert resource != null;
@@ -95,14 +105,29 @@ public class OperatorScreen extends AbstractScreen{
         setResizable(false);
     }
 
+    /**
+     * Get the current operator for the screen
+     * 
+     * @return operator an OperatorInterface
+     */
     public OperatorInterface getOperator() {
         return operator;
     }
 
+    /**
+     * Get the current operator for the screen.
+     *
+     * @param operator an OperatorInterface
+     */
     public void setOperator(OperatorInterface operator) {
         this.operator = operator;
     }
 
+    /**
+     * Get the current datasource in the databox.
+     *
+     * @return A string representation of the choice in data box.
+     */
     public String getDatasource(){
         return Objects.requireNonNull(dataBox.getSelectedItem()).toString();
     }
