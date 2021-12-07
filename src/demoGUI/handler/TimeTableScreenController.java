@@ -1,18 +1,16 @@
 package demoGUI.handler;
 
-import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.DatabaseController;
 import demoGUI.userview.TimeTableScreen;
 import demoGUI.userview.*;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TimeTableScreenController implements ActionListener {
-    private TimeTableScreen timeTableScreen;
-    private DatabaseController controller;
+    private final TimeTableScreen timeTableScreen;
+    private final DatabaseController controller;
 
     public TimeTableScreenController(TimeTableScreen timeTableScreen) {
 

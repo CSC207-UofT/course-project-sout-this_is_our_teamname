@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command {
 
     private final ArrayList<Course> scheduledCourse;
-    private ScheduleCourseScreen scheduleCourseScreen;
+    private final ScheduleCourseScreen scheduleCourseScreen;
 
     /**
      * A constructor to initialize what this command is connected to
