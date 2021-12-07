@@ -63,16 +63,20 @@ public class ScheduleCourseHandler implements ActionListener {
                 LinkedHashMap<String, Course> map = webscraper.retrieveData(name, term, year);
                 ArrayList<String> lecture = new ArrayList<>();
                 ArrayList<String> tutorial = new ArrayList<>();
+                ArrayList<String> practical = new ArrayList<>();
                 for (String x: map.keySet()) {
                     if (x.charAt(0) == 'L') {
                         lecture.add(x + ": " + map.get(x));
-                    } else {
+                        } else if (x.charAt(0) == 'T') {
                         tutorial.add(x + ": " + map.get(x));
+                    } else if (x.charAt(0) == 'P'){
+                        practical.add(x + ": " + map.get(x));
                     }
                 }
                 // set the information of lectures and tutorials to corresponding JComboBox.
                 scheduleCourseScreen.setLeturebox(lecture);
                 scheduleCourseScreen.setTutBox(tutorial);
+                scheduleCourseScreen.setpracBox(practical);
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             }
@@ -88,12 +92,20 @@ public class ScheduleCourseHandler implements ActionListener {
                 LinkedHashMap<String, Course> map = webscraper.retrieveData(name, term, year);
                 String lecture = scheduleCourseScreen.getlecBox();
                 String tut = scheduleCourseScreen.gettutBox();
+                String prac = scheduleCourseScreen.getpracBox();
+                System.out.println(tut);
+                System.out.println(prac);
                 String lecCode = lecture.split(":")[0];
                 String tutCode = tut.split(":")[0];
+                String pracCode = prac.split(":")[0];
+                System.out.println(tutCode);
+                System.out.println(pracCode);
                 Course lecSection = map.get(lecCode);
                 Course tutSection = map.get(tutCode);
+                Course pracSection = map.get(pracCode);
                 scheduleCourseScreen.setLecture(lecSection);
                 scheduleCourseScreen.setTutorial(tutSection);
+                scheduleCourseScreen.setPractical(pracSection);
                 GUICommandFactory factory = ((GUICommandFactory)scheduleCourseScreen.getController().getFactory());
                 factory.setScreen(scheduleCourseScreen);
                 scheduleCourseScreen.getController().runCommand(Constants.SCHEDULE_COURSE);

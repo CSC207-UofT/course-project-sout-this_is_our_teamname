@@ -30,6 +30,7 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
         ArrayList<Course> scheduledCourse = new ArrayList<>();
         scheduledCourse.add(scheduleCourseScreen.getTut());
         scheduledCourse.add(scheduleCourseScreen.getLec());
+        scheduledCourse.add(scheduleCourseScreen.getPrac());
 
         this.scheduledCourse = scheduledCourse;
         this.scheduleCourseScreen = scheduleCourseScreen;

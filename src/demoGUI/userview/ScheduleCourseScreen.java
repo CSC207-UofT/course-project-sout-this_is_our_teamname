@@ -28,6 +28,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
     JComboBox<String> lectureBox = new JComboBox<>();
     JLabel tutorial = new JLabel("Tutorial");
     JComboBox<String> tutBox = new JComboBox<>();
+    JLabel practical = new JLabel("Practical");
+    JComboBox<String> pracBox = new JComboBox<>();
     JButton backBtn = new JButton("Back");
     JButton searchBtn = new JButton("Search");
     JButton applyBtn = new JButton("Schedule");
@@ -35,6 +37,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
     ScheduleCourseHandler scheduleCourseHandler;
     Course lec;
     Course tut;
+    Course prac;
     DatabaseController controller;
 
 
@@ -84,6 +87,12 @@ public class ScheduleCourseScreen extends AbstractScreen{
         tutBox.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         tutBox.setBounds(120, 340, 600, 40);
 
+        practical.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        practical.setBounds(40, 400, 120, 40);
+
+        pracBox.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        pracBox.setBounds(120, 400, 600, 40);
+
         // Back button
         backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         backBtn.addActionListener(scheduleCourseHandler);
@@ -114,6 +123,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
         centerPanel.add(lectureBox);
         centerPanel.add(tutorial);
         centerPanel.add(tutBox);
+        centerPanel.add(practical);
+        centerPanel.add(pracBox);
         southPanel.add(backBtn);
         southPanel.add(applyBtn);
         contentPane.add(centerPanel);
@@ -233,12 +244,26 @@ public class ScheduleCourseScreen extends AbstractScreen{
     }
 
     /**
+     * A helper method to set the pracBox.
+     *
+     * @param input a list of string that need to be put into the practical box.
+     */
+    public void setpracBox(ArrayList<String> input){
+        for (String s : input) {
+            this.pracBox.addItem(s);
+        }
+    }
+
+    /**
      * A helper method to get the item in the tutorialBox.
      * 
      * @return string representation of the selected item in tutorial box.
      */
     public String gettutBox() {
-        return Objects.requireNonNull(tutBox.getSelectedItem()).toString();
+        if (tutBox.getSelectedItem() != null) {
+            return Objects.requireNonNull(tutBox.getSelectedItem()).toString();
+        }
+        return "";
     }
 
     /**
@@ -247,7 +272,22 @@ public class ScheduleCourseScreen extends AbstractScreen{
      * @return string representation of the selected item in lecture box.
      */
     public String getlecBox() {
-        return Objects.requireNonNull(lectureBox.getSelectedItem()).toString();
+        if (lectureBox.getSelectedItem() != null) {
+            return Objects.requireNonNull(lectureBox.getSelectedItem()).toString();
+        }
+        return "";
+    }
+
+    /**
+     * A helper method to get the item in the pracBox.
+     *
+     * @return string representation of the selected item in practical box.
+     */
+    public String getpracBox() {
+        if (pracBox.getSelectedItem() != null) {
+            return Objects.requireNonNull(pracBox.getSelectedItem()).toString();
+        }
+        return "";
     }
 
     /**
@@ -274,6 +314,13 @@ public class ScheduleCourseScreen extends AbstractScreen{
     }
 
     /**
+     * A helper method to set the practical.
+     */
+    public void setPractical(Course prac) {
+        this.prac = prac;
+    }
+
+    /**
      * A helper method to get the lecture.
      * 
      * @return the lecture section being selected.
@@ -289,5 +336,14 @@ public class ScheduleCourseScreen extends AbstractScreen{
      */
     public Course getTut() {
         return this.tut;
+    }
+
+    /**
+     * A helper method to get the practical.
+     *
+     * @return the practical section being selected
+     */
+    public Course getPrac() {
+        return this.prac;
     }
 }
