@@ -47,6 +47,8 @@ def _format_time(t: str):
         return t
     if int(timesplit[0]) > 12:
         return f"{int(timesplit[0]) - 12}:{timesplit[1]}PM"
+    elif int(timesplit[0]) == 12:
+        return f"12:{timesplit[1]}PM"
     else:
         return f"{int(timesplit[0])}:{timesplit[1]}AM"
 
@@ -93,17 +95,17 @@ def prepare_to_write(obj: List[List[str]]):
 def main():
     dat = get_data("ReferenceFiles\\WinterCourses.csv")
     for it in dat:
-        s = f"{it},Winter2021,Faculty of Applied Science and Engineering,,\n" \
+        s = f"{it},Winter2022,Faculty of Applied Science and Engineering,,\n" \
              f"ACTIVITY,TIME,LOCATION,INSTRUCTOR,DELIVERY METHOD\n" \
              f"{prepare_to_write(dat[it])}\n"
-        output = open(f"Winter2021\\{it[:-1]}.csv", 'w')
+        output = open(f"Winter2022\\{it[:-1]}.csv", 'w')
         output.write(s)
         output.close()
 
 
 def python_patch1():
-    for filename in os.listdir("Winter2021"):
-        input_ = open(f"Winter2021\\{filename}")
+    for filename in os.listdir("Winter2022"):
+        input_ = open(f"Winter2022\\{filename}")
         data = input_.read()
         input_.close()
 
@@ -117,5 +119,5 @@ def python_patch1():
 
 
 if __name__ == '__main__':
-    # main()
-    python_patch1()
+    main()
+    # python_patch1()
