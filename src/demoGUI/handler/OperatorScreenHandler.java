@@ -1,6 +1,5 @@
 package demoGUI.handler;
 
-
 import Interfaces.OperatorInterface;
 import demoGUI.userview.OperatorScreen;
 import javax.swing.*;
@@ -8,12 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Handle's schedule course button when clicked
+ * Handles events on the setting screen.
  */
-
-
 public class OperatorScreenHandler implements ActionListener {
-    private OperatorScreen operatorScreen;
+    private final OperatorScreen operatorScreen;
+
 
     public OperatorScreenHandler(OperatorScreen operatorScreen){
         this.operatorScreen = operatorScreen;
@@ -25,8 +23,6 @@ public class OperatorScreenHandler implements ActionListener {
         String text = jButton.getText();
         if ("Back".equals(text)){
             backHome();
-        } else if ("Taiga".equals(text)){
-            JOptionPane.showMessageDialog(operatorScreen,"You touched Taiga's head Aww");
         } else if ("Apply".equals(text)) {
             // Get user input
             String type = operatorScreen.getDatasource();
@@ -34,10 +30,14 @@ public class OperatorScreenHandler implements ActionListener {
 
             operatorScreen.setOperator(operator);
 
+            // Showing prompts
             JOptionPane.showMessageDialog(operatorScreen,"Successfully applied " + type);
         }
     }
-
+    
+    /** 
+     * Dispose the current operatorScreen
+     */
     private void backHome(){
         operatorScreen.dispose();
     }

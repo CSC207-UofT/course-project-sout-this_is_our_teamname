@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command {
 
     private final ArrayList<Course> scheduledCourse;
-    private ScheduleCourseScreen scheduleCourseScreen;
+    private final ScheduleCourseScreen scheduleCourseScreen;
 
     /**
      * A constructor to initialize what this command is connected to
@@ -30,6 +30,7 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
         ArrayList<Course> scheduledCourse = new ArrayList<>();
         scheduledCourse.add(scheduleCourseScreen.getTut());
         scheduledCourse.add(scheduleCourseScreen.getLec());
+        scheduledCourse.add(scheduleCourseScreen.getPrac());
 
         this.scheduledCourse = scheduledCourse;
         this.scheduleCourseScreen = scheduleCourseScreen;
@@ -54,7 +55,7 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
                 manager.schedule(item);
             }
         } else {
-            System.out.println("A Conflict has occurred. Please Try Again!");
+            scheduleCourseScreen.setConflit(true);
         }
     }
 
@@ -67,13 +68,15 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
      */
     private boolean hasConflicts(ArrayList<CourseSection> sections) {
         for (Course course : this.scheduledCourse){
-            ArrayList<CourseSection> conflictCheckSections = course.split();
-            TimeTableManager manager = scheduleCourseScreen.getController().getFactory().getCourseManager();
-            for (CourseSection sectionOfCourse : conflictCheckSections){
-                if (!manager.hasConflicts(sectionOfCourse)){
-                    sections.add(sectionOfCourse);
-                } else {
-                    return true;
+            if (course != null) {
+                ArrayList<CourseSection> conflictCheckSections = course.split();
+                TimeTableManager manager = scheduleCourseScreen.getController().getFactory().getCourseManager();
+                for (CourseSection sectionOfCourse : conflictCheckSections){
+                    if (!manager.hasConflicts(sectionOfCourse)){
+                        sections.add(sectionOfCourse);
+                    } else {
+                        return true;
+                    }
                 }
             }
         }

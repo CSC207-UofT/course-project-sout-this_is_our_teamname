@@ -41,7 +41,7 @@ public class GUIMakeEventCommand implements Command {
     final String DESCRIPTION = "description";
 
     private Events scheduledObject;
-    private ScheduleEventScreen scheduleEventScreen;
+    private final ScheduleEventScreen scheduleEventScreen;
 
     /**
      * A constructor to set the command
@@ -81,7 +81,8 @@ public class GUIMakeEventCommand implements Command {
                     scheduledObject = obj;
                     running = false;
                 } else {
-                    System.out.println("Conflict Found. Try again!");
+                    scheduleEventScreen.setConflict(true);
+                    running = false;
                 }
             } else {
                 Task obj = (Task) toSchedule;
@@ -89,8 +90,6 @@ public class GUIMakeEventCommand implements Command {
                 running = false;
             }
         }
-
-        System.out.println("Event Scheduled");
     }
 
     /**
