@@ -12,7 +12,9 @@ import javax.swing.*;
  * screen: The window viewed by the user
  */
 public abstract class AbstractScreen extends JFrame {
-    protected DatabaseController controller;
+    // TODO Why is this unused. Make this protected so that child classes
+    //  inherit it. Write about it in DD
+    private DatabaseController controller;
     private final TimeTableScreen screen;
 
     /**
@@ -44,5 +46,7 @@ public abstract class AbstractScreen extends JFrame {
      */
     public DatabaseController getController() {
         return controller;
+
+
     }
 }
