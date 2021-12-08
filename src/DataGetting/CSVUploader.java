@@ -1,6 +1,7 @@
 package DataGetting;
 
 import TimeTableObjects.EventObjects.Activity;
+import TimeTableObjects.EventObjects.CourseSection;
 import TimeTableObjects.EventObjects.Task;
 
 import java.io.*;
@@ -36,14 +37,30 @@ public class CSVUploader extends DataGetter<Object> {
             throw new FileNotFoundException();
         }
         data.remove(0);
+        // TODO i is here just as a brute force approach. Basically, it needs to
+        //  be an unique item. That's the idea for place to data. Please
+        //  replace if you have better idea on how to do this
+        int i = 0;
         for (String[] line : data) {
-            if (!line[1].equals("Tasks")) {
+            if (!line[2].equals("Tasks")) {
                 String[] times = line[1].split("-");
                 if (line[2].equals("Activity")) {
                     Activity event = new Activity(LocalTime.of(Integer.parseInt(times[0].substring(0, 2)), 0, 0),
                             LocalTime.of(Integer.parseInt(times[1].substring(0, 2)), 0, 0), line[0], term, line[5]);
                     event.setName(line[3]);
                     placeToData(term, event);
+                } else if (line[2].equals("CourseSection")){
+                    CourseSection event =
+                            new CourseSection(line[3],
+                                    LocalTime.of(Integer.parseInt(times[0].substring(0, 2)), 0, 0),
+                                    LocalTime.of(Integer.parseInt(times[1].substring(0, 2)), 0, 0),
+                                    line[0],
+                                    term + " " + year,
+                                    line[4]);
+                    event.setName(line[3]);
+                    // TODO Fix i
+                    placeToData(String.valueOf(i), event);
+                    i++;
                 }
             }
             else {
