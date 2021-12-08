@@ -78,9 +78,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
      */
     public ScheduleCourseScreen(DatabaseController controller, TimeTableScreen screen) {
         // TODO Use Constants
-        super("Schedule Course", screen);
+        super("Schedule Course", controller, screen);
 
-        this.controller = controller;
 
         scheduleCourseHandler = new ScheduleCourseHandler(this);
         Container contentPane = getContentPane();
@@ -207,6 +206,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
      *
      */
     private void addTerm(){
+        termBox.removeAllItems();
         termBox.addItem("Fall");
         termBox.addItem("Winter");
     }
@@ -314,17 +314,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
             return Objects.requireNonNull(pracBox.getSelectedItem()).toString();
         }
         return "";
-    }
-
-    /**
-     * TODO WHY??? THIS IS INHERITED!!!
-     *
-     * A helper method to get the controller.
-     *
-     * @return the controller of the screen.
-     */
-    public DatabaseController getController() {
-        return controller;
     }
 
     /**

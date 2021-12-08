@@ -43,7 +43,6 @@ public class SaveScreen extends AbstractScreen{
     private static final JTextField termTxt = new JTextField(6);
 
     // TODO Controller can be inherited. See class AbstractScreen
-    DatabaseController controller;
     SaveScreenHandler saveScreenHandler;
 
     /**
@@ -53,9 +52,7 @@ public class SaveScreen extends AbstractScreen{
      */
     public SaveScreen(DatabaseController controller, TimeTableScreen screen) {
         // TODO Use Constants here
-        super("Save", screen);
-
-        this.controller = controller;
+        super("Save", controller, screen);
 
         saveScreenHandler = new SaveScreenHandler(this);
 
@@ -129,16 +126,6 @@ public class SaveScreen extends AbstractScreen{
 
         // Fixed size
         setResizable(false);
-    }
-
-    /**
-     * TODO WHY??? THIS IS INHERITED!!!
-     *
-     * Gets the DatabaseController for the GUI
-     * @return the DatabaseController for the GUI
-     */
-    public DatabaseController getController() {
-        return controller;
     }
 
     /**

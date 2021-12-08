@@ -55,9 +55,7 @@ public class LoadScreen extends AbstractScreen{
      */
     public LoadScreen(DatabaseController controller, TimeTableScreen screen) {
         // TODO Use Constants
-        super("Load", screen);
-
-        this.controller = controller;
+        super("Load", controller, screen);
 
         loadScreenHandler = new LoadScreenHandler(this);
 
@@ -130,16 +128,6 @@ public class LoadScreen extends AbstractScreen{
 
         // Fixed size
         setResizable(false);
-    }
-
-    /**
-     * TODO WHY??? THIS IS INHERITED!!!
-     *
-     * Gets the DatabaseController for the GUI
-     * @return the DatabaseController for the GUI
-     */
-    public DatabaseController getController() {
-        return controller;
     }
 
     /**

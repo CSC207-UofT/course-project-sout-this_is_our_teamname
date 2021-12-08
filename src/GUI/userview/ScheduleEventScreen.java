@@ -65,7 +65,6 @@ public class ScheduleEventScreen extends AbstractScreen{
     private static final JButton applyBtn = new JButton("Schedule");
 
     // TODO Controller can be inherited. See class AbstractScreen
-    DatabaseController controller;
     ScheduleEventHandler scheduleEventHandler;
     //TODO remove conflict everywhere, check correct use of dialog
     Boolean conflict;
@@ -77,9 +76,8 @@ public class ScheduleEventScreen extends AbstractScreen{
      */
     public ScheduleEventScreen(DatabaseController controller, TimeTableScreen screen) {
         // TODO USE CONsTANTS HERE!
-        super("Schedule NonCourse", screen);
+        super("Schedule NonCourse", controller, screen);
         scheduleEventHandler = new ScheduleEventHandler(this);
-        this.controller = controller;
         Container contentPane = getContentPane();
 
         conflict = false;
@@ -231,16 +229,6 @@ public class ScheduleEventScreen extends AbstractScreen{
     private void addType(){
         typeBox.addItem("Activity");
         typeBox.addItem("Reminder");
-    }
-
-    /**
-     * TODO WHY??? THIS IS INHERITED!!!
-     *
-     * Gets the DatabaseController for the GUI
-     * @return the DatabaseController for the GUI
-     */
-    public DatabaseController getController() {
-        return controller;
     }
 
     /**
