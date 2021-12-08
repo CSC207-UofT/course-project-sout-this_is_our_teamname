@@ -34,7 +34,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
     JButton searchBtn = new JButton("Search");
     JButton applyBtn = new JButton("Schedule");
     ScheduleCourseHandler scheduleCourseHandler;
-    Boolean conflict;
 
     Course lec;
     Course tut;
@@ -54,8 +53,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
         this.controller = controller;
         scheduleCourseHandler = new ScheduleCourseHandler(this);
         Container contentPane = getContentPane();
-
-        conflict = false;
 
         courseName.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         courseName.setBounds(200, 40, 120, 40);
@@ -149,12 +146,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
      * A helper method to set the frame.
      */
     protected void setFrame() {
-        // Window's icon
-        URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
-        assert resource != null;
-        Image image = new ImageIcon(resource).getImage();
-        setIconImage(image);
-
 
         // Set size
         setSize(800, 600);
@@ -339,23 +330,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
      */
     public Course getTut() {
         return this.tut;
-    }
-
-    /**
-     * A helper method to see if the current course creates a conflict in the timetable.
-     *
-     * @return true if there is a conflict, vice versa
-     */
-    public Boolean getConflict() {
-        return conflict;
-    }
-
-    /**
-     * A helper method, this will change the conflict status of the current course being scheduled.
-     *
-     */
-    public void setConflit(Boolean conflit) {
-        this.conflict = conflit;
     }
 
     /**

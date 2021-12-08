@@ -76,13 +76,6 @@ public class LoadScreen extends AbstractScreen{
     }
 
     protected void setFrame() {
-        // Window's icon
-        URL resource = LoadScreen.class.getClassLoader().getResource("pic2.jpg");
-        assert resource != null;
-        Image image = new ImageIcon(resource).getImage();
-        setIconImage(image);
-
-
         // Set size
         setSize(800, 600);
 
