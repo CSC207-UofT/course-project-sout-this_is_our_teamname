@@ -1,7 +1,9 @@
 package GUI.GUIcommands;
 
 import Commands.Command;
+import Commands.CreationCommands.MakeCourseCommand;
 import Commands.NeedsCoursesCommand;
+import DataGetting.CourseGetter;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
@@ -17,16 +19,20 @@ import java.util.ArrayList;
  * scheduledCourse: The courses to be scheduled to the manager.
  * scheduleCourseScreen: The window viewed by the user when scheduling a course.
  */
-public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command {
-
+public class GUIMakeCourseCommand implements Command {
+    private final TimeTableManager manager;
     private final ArrayList<Course> scheduledCourse;
     private final ScheduleCourseScreen scheduleCourseScreen;
+    private final CourseGetter source;
 
     /**
      * A constructor to initialize what this command is connected to
      * @param scheduleCourseScreen is the window viewed by the user when scheduling a course
      */
-    public GUIMakeCourseCommand(ScheduleCourseScreen scheduleCourseScreen){
+    public GUIMakeCourseCommand(ScheduleCourseScreen scheduleCourseScreen,
+                                TimeTableManager sendTo, CourseGetter dataSource){
+        this.manager = sendTo;
+        this.source = dataSource;
         ArrayList<Course> scheduledCourse = new ArrayList<>();
         scheduledCourse.add(scheduleCourseScreen.getTut());
         scheduledCourse.add(scheduleCourseScreen.getLec());
@@ -44,8 +50,6 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
 
         ArrayList<CourseSection> sections = new ArrayList<>();
 
-        TimeTableManager manager = scheduleCourseScreen.getController().getFactory().getCourseManager();
-
         boolean hasConflict = hasConflicts(sections);
 
 
@@ -55,8 +59,14 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
                 manager.schedule(item);
             }
         } else {
-            ConflictDialog.main(new String[]{""});
+            ConflictDialog cd = new ConflictDialog();
+            cd.run();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Scheduled Course";
     }
 
 

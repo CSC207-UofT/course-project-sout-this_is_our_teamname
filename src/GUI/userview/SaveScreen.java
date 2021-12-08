@@ -26,19 +26,22 @@ import java.awt.*;
  * saveScreenHandler: The handler to handle actions performed on the screen
  */
 public class SaveScreen extends AbstractScreen{
-    JLabel title = new JLabel("Please enter the name and year you would like to save your timetables with",
+    private static final JLabel title = new JLabel("Please enter the name and" +
+            " year you would like to save your timetables with",
             JLabel.CENTER);
-    JPanel centerPanel = new JPanel(null);
-    JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    JLabel name = new JLabel("Name");
-    JLabel year = new JLabel("Year");
-    JLabel term = new JLabel("Term");
-    JButton saveBtn = new JButton("Save");
-    JButton backBtn = new JButton("Back");
-    JTextField nameTxt = new JTextField(20);
-    JTextField yearTxt = new JTextField(4);
-    JTextField termTxt = new JTextField(6);
+    private static final JPanel centerPanel = new JPanel(null);
+    private static final JPanel southPanel =
+            new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    private static final JLabel name = new JLabel("Name");
+    private static final JLabel year = new JLabel("Year");
+    private static final JLabel term = new JLabel("Term");
+    private static final JButton saveBtn = new JButton("Save");
+    private static final JButton backBtn = new JButton("Back");
+    private static final JTextField nameTxt = new JTextField(20);
+    private static final JTextField yearTxt = new JTextField(4);
+    private static final JTextField termTxt = new JTextField(6);
 
+    // TODO Controller can be inherited. See class AbstractScreen
     DatabaseController controller;
     SaveScreenHandler saveScreenHandler;
 
@@ -48,6 +51,7 @@ public class SaveScreen extends AbstractScreen{
      * @param screen The window viewed by the user
      */
     public SaveScreen(DatabaseController controller, TimeTableScreen screen) {
+        // TODO Use Constants here
         super("Save", screen);
 
         this.controller = controller;
@@ -56,7 +60,11 @@ public class SaveScreen extends AbstractScreen{
 
         Container contentPane = getContentPane();
 
-        title.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        // TODO Make `new Font("Times New Roman", Font.PLAIN, 20)` into a
+        //  constant rather than repeating over and over, FONT20 FONT15example
+        //  below
+
+        title.setFont(Constants.FONT20);
         title.setPreferredSize(new Dimension(0, 20));
 
         // Save button
@@ -123,6 +131,8 @@ public class SaveScreen extends AbstractScreen{
     }
 
     /**
+     * TODO WHY??? THIS IS INHERITED!!!
+     *
      * Gets the DatabaseController for the GUI
      * @return the DatabaseController for the GUI
      */
@@ -134,19 +144,25 @@ public class SaveScreen extends AbstractScreen{
      * Gets the name of timetable to be saved
      * @return the name of timetable to be saved
      */
-    public String getNameString() {return nameTxt.getText();}
+    public String getNameString() {
+        return nameTxt.getText();
+    }
 
     /**
      * Gets the year of timetable to be saved
      * @return the year of timetable to be saved
      */
-    public String getYearString() {return yearTxt.getText();}
+    public String getYearString() {
+        return yearTxt.getText();
+    }
 
     /**
      * Gets the term of timetable to be loaded
      * @return the term of timetable to be loaded
      */
-    public String getTermString() {return termTxt.getText();}
+    public String getTermString() {
+        return termTxt.getText();
+    }
 
 
     public static void main(String[] args) {

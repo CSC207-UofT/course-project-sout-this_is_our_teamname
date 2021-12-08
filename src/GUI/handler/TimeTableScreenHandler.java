@@ -38,15 +38,14 @@ public class TimeTableScreenHandler implements ActionListener {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
         //given the button (and its text), run command and open a new window
-        runButton(controller, text);
+        runButton(text);
     }
 
     /**
      * Perform action based on the button pressed by the user
-     * @param controller The DatabaseController for GUI
      * @param buttonText The text of the button pressed by the user
      */
-    private void runButton(DatabaseController controller, String buttonText){
+    private void runButton(String buttonText){
         switch(buttonText){
             case "Schedule Course":
                 new ScheduleCourseScreen(controller, timeTableScreen);

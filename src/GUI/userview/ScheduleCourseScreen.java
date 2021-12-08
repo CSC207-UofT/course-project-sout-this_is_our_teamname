@@ -37,30 +37,34 @@ import java.util.Objects;
  * controller: The DatabaseController for the GUI
  */
 public class ScheduleCourseScreen extends AbstractScreen{
-
-    JPanel centerPanel = new JPanel(null);
-    JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    JLabel courseName = new JLabel("Course Name:");
-    JTextField nameTxt = new JTextField();
-    JLabel term = new JLabel("Term");
-    JComboBox<String> termBox = new JComboBox<>();
-    JLabel year = new JLabel("Year");
-    JComboBox<String> yearBox = new JComboBox<>();
-    JLabel lecture = new JLabel("Lecture");
-    JComboBox<String> lectureBox = new JComboBox<>();
-    JLabel tutorial = new JLabel("Tutorial");
-    JComboBox<String> tutBox = new JComboBox<>();
-    JLabel practical = new JLabel("Practical");
-    JComboBox<String> pracBox = new JComboBox<>();
-    JButton backBtn = new JButton("Back");
-    JButton searchBtn = new JButton("Search");
-    JButton applyBtn = new JButton("Schedule");
+    private final static JPanel centerPanel = new JPanel(null);
+    private final static JPanel southPanel =
+            new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    private final static JLabel courseName = new JLabel("Course Name:");
+    private final static JTextField nameTxt = new JTextField();
+    private final static JLabel term = new JLabel("Term");
+    private final static JComboBox<String> termBox = new JComboBox<>();
+    private final static JLabel year = new JLabel("Year");
+    private final static JComboBox<String> yearBox = new JComboBox<>();
+    private final static JLabel lecture = new JLabel("Lecture");
+    private final static JComboBox<String> lectureBox = new JComboBox<>();
+    private final static JLabel tutorial = new JLabel("Tutorial");
+    private final static JComboBox<String> tutBox = new JComboBox<>();
+    private final static JLabel practical = new JLabel("Practical");
+    private final static JComboBox<String> pracBox = new JComboBox<>();
+    private final static JButton backBtn = new JButton("Back");
+    private final static JButton searchBtn = new JButton("Search");
+    private final static JButton applyBtn = new JButton("Schedule");
 
     ScheduleCourseHandler scheduleCourseHandler;
 
-    Course lec;
-    Course tut;
-    Course prac;
+    // TODO What are these? Constants need to be static and caps. Instance
+    //  Variables need to be declared private or public
+    private Course lec;
+    private Course tut;
+    private Course prac;
+
+    // TODO Controller can be inherited. See class AbstractScreen
     DatabaseController controller;
 
 
@@ -72,8 +76,11 @@ public class ScheduleCourseScreen extends AbstractScreen{
      * @param screen A TimeTableScreen object that stores course.
      */
     public ScheduleCourseScreen(DatabaseController controller, TimeTableScreen screen) {
+        // TODO Use Constants
         super("Schedule Course", screen);
+
         this.controller = controller;
+
         scheduleCourseHandler = new ScheduleCourseHandler(this);
         Container contentPane = getContentPane();
 
@@ -154,8 +161,10 @@ public class ScheduleCourseScreen extends AbstractScreen{
     }
 
     /**
-     * The main method of the ScheduleCourseScreen.
+     * TODO Why is main in the middle of the file? It's like if I put if
+     * TODO "__name__" == __main__ in th middle of a python file.
      *
+     * The main method of the ScheduleCourseScreen.
      */
     public static void main(String[] args) {
         DatabaseController controller = new DatabaseController("gui");
@@ -194,9 +203,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
     /**
      * A helper method to add term to the termBox.
      *
-     * @param termBox the JComboBox stores the term.
      */
-    private void addTerm(JComboBox<String> termBox){
+    private void addTerm(){
         termBox.addItem("Fall");
         termBox.addItem("Winter");
     }
@@ -204,9 +212,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
     /**
      * A helper method to add year to the yearBox.
      *
-     * @param yearBox the JComboBox stores the year.
      */
-    private void addYear(JComboBox<String> yearBox){
+    private void addYear(){
         yearBox.addItem("2021");
         yearBox.addItem("2020");
     }
@@ -245,7 +252,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
      */
     public void setLeturebox(ArrayList<String> input){
         for (String s : input) {
-            this.lectureBox.addItem(s);
+            lectureBox.addItem(s);
         }
     }
 
@@ -256,7 +263,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
      */
     public void setTutBox(ArrayList<String> input){
         for (String s : input) {
-            this.tutBox.addItem(s);
+            tutBox.addItem(s);
         }
     }
 
@@ -267,7 +274,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
      */
     public void setpracBox(ArrayList<String> input){
         for (String s : input) {
-            this.pracBox.addItem(s);
+            pracBox.addItem(s);
         }
     }
 
@@ -308,6 +315,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
     }
 
     /**
+     * TODO WHY??? THIS IS INHERITED!!!
+     *
      * A helper method to get the controller.
      *
      * @return the controller of the screen.

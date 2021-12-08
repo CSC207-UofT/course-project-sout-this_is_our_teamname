@@ -40,29 +40,31 @@ import java.util.Objects;
  * conflict: Whether there is conflict for selected course. True if there is, false otherwise.
  */
 public class ScheduleEventScreen extends AbstractScreen{
-    JPanel centerPanel = new JPanel(null);
-    JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    JLabel eventName = new JLabel("Event Name:");
-    JTextField nameTxt = new JTextField();
-    JLabel startTime = new JLabel("Start Time");
-    JComboBox<String> startTimeBox = new JComboBox<>();
-    JLabel endTime = new JLabel("End Time");
-    JComboBox<String> endTimeBox = new JComboBox<>();
-    JLabel location = new JLabel("Location");
-    JTextField locationTxt = new JTextField();
-    JLabel day = new JLabel("Day");
-    JComboBox<String> dayBox = new JComboBox<>();
-    JLabel term = new JLabel("Term");
-    JComboBox<String> termBox = new JComboBox<>();
-    JLabel type = new JLabel("Type");
-    JComboBox<String> typeBox = new JComboBox<>();
-    JLabel year = new JLabel("Year");
-    JTextField yearTxt = new JTextField();
-    JTextField descriptionTxt = new JTextField();
-    JLabel description = new JLabel("Description");
-    JButton backBtn = new JButton("Back");
-    JButton applyBtn = new JButton("Schedule");
+    private static final JPanel centerPanel = new JPanel(null);
+    private static final JPanel southPanel =
+            new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    private static final JLabel eventName = new JLabel("Event Name:");
+    private static final JTextField nameTxt = new JTextField();
+    private static final JLabel startTime = new JLabel("Start Time");
+    private static final JComboBox<String> startTimeBox = new JComboBox<>();
+    private static final JLabel endTime = new JLabel("End Time");
+    private static final JComboBox<String> endTimeBox = new JComboBox<>();
+    private static final JLabel location = new JLabel("Location");
+    private static final JTextField locationTxt = new JTextField();
+    private static final JLabel day = new JLabel("Day");
+    private static final JComboBox<String> dayBox = new JComboBox<>();
+    private static final JLabel term = new JLabel("Term");
+    private static final JComboBox<String> termBox = new JComboBox<>();
+    private static final JLabel type = new JLabel("Type");
+    private static final JComboBox<String> typeBox = new JComboBox<>();
+    private static final JLabel year = new JLabel("Year");
+    private static final JTextField yearTxt = new JTextField();
+    private static final JTextField descriptionTxt = new JTextField();
+    private static final JLabel description = new JLabel("Description");
+    private static final JButton backBtn = new JButton("Back");
+    private static final JButton applyBtn = new JButton("Schedule");
 
+    // TODO Controller can be inherited. See class AbstractScreen
     DatabaseController controller;
     ScheduleEventHandler scheduleEventHandler;
     Boolean conflict;
@@ -73,6 +75,7 @@ public class ScheduleEventScreen extends AbstractScreen{
      * @param screen The window viewed by the user
      */
     public ScheduleEventScreen(DatabaseController controller, TimeTableScreen screen) {
+        // TODO USE CONsTANTS HERE!
         super("Schedule NonCourse", screen);
         scheduleEventHandler = new ScheduleEventHandler(this);
         this.controller = controller;
@@ -205,9 +208,8 @@ public class ScheduleEventScreen extends AbstractScreen{
 
     /**
      * Fills the given comboBox with weekdays to be selected
-     * @param dayBox is the comboBox to allow user to select the weekdays of the event to be scheduled
      */
-    private void addWeekday(JComboBox<String> dayBox) {
+    private void addWeekday() {
         for (String weekday : Constants.DAYS_OF_THE_WEEK) {
             dayBox.addItem(weekday);
         }
@@ -215,29 +217,23 @@ public class ScheduleEventScreen extends AbstractScreen{
 
     /**
      * Fills the given comboBox with terms to be selected
-     * @param termBox is the comboBox to allow user to select the term of the event to be scheduled
      */
-    private void addTerm(JComboBox<String> termBox){
+    private void addTerm(){
         termBox.addItem("Fall");
         termBox.addItem("Winter");
     }
 
     /**
      * Fills the given comboBox with types of event to be selected
-     * @param typeBox is the comboBox to allow user to select the type of event to be scheduled
      */
-    private void addType(JComboBox<String> typeBox){
+    private void addType(){
         typeBox.addItem("Activity");
         typeBox.addItem("Reminder");
     }
 
     /**
-     * Sets whether there is conflict for selected event
-     * @param conflict is whether there is conflict for selected event
-     */
-    public void setConflict(Boolean conflict) {this.conflict = conflict;}
-
-    /**
+     * TODO WHY??? THIS IS INHERITED!!!
+     *
      * Gets the DatabaseController for the GUI
      * @return the DatabaseController for the GUI
      */
@@ -297,7 +293,9 @@ public class ScheduleEventScreen extends AbstractScreen{
      * Gets the year of event to be scheduled
      * @return the year of event to be scheduled
      */
-    public String getYear() {return Objects.requireNonNull(yearTxt.getText());}
+    public String getYear() {
+        return Objects.requireNonNull(yearTxt.getText());
+    }
 
     /**
      * Gets the type of event to be scheduled
@@ -327,6 +325,4 @@ public class ScheduleEventScreen extends AbstractScreen{
         new ScheduleEventScreen(controller, screen);
 
     }
-
-
 }

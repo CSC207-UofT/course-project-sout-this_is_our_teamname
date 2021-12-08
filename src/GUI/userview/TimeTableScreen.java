@@ -2,11 +2,15 @@ package GUI.userview;
 
 import Helpers.Constants;
 import TimeTableContainers.TimeTable;
+// TODO The following classes should NOT be referenced in this class. See GUI
+//  UML Diagram
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
+
 import GUI.handler.TimeTableScreenHandler;
 import GUI.util.DimensionUtil;
+
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import javax.swing.*;
@@ -67,6 +71,8 @@ public class TimeTableScreen extends JFrame {
     }
 
     /**
+     * TODO Break Up into helpers!
+     *
      * Refreshes the timetableTabs every time the user schedules a new Event
      * @param manager is the TimeTableManager that stores timetables for each term
      */
@@ -90,6 +96,8 @@ public class TimeTableScreen extends JFrame {
             //add comboxBox
             for (int i=0; i <=6; i++){
                 JComboBox<String> comboBox = new JComboBox<>();
+                // TODO Move this into the GUIGetAllTimetableCommand.
+                //  Replace with DataBaseController.getCommand call here
                 for (Task task : manager.getTimetable(term).getTaskCalendar().
                                 get(Constants.DAYS_OF_THE_WEEK[i]).toArray(new Task[0])) {
                     comboBox.addItem(task.getName());
@@ -121,6 +129,7 @@ public class TimeTableScreen extends JFrame {
 
                 // Implement table cell tool tips.
                 //Citation: https://stackoverflow.com/questions/9467093/how-to-add-a-tooltip-to-a-cell-in-a-jtable
+                // TODO Javadoc
                 public String getToolTipText(MouseEvent e) {
                     String tip = null;
                     java.awt.Point p = e.getPoint();
@@ -163,6 +172,8 @@ public class TimeTableScreen extends JFrame {
                 int columnIndex = Arrays.asList(Constants.DAYS_OF_THE_WEEK).indexOf(day) + 1;
 
                 for (int i = 0; i <= 23; i++) {
+                    // TODO Move this into the GUIGetAllTimetableCommand.
+                    //  Replace with DataBaseController.getCommand call here
                     Events event = table.getCalendar().get(day)[i];
                     if (event != null) {
                         int rowIndex = i + 1;
@@ -175,6 +186,8 @@ public class TimeTableScreen extends JFrame {
 
     /**
      * Sets the frame of the window for display.
+     *
+     * @param bounds TODO
      */
     private void setFrame (Rectangle bounds){
         setBounds(bounds);

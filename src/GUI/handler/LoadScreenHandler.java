@@ -1,7 +1,6 @@
 package GUI.handler;
 
 import Helpers.Constants;
-import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.GUICommandFactory;
 import GUI.userview.LoadScreen;
 
@@ -16,7 +15,7 @@ import java.awt.event.ActionListener;
  * === Attributes ===
  * loadScreen: The window viewed by the user when loading data
  */
-public class LoadScreenHandler implements ActionListener{
+public class LoadScreenHandler implements ActionListener {
     private final LoadScreen loadScreen;
 
     /**
@@ -35,17 +34,19 @@ public class LoadScreenHandler implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
-        if ("Back".equals(text)){
+        if (text.equals("Back")){
             loadScreen.dispose();
 
         } else if ("Load".equals(text)){
             try{
-                //load timetables
-                CommandFactory factory = loadScreen.getController().getFactory();
-                ((GUICommandFactory) factory).setScreen(loadScreen);
+                // load timetables TODO Mention design Decision in DD
+                GUICommandFactory factory = (GUICommandFactory) loadScreen.getController().getFactory();
+                factory.setScreen(loadScreen);
                 loadScreen.getController().runCommand(Constants.LOAD_DATA);
-            } catch (Exception ignore){}
-            //refresh timetables
+            } catch (Exception ignore){
+                // Doesn't catch anything
+            }
+            // refresh timetables
             loadScreen.getScreen().refreshTimetableTabs(
                     loadScreen.getController().getFactory().getCourseManager());
             loadScreen.dispose();

@@ -77,7 +77,8 @@ public class GUIMakeEventCommand implements Command {
                     scheduledObject = obj;
                     running = false;
                 } else {
-                    ConflictDialog.main(new String[]{""});
+                    ConflictDialog cd = new ConflictDialog();
+                    cd.run();
                     running = false;
                 }
             } else {

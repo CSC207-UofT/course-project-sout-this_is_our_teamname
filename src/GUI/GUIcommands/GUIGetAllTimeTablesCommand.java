@@ -3,6 +3,7 @@ package GUI.GUIcommands;
 import Commands.Command;
 import TimeTableContainers.TimeTable;
 import GUI.userview.AbstractScreen;
+import TimeTableContainers.TimeTableManager;
 
 /**
  *
@@ -13,14 +14,17 @@ import GUI.userview.AbstractScreen;
  */
 public class GUIGetAllTimeTablesCommand implements Command {
     private final AbstractScreen screen;
+    private final TimeTableManager manager;
 
     /**
      * A constructor to indicate what manager to get all the commands from.
      *
      * @param screen is a window viewed by the user.
      */
-    public GUIGetAllTimeTablesCommand(AbstractScreen screen){
+    public GUIGetAllTimeTablesCommand(AbstractScreen screen,
+                                      TimeTableManager manager){
         this.screen = screen;
+        this.manager = manager;
     }
 
     /**
@@ -29,7 +33,7 @@ public class GUIGetAllTimeTablesCommand implements Command {
      */
     @Override
     public void execute() {
-        TimeTable[] output = screen.getController().getFactory().getCourseManager().getAllTimeTables();
+        TimeTable[] output = manager.getAllTimeTables();
         for (TimeTable table : output) {
             // create a tab for the timetable
 
