@@ -39,9 +39,8 @@ public class LoadScreenHandler implements ActionListener {
 
         } else if (text.equals("Load")){
             try{
-                // load timetables
-                GUICommandFactory factory =
-                        (GUICommandFactory) loadScreen.getController().getFactory();
+                // load timetables TODO Mention design Decision in DD
+                GUICommandFactory factory = (GUICommandFactory) loadScreen.getController().getFactory();
                 factory.setScreen(loadScreen);
                 loadScreen.getController().runCommand(Constants.LOAD_DATA);
             } catch (Exception ignore){

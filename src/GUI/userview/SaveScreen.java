@@ -42,7 +42,6 @@ public class SaveScreen extends AbstractScreen{
     private static final JTextField yearTxt = new JTextField(4);
     private static final JTextField termTxt = new JTextField(6);
 
-    // TODO Controller can be inherited. See class AbstractScreen
     SaveScreenHandler saveScreenHandler;
 
     /**
@@ -57,10 +56,6 @@ public class SaveScreen extends AbstractScreen{
         saveScreenHandler = new SaveScreenHandler(this);
 
         Container contentPane = getContentPane();
-
-        // TODO Make `new Font("Times New Roman", Font.PLAIN, 20)` into a
-        //  constant rather than repeating over and over, FONT20 FONT15example
-        //  below
 
         title.setFont(Constants.FONT20);
         title.setPreferredSize(new Dimension(0, 20));

@@ -47,11 +47,8 @@ public class GUIMakeCourseCommand implements Command {
      */
     @Override
     public void execute() {
-
         ArrayList<CourseSection> sections = new ArrayList<>();
-
         boolean hasConflict = hasConflicts(sections);
-
 
         if (!hasConflict){
             // Pass this to the TimeTableManager.

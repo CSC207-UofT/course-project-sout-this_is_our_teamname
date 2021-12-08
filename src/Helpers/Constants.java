@@ -43,8 +43,6 @@ public class Constants {
     public static final String LOAD_DATA = "Load Data";
     public static final String DOWNLOAD_TIMETABLE = "Download Timetable";
     public static final String EXIT = "Log Out";
-    public static final String SAVE = "Save";
-    public static final String Load = "Load";
     public static final Font FONT20 = new Font("Times New Roman", Font.PLAIN,
             20);
     public static final Font FONT15 = new Font("Times New Roman", Font.PLAIN,
