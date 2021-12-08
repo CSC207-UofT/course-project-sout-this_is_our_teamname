@@ -1,10 +1,8 @@
-
 package demoGUI.handler;
 
 import DataGetting.WebScraper;
 import Helpers.Constants;
 import Helpers.InvalidInputException;
-import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.GUICommandFactory;
 import TimeTableObjects.Course;
 import demoGUI.userview.*;
