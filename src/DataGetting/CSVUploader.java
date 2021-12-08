@@ -35,22 +35,21 @@ public class CSVUploader extends DataGetter<Object> {
         } catch (IOException e){
             throw new FileNotFoundException();
         }
-
-        String[][] meaningfulData = meaningfulDataHelper(data);
-        for (String[] row : meaningfulData) {
-            if (!row[1].equals("Tasks")) {
-                String[] times = row[1].split("-");
-                if (row[2].equals("Activity")) {
+        data.remove(0);
+        for (String[] line : data) {
+            if (!line[1].equals("Tasks")) {
+                String[] times = line[1].split("-");
+                if (line[2].equals("Activity")) {
                     Activity event = new Activity(LocalTime.of(Integer.parseInt(times[0].substring(0, 2)), 0, 0),
-                            LocalTime.of(Integer.parseInt(times[1].substring(0, 2)), 0, 0), row[0], term, row[5]);
-                    event.setName(row[3]);
+                            LocalTime.of(Integer.parseInt(times[1].substring(0, 2)), 0, 0), line[0], term, line[5]);
+                    event.setName(line[3]);
                     placeToData(term, event);
                 }
             }
             else {
-                String[] smallMeaningfulData = smallMeaningfulDataHelper(row);
-                for (String taskString : smallMeaningfulData) {
-                    Task task = new Task(LocalTime.of(0, 0, 0), LocalTime.of(23, 59, 59), row[0], term);
+                String[] FirstTwoRemoved = RemoveFirstTwo(line);
+                for (String taskString : FirstTwoRemoved) {
+                    Task task = new Task(LocalTime.of(0, 0, 0), LocalTime.of(23, 59, 59), line[0], term);
                     task.setName(taskString);
                     placeToData(term, task);
                 }
@@ -74,30 +73,16 @@ public class CSVUploader extends DataGetter<Object> {
     }
 
     /**
-     * Process an array of arrays of strings to one which
-     * contains only meaningful data
-     *
-     * @param data the array needs to be processed
-     */
-    private String[][] meaningfulDataHelper(ArrayList<String[]> data) {
-        String[][] meaningfuldata = new String[1][data.size() - 1];
-        for (int i = 0; i + 1 < data.size(); i++) {
-            meaningfuldata[i] = data.get(i + 1);
-        }
-        return meaningfuldata;
-    }
-
-    /**
      * Process an array of strings to one which contains only meaningful data
      *
      * @param data the array needs to be processed
      */
-    private String[] smallMeaningfulDataHelper(String[] data) {
-        String[] smallMeaningfulData = new String[data.length - 2];
+    private String[] RemoveFirstTwo(String[] data) {
+        String[] FirstTwoRemoved = new String[data.length - 2];
         for (int i = 0; i + 2 < data.length; i++) {
-            smallMeaningfulData[i] = data[i + 2];
+            FirstTwoRemoved[i] = data[i + 2];
         }
-        return smallMeaningfulData;
+        return FirstTwoRemoved;
     }
 
     /**
@@ -107,27 +92,14 @@ public class CSVUploader extends DataGetter<Object> {
      * @param filepath the path of the csv file that needs to be read
      */
     private ArrayList<String[]> ReadThroughFile(String filepath) throws IOException {
-        ArrayList<String[]> dataplus = new ArrayList<>();
+        ArrayList<String[]> AllDataLines = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(filepath));
-        String row;
-        while ((row = reader.readLine()) != null) {
-            String[] data = row.split(",");
-            dataplus.add(data);
+        String fileline;
+        while ((fileline = reader.readLine()) != null) {
+            String[] OneDataLine = fileline.split(",");
+            AllDataLines.add(OneDataLine);
         }
         reader.close();
-        return dataplus;
-    }
-
-    /**
-     * Return a new array with one more object added to the original array
-     *
-     * @param objects the original object array
-     * @param object the object that needs to be added
-     */
-    private Object[] AddOneMore(Object[] objects, Object object) {
-        Object[] newList = new Object[objects.length + 1];
-        System.arraycopy(objects, 0, newList, 0, objects.length);
-        newList[objects.length] = object;
-        return newList;
+        return AllDataLines;
     }
 }
