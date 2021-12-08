@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
  * Handler to handle actions performed by the user when saving the timetables
  *
  * === Attributes ===
- * saveScreen: The window viewed by the user when loading data
+ * saveScreen: The window viewed by the user when saving the timetables
  */
 public class SaveScreenHandler implements ActionListener{
     private final SaveScreen saveScreen;
