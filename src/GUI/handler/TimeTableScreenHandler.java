@@ -54,16 +54,15 @@ public class TimeTableScreenHandler implements ActionListener {
                 new ScheduleEventScreen(controller, timeTableScreen);
                 break;
             case "Save":
-                new SaveScreen(controller, timeTableScreen);
+                new SaveScreen(timeTableScreen);
                 break;
             case "Load":
-                new LoadScreen(controller, timeTableScreen);
+                new LoadScreen(timeTableScreen);
                 break;
             default:
                 break;
         }
     }
-
 
     /**
      * Gets the DatabaseController for the GUI
