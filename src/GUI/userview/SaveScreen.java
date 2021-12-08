@@ -66,29 +66,29 @@ public class SaveScreen extends AbstractScreen{
         title.setPreferredSize(new Dimension(0, 20));
 
         // Save button
-        saveBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        saveBtn.setFont(Constants.FONT20);
         saveBtn.addActionListener(saveScreenHandler);
 
-        name.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        name.setFont(Constants.FONT20);
         name.setBounds(200, 40, 120, 40);
 
-        nameTxt.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        nameTxt.setFont(Constants.FONT20);
         nameTxt.setBounds(320, 40, 120, 40);
 
-        year.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        year.setFont(Constants.FONT20);
         year.setBounds(200, 100, 120, 40);
 
-        yearTxt.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        yearTxt.setFont(Constants.FONT20);
         yearTxt.setBounds(320, 100, 120, 40);
 
-        term.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        term.setFont(Constants.FONT20);
         term.setBounds(200, 160, 120, 40);
 
-        termTxt.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        termTxt.setFont(Constants.FONT20);
         termTxt.setBounds(320, 160, 120, 40);
 
         // Back button
-        backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        backBtn.setFont(Constants.FONT20);
         backBtn.addActionListener(saveScreenHandler);
 
 

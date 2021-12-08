@@ -64,7 +64,6 @@ public class TimeTableScreenHandler implements ActionListener {
         }
     }
 
-
     /**
      * Gets the DatabaseController for the GUI
      * @return the DatabaseController for the GUI
