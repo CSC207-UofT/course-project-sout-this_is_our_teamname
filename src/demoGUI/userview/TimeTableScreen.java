@@ -179,10 +179,6 @@ public class TimeTableScreen extends JFrame {
      */
     private void setFrame (Rectangle bounds){
         setBounds(bounds);
-
-            // Full screen
-//        setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        setLocationRelativeTo(null);
             setSize(1200, 700);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setResizable(true);
