@@ -1,6 +1,5 @@
 package DataGetting;
 
-import Helpers.Search;
 import TimeTableObjects.Course;
 import Helpers.Constants;
 import org.jsoup.Jsoup;
@@ -8,13 +7,10 @@ import org.jsoup.nodes.Document;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.LocalTime;
 import java.util.*;
-import java.util.regex.Pattern;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A WebScraper class. It is a DataGetter class that gets the data from a the course finder
  * website.
@@ -311,6 +307,10 @@ public class WebScraper extends CourseGetter {
         return splicedTime.length == 2;
     }
 
+    /**
+     * Return a String representation of the class
+     * @return the String representation
+     */
     public String toString(){
         return "WebScraper";
     }

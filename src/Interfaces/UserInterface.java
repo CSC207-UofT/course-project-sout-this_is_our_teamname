@@ -12,15 +12,13 @@ import java.util.LinkedHashMap;
 
 
 /**
- * TODO REMOVE THIS SENTENCE!!!
  *
  * An UserInterface class
  * It sets the DatabaseController.
  *
  * === Private Attributes ===
  *  control: The DatabaseController object.
- *  operator: The OperatorInterface object.
- *  presenter: the Presenter object.
+ *
  */
 public class UserInterface {
     private final DatabaseController control;

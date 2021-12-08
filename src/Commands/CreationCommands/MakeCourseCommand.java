@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A command to create a Course Object.
  *
  * === Private Attributes ===
+ * scheduledCourse: The courses to be scheduled to the manager.
  * dataSource: The source where the data is from.
  * manager: The manager that will eventually schedule the object
  */

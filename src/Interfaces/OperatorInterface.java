@@ -11,7 +11,6 @@ import java.util.*;
 
 
 /**
- * TODO REMOVE THIS SENTENCE!!!
  *
  * An OperatorInterface class, sets the DataGetter and bans functions by operator.
  *
@@ -56,6 +55,10 @@ public class OperatorInterface {
         }
     }
 
+    /**
+     * Promps the user to ban a function
+     * @throws IOException raised if function not found
+     */
     private void promptBan() throws IOException {
         // As long as the operator wants to ban function.
         boolean running = true;

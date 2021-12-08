@@ -8,17 +8,25 @@ import Helpers.InputCheckers.InputChecker;
 import java.io.IOException;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * Load the data to an external source
+ *
+ * === Attributes ===
+ * loader: The CSVUploader to load the data in a csv file
  */
 public class LoadDataCommand implements Command {
     private final CSVUploader loader;
 
+    /**
+     * Constructor to set the command.
+     */
     public LoadDataCommand(){
         this.loader = new CSVUploader();
     }
 
+    /**
+     * Executes the command to load the data in the csv file.
+     */
     @Override
     public void execute() {
         String[] prompts = {"Enter the Filename (Example: My_TimeTable for My_TimeTable for My_TimeTable_2021_WINTER)",

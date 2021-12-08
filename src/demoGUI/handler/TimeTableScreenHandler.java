@@ -8,18 +8,31 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ *
+ * Handler to handle actions performed by the user on the main screen
+ *
+ * === Attributes ===
+ * timeTableScreen: The window displaying the timetable
+ * controller: The DatabaseController for GUI
+ */
 public class TimeTableScreenHandler implements ActionListener {
-    private TimeTableScreen timeTableScreen;
-    private DatabaseController controller;
+    private final TimeTableScreen timeTableScreen;
+    private final DatabaseController controller;
 
+    /**
+     * Constructor to set the handler.
+     * @param timeTableScreen is the window displaying the timetable
+     */
     public TimeTableScreenHandler(TimeTableScreen timeTableScreen) {
-
         this.timeTableScreen = timeTableScreen;
         this.controller = new DatabaseController("gui");
-
     }
 
-
+    /**
+     * Handles the action user performed on the screen
+     * @param e the action user performed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
@@ -28,6 +41,11 @@ public class TimeTableScreenHandler implements ActionListener {
         runButton(controller, text);
     }
 
+    /**
+     * Perform action based on the button pressed by the user
+     * @param controller The DatabaseController for GUI
+     * @param buttonText The text of the button pressed by the user
+     */
     private void runButton(DatabaseController controller, String buttonText){
         switch(buttonText){
             case "Schedule Course":
@@ -47,6 +65,10 @@ public class TimeTableScreenHandler implements ActionListener {
         }
     }
 
+    /**
+     * Gets the DatabaseController for the GUI
+     * @return the DatabaseController for the GUI
+     */
     public DatabaseController getController() {
         return controller;
     }

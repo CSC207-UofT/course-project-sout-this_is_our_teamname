@@ -5,9 +5,11 @@ import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A command object to get all the timetables
+ *
+ * === Attributes ===
+ * manager: The manager with all the timetables.
  */
 public class GetAllTimeTablesCommand implements Command {
     private final TimeTableManager manager;
@@ -34,6 +36,10 @@ public class GetAllTimeTablesCommand implements Command {
         }
     }
 
+    /**
+     * Return a String representation of the Command
+     * @return the String representation
+     */
     @Override
     public String toString() {
         return "Extracted all Saved TimeTables";

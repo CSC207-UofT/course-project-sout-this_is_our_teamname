@@ -8,36 +8,51 @@ import TimeTableObjects.Events;
 import demoGUI.handler.TimeTableScreenHandler;
 import demoGUI.util.DimensionUtil;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
 import java.net.URL;
-import java.util.List;
 
-
+/**
+ * A screen that displays the window viewed by the user
+ *
+ * === Attributes ===
+ * timeTableRootPanel: The panel that contains all components on the screen
+ * buttonsPanel: The panel that contains all the buttons on the screen
+ * tabsPanel: The panel that contains the tabbedPane on the screen
+ * courseButton: The button that opens ScheduleCourseScreen when clicked
+ * taskActivityButton: The button that opens ScheduleEventScreen when clicked
+ * saveButton: The button that opens SaveScreen when clicked
+ * loadButton: The buttons that opens LoadScreen when clicked
+ * titlePanel: The panel that contains the title
+ * titleLabel: The label to display the tile of this screen
+ * timetableTabs: The tabbedPane that contains the timetable for each term as a new tab
+ *
+ * timeTableScreenHandler: The handler to handle actions performed on the screen
+ */
 public class TimeTableScreen extends JFrame {
-    private JPanel TimeTableRootPanel;
-    private JPanel ButtonsPanel;
-    private JPanel TabsPanel;
+    private JPanel timeTableRootPanel;
+    private JPanel buttonsPanel;
+    private JPanel tabsPanel;
     private JButton courseButton;
     private JButton taskActivityButton;
     private JButton saveButton;
     private JButton loadButton;
-    private JPanel TitlePanel;
-    private JLabel titleLable;
-    private JTabbedPane timeTableTabs;
-    private JPanel UnderTabsPanel;
-    private JScrollPane TimeTableScrollPane;
-    TimeTableScreenHandler timeTableScreenHandler;
-    List<TableCellEditor> editors = new ArrayList<>(7);
+    private JPanel titlePanel;
+    private JLabel titleLabel;
+    private JTabbedPane timetableTabs;
 
+    TimeTableScreenHandler timeTableScreenHandler;
+
+    /**
+     * Constructor to set the screen
+     */
     public TimeTableScreen() {
         super();
 
         timeTableScreenHandler = new TimeTableScreenHandler(this);
-        this.setContentPane(TimeTableRootPanel);
+        this.setContentPane(timeTableRootPanel);
 
         // add button functions
         courseButton.addActionListener(timeTableScreenHandler);
@@ -52,8 +67,12 @@ public class TimeTableScreen extends JFrame {
         setFrame(bounds);
     }
 
+    /**
+     * Refreshes the timetableTabs every time the user schedules a new Event
+     * @param manager is the TimeTableManager that stores timetables for each term
+     */
     public void refreshTimetableTabs(TimeTableManager manager) {
-        timeTableTabs.removeAll();
+        timetableTabs.removeAll();
         //cycle through the timetables in manager using the name of the timetables
         for (String term : manager.getTerms()) {
             JPanel panel = new JPanel();
@@ -71,7 +90,7 @@ public class TimeTableScreen extends JFrame {
             panel.add(reminderLabel);
             //add comboxBox
             for (int i=0; i <=6; i++){
-                JComboBox<String> comboBox = new JComboBox<String>();
+                JComboBox<String> comboBox = new JComboBox<>();
                 for (Task task : manager.getTimetable(term).getTaskCalendar().
                                 get(Constants.DAYS_OF_THE_WEEK[i]).toArray(new Task[0])) {
                     comboBox.addItem(task.getName());
@@ -88,13 +107,15 @@ public class TimeTableScreen extends JFrame {
             firstColumn.setPreferredWidth(150);
 
             panel.add(table);
-            timeTableTabs.addTab(term, panel);
+            timetableTabs.addTab(term, panel);
         }
     }
 
-//TODO needs window pop up when there is a conflict
-
-
+    /**
+     * Helper method to fill an empty table with Events from given TimeTable
+     * @param table is the TimeTable with Events to be filled into the table
+     * @return a table filled with Events from the TimeTable
+     */
     //TODO extract method here
     private JTable fillTimeTable(TimeTable table) {
             JTable jtable = new JTable(25, 8){
@@ -151,37 +172,29 @@ public class TimeTableScreen extends JFrame {
                 }
             }
         return jtable;
-        }
+    }
 
-
-        private void setFrame (Rectangle bounds){
-            // Window's icon
-            URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
-            assert resource != null;
-            Image image = new ImageIcon(resource).getImage();
-            setIconImage(image);
-
-            setBounds(bounds);
-
-            // Full screen
-//        setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        setLocationRelativeTo(null);
-            setSize(1200, 900);
+    /**
+     * Sets the frame of the window for display.
+     */
+    private void setFrame (Rectangle bounds){
+        setBounds(bounds);
+            setSize(1200, 700);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setResizable(true);
             setVisible(true);
 
-            // Show in the middle
-            setLocationRelativeTo(null);
+        // Show in the middle
+        setLocationRelativeTo(null);
 
-            // Fixed size
-            setResizable(false);
+        // Fixed size
+        setResizable(false);
 
-            // Visibility
-            setVisible(true);
-        }
-
-        public static void main (String[]args) throws AWTException {
-            new TimeTableScreen();
-        }
+        // Visibility
+        setVisible(true);
     }
+
+    public static void main (String[]args) throws AWTException {
+        new TimeTableScreen();
+    }
+}

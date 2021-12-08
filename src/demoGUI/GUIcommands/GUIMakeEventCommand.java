@@ -11,6 +11,7 @@ import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
+import demoGUI.userview.ConflictDialog;
 import demoGUI.userview.ScheduleEventScreen;
 
 import java.time.LocalTime;
@@ -24,9 +25,8 @@ import java.util.regex.Pattern;
  * A command to create a Non-Course Object.
  *
  * === Private Attributes ===
- * manager: The manager that will eventually schedule the object
- * scheduledObject: An non course Event waiting to be scheduled
- * managerChanged: Whether the TimeTableManager is changed
+ * scheduledObject: An non-course Event waiting to be scheduled
+ * scheduleEventScreen: The window viewed by the user when scheduling non-course Event
  */
 public class GUIMakeEventCommand implements Command {
     // Some Constants:
@@ -45,7 +45,7 @@ public class GUIMakeEventCommand implements Command {
 
     /**
      * A constructor to set the command
-     * @param scheduleEventScreen //TODO finish here
+     * @param scheduleEventScreen is the window viewed by the user when scheduling non-course Event
      */
     public GUIMakeEventCommand(ScheduleEventScreen scheduleEventScreen){
         this.scheduledObject = null;
@@ -81,7 +81,7 @@ public class GUIMakeEventCommand implements Command {
                     scheduledObject = obj;
                     running = false;
                 } else {
-                    scheduleEventScreen.setConflict(true);
+                    ConflictDialog.main(new String[]{""});
                     running = false;
                 }
             } else {
@@ -113,6 +113,10 @@ public class GUIMakeEventCommand implements Command {
     }
 
     // ============================= Helper Methods ============================
+    /**
+     * Return a String representation of the Command
+     * @return the String representation
+     */
     @Override
     public String toString() {
         if (this.hasScheduled()){

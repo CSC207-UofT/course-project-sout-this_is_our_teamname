@@ -10,16 +10,27 @@ import java.io.IOException;
 /**
  *
  * Load the data to an external source
+ *
+ * === Attributes ===
+ * screen: The window viewed by the user when loading data
+ * loader: The CSVUploader to load the data in a csv file
  */
 public class LoadDataCommand4GUI implements Command {
     private final LoadScreen screen;
     private final CSVUploader loader;
 
+    /**
+     * Constructor to set the command.
+     * @param screen is the window viewed by the user when loading data
+     */
     public LoadDataCommand4GUI(LoadScreen screen){
         this.screen = screen;
         this.loader = new CSVUploader();
     }
 
+    /**
+     * Executes the command to load the data in the csv file.
+     */
     @Override
     public void execute() {
         String filename = screen.getNameString();

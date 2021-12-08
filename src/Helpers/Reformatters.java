@@ -3,7 +3,7 @@ package Helpers;
 import java.util.LinkedHashMap;
 
 /**
- * TODO DELETE THIS SENTENCE
+ * A helper class that maps the Strings in an Array to its corresponding index.
  */
 public class Reformatters {
     /**

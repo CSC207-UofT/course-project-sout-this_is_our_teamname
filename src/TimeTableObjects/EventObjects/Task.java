@@ -6,13 +6,15 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * Task is a reminder Events object.
+ *
+ * === Attributes ===
+ * date: The weekday of the task
+ * term: The term of the task
+ * name: The name of the task
  */
 public class Task implements Reconstructable {
-    private final LocalTime startTime;
-    private final LocalTime endTime;
     private final String date;
     private final String term;
     private String name;
@@ -28,8 +30,6 @@ public class Task implements Reconstructable {
                 LocalTime theEndTime,
                 String theDate,
                 String term) {
-        this.startTime = theStartTime;
-        this.endTime = theEndTime;
         this.date = theDate;
         this.term = term;
     }

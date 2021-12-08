@@ -13,7 +13,6 @@ import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A CSVScraper class. It is a DataGetter class that gets the data from a CSV
  * file.
