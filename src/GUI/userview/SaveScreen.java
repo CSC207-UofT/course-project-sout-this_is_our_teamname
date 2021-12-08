@@ -1,11 +1,10 @@
-package demoGUI.userview;
+package GUI.userview;
 
 import InterfaceAdaptors.DatabaseController;
-import demoGUI.handler.SaveScreenHandler;
+import GUI.handler.SaveScreenHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 
 /**
  * A screen that displays the window viewed by the user
@@ -16,10 +15,12 @@ import java.net.URL;
  * southPanel: The panel that contains all components locating at the bottom of the screen
  * name: The label for nameTxt
  * year: The label for yearTxt
+ * term: The label for termTxt
  * saveBtn: The button to save the data when clicked
  * backBtn: The button to close the screen when clicked
  * nameTxt: The textField for the user to enter the name of timetable to be saved
  * yearTxt: The textField for the user to enter the year of timetable to be saved
+ * termTxt: The textField for the user to enter the term of timetable to be saved
  *
  * controller: The DatabaseController for the GUI
  * saveScreenHandler: The handler to handle actions performed on the screen
@@ -31,10 +32,12 @@ public class SaveScreen extends AbstractScreen{
     JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     JLabel name = new JLabel("Name");
     JLabel year = new JLabel("Year");
+    JLabel term = new JLabel("Term");
     JButton saveBtn = new JButton("Save");
     JButton backBtn = new JButton("Back");
     JTextField nameTxt = new JTextField(20);
     JTextField yearTxt = new JTextField(4);
+    JTextField termTxt = new JTextField(6);
 
     DatabaseController controller;
     SaveScreenHandler saveScreenHandler;
@@ -71,6 +74,13 @@ public class SaveScreen extends AbstractScreen{
 
         yearTxt.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         yearTxt.setBounds(320, 100, 120, 40);
+
+        term.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        term.setBounds(200, 160, 120, 40);
+
+        termTxt.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        termTxt.setBounds(320, 160, 120, 40);
+
         // Back button
         backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         backBtn.addActionListener(saveScreenHandler);
@@ -80,6 +90,8 @@ public class SaveScreen extends AbstractScreen{
         centerPanel.add(nameTxt);
         centerPanel.add(year);
         centerPanel.add(yearTxt);
+        centerPanel.add(term);
+        centerPanel.add(termTxt);
 
         southPanel.add(saveBtn);
         southPanel.add(backBtn);

@@ -1,4 +1,4 @@
-package demoGUI.GUIcommands;
+package GUI.GUIcommands;
 
 import Commands.Command;
 import DataLoading.CSVDownloader;
@@ -7,7 +7,7 @@ import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
-import demoGUI.userview.SaveScreen;
+import GUI.userview.SaveScreen;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.util.List;
  * manager: The TimeTableManager that will be saved.
  * loader: A class that downloads a timetable manager object to a properly formatted csv file.
  */
-public class DownloadDataCommand4GUI implements Command {
+public class GUIDownloadDataCommand implements Command {
     private final SaveScreen screen;
     private final TimeTableManager manager;
     private final CSVDownloader loader;
@@ -32,7 +32,7 @@ public class DownloadDataCommand4GUI implements Command {
      * Constructor to save the timetables.
      * @param screen is the window viewed by the user when saving.
      */
-    public DownloadDataCommand4GUI(SaveScreen screen){
+    public GUIDownloadDataCommand(SaveScreen screen){
         this.screen = screen;
         this.manager = screen.getController().getFactory().getCourseManager();
         this.loader = new CSVDownloader();

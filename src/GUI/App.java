@@ -1,6 +1,6 @@
-package demoGUI;
+package GUI;
 
-import demoGUI.userview.TimeTableScreen;
+import GUI.userview.TimeTableScreen;
 
 import javax.swing.*;
 import java.awt.*;

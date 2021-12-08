@@ -1,12 +1,11 @@
-package demoGUI.userview;
+package GUI.userview;
 
 import Helpers.Constants;
 import InterfaceAdaptors.DatabaseController;
-import demoGUI.handler.ScheduleEventHandler;
+import GUI.handler.ScheduleEventHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 import java.util.Objects;
 
 /**

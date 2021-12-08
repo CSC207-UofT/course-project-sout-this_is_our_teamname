@@ -1,9 +1,9 @@
-package demoGUI.handler;
+package GUI.handler;
 
 import Helpers.Constants;
 import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.GUICommandFactory;
-import demoGUI.userview.*;
+import GUI.userview.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +31,6 @@ public class ScheduleEventHandler implements ActionListener {
      * Handles the action user performed on the screen
      * @param e the action user performed
      */
-    //TODO add exception diag window for when inputs are incorrect, such as endtime equal or earlier then starttime
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();

@@ -236,14 +236,6 @@ public class DatabaseController {
     }
 
     /**
-     * Gets the type of UI currently in use.
-     * @return string representation of UI currently in use
-     */
-    public String getCurrentUI() {
-        return currentUI;
-    }
-
-    /**
      * Returns a hashmap of the entries in the string array commandList with
      * corresponding integer values from least to greatest.
      *

@@ -1,9 +1,9 @@
-package demoGUI.handler;
+package GUI.handler;
 
 import Helpers.Constants;
 import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.GUICommandFactory;
-import demoGUI.userview.SaveScreen;
+import GUI.userview.SaveScreen;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

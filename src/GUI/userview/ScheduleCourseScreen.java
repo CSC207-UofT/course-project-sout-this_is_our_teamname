@@ -1,12 +1,11 @@
-package demoGUI.userview;
+package GUI.userview;
 
 import InterfaceAdaptors.DatabaseController;
 import TimeTableObjects.Course;
-import demoGUI.handler.ScheduleCourseHandler;
+import GUI.handler.ScheduleCourseHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -56,7 +55,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
     JButton backBtn = new JButton("Back");
     JButton searchBtn = new JButton("Search");
     JButton applyBtn = new JButton("Schedule");
-    JButton solverBtn = new JButton("Solver");
 
     ScheduleCourseHandler scheduleCourseHandler;
 

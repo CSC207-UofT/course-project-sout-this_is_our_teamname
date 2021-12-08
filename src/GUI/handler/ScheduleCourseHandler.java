@@ -1,11 +1,11 @@
-package demoGUI.handler;
+package GUI.handler;
 
 import DataGetting.WebScraper;
 import Helpers.Constants;
 import Helpers.InvalidInputException;
 import InterfaceAdaptors.GUICommandFactory;
 import TimeTableObjects.Course;
-import demoGUI.userview.*;
+import GUI.userview.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
