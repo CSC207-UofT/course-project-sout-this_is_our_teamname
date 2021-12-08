@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A Puzzle class for TimeTable Manager, schedules the given courses in the appropriate timetables
  * without any conflicts
@@ -17,6 +16,7 @@ import java.util.HashMap;
  *  courses: The courses this TimeTablePuzzle will solve.
  *  manager: The manager that will schedule the courses.
  *  scheduled: The ArrayList that holds the courses already scheduled
+ *  unscheduled: The ArrayList that holds the courses that haven't been scheduled
  *  extendedCourse: The course that this puzzle has "extended" after the extensions method
  *
  */
@@ -32,6 +32,8 @@ public class TimeTablePuzzle {
      *
      * @param courses The courses to be schdeuled in the TimeTable
      * @param manager The TimeTableManager that will schedule the courses
+     * @param unscheduled The courses that haven't been scheduled
+     * @param scheduled The courses that have been scheduled
      */
     public TimeTablePuzzle(HashMap<String, HashMap<String,
             ArrayList<Course>>> courses, TimeTableManager manager,
@@ -140,16 +142,25 @@ public class TimeTablePuzzle {
 
             TimeTableManager copy_schedule = initial_schedule.get_copy();
 
+            boolean toSchedule = true;
             for (CourseSection section : course.split()){
-                copy_schedule.schedule(section);
+                if (copy_schedule.hasConflicts(section)){
+                    toSchedule = false;
+                }
             }
 
-            TimeTablePuzzle next = new TimeTablePuzzle(new HashMap<>(courses),
-                    copy_schedule,
-                    new ArrayList<>(this.unscheduled),
-                    new ArrayList<>(this.scheduled));
-            next.scheduled.add(course);
-            extensions.add(next);
+            if (toSchedule){
+                for (CourseSection section : course.split()){
+                    copy_schedule.schedule(section);
+                }
+
+                TimeTablePuzzle next = new TimeTablePuzzle(new HashMap<>(courses),
+                        copy_schedule.get_copy(),
+                        new ArrayList<>(this.unscheduled),
+                        new ArrayList<>(this.scheduled));
+                next.scheduled.add(course);
+                extensions.add(next);
+            }
         }
 
         return extensions;

@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Set;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A Depth first search program
  *
+ * === Attributes ===
+ * path: the path for all TimeTablePuzzle items
  */
 public class DfsSearch {
     /**

@@ -5,16 +5,15 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * Events class is a class that can be stored in a TimeTable class.
  *
  * === Private Attributes ===
- * startTime is the starting time of the event
- * endTime is the ending time of the event
- * date is the weekday of the event
- * term is which school term and year the timetable belongs to e.g. Winter 2021, Year 2021
- * name is the name or a short description of the Event
+ * startTime: The starting time of the event
+ * endTime: The ending time of the event
+ * date: The weekday of the event
+ * term: The school term and year the timetable belongs to e.g. Winter 2021, Year 2021
+ * name: The name or a short description of the Event
  */
 public abstract class Events implements Reconstructable {
     private final LocalTime startTime;
@@ -63,15 +62,6 @@ public abstract class Events implements Reconstructable {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * Add to the name of the event
-     *
-     * @param info is going to be added to the name of the Events object
-     */
-    public void addToName(String info) {
-        this.name += info;
     }
 
     /**

@@ -1,46 +1,57 @@
-package demoGUI.handler;
+package GUI.handler;
 
 import Helpers.Constants;
-import Helpers.StringToTime;
-import demoGUI.GUIcommands.GUIMakeEventCommand;
-import demoGUI.userview.*;
+import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.GUICommandFactory;
+import GUI.userview.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalTime;
 
+/**
+ *
+ * Handler to handle actions performed by the user when scheduling non-course Event
+ *
+ * === Attributes ===
+ * scheduleEventScreen: The window viewed by the user when scheduling non-course Event
+ */
 public class ScheduleEventHandler implements ActionListener {
-    private ScheduleEventScreen scheduleEventScreen;
+    private final ScheduleEventScreen scheduleEventScreen;
 
+    /**
+     * Constructor to set the handler.
+     * @param scheduleEventScreen is the window viewed by the user when scheduling non-course Event
+     */
     public ScheduleEventHandler(ScheduleEventScreen scheduleEventScreen){
         this.scheduleEventScreen = scheduleEventScreen;
     }
-    //TODO add exception diag window for when inputs are incorrect, such as endtime equal or earlier then starttime
+
+    /**
+     * Handles the action user performed on the screen
+     * @param e the action user performed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
         if ("Back".equals(text)){
-            backUser();
+            scheduleEventScreen.dispose();
         }
         else if ("Schedule".equals(text)) {
             try{
                 //schedule events
-                scheduleEventScreen.getController().getFactory().setScreen(scheduleEventScreen);
+                CommandFactory factory = scheduleEventScreen.getController().getFactory();
+                ((GUICommandFactory) factory).setScreen(scheduleEventScreen);
                 scheduleEventScreen.getController().runCommand(Constants.SCHEDULE_EVENT);
             } catch (Exception ignore){}
             //refresh timetables
             scheduleEventScreen.getScreen().refreshTimetableTabs(
                     scheduleEventScreen.getController().getFactory().getCourseManager());
+
             scheduleEventScreen.dispose();
 
         }
     }
-
-    private void backUser(){
-        scheduleEventScreen.dispose();
-    }
-
 }
 

@@ -18,14 +18,12 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A command to create a Non-Course Object.
  *
  * === Private Attributes ===
  * manager: The manager that will eventually schedule the object
  * scheduledObject: An non course Event waiting to be scheduled
- * managerChanged: Whether the TimeTableManager is changed
  */
 public class MakeEventCommand implements Command {
     // Some Constants:
@@ -61,6 +59,7 @@ public class MakeEventCommand implements Command {
             HashMap<String, String> responses = promptUser();
 
             Object toSchedule = getCorrectTimeTableObject(
+                    responses.get(NAME),
                     StringToTime.makeTime(responses.get(START_TIME)),
                     StringToTime.makeTime(responses.get(END_TIME)),
                     responses.get(LOCATION),
@@ -125,6 +124,10 @@ public class MakeEventCommand implements Command {
     }
 
     // ============================= Helper Methods ============================
+    /**
+     * Return a String representation of the Command
+     * @return the String representation
+     */
     @Override
     public String toString() {
         if (this.hasScheduled()){
@@ -154,13 +157,14 @@ public class MakeEventCommand implements Command {
      * @param type the type of object
      * @return event "cast" to the correct type.
      */
-    public static Object getCorrectTimeTableObject(LocalTime startTime,
-                                                         LocalTime endTime,
-                                                         String theLocation,
-                                                         String theDate,
-                                                         String term,
-                                                         String year,
-                                                         String type) {
+    public static Object getCorrectTimeTableObject(String name,
+                                                   LocalTime startTime,
+                                                   LocalTime endTime,
+                                                   String theLocation,
+                                                   String theDate,
+                                                   String term,
+                                                   String year,
+                                                   String type) {
         // Creates the Activity
         switch (type){
             case Constants.ACTIVITY:
@@ -168,12 +172,15 @@ public class MakeEventCommand implements Command {
                 System.out.println("Enter Description: ");
                 String description = descriptionScanner.nextLine();
 
-                return new Activity(startTime, endTime, theDate,
+                Activity activity = new Activity(startTime, endTime, theDate,
                         term + " " + year, description);
+                activity.setName(name);
+                return activity;
             case Constants.TASK:
                 Task task = new Task(startTime, endTime, theDate,
                         term + " " + year);
-                task.addToName(theLocation);
+                task.setName(name);
+                task.addToName(" at " + theLocation);
                 return task;
             // ...
             // Add more types of events here!
@@ -239,6 +246,9 @@ public class MakeEventCommand implements Command {
         }
     }
 
+    /**
+     * A predicate to check if an input is a year
+     */
     private static class isYear extends Predicate{
         @Override
         public boolean run(String prompt) {

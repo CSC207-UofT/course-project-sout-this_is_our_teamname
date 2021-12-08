@@ -3,7 +3,7 @@ package InterfaceAdaprotsTests;
 import Commands.Command;
 import Commands.CreationCommands.GetAllTimeTablesCommand;
 import Commands.CreationCommands.PrintHistoryCommand;
-import InterfaceAdaptors.CommandFactory;
+import InterfaceAdaptors.CommandLineCommandFactory;
 import InterfaceAdaptors.DatabaseController;
 import DataGetting.CSVScraper;
 import Helpers.InvalidInputException;
@@ -19,13 +19,13 @@ import static org.junit.Assert.*;
  * These tests are not comprehensive, but it is challenging to test methods
  * that use `System.in`. That will be dealt with in Phase 2 (hopefully)
  */
-public class CommandFactoryTest {
-    CommandFactory factory;
+public class CommandLineCommandFactoryTest {
+    CommandLineCommandFactory factory;
     TimeTableManager manager;
 
     @Before
     public void Setup(){
-        factory = new CommandFactory(new DatabaseController("cmd"));
+        factory = new CommandLineCommandFactory(new DatabaseController("cmd"));
         manager = new TimeTableManager();
         factory.setDataSource(new CSVScraper());
     }

@@ -3,12 +3,9 @@ package DataGetting;
 import TimeTableObjects.Course;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A data gathering class / database class
  */

@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * TODO REMOVE THIS SENTENCE!!!
  *
  * A database controller class that serves as the Invoker in the command
  * pattern. It sets the command and executes them.
@@ -37,9 +36,8 @@ public class DatabaseController {
     public DatabaseController(String currentUI){
         this.CommandHistory = new Stack<>();
         this.currentUI = currentUI;
-        this.Factory = new CommandFactory(this);
+        this.Factory = setFactory();
     }
-
 
     // ======================== Control UserInterface ==========================
     /**
@@ -55,7 +53,6 @@ public class DatabaseController {
         String[] banFunctions = this.readFunctions();
 
         this.Factory.setAllowedFunctions(banFunctions);
-
     }
 
     /**
@@ -114,6 +111,17 @@ public class DatabaseController {
         return newString.split(",\\s+");
     }
 
+    /**
+     * Returns the CommandFactory based on the UI the user is using
+     * @return the corresponding CommandFactory
+     */
+    private CommandFactory setFactory(){
+        if (currentUI.equals("cmd")){
+            return new CommandLineCommandFactory(this);
+        } else {
+            return new GUICommandFactory(this);
+        }
+    }
 
     // ======================= Control OperatorInterface =======================
     /**
@@ -139,6 +147,7 @@ public class DatabaseController {
         // Set the factory so that it persists even before the program exits
         this.Factory.setAllowedFunctions(function.toArray(new String[0]));
     }
+
     /**
      * Set the datasource to the CommandFactory according to the operator's choice.
      *
@@ -157,7 +166,6 @@ public class DatabaseController {
         // After writing, close the file.
         file.close();
     }
-
 
     // ===================== Command Pattern Infrastructure ====================
     /**
@@ -186,6 +194,7 @@ public class DatabaseController {
         executeCommand(theCommand);
         return true;
     }
+
     /**
      * Sends the command into the commandHistory and executes the command.
      *
@@ -198,7 +207,6 @@ public class DatabaseController {
         this.CommandHistory.push(theCommand);
         theCommand.execute();
     }
-
 
     // ============================ Setters and Getters ========================
 
@@ -215,7 +223,7 @@ public class DatabaseController {
      *
      * @param theFactory the factory to be set
      */
-    public void setFactory(CommandFactory theFactory){
+    public void setFactory(CommandLineCommandFactory theFactory){
         this.Factory = theFactory;
     }
 
@@ -226,12 +234,6 @@ public class DatabaseController {
     public Stack<Command> getCommandHistory() {
         return CommandHistory;
     }
-
-    /**
-     * Gets the type of UI currently in use.
-     * @return string representation of UI currently in use
-     */
-    public String getCurrentUI() { return currentUI; }
 
     /**
      * Returns a hashmap of the entries in the string array commandList with

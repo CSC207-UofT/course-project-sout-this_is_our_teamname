@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A class that downloads a timetable manager object to a properly formatted csv file
  *

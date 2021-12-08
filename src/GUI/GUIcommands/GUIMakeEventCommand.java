@@ -1,9 +1,7 @@
-package demoGUI.GUIcommands;
+package GUI.GUIcommands;
 
 import Commands.Command;
-import Commands.CreationCommands.MakeEventCommand;
 import Helpers.Constants;
-import Helpers.InputCheckers.InputChecker;
 import Helpers.InputCheckers.Predicate;
 import Helpers.Search;
 import Helpers.StringToTime;
@@ -11,22 +9,20 @@ import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
-import demoGUI.userview.ScheduleEventScreen;
+import GUI.userview.ConflictDialog;
+import GUI.userview.ScheduleEventScreen;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
  * A command to create a Non-Course Object.
  *
  * === Private Attributes ===
- * manager: The manager that will eventually schedule the object
- * scheduledObject: An non course Event waiting to be scheduled
- * managerChanged: Whether the TimeTableManager is changed
+ * scheduledObject: An non-course Event waiting to be scheduled
+ * scheduleEventScreen: The window viewed by the user when scheduling non-course Event
  */
 public class GUIMakeEventCommand implements Command {
     // Some Constants:
@@ -41,11 +37,11 @@ public class GUIMakeEventCommand implements Command {
     final String DESCRIPTION = "description";
 
     private Events scheduledObject;
-    private ScheduleEventScreen scheduleEventScreen;
+    private final ScheduleEventScreen scheduleEventScreen;
 
     /**
      * A constructor to set the command
-     * @param scheduleEventScreen //TODO finish here
+     * @param scheduleEventScreen is the window viewed by the user when scheduling non-course Event
      */
     public GUIMakeEventCommand(ScheduleEventScreen scheduleEventScreen){
         this.scheduledObject = null;
@@ -81,7 +77,8 @@ public class GUIMakeEventCommand implements Command {
                     scheduledObject = obj;
                     running = false;
                 } else {
-                    System.out.println("Conflict Found. Try again!");
+                    ConflictDialog.main(new String[]{""});
+                    running = false;
                 }
             } else {
                 Task obj = (Task) toSchedule;
@@ -89,8 +86,6 @@ public class GUIMakeEventCommand implements Command {
                 running = false;
             }
         }
-
-        System.out.println("Event Scheduled");
     }
 
     /**
@@ -109,11 +104,14 @@ public class GUIMakeEventCommand implements Command {
         prompts.put(YEAR, scheduleEventScreen.getYear());
         prompts.put(TYPE,scheduleEventScreen.getEventType());
         prompts.put(DESCRIPTION,scheduleEventScreen.getDescription());
-;
         return prompts;
     }
 
     // ============================= Helper Methods ============================
+    /**
+     * Return a String representation of the Command
+     * @return the String representation
+     */
     @Override
     public String toString() {
         if (this.hasScheduled()){
@@ -159,9 +157,6 @@ public class GUIMakeEventCommand implements Command {
                 Activity activity = new Activity(startTime, endTime, theDate, activityTerm, description);
                 activity.setName(name);
                 return activity;
-
-            //need to change
-            //TODO need to change CONSTANT and rename task to Reminder!
             case "Reminder":
                 String taskTerm = term + " " + year;
                 Task task = new Task(startTime, endTime, theDate, taskTerm);

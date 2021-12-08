@@ -8,18 +8,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * This is a course section (LEC/TUT/PRA) chosen by the user
  *
  * === Private Attributes ===
- * sectionName is the section code of the course section
- * professor The professor teaching this course section
- * faculty The faculty this course belongs to
- * deliveryMethod The delivery method for this course section
- * timeLocation The time and corresponding location for this course
- * term The term for this course
- * courseName is the course code
+ * sectionName: The section code of the course section
+ * professor: The professor teaching this course section
+ * faculty: The faculty this course belongs to
+ * deliveryMethod: The delivery method for this course section
+ * term: The term for this course
+ * timeLocation: The time and corresponding location for this course
+ * courseName: The course code
  */
 public class Course implements Splittable<CourseSection> {
     private final String sectionName;
@@ -38,6 +37,7 @@ public class Course implements Splittable<CourseSection> {
     /**
      * Construct a course with the given section, professor, faculty, delivery method,
      * time and location.
+     * @param courseName The name of this course
      * @param section The section code for this course
      * @param professor The professor teaching this course section
      * @param faculty The faculty this course belongs to
@@ -49,7 +49,7 @@ public class Course implements Splittable<CourseSection> {
      *                     {date, startTime, endTime}
      * @param term The term and year for this course e.g. Fall 2021
      */
-    public Course(String CourseName,
+    public Course(String courseName,
                   String section,
                   String professor,
                   String faculty,
@@ -57,7 +57,7 @@ public class Course implements Splittable<CourseSection> {
                   HashMap<Object[], String> timeLocation,
                   String term
                   ) {
-        this.courseName = CourseName;
+        this.courseName = courseName;
         this.sectionName = section;
         this.professor = professor;
         this.faculty = faculty;

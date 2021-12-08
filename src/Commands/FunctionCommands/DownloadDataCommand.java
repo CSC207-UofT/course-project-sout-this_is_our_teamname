@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * Downloads the data for the user to see
  */
@@ -28,21 +27,29 @@ public class DownloadDataCommand implements Command {
         this.loader = new CSVDownloader();
     }
 
+    /**
+     * Executes the command to download the timetable.
+     */
     @Override
     public void execute() {
         boolean running = true;
         while (running){
+            Scanner ask2 = new Scanner(System.in);
+            System.out.println("Enter the name for the timetables to save with (Example: My_TimeTable 2021)");
+            String chosen = ask2.nextLine();
+
             Scanner ask = new Scanner(System.in);
-            System.out.println("Enter the name for the timetables to save with");
-            String chosen = ask.nextLine();
+            System.out.println("Enter the year for the timetables to save: ");
+            String year = ask.nextLine();
 
-            String[] keyInfo = chosen.split(" ");
-            String term = keyInfo[0];
-            String year = keyInfo[1];
+            Scanner ask3 = new Scanner(System.in);
+            System.out.println("Enter the term: ");
+            String term = ask3.nextLine();
 
-            HashMap<String, List<List<String>>> dataMap = getData();
+            HashMap<String, List<List<String>>> dataMap =
+                    getData(term + " " + year);
             try {
-                this.loader.download(dataMap, term, year);
+                this.loader.download(dataMap, chosen, year);
                 running = false;
             } catch (IOException e){
                 System.out.println("Cannot find timetable. Try again!");
@@ -52,11 +59,17 @@ public class DownloadDataCommand implements Command {
         System.out.println("Downloaded");
     }
 
-    public HashMap<String, List<List<String>>> getData(){
+    /**
+     * Gets the data from the manager.
+     * @return hashmap of list of events in the timetable for each term.
+     */
+    public HashMap<String, List<List<String>>> getData(String theTerm){
         HashMap<String, List<List<String>>> datalist = new HashMap<>();
 
         for (String term : this.manager.getTerms()) {
-            datalist.put(term, TimetableToList(this.manager.getTimetable(term)));
+            if (term.equals(theTerm)){
+                datalist.put(term.split(" ")[0], TimetableToList(this.manager.getTimetable(term)));
+            }
         }
         return datalist;
     }

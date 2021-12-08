@@ -11,7 +11,6 @@ import java.time.LocalTime;
 import java.util.*;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A WebScraper class. It is a DataGetter class that gets the data from a the course finder
  * website.
@@ -117,6 +116,14 @@ public class WebScraper extends CourseGetter {
             // create the location time map.
             HashMap<Object[], String> locationTimeMap = new HashMap<>();
 
+            if (locations.size() < times.size()){
+                int diff = times.size() - locations.size();
+                for (int k = 0; k < diff; k++){
+                    locations.add((int) Math.ceil((double) diff / 2),
+                            Constants.TBA);
+                }
+            }
+
             for (int j = 0; j < locations.size(); j++){
                 locationTimeMap.put(times.get(j), locations.get(j));
             }
@@ -196,15 +203,17 @@ public class WebScraper extends CourseGetter {
         ArrayList<Object[]> timesList = new ArrayList<>();
         if (formattedTimeString.length() != 0){
             for (String timeEntry : times) {
-                // Remove white space
-                timeEntry = timeEntry.trim();
-                String[] dateAndTime = timeEntry.split(" ");
+                if (isTimeString(timeEntry)){
+                    // Remove white space
+                    timeEntry = timeEntry.trim();
+                    String[] dateAndTime = timeEntry.split(" ");
 
-                LocalTime formattedStart = formatTime(dateAndTime[1].split("-")[0]);
-                LocalTime formattedEnd = formatTime(dateAndTime[1].split("-")[1]);
+                    LocalTime formattedStart = formatTime(dateAndTime[1].split("-")[0]);
+                    LocalTime formattedEnd = formatTime(dateAndTime[1].split("-")[1]);
 
-                timesList.add(new Object[]{formatDate(dateAndTime[0]), formattedStart,
-                        formattedEnd});
+                    timesList.add(new Object[]{formatDate(dateAndTime[0]), formattedStart,
+                            formattedEnd});
+                }
             }
         } else {
             timesList.add(new Object[]{Constants.TBA, LocalTime.of(0, 0, 0),
@@ -282,8 +291,42 @@ public class WebScraper extends CourseGetter {
         return theTerm;
     }
 
+    /**
+     * An helper method to check if the string for time is a correct date and
+     * time string. Used to help avoid fringe cases (eg ECE110H1, Winter 2022)
+     * @param input the string to be checked
+     * @return true if the string is a valid time string
+     */
+    private boolean isTimeString(String input){
+        String[] splicedInput = input.trim().split(" ");
+        if (splicedInput.length != 2){
+            return false;
+        }
+
+        String[] splicedTime = splicedInput[1].split("-");
+        return splicedTime.length == 2;
+    }
+
+    /**
+     * Return a String representation of the class
+     * @return the String representation
+     */
     public String toString(){
         return "WebScraper";
+    }
+
+    public static void main(String[] args) {
+        CourseGetter scraper = new WebScraper();
+        try {
+            LinkedHashMap<String, Course> data = scraper.retrieveData(
+                    "ECE110H1", "Winter", "2022");
+            for (String course : data.keySet()){
+                System.out.print(course + ": ");
+                System.out.println(data.get(course));
+            }
+        } catch (FileNotFoundException e){
+            System.out.println(":(");
+        }
     }
 }
 

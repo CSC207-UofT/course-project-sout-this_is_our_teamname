@@ -1,11 +1,12 @@
-package demoGUI.GUIcommands;
+package GUI.GUIcommands;
 
 import Commands.Command;
 import Commands.NeedsCoursesCommand;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
-import demoGUI.userview.ScheduleCourseScreen;
+import GUI.userview.ConflictDialog;
+import GUI.userview.ScheduleCourseScreen;
 
 import java.util.ArrayList;
 
@@ -13,23 +14,23 @@ import java.util.ArrayList;
  * A command to create a Course Object.
  *
  * === Private Attributes ===
- * dataSource: The source where the data is from.
- * manager: The manager that will eventually schedule the object
+ * scheduledCourse: The courses to be scheduled to the manager.
+ * scheduleCourseScreen: The window viewed by the user when scheduling a course.
  */
 public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command {
 
     private final ArrayList<Course> scheduledCourse;
-    private ScheduleCourseScreen scheduleCourseScreen;
+    private final ScheduleCourseScreen scheduleCourseScreen;
 
     /**
      * A constructor to initialize what this command is connected to
-     *
-     *
+     * @param scheduleCourseScreen is the window viewed by the user when scheduling a course
      */
     public GUIMakeCourseCommand(ScheduleCourseScreen scheduleCourseScreen){
         ArrayList<Course> scheduledCourse = new ArrayList<>();
         scheduledCourse.add(scheduleCourseScreen.getTut());
         scheduledCourse.add(scheduleCourseScreen.getLec());
+        scheduledCourse.add(scheduleCourseScreen.getPrac());
 
         this.scheduledCourse = scheduledCourse;
         this.scheduleCourseScreen = scheduleCourseScreen;
@@ -54,7 +55,7 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
                 manager.schedule(item);
             }
         } else {
-            System.out.println("A Conflict has occurred. Please Try Again!");
+            ConflictDialog.main(new String[]{""});
         }
     }
 
@@ -67,13 +68,15 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
      */
     private boolean hasConflicts(ArrayList<CourseSection> sections) {
         for (Course course : this.scheduledCourse){
-            ArrayList<CourseSection> conflictCheckSections = course.split();
-            TimeTableManager manager = scheduleCourseScreen.getController().getFactory().getCourseManager();
-            for (CourseSection sectionOfCourse : conflictCheckSections){
-                if (!manager.hasConflicts(sectionOfCourse)){
-                    sections.add(sectionOfCourse);
-                } else {
-                    return true;
+            if (course != null) {
+                ArrayList<CourseSection> conflictCheckSections = course.split();
+                TimeTableManager manager = scheduleCourseScreen.getController().getFactory().getCourseManager();
+                for (CourseSection sectionOfCourse : conflictCheckSections){
+                    if (!manager.hasConflicts(sectionOfCourse)){
+                        sections.add(sectionOfCourse);
+                    } else {
+                        return true;
+                    }
                 }
             }
         }
