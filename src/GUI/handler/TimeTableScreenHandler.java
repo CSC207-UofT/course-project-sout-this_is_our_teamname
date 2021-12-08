@@ -1,8 +1,8 @@
-package demoGUI.handler;
+package GUI.handler;
 
 import InterfaceAdaptors.DatabaseController;
-import demoGUI.userview.TimeTableScreen;
-import demoGUI.userview.*;
+import GUI.userview.TimeTableScreen;
+import GUI.userview.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

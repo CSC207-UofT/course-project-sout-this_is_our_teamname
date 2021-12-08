@@ -7,8 +7,8 @@ import Commands.RemovalCommands.RemoveEventCommand;
 import Commands.RemovalCommands.RemoveTimeTable;
 import Helpers.Constants;
 import Helpers.InvalidInputException;
-import demoGUI.GUIcommands.*;
-import demoGUI.userview.*;
+import GUI.GUIcommands.*;
+import GUI.userview.*;
 
 /**
  *

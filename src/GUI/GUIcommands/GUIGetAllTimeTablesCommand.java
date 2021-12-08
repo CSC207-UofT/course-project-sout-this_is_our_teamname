@@ -1,8 +1,8 @@
-package demoGUI.GUIcommands;
+package GUI.GUIcommands;
 
 import Commands.Command;
 import TimeTableContainers.TimeTable;
-import demoGUI.userview.AbstractScreen;
+import GUI.userview.AbstractScreen;
 
 /**
  *

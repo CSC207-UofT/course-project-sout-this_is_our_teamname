@@ -1,4 +1,4 @@
-package demoGUI.userview;
+package GUI.userview;
 
 import InterfaceAdaptors.DatabaseController;
 
@@ -23,7 +23,7 @@ public abstract class AbstractScreen extends JFrame {
     AbstractScreen(String str, TimeTableScreen screen){
         super(str);
         this.screen = screen;
-    };
+    }
 
     /**
      * Sets the frame of the window for display.

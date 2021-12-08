@@ -1,4 +1,4 @@
-package demoGUI.GUIcommands;
+package GUI.GUIcommands;
 
 import Commands.Command;
 import DataLoading.CSVDownloader;
@@ -7,7 +7,7 @@ import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
-import demoGUI.userview.SaveScreen;
+import GUI.userview.SaveScreen;
 
 import java.io.IOException;
 import java.util.ArrayList;

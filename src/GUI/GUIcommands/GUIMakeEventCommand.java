@@ -1,9 +1,7 @@
-package demoGUI.GUIcommands;
+package GUI.GUIcommands;
 
 import Commands.Command;
-import Commands.CreationCommands.MakeEventCommand;
 import Helpers.Constants;
-import Helpers.InputCheckers.InputChecker;
 import Helpers.InputCheckers.Predicate;
 import Helpers.Search;
 import Helpers.StringToTime;
@@ -11,14 +9,12 @@ import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
-import demoGUI.userview.ConflictDialog;
-import demoGUI.userview.ScheduleEventScreen;
+import GUI.userview.ConflictDialog;
+import GUI.userview.ScheduleEventScreen;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
@@ -108,7 +104,6 @@ public class GUIMakeEventCommand implements Command {
         prompts.put(YEAR, scheduleEventScreen.getYear());
         prompts.put(TYPE,scheduleEventScreen.getEventType());
         prompts.put(DESCRIPTION,scheduleEventScreen.getDescription());
-;
         return prompts;
     }
 

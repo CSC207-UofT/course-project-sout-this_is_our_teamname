@@ -1,4 +1,4 @@
-package demoGUI.userview;
+package GUI.userview;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -24,11 +24,7 @@ public class ConflictDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        okButton.addActionListener(e -> onOK());
     }
 
     /**

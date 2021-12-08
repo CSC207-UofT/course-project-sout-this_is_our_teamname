@@ -1,18 +1,17 @@
-package demoGUI.userview;
+package GUI.userview;
 
 import Helpers.Constants;
 import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
-import demoGUI.handler.TimeTableScreenHandler;
-import demoGUI.util.DimensionUtil;
+import GUI.handler.TimeTableScreenHandler;
+import GUI.util.DimensionUtil;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
-import java.net.URL;
 
 /**
  * A screen that displays the window viewed by the user

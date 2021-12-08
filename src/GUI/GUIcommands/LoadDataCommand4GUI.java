@@ -1,9 +1,9 @@
-package demoGUI.GUIcommands;
+package GUI.GUIcommands;
 
 import Commands.Command;
 import DataGetting.CSVUploader;
 import Helpers.Constants;
-import demoGUI.userview.LoadScreen;
+import GUI.userview.LoadScreen;
 
 import java.io.IOException;
 

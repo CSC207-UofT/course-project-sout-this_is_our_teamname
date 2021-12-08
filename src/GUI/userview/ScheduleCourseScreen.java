@@ -1,12 +1,11 @@
-package demoGUI.userview;
+package GUI.userview;
 
 import InterfaceAdaptors.DatabaseController;
 import TimeTableObjects.Course;
-import demoGUI.handler.ScheduleCourseHandler;
+import GUI.handler.ScheduleCourseHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 

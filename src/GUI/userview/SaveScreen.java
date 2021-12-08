@@ -1,11 +1,10 @@
-package demoGUI.userview;
+package GUI.userview;
 
 import InterfaceAdaptors.DatabaseController;
-import demoGUI.handler.SaveScreenHandler;
+import GUI.handler.SaveScreenHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 
 /**
  * A screen that displays the window viewed by the user

@@ -1,12 +1,12 @@
-package demoGUI.GUIcommands;
+package GUI.GUIcommands;
 
 import Commands.Command;
 import Commands.NeedsCoursesCommand;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
-import demoGUI.userview.ConflictDialog;
-import demoGUI.userview.ScheduleCourseScreen;
+import GUI.userview.ConflictDialog;
+import GUI.userview.ScheduleCourseScreen;
 
 import java.util.ArrayList;
 
