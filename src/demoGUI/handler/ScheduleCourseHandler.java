@@ -41,7 +41,7 @@ public class ScheduleCourseHandler implements ActionListener {
         String text = jButton.getText();
         // if the user uses the "Back" button
         if ("Back".equals(text)){
-            backUser();
+            scheduleCourseScreen.dispose();
 
         // if the user uses the "Solver" button
             scheduleCourseScreen.dispose();

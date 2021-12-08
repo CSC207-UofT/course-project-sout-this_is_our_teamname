@@ -178,12 +178,6 @@ public class TimeTableScreen extends JFrame {
      * Sets the frame of the window for display.
      */
     private void setFrame (Rectangle bounds){
-        // Window's icon
-        URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
-        assert resource != null;
-        Image image = new ImageIcon(resource).getImage();
-        setIconImage(image);
-
         setBounds(bounds);
 
             // Full screen
