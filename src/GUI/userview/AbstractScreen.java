@@ -28,7 +28,6 @@ public abstract class AbstractScreen extends JFrame {
     /**
      * Sets the frame of the window for display.
      */
-    //TODO protected?
     protected abstract void setFrame();
 
     /**

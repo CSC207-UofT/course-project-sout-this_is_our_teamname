@@ -15,7 +15,7 @@ import java.io.IOException;
  * screen: The window viewed by the user when loading data
  * loader: The CSVUploader to load the data in a csv file
  */
-public class LoadDataCommand4GUI implements Command {
+public class GUILoadDataCommand implements Command {
     private final LoadScreen screen;
     private final CSVUploader loader;
 
@@ -23,7 +23,7 @@ public class LoadDataCommand4GUI implements Command {
      * Constructor to set the command.
      * @param screen is the window viewed by the user when loading data
      */
-    public LoadDataCommand4GUI(LoadScreen screen){
+    public GUILoadDataCommand(LoadScreen screen){
         this.screen = screen;
         this.loader = new CSVUploader();
     }

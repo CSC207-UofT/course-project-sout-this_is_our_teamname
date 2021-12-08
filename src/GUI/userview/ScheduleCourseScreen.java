@@ -55,7 +55,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
     JButton backBtn = new JButton("Back");
     JButton searchBtn = new JButton("Search");
     JButton applyBtn = new JButton("Schedule");
-    JButton solverBtn = new JButton("Solver");
 
     ScheduleCourseHandler scheduleCourseHandler;
 

@@ -66,9 +66,9 @@ public class GUICommandFactory extends CommandFactory {
             case Constants.REMOVE_TIMETABLE:
                 return new RemoveTimeTable(courseManager);
             case Constants.LOAD_DATA:
-                return new LoadDataCommand4GUI((LoadScreen) screen);
+                return new GUILoadDataCommand((LoadScreen) screen);
             case Constants.DOWNLOAD_TIMETABLE:
-                return new DownloadDataCommand4GUI((SaveScreen) screen);
+                return new GUIDownloadDataCommand((SaveScreen) screen);
             default:
                 throw new InvalidInputException();
         }

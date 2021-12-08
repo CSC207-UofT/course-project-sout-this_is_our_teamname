@@ -157,9 +157,6 @@ public class GUIMakeEventCommand implements Command {
                 Activity activity = new Activity(startTime, endTime, theDate, activityTerm, description);
                 activity.setName(name);
                 return activity;
-
-            //need to change
-            //TODO need to change CONSTANT and rename task to Reminder!
             case "Reminder":
                 String taskTerm = term + " " + year;
                 Task task = new Task(startTime, endTime, theDate, taskTerm);

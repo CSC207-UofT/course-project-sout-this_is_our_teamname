@@ -1,7 +1,6 @@
 package GUI.userview;
 
 import javax.swing.*;
-import java.awt.event.*;
 
 /**
  * Displays the conflict dialog if there is conflict in the Event to be scheduled
@@ -32,15 +31,6 @@ public class ConflictDialog extends JDialog {
      */
     private void onOK() {
         // add your code here
-        dispose();
-    }
-
-    //TODO: delete if not used
-    /**
-     * Dispose the dialog when button is clicked
-     */
-    private void onCancel() {
-        // add your code here if necessary
         dispose();
     }
 
