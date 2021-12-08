@@ -207,8 +207,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
      * @param yearBox the JComboBox stores the year.
      */
     private void addYear(JComboBox<String> yearBox){
-        yearBox.addItem("2020");
         yearBox.addItem("2021");
+        yearBox.addItem("2020");
     }
 
     /**
