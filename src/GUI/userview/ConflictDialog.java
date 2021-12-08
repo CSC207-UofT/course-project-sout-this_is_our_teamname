@@ -27,18 +27,17 @@ public class ConflictDialog extends JDialog {
     }
 
     /**
-     * Dispose the dialog when button is clicked
+     * Runs this Conflict Dialog
      */
-    private void onOK() {
-        // add your code here
-        dispose();
+    public void run(){
+        JFrame jframe = new JFrame();
+        this.pack();
+        this.setLocationRelativeTo(jframe);
+        this.setVisible(true);
     }
 
     public static void main(String[] args) {
-        JFrame jframe = new JFrame();
-        ConflictDialog dialog = new ConflictDialog();
-        dialog.pack();
-        dialog.setLocationRelativeTo(jframe);
-        dialog.setVisible(true);
+        ConflictDialog cd = new ConflictDialog();
+        cd.run();
     }
 }

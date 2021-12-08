@@ -1,7 +1,6 @@
 package GUI.handler;
 
 import Helpers.Constants;
-import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.GUICommandFactory;
 import GUI.userview.*;
 
@@ -35,7 +34,7 @@ public class ScheduleEventHandler implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
-        if ("Back".equals(text)){
+        if (text.equals("Back")){
             scheduleEventScreen.dispose();
         }
         else if ("Schedule".equals(text)) {

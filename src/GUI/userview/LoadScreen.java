@@ -26,19 +26,24 @@ import java.awt.*;
  * loadScreenHandler: The handler to handle actions performed on the screen
  */
 public class LoadScreen extends AbstractScreen{
-    JLabel title = new JLabel("Please enter the name and year of the timetables that you would like to load",
+    private final static JLabel title = new JLabel("Please enter the name " +
+            "and year of the timetables that you would like to load",
             JLabel.CENTER);
-    JPanel centerPanel = new JPanel(null);
-    JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    JLabel name = new JLabel("Name");
-    JLabel year = new JLabel("Year");
-    JLabel term = new JLabel("Term");
-    JButton loadBtn = new JButton("Load");
-    JButton backBtn = new JButton("Back");
-    JTextField nameTxt = new JTextField(20);
-    JTextField yearTxt = new JTextField(4);
-    JTextField termTxt = new JTextField(6);
 
+    // Layout information
+    private final static JPanel centerPanel = new JPanel(null);
+    private final static JPanel southPanel =
+            new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    private final static JLabel name = new JLabel("Name");
+    private final static JLabel year = new JLabel("Year");
+    private final static JLabel term = new JLabel("Term");
+    private final static JButton loadBtn = new JButton("Load");
+    private final static JButton backBtn = new JButton("Back");
+    private final static JTextField nameTxt = new JTextField(20);
+    private final static JTextField yearTxt = new JTextField(4);
+    private final static JTextField termTxt = new JTextField(6);
+
+    // TODO Controller can be inherited. See class AbstractScreen
     DatabaseController controller;
     LoadScreenHandler loadScreenHandler;
 
@@ -48,6 +53,7 @@ public class LoadScreen extends AbstractScreen{
      * @param screen The window viewed by the user
      */
     public LoadScreen(DatabaseController controller, TimeTableScreen screen) {
+        // TODO Use Constants
         super("Load", screen);
 
         this.controller = controller;
@@ -56,7 +62,11 @@ public class LoadScreen extends AbstractScreen{
 
         Container contentPane = getContentPane();
 
-        title.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        // TODO Make `new Font("Times New Roman", Font.PLAIN, 20)` into a
+        //  constant rather than repeating over and over, FONT20 FONT15 example
+        //  below
+
+        title.setFont(Constants.FONT15);
         title.setPreferredSize(new Dimension(0, 20));
 
         // Load button
@@ -80,7 +90,6 @@ public class LoadScreen extends AbstractScreen{
 
         termTxt.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         termTxt.setBounds(320, 160, 120, 40);
-
 
         // Back button
         backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -123,6 +132,8 @@ public class LoadScreen extends AbstractScreen{
     }
 
     /**
+     * TODO WHY??? THIS IS INHERITED!!!
+     *
      * Gets the DatabaseController for the GUI
      * @return the DatabaseController for the GUI
      */
@@ -134,24 +145,29 @@ public class LoadScreen extends AbstractScreen{
      * Gets the name of timetable to be loaded
      * @return the name of timetable to be loaded
      */
-    public String getNameString() {return nameTxt.getText();}
+    public String getNameString() {
+        return nameTxt.getText();
+    }
 
     /**
      * Gets the year of timetable to be loaded
      * @return the year of timetable to be loaded
      */
-    public String getYearString() {return yearTxt.getText();}
+    public String getYearString() {
+        return yearTxt.getText();
+    }
 
     /**
      * Gets the term of timetable to be loaded
      * @return the term of timetable to be loaded
      */
-    public String getTermString() {return termTxt.getText();}
+    public String getTermString() {
+        return termTxt.getText();
+    }
 
     public static void main(String[] args) {
         DatabaseController controller = new DatabaseController("gui");
         TimeTableScreen screen = new TimeTableScreen();
         new LoadScreen(controller, screen);
-
     }
 }

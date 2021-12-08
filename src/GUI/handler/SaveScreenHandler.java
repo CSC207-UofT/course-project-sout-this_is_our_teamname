@@ -35,16 +35,19 @@ public class SaveScreenHandler implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
-        if ("Back".equals(text)){
+        if (text.equals("Back")){
             saveScreen.dispose();
 
-        } else if ("Save".equals(text)){
+        } else if (text.equals("Save")){
             try{
                 //save timetables
-                CommandFactory factory = saveScreen.getController().getFactory();
-                ((GUICommandFactory) factory).setScreen(saveScreen);
+                GUICommandFactory factory =
+                        (GUICommandFactory) saveScreen.getController().getFactory();
+                factory.setScreen(saveScreen);
                 saveScreen.getController().runCommand(Constants.DOWNLOAD_TIMETABLE);
-            } catch (Exception ignore){}
+            } catch (Exception ignore){
+                // Catching exceptions
+            }
             //refresh timetables
             saveScreen.getScreen().refreshTimetableTabs(saveScreen.getController().getFactory().getCourseManager());
             saveScreen.dispose();

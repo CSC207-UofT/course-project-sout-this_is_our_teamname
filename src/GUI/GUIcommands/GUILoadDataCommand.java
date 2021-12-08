@@ -56,6 +56,5 @@ public class GUILoadDataCommand implements Command {
         } catch (IOException e){
             System.out.println("Invalid Input. Try again!");
         }
-        System.out.println("Loaded");
     }
 }
