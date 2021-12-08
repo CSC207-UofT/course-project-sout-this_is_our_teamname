@@ -11,6 +11,7 @@ import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;
+import demoGUI.userview.ConflictDialog;
 import demoGUI.userview.ScheduleEventScreen;
 
 import java.time.LocalTime;
@@ -80,7 +81,7 @@ public class GUIMakeEventCommand implements Command {
                     scheduledObject = obj;
                     running = false;
                 } else {
-                    scheduleEventScreen.setConflict(true);
+                    ConflictDialog.main(new String[]{""});
                     running = false;
                 }
             } else {

@@ -5,6 +5,7 @@ import Commands.NeedsCoursesCommand;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 import TimeTableObjects.EventObjects.CourseSection;
+import demoGUI.userview.ConflictDialog;
 import demoGUI.userview.ScheduleCourseScreen;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
                 manager.schedule(item);
             }
         } else {
-            scheduleCourseScreen.setConflit(true);
+            ConflictDialog.main(new String[]{""});
         }
     }
 

@@ -100,13 +100,6 @@ public class SaveScreen extends AbstractScreen{
      * Sets the frame of the window for display.
      */
     protected void setFrame() {
-        // Window's icon
-        URL resource = SaveScreen.class.getClassLoader().getResource("pic2.jpg");
-        assert resource != null;
-        Image image = new ImageIcon(resource).getImage();
-        setIconImage(image);
-
-
         // Set size
         setSize(800, 600);
 

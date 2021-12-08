@@ -93,13 +93,9 @@ public class ScheduleCourseHandler implements ActionListener {
                 String lecture = scheduleCourseScreen.getlecBox();
                 String tut = scheduleCourseScreen.gettutBox();
                 String prac = scheduleCourseScreen.getpracBox();
-                System.out.println(tut);
-                System.out.println(prac);
                 String lecCode = lecture.split(":")[0];
                 String tutCode = tut.split(":")[0];
                 String pracCode = prac.split(":")[0];
-                System.out.println(tutCode);
-                System.out.println(pracCode);
                 Course lecSection = map.get(lecCode);
                 Course tutSection = map.get(tutCode);
                 Course pracSection = map.get(pracCode);
@@ -114,10 +110,6 @@ public class ScheduleCourseHandler implements ActionListener {
             }
             scheduleCourseScreen.getScreen().refreshTimetableTabs(
                     scheduleCourseScreen.getController().getFactory().getCourseManager());
-            //opens conflict dialog when there is a conflict in scheduling
-            if (scheduleCourseScreen.getConflict()){
-                ConflictDialog.main(new String[]{""});
-            }
             scheduleCourseScreen.dispose();
         }
     }
