@@ -3,29 +3,46 @@ package demoGUI.userview;
 import javax.swing.*;
 import java.awt.event.*;
 
+/**
+ * Displays the conflict dialog if there is conflict in the Event to be scheduled
+ *
+ * === Attributes ===
+ * contentPane: The panel that contains all components locating on the dialog
+ * okButton: The button to close the dialog when clicked
+ * conflictLabel: The label displaying the conflict message
+ */
 public class ConflictDialog extends JDialog {
     private JPanel contentPane;
-    private JButton OKbutton;
+    private JButton okButton;
     private JLabel conflictLabel;
 
-
+    /**
+     * Constructor to set the dialog
+     */
     public ConflictDialog() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(OKbutton);
+        getRootPane().setDefaultButton(okButton);
 
-        OKbutton.addActionListener(new ActionListener() {
+        okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
         });
     }
 
+    /**
+     * Dispose the dialog when button is clicked
+     */
     private void onOK() {
         // add your code here
         dispose();
     }
 
+    //TODO: delete if not used
+    /**
+     * Dispose the dialog when button is clicked
+     */
     private void onCancel() {
         // add your code here if necessary
         dispose();

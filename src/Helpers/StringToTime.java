@@ -3,7 +3,7 @@ package Helpers;
 import java.time.LocalTime;
 
 /**
- * TODO DELETE THIS SENTENCE
+ * A helper class that converts Strings to LocalTime object.
  */
 public class StringToTime {
     /** Turns a string in the format "13:00PM" to 13:00:00

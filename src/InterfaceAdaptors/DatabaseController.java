@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * TODO REMOVE THIS SENTENCE!!!
  *
  * A database controller class that serves as the Invoker in the command
  * pattern. It sets the command and executes them.
@@ -112,6 +111,10 @@ public class DatabaseController {
         return newString.split(",\\s+");
     }
 
+    /**
+     * Returns the CommandFactory based on the UI the user is using
+     * @return the corresponding CommandFactory
+     */
     private CommandFactory setFactory(){
         if (currentUI.equals("cmd")){
             return new CommandLineCommandFactory(this);

@@ -1,12 +1,9 @@
 package DataGetting;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A DataGetter Superclass that connects to external sources to retrieve data
  *

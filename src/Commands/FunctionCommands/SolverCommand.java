@@ -8,11 +8,9 @@ import Functions.TimeTablePuzzle;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 
-import java.io.InputStream;
 import java.util.*;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A command to solve a TimeTable
  * === Private Attributes ===
@@ -64,7 +62,7 @@ public class SolverCommand extends NeedsCoursesCommand {
         }
 
         TimeTablePuzzle puzzle = new TimeTablePuzzle(courses, manager,
-                something(courses), new ArrayList<>());
+                hashmapToArraylist(courses), new ArrayList<>());
         DfsSearch solver = new DfsSearch();
         Set<String> seen = new HashSet<>();
         ArrayList<TimeTablePuzzle> solved = solver.solve(puzzle, seen);
@@ -105,14 +103,16 @@ public class SolverCommand extends NeedsCoursesCommand {
     }
 
     /**
-     * TODO This needs to be named better. I was short on time! - MATT
+     * Converts the arraylist of courses in 2-dimensional hashmap to courses in 2-dimensional arraylist.
+     * @param courses is the arraylist of courses in 2-dimensional hashmap
+     * @return courses in 2-dimensional arraylist
      */
-    private ArrayList<ArrayList<Course>> something(HashMap<String, HashMap<String, ArrayList<Course>>> courses){
-        ArrayList<ArrayList<Course>> something = new ArrayList<>();
+    private ArrayList<ArrayList<Course>> hashmapToArraylist(HashMap<String, HashMap<String, ArrayList<Course>>> courses){
+        ArrayList<ArrayList<Course>> twoDimensionalList = new ArrayList<>();
         for (HashMap<String, ArrayList<Course>> cor : courses.values()){
-            something.addAll(cor.values());
+            twoDimensionalList.addAll(cor.values());
         }
-        return something;
+        return twoDimensionalList;
     }
 
     public static void main(String[] args) {

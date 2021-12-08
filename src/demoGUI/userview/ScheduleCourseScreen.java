@@ -3,19 +3,42 @@ package demoGUI.userview;
 import InterfaceAdaptors.DatabaseController;
 import TimeTableObjects.Course;
 import demoGUI.handler.ScheduleCourseHandler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
-
 /**
- * A ScheduleCourseScreen class that construct the screen of Schedule Course.
+ * A screen that displays the window viewed by the user
  *
+ * === Attributes ===
+ * centerPanel: The panel that contains all components locating at the center of the screen
+ * southPanel: The panel that contains all components locating at the bottom of the screen
+ * courseName: The label for nameTxt
+ * nameTxt: The textField for the user to enter the name of course to be scheduled
+ * term: The label for termBox
+ * termBox: The comboBox to allow user to select the term of the course to be scheduled
+ * year: The label for yearBox
+ * yearBox: The comboBox to allow user to select the year of the course to be scheduled
+ * lecture: The label for lectureBox
+ * lectureBox: The comboBox to allow user to select the lecture of the course to be scheduled
+ * tutorial: The label for tutBox
+ * tutBox: The comboBox to allow user to select the tutorial of the course to be scheduled
+ * backBtn: The button to close the screen when clicked
+ * searchBtn: The button to search for course information on current data source
+ * applyBtn: The button to schedule the course selected when clicked
+ * solverBtn: THe button to solve for a timetable for all selected courses when clicked
+ *
+ * scheduleCourseHandler: The handler to handle actions performed on the screen
+ * conflict: Whether there is conflict for selected course. True if there is, false otherwise.
+ * lec: Stores all the lecture sections for selected course
+ * tut: Stores all the tutorial sections for selected course
+ * controller: The DatabaseController for the GUI
  */
 public class ScheduleCourseScreen extends AbstractScreen{
-    // Instant Variables of the screen
+
     JPanel centerPanel = new JPanel(null);
     JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     JLabel courseName = new JLabel("Course Name:");
@@ -33,6 +56,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
     JButton backBtn = new JButton("Back");
     JButton searchBtn = new JButton("Search");
     JButton applyBtn = new JButton("Schedule");
+    JButton solverBtn = new JButton("Solver");
+
     ScheduleCourseHandler scheduleCourseHandler;
     Boolean conflict;
 

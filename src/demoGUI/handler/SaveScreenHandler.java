@@ -3,41 +3,51 @@ package demoGUI.handler;
 import Helpers.Constants;
 import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.GUICommandFactory;
-import demoGUI.userview.ConflictDialog;
 import demoGUI.userview.SaveScreen;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ *
+ * Handler to handle actions performed by the user when saving the timetables
+ *
+ * === Attributes ===
+ * saveScreen: The window viewed by the user when loading data
+ */
 public class SaveScreenHandler implements ActionListener{
-    private final SaveScreen savescreen;
+    private final SaveScreen saveScreen;
 
-    public SaveScreenHandler(SaveScreen savescreen){
-        this.savescreen = savescreen;
+    /**
+     * Constructor to set the handler.
+     * @param saveScreen is the window viewed by the user when saving the timetables
+     */
+    public SaveScreenHandler(SaveScreen saveScreen){
+        this.saveScreen = saveScreen;
     }
 
+    /**
+     * Handles the action user performed on the screen
+     * @param e the action user performed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
         if ("Back".equals(text)){
-            backChoosing();
+            saveScreen.dispose();
 
         } else if ("Save".equals(text)){
             try{
                 //save timetables
-                CommandFactory factory = savescreen.getController().getFactory();
-                ((GUICommandFactory) factory).setScreen(savescreen);
-                savescreen.getController().runCommand(Constants.DOWNLOAD_TIMETABLE);
+                CommandFactory factory = saveScreen.getController().getFactory();
+                ((GUICommandFactory) factory).setScreen(saveScreen);
+                saveScreen.getController().runCommand(Constants.DOWNLOAD_TIMETABLE);
             } catch (Exception ignore){}
             //refresh timetables
-            savescreen.getScreen().refreshTimetableTabs(savescreen.getController().getFactory().getCourseManager());
-            savescreen.dispose();
+            saveScreen.getScreen().refreshTimetableTabs(saveScreen.getController().getFactory().getCourseManager());
+            saveScreen.dispose();
         }
-    }
-
-    private void backChoosing(){
-        savescreen.dispose();
     }
 }

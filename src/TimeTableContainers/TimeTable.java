@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 
 
 /**
- * aTimeTable class stores all the activities from Monday to Sunday. If there
+ * A TimeTable class stores all the activities from Monday to Sunday. If there
  * is a conflict when storing a new activity,
  * it will still be stored, and a conflict warning will be sent back prompting user to take action or ignore it.
  *
@@ -63,6 +63,12 @@ public class TimeTable {
         return false;
     }
 
+    /**
+     * Schedules the given task into the appropriate weekday.
+     *
+     * @param task the given task
+     * @return true if scheduling is successful
+     */
     public boolean schedule(Task task){
         this.taskCalendar.get(task.getDate()).add(task);
         return true;
@@ -186,14 +192,27 @@ public class TimeTable {
         return this.calendar;
     }
 
+    /**
+     * Sets the calendar of the timetable
+     *
+     * @param other the other calendar
+     */
     public void setCalendar(LinkedHashMap<String, Events[]> other){
         this.calendar = other;
     }
 
+    /**
+     * Sets the task hashmap
+     * @param taskCalendar a hashmap of tasks
+     */
     public void setTaskCalendar(LinkedHashMap<String, ArrayList<Task>> taskCalendar) {
         this.taskCalendar = taskCalendar;
     }
 
+    /**
+     * Makes a copy of the TimeTable without alias
+     * @return a copy of the TimeTable
+     */
     public TimeTable make_copy(){
         TimeTable copy = new TimeTable();
 

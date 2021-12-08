@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * Downloads the data for the user to see
  */
@@ -28,6 +27,9 @@ public class DownloadDataCommand implements Command {
         this.loader = new CSVDownloader();
     }
 
+    /**
+     * Executes the command to download the timetable.
+     */
     @Override
     public void execute() {
         boolean running = true;
@@ -52,6 +54,10 @@ public class DownloadDataCommand implements Command {
         System.out.println("Downloaded");
     }
 
+    /**
+     * Gets the data from the manager.
+     * @return hashmap of list of events in the timetable for each term.
+     */
     public HashMap<String, List<List<String>>> getData(){
         HashMap<String, List<List<String>>> datalist = new HashMap<>();
 

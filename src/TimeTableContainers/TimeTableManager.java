@@ -11,7 +11,6 @@ import java.util.*;
 
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A manager that manages and holds different timetables.
  * === Private Attributes ===
@@ -188,7 +187,6 @@ public class TimeTableManager {
     }
 
     //============================ Getters =====================================
-//TODO better name for this getter, not just terms, names instead
     /**
      * Get the terms of the timetables
      *
@@ -227,6 +225,10 @@ public class TimeTableManager {
         return this.timetables.get(name);
     }
 
+    /**
+     * Gets a copy of the TimeTableManager without alias
+     * @return a copy of the TimeTableManager
+     */
     public TimeTableManager get_copy(){
         TimeTableManager copy = new TimeTableManager();
 
@@ -240,6 +242,10 @@ public class TimeTableManager {
         return copy;
     }
 
+    /**
+     * Sets the timetables with given hashmap of TimeTable
+     * @param other the other timetables
+     */
     public void setTimetables(HashMap<String, TimeTable> other){
         // To prevent aliasing
         this.timetables = new HashMap<>(other);

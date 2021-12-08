@@ -10,6 +10,13 @@ import Helpers.InvalidInputException;
 import demoGUI.GUIcommands.*;
 import demoGUI.userview.*;
 
+/**
+ *
+ * A factory class to create the individual commands of the class.
+ *
+ * === Attributes ===
+ * screen: The window viewed by the user
+ */
 public class GUICommandFactory extends CommandFactory {
     private AbstractScreen screen;
 

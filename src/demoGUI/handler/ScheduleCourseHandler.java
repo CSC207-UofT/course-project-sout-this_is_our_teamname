@@ -46,6 +46,7 @@ public class ScheduleCourseHandler implements ActionListener {
             backUser();
 
         // if the user uses the "Solver" button
+            scheduleCourseScreen.dispose();
         } else if ("Solver".equals(text)){
             String name = scheduleCourseScreen.getCourseName();
             String term = scheduleCourseScreen.getTerm();
@@ -122,16 +123,6 @@ public class ScheduleCourseHandler implements ActionListener {
             scheduleCourseScreen.dispose();
         }
     }
-
-    /** Handles the click of the "Back" button
-     *
-     */
-    private void backUser(){
-        scheduleCourseScreen.dispose();
-    }
-
-
-
 }
 
 

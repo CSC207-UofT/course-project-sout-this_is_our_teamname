@@ -2,7 +2,7 @@ package Helpers;
 
 
 /**
- * TODO DELETE THIS SENTENCE
+ * A helper class that stores the constants for this program.
  */
 public class Constants {
     public static final String MONDAY = "Monday";

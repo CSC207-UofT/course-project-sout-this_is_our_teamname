@@ -13,8 +13,8 @@ import java.util.ArrayList;
  * A command to create a Course Object.
  *
  * === Private Attributes ===
- * dataSource: The source where the data is from.
- * manager: The manager that will eventually schedule the object
+ * scheduledCourse: The courses to be scheduled to the manager.
+ * scheduleCourseScreen: The window viewed by the user when scheduling a course.
  */
 public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command {
 
@@ -23,8 +23,7 @@ public class GUIMakeCourseCommand extends NeedsCoursesCommand implements Command
 
     /**
      * A constructor to initialize what this command is connected to
-     *
-     *
+     * @param scheduleCourseScreen is the window viewed by the user when scheduling a course
      */
     public GUIMakeCourseCommand(ScheduleCourseScreen scheduleCourseScreen){
         ArrayList<Course> scheduledCourse = new ArrayList<>();

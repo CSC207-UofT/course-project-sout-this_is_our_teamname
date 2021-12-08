@@ -14,7 +14,6 @@ import java.util.LinkedHashMap;
 import java.util.regex.Pattern;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A command to remove an Event.
  *

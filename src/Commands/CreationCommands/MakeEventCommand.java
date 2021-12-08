@@ -18,14 +18,12 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * A command to create a Non-Course Object.
  *
  * === Private Attributes ===
  * manager: The manager that will eventually schedule the object
  * scheduledObject: An non course Event waiting to be scheduled
- * managerChanged: Whether the TimeTableManager is changed
  */
 public class MakeEventCommand implements Command {
     // Some Constants:
@@ -126,6 +124,10 @@ public class MakeEventCommand implements Command {
     }
 
     // ============================= Helper Methods ============================
+    /**
+     * Return a String representation of the Command
+     * @return the String representation
+     */
     @Override
     public String toString() {
         if (this.hasScheduled()){
@@ -244,6 +246,9 @@ public class MakeEventCommand implements Command {
         }
     }
 
+    /**
+     * A predicate to check if an input is a year
+     */
     private static class isYear extends Predicate{
         @Override
         public boolean run(String prompt) {

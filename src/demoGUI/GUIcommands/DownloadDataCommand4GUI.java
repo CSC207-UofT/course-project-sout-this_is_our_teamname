@@ -17,18 +17,30 @@ import java.util.List;
 /**
  *
  * Downloads the data for the user to see
+ *
+ * === Attributes ===
+ * screen: The window viewed by the user when saving.
+ * manager: The TimeTableManager that will be saved.
+ * loader: A class that downloads a timetable manager object to a properly formatted csv file.
  */
 public class DownloadDataCommand4GUI implements Command {
     private final SaveScreen screen;
     private final TimeTableManager manager;
     private final CSVDownloader loader;
 
+    /**
+     * Constructor to save the timetables.
+     * @param screen is the window viewed by the user when saving.
+     */
     public DownloadDataCommand4GUI(SaveScreen screen){
         this.screen = screen;
         this.manager = screen.getController().getFactory().getCourseManager();
         this.loader = new CSVDownloader();
     }
 
+    /**
+     * Executes the command to download the timetable.
+     */
     @Override
     public void execute() {
         boolean running = true;
@@ -49,6 +61,10 @@ public class DownloadDataCommand4GUI implements Command {
         System.out.println("Downloaded");
     }
 
+    /**
+     * Gets the data from the manager.
+     * @return hashmap of list of events in the timetable for each term.
+     */
     public HashMap<String, List<List<String>>> getData(){
         HashMap<String, List<List<String>>> datalist = new HashMap<>();
 

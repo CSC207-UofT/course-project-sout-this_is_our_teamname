@@ -2,13 +2,14 @@ package demoGUI.GUIcommands;
 
 import Commands.Command;
 import TimeTableContainers.TimeTable;
-import TimeTableContainers.TimeTableManager;
 import demoGUI.userview.AbstractScreen;
 
 /**
- * TODO DELETE THIS SENTENCE
  *
  * A command object to get all the timetables
+ *
+ * === Attributes ===
+ * screen: The window viewed by the user.
  */
 public class GUIGetAllTimeTablesCommand implements Command {
     private final AbstractScreen screen;
@@ -37,6 +38,10 @@ public class GUIGetAllTimeTablesCommand implements Command {
         }
     }
 
+    /**
+     * Return a String representation of the Command
+     * @return the String representation
+     */
     @Override
     public String toString() {
         return "Extracted all Saved TimeTables";
