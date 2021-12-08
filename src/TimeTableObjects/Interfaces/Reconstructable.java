@@ -1,7 +1,5 @@
 package TimeTableObjects.Interfaces;
 
-import TimeTableObjects.Events;
-
 import java.util.ArrayList;
 
 /**

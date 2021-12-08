@@ -35,14 +35,6 @@ public class Task implements Reconstructable {
     }
 
     /**
-     * If the Events object has an empty string for name attribute,
-     * then set name to: "Unnamed" + Activity/Task/CourseSection
-     */
-    public void nameIt(){
-        this.setName("Unnamed" + this.getClass().getSimpleName());
-    }
-
-    /**
      * Add to the name of the event
      *
      * @param info is going to be added to the name of the Events object

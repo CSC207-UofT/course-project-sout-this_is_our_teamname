@@ -65,15 +65,6 @@ public abstract class Events implements Reconstructable {
     }
 
     /**
-     * Add to the name of the event
-     *
-     * @param info is going to be added to the name of the Events object
-     */
-    public void addToName(String info) {
-        this.name += info;
-    }
-
-    /**
      * Get the start time for the event
      *
      * @return startTime
