@@ -23,7 +23,7 @@ public class ConflictDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
-        okButton.addActionListener(e -> onOK());
+        okButton.addActionListener(e -> dispose());
     }
 
     /**

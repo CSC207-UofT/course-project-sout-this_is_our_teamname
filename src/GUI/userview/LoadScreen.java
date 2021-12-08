@@ -1,5 +1,6 @@
 package GUI.userview;
 
+import Helpers.Constants;
 import InterfaceAdaptors.DatabaseController;
 import GUI.handler.LoadScreenHandler;
 
@@ -70,7 +71,7 @@ public class LoadScreen extends AbstractScreen{
         title.setPreferredSize(new Dimension(0, 20));
 
         // Load button
-        loadBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        loadBtn.setFont(Constants.FONT20);
         loadBtn.addActionListener(loadScreenHandler);
 
         name.setFont(new Font("Times New Roman", Font.PLAIN, 20));

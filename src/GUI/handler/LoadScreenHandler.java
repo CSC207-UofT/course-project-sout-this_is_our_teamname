@@ -37,7 +37,7 @@ public class LoadScreenHandler implements ActionListener {
         if (text.equals("Back")){
             loadScreen.dispose();
 
-        } else if ("Load".equals(text)){
+        } else if (text.equals("Load")){
             try{
                 // load timetables TODO Mention design Decision in DD
                 GUICommandFactory factory = (GUICommandFactory) loadScreen.getController().getFactory();
@@ -48,6 +48,11 @@ public class LoadScreenHandler implements ActionListener {
             }
             // refresh timetables
             loadScreen.getScreen().refreshTimetableTabs(
+                    // TODO WHY? It's like saying "hey! I'll go to Bahan from
+                    //  Myhal by going through UTM!!!" SEE? IT DOESN"T MAKE
+                    //  ANY SENSE!!! I would urge you to put the manager call
+                    //  from GUICommandFactory and call it that way. Use
+                    //  Aliasing!!!
                     loadScreen.getController().getFactory().getCourseManager());
             loadScreen.dispose();
         }

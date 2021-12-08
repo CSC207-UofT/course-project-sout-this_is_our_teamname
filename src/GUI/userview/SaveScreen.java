@@ -1,5 +1,6 @@
 package GUI.userview;
 
+import Helpers.Constants;
 import InterfaceAdaptors.DatabaseController;
 import GUI.handler.SaveScreenHandler;
 
