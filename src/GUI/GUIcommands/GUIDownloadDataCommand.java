@@ -48,8 +48,10 @@ public class GUIDownloadDataCommand implements Command {
 
             String filename = screen.getNameString();
             String year = screen.getYearString();
+            String term = screen.getTermString();
 
-            HashMap<String, List<List<String>>> dataMap = getData();
+            HashMap<String, List<List<String>>> dataMap =
+                    getData(term + " " + year);
             try {
                 this.loader.download(dataMap, filename, year);
                 running = false;
@@ -65,11 +67,13 @@ public class GUIDownloadDataCommand implements Command {
      * Gets the data from the manager.
      * @return hashmap of list of events in the timetable for each term.
      */
-    public HashMap<String, List<List<String>>> getData(){
+    public HashMap<String, List<List<String>>> getData(String theTerm){
         HashMap<String, List<List<String>>> datalist = new HashMap<>();
 
         for (String term : this.manager.getTerms()) {
-            datalist.put(term, TimetableToList(this.manager.getTimetable(term)));
+            if (term.equals(theTerm)){
+                datalist.put(term, TimetableToList(this.manager.getTimetable(term)));
+            }
         }
         return datalist;
     }

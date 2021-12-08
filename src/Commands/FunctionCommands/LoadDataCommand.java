@@ -4,8 +4,14 @@ import Commands.Command;
 import DataGetting.CSVUploader;
 import Helpers.Constants;
 import Helpers.InputCheckers.InputChecker;
+import TimeTableContainers.TimeTableManager;
+import TimeTableObjects.EventObjects.Task;
+import TimeTableObjects.Events;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Time;
+import java.util.LinkedHashMap;
 
 /**
  *
@@ -16,11 +22,13 @@ import java.io.IOException;
  */
 public class LoadDataCommand implements Command {
     private final CSVUploader loader;
+    private final TimeTableManager manager;
 
     /**
      * Constructor to set the command.
      */
-    public LoadDataCommand(){
+    public LoadDataCommand(TimeTableManager manager){
+        this.manager = manager;
         this.loader = new CSVUploader();
     }
 
@@ -30,19 +38,23 @@ public class LoadDataCommand implements Command {
     @Override
     public void execute() {
         String[] prompts = {"Enter the Filename (Example: My_TimeTable for My_TimeTable for My_TimeTable_2021_WINTER)",
-                "Enter the year (Example: 2021 for My_TimeTable for My_TimeTable_2021_WINTER)"};
-        boolean running = true;
-        while (running){
-            String[] responses = InputChecker.getQuestionsAnswers(prompts);
+                "Enter the year (Example: 2021 for My_TimeTable for " +
+                        "My_TimeTable_2021_WINTER)", "Enter the term"};
+        String[] responses = InputChecker.getQuestionsAnswers(prompts);
 
-            try {
-                for (String term : new String[]{Constants.WINTER, Constants.SUMMER}){
-                    this.loader.CalibrateData(responses[0], term, responses[1]);
+        LinkedHashMap<String, Object> data;
+        try {
+            data = this.loader.retrieveData(responses[0], responses[2],
+                    responses[1]);
+            for (Object item : data.values()){
+                if (item instanceof Events) {
+                    this.manager.schedule((Events) item);
+                } else if (item instanceof Task){
+                    this.manager.schedule((Task) item);
                 }
-                running = false;
-            } catch (IOException e){
-                System.out.println("Invalid Input. Try again!");
             }
+        } catch (FileNotFoundException e){
+            System.out.println("Invalid Input. Try again!");
         }
         System.out.println("Loaded");
     }

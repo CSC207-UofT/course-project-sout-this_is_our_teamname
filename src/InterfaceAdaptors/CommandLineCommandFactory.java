@@ -69,7 +69,7 @@ public class CommandLineCommandFactory extends CommandFactory {
             case Constants.PRINT_HISTORY:
                 return new PrintHistoryCommand(controller);
             case Constants.LOAD_DATA:
-                return new LoadDataCommand();
+                return new LoadDataCommand(courseManager);
             case Constants.DOWNLOAD_TIMETABLE:
                 return new DownloadDataCommand(courseManager);
             case Constants.EXIT:

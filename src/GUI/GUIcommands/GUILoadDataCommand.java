@@ -4,8 +4,12 @@ import Commands.Command;
 import DataGetting.CSVUploader;
 import Helpers.Constants;
 import GUI.userview.LoadScreen;
+import TimeTableContainers.TimeTableManager;
+import TimeTableObjects.EventObjects.Task;
+import TimeTableObjects.Events;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 
 /**
  *
@@ -18,14 +22,16 @@ import java.io.IOException;
 public class GUILoadDataCommand implements Command {
     private final LoadScreen screen;
     private final CSVUploader loader;
+    private final TimeTableManager manager;
 
     /**
      * Constructor to set the command.
      * @param screen is the window viewed by the user when loading data
      */
-    public GUILoadDataCommand(LoadScreen screen){
+    public GUILoadDataCommand(TimeTableManager manager, LoadScreen screen){
         this.screen = screen;
         this.loader = new CSVUploader();
+        this.manager = manager;
     }
 
     /**
@@ -35,16 +41,20 @@ public class GUILoadDataCommand implements Command {
     public void execute() {
         String filename = screen.getNameString();
         String year = screen.getYearString();
-        boolean running = true;
-        while (running){
-            try {
-                for (String term : new String[]{Constants.WINTER, Constants.SUMMER}){
-                    this.loader.CalibrateData(filename, term, year);
+        String term = screen.getTermString();
+
+        LinkedHashMap<String, Object> data;
+        try {
+            data = this.loader.retrieveData(filename, term, year);
+            for (Object item : data.values()){
+                if (item instanceof Events) {
+                    this.manager.schedule((Events) item);
+                } else if (item instanceof Task){
+                    this.manager.schedule((Task) item);
                 }
-                running = false;
-            } catch (IOException e){
-                System.out.println("Invalid Input. Try again!");
             }
+        } catch (IOException e){
+            System.out.println("Invalid Input. Try again!");
         }
         System.out.println("Loaded");
     }

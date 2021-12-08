@@ -34,17 +34,22 @@ public class DownloadDataCommand implements Command {
     public void execute() {
         boolean running = true;
         while (running){
-            Scanner ask = new Scanner(System.in);
+            Scanner ask2 = new Scanner(System.in);
             System.out.println("Enter the name for the timetables to save with (Example: My_TimeTable 2021)");
-            String chosen = ask.nextLine();
+            String chosen = ask2.nextLine();
 
-            String[] keyInfo = chosen.split(" ");
-            String filename = keyInfo[0];
-            String year = keyInfo[1];
+            Scanner ask = new Scanner(System.in);
+            System.out.println("Enter the year for the timetables to save: ");
+            String year = ask.nextLine();
 
-            HashMap<String, List<List<String>>> dataMap = getData();
+            Scanner ask3 = new Scanner(System.in);
+            System.out.println("Enter the term: ");
+            String term = ask3.nextLine();
+
+            HashMap<String, List<List<String>>> dataMap =
+                    getData(term + " " + year);
             try {
-                this.loader.download(dataMap, filename, year);
+                this.loader.download(dataMap, chosen, year);
                 running = false;
             } catch (IOException e){
                 System.out.println("Cannot find timetable. Try again!");
@@ -58,11 +63,13 @@ public class DownloadDataCommand implements Command {
      * Gets the data from the manager.
      * @return hashmap of list of events in the timetable for each term.
      */
-    public HashMap<String, List<List<String>>> getData(){
+    public HashMap<String, List<List<String>>> getData(String theTerm){
         HashMap<String, List<List<String>>> datalist = new HashMap<>();
 
         for (String term : this.manager.getTerms()) {
-            datalist.put(term, TimetableToList(this.manager.getTimetable(term)));
+            if (term.equals(theTerm)){
+                datalist.put(term.split(" ")[0], TimetableToList(this.manager.getTimetable(term)));
+            }
         }
         return datalist;
     }

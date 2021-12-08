@@ -5,6 +5,7 @@ import TimeTableObjects.EventObjects.Task;
 
 import java.io.*;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
@@ -28,7 +29,7 @@ public class CSVUploader extends DataGetter<Object> {
     public void CalibrateData(String filename, String term,
                               String year) throws FileNotFoundException {
         String filepath = "src\\OutputFiles\\" + filename + "_" + year + "_"  + term + ".csv";
-        String[][] data;
+        ArrayList<String[]> data;
         try {
             data = ReadThroughFile(filepath);
         } catch (IOException e){
@@ -66,8 +67,8 @@ public class CSVUploader extends DataGetter<Object> {
      * @throws FileNotFoundException if the file is not found
      */
     @Override
-    LinkedHashMap<String, Object> retrieveData(String courseName, String term,
-                                               String year) throws FileNotFoundException {
+    public LinkedHashMap<String, Object> retrieveData(String courseName,
+                                                      String term, String year) throws FileNotFoundException {
         CalibrateData(courseName, term, year);
         return super.getData();
     }
@@ -78,10 +79,10 @@ public class CSVUploader extends DataGetter<Object> {
      *
      * @param data the array needs to be processed
      */
-    private String[][] meaningfulDataHelper(String[][] data) {
-        String[][] meaningfuldata = new String[1][data.length - 1];
-        for (int i = 0; i + 1 < data.length; i++) {
-            meaningfuldata[i] = data[i + 1];
+    private String[][] meaningfulDataHelper(ArrayList<String[]> data) {
+        String[][] meaningfuldata = new String[1][data.size() - 1];
+        for (int i = 0; i + 1 < data.size(); i++) {
+            meaningfuldata[i] = data.get(i + 1);
         }
         return meaningfuldata;
     }
@@ -105,13 +106,13 @@ public class CSVUploader extends DataGetter<Object> {
      *
      * @param filepath the path of the csv file that needs to be read
      */
-    private String[][] ReadThroughFile(String filepath) throws IOException {
-        String[][] dataplus = {};
+    private ArrayList<String[]> ReadThroughFile(String filepath) throws IOException {
+        ArrayList<String[]> dataplus = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(filepath));
         String row;
         while ((row = reader.readLine()) != null) {
             String[] data = row.split(",");
-            dataplus = (String[][]) AddOneMore(dataplus, data);
+            dataplus.add(data);
         }
         reader.close();
         return dataplus;
