@@ -1,6 +1,6 @@
 package GUI.userview;
 
-import InterfaceAdaptors.DatabaseController;
+import Helpers.Constants;
 import GUI.handler.SaveScreenHandler;
 
 import javax.swing.*;
@@ -41,56 +41,46 @@ public class SaveScreen extends AbstractScreen{
     private static final JTextField yearTxt = new JTextField(4);
     private static final JTextField termTxt = new JTextField(6);
 
-    // TODO Controller can be inherited. See class AbstractScreen
-    DatabaseController controller;
     SaveScreenHandler saveScreenHandler;
 
     /**
      * Constructor to set the screen
-     * @param controller The DatabaseController for the GUI
      * @param screen The window viewed by the user
      */
-    public SaveScreen(DatabaseController controller, TimeTableScreen screen) {
-        // TODO Use Constants here
-        super("Save", screen);
-
-        this.controller = controller;
+    public SaveScreen(TimeTableScreen screen) {
+        super(Constants.SAVE, screen);
 
         saveScreenHandler = new SaveScreenHandler(this);
 
         Container contentPane = getContentPane();
 
-        // TODO Make `new Font("Times New Roman", Font.PLAIN, 20)` into a
-        //  constant rather than repeating over and over, FONT20 FONT15example
-        //  below
-
         title.setFont(Constants.FONT20);
         title.setPreferredSize(new Dimension(0, 20));
 
         // Save button
-        saveBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        saveBtn.setFont(Constants.FONT20);
         saveBtn.addActionListener(saveScreenHandler);
 
-        name.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        name.setFont(Constants.FONT20);
         name.setBounds(200, 40, 120, 40);
 
-        nameTxt.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        nameTxt.setFont(Constants.FONT20);
         nameTxt.setBounds(320, 40, 120, 40);
 
-        year.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        year.setFont(Constants.FONT20);
         year.setBounds(200, 100, 120, 40);
 
-        yearTxt.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        yearTxt.setFont(Constants.FONT20);
         yearTxt.setBounds(320, 100, 120, 40);
 
-        term.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        term.setFont(Constants.FONT20);
         term.setBounds(200, 160, 120, 40);
 
-        termTxt.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        termTxt.setFont(Constants.FONT20);
         termTxt.setBounds(320, 160, 120, 40);
 
         // Back button
-        backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        backBtn.setFont(Constants.FONT20);
         backBtn.addActionListener(saveScreenHandler);
 
 
@@ -131,16 +121,6 @@ public class SaveScreen extends AbstractScreen{
     }
 
     /**
-     * TODO WHY??? THIS IS INHERITED!!!
-     *
-     * Gets the DatabaseController for the GUI
-     * @return the DatabaseController for the GUI
-     */
-    public DatabaseController getController() {
-        return controller;
-    }
-
-    /**
      * Gets the name of timetable to be saved
      * @return the name of timetable to be saved
      */
@@ -166,9 +146,7 @@ public class SaveScreen extends AbstractScreen{
 
 
     public static void main(String[] args) {
-        DatabaseController controller = new DatabaseController("gui");
         TimeTableScreen screen = new TimeTableScreen();
-        new SaveScreen(controller, screen);
-
+        new SaveScreen(screen);
     }
 }
