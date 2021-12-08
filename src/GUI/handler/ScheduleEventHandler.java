@@ -37,15 +37,22 @@ public class ScheduleEventHandler implements ActionListener {
         if (text.equals("Back")){
             scheduleEventScreen.dispose();
         }
-        else if ("Schedule".equals(text)) {
+        else if (text.equals("Schedule")) {
             try{
                 //schedule events
-                CommandFactory factory = scheduleEventScreen.getController().getFactory();
-                ((GUICommandFactory) factory).setScreen(scheduleEventScreen);
+                GUICommandFactory factory = (GUICommandFactory) scheduleEventScreen.getController().getFactory();
+                factory.setScreen(scheduleEventScreen);
                 scheduleEventScreen.getController().runCommand(Constants.SCHEDULE_EVENT);
-            } catch (Exception ignore){}
+            } catch (Exception ignore){
+                // catches nothing
+            }
             //refresh timetables
             scheduleEventScreen.getScreen().refreshTimetableTabs(
+                    // TODO WHY? It's like saying "hey! I'll go to Bahan from
+                    //  Myhal by going through UTM!!!" SEE? IT DOESN"T MAKE
+                    //  ANY SENSE!!! I would urge you to put the manager call
+                    //  from GUICommandFactory and call it that way. Use
+                    //  Aliasing!!!
                     scheduleEventScreen.getController().getFactory().getCourseManager());
 
             scheduleEventScreen.dispose();

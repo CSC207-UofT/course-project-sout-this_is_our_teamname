@@ -1,5 +1,6 @@
 package GUI.userview;
 
+import Helpers.Constants;
 import InterfaceAdaptors.DatabaseController;
 import TimeTableObjects.Course;
 import GUI.handler.ScheduleCourseHandler;
@@ -84,9 +85,10 @@ public class ScheduleCourseScreen extends AbstractScreen{
         scheduleCourseHandler = new ScheduleCourseHandler(this);
         Container contentPane = getContentPane();
 
-        courseName.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        //TODO use constants, FONT20 FONT15 example below
+        courseName.setFont(Constants.FONT20);
         courseName.setBounds(200, 40, 120, 40);
-        nameTxt.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        nameTxt.setFont(Constants.FONT15);
         nameTxt.setBounds(320, 40, 220, 40);
         nameTxt.setToolTipText("Please insert the full code, case sensitive. eg: CSC207H1");
 
@@ -133,8 +135,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
         applyBtn.addActionListener(scheduleCourseHandler);
 
         // set the year Box and term Box
-        addYear(yearBox);
-        addTerm(termBox);
+        addYear();
+        addTerm();
 
         // add to the panel
         centerPanel.add(courseName);
@@ -215,7 +217,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
      */
     private void addYear(){
         yearBox.addItem("2021");
-        yearBox.addItem("2020");
+        yearBox.addItem("2022");
     }
 
     /**
@@ -351,9 +353,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
      *
      * @return the lecture section being selected.
      */
-    public Course getLec() {
-        return this.lec;
-    }
+    public Course getLec() {return this.lec;}
 
     /**
      * A helper method to get the tutorial.

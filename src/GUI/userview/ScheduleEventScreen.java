@@ -67,6 +67,7 @@ public class ScheduleEventScreen extends AbstractScreen{
     // TODO Controller can be inherited. See class AbstractScreen
     DatabaseController controller;
     ScheduleEventHandler scheduleEventHandler;
+    //TODO remove conflict everywhere, check correct use of dialog
     Boolean conflict;
 
     /**
@@ -83,9 +84,10 @@ public class ScheduleEventScreen extends AbstractScreen{
 
         conflict = false;
 
-        eventName.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        //TODO use constants, FONT20 FONT15 example below
+        eventName.setFont(Constants.FONT20);
         eventName.setBounds(200, 40, 120, 40);
-        nameTxt.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        nameTxt.setFont(Constants.FONT15);
         nameTxt.setBounds(320, 40, 220, 40);
 
         startTime.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -142,9 +144,9 @@ public class ScheduleEventScreen extends AbstractScreen{
         // Dropdown menu
         addDropdowntime(startTimeBox);
         addDropdowntime(endTimeBox);
-        addWeekday(dayBox);
-        addTerm(termBox);
-        addType(typeBox);
+        addWeekday();
+        addTerm();
+        addType();
 
 
         centerPanel.add(eventName);
@@ -312,12 +314,6 @@ public class ScheduleEventScreen extends AbstractScreen{
     public String getDescription() {
         return Objects.requireNonNull(descriptionTxt.getText());
     }
-
-    /**
-     * Gets whether there is conflict for selected event
-     * @return whether there is conflict for selected event
-     */
-    public Boolean getConflict() {return conflict;}
 
     public static void main(String[] args) {
         DatabaseController controller = new DatabaseController("gui");
