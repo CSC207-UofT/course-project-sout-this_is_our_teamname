@@ -142,6 +142,12 @@ public class SaveScreen extends AbstractScreen{
      */
     public String getYearString() {return yearTxt.getText();}
 
+    /**
+     * Gets the term of timetable to be loaded
+     * @return the term of timetable to be loaded
+     */
+    public String getTermString() {return termTxt.getText();}
+
 
     public static void main(String[] args) {
         DatabaseController controller = new DatabaseController("gui");
