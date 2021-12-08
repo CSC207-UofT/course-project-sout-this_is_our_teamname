@@ -1,7 +1,6 @@
 package InterfaceAdaptors;
 
 import Commands.FunctionCommands.*;
-import DataGetting.CourseGetter;
 import Commands.Command;
 import Commands.CreationCommands.GetAllTimeTablesCommand;
 import Commands.CreationCommands.MakeCourseCommand;
@@ -11,37 +10,18 @@ import Commands.RemovalCommands.RemoveEventCommand;
 import Commands.RemovalCommands.RemoveTimeTable;
 import Commands.CreationCommands.PrintHistoryCommand;
 import Helpers.InvalidInputException;
-import TimeTableContainers.TimeTableManager;
-import demoGUI.GUIcommands.GUIGetAllTimeTablesCommand;
-import demoGUI.GUIcommands.GUIMakeCourseCommand;
-import demoGUI.GUIcommands.GUIMakeEventCommand;
-import demoGUI.GUIcommands.DownloadDataCommand4GUI;
-import demoGUI.GUIcommands.LoadDataCommand4GUI;
 import Helpers.Constants;
-import demoGUI.userview.AbstractScreen;
-import demoGUI.userview.LoadScreen;
-import demoGUI.userview.SaveScreen;
-import demoGUI.userview.ScheduleCourseScreen;
-import demoGUI.userview.ScheduleEventScreen;
 
 /**
- * TODO REMOVE THIS SENTENCE!!!
  *
  * A factory class to create the individual commands of the class.
  *
- * === Attributes ===
- * courseManager: The TimetableManager to connect to
- * dataSource: The Data Getter to get the data from
- * controller: The controller that this is connected to
- * allowedFunctions: The list of allowed functions for the program as set out
- *  by the OperatorInterface
  */
 public class CommandLineCommandFactory extends CommandFactory {
     /**
      * Constructor. Sets the TimeTable Manager and DataSource of the file
      *
-     * @param theController the database controller that this CommandFactory
-     *                      is set to.
+     * @param theController the database controller that this CommandFactory is set to.
      */
     public CommandLineCommandFactory(DatabaseController theController){
         super(theController);

@@ -7,15 +7,13 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
- * TODO REMOVE THIS SENTENCE
  *
  * This is a specific time interval of a specific section for a course.
  *
  * === Private Attributes ===
- * waitlist is whether this course is waitlisted or not.
- * courseName is the course code of the course section
- * sectionCode is the section code of the course section
- * description contains all the other info of the course section
+ * courseName: The course code of the course section
+ * sectionCode:The section code of the course section
+ * description: Contains all the other info of the course section
  */
 public class CourseSection extends Events  implements Reconstructable {
     private final String courseName;

@@ -1,15 +1,12 @@
 
 package demoGUI.handler;
 
-import DataGetting.DataGetter;
 import DataGetting.WebScraper;
 import Helpers.Constants;
 import Helpers.InvalidInputException;
-import InterfaceAdaptors.CommandFactory;
 import InterfaceAdaptors.GUICommandFactory;
 import TimeTableObjects.Course;
 import demoGUI.userview.*;
-
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,21 +14,35 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 
+/**
+ *
+ * Handler to handle actions performed by the user when scheduling course
+ *
+ * === Attributes ===
+ * scheduleCourseScreen: The window viewed by the user when scheduling course
+ */
 public class ScheduleCourseHandler implements ActionListener {
     private final ScheduleCourseScreen scheduleCourseScreen;
 
+    /**
+     * Constructor to set the handler.
+     * @param scheduleCourseScreen is the window viewed by the user when scheduling course
+     */
     public ScheduleCourseHandler(ScheduleCourseScreen scheduleCourseScreen){
         this.scheduleCourseScreen = scheduleCourseScreen;
     }
 
+    /**
+     * Handles the action user performed on the screen
+     * @param e the action user performed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton) e.getSource();
         String text = jButton.getText();
         if ("Back".equals(text)){
-            backUser();
+            scheduleCourseScreen.dispose();
         } else if ("Solver".equals(text)){
             String name = scheduleCourseScreen.getCourseName();
             String term = scheduleCourseScreen.getTerm();
@@ -58,8 +69,8 @@ public class ScheduleCourseHandler implements ActionListener {
                         tutorial.add(x + ": " + map.get(x));
                     }
                 }
-                scheduleCourseScreen.setLeturebox(lecture);
-                scheduleCourseScreen.setTutBox(tutorial);
+                scheduleCourseScreen.addLecture(lecture);
+                scheduleCourseScreen.addTutorial(tutorial);
 
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
@@ -74,8 +85,8 @@ public class ScheduleCourseHandler implements ActionListener {
             try {
 
                 LinkedHashMap<String, Course> map = webscraper.retrieveData(name, term, year);
-                String lecture = scheduleCourseScreen.getlecBox();
-                String tut = scheduleCourseScreen.gettutBox();
+                String lecture = scheduleCourseScreen.getLecBox();
+                String tut = scheduleCourseScreen.getTutBox();
                 String lecCode = lecture.split(":")[0];
                 String tutCode = tut.split(":")[0];
                 Course lecSection = map.get(lecCode);
@@ -100,13 +111,6 @@ public class ScheduleCourseHandler implements ActionListener {
 
 
     }
-
-    private void backUser(){
-        scheduleCourseScreen.dispose();
-    }
-
-
-
 }
 
 

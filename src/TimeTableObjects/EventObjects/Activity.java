@@ -1,6 +1,5 @@
  package TimeTableObjects.EventObjects;
 
-import Helpers.Constants;
 import TimeTableObjects.Events;
 import TimeTableObjects.Interfaces.Reconstructable;
 
@@ -8,12 +7,11 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
  /**
-  * TODO REMOVE THIS SENTENCE
   *
   * Activity is an extracurricular or social Events object.
   *
   * === Private Attributes ===
-  * description contains all the other info about the activity
+  * description: contains all the other info about the activity
   */
 public class Activity extends Events implements Reconstructable {
     private final String description;

@@ -10,11 +10,22 @@ import java.util.Objects;
 
 /**
  * This is the homeScreen of the GUI
+ *
+ * === Attributes ===
+ * title: The label to display the tile of this screen
+ * datasource: The label for dataBox
+ * centerPanel: The panel that contains all components locating at the center of the screen
+ * southPanel: The panel that contains all components locating at the bottom of the screen
+ * banBtn: The button to ban command selected when clicked
+ * backBtn: The button to close the screen when clicked
+ * applyBtn: The button to apply changes to the data source when clicked
+ * dataBox: The comboBox that holds all the possible data source for user to select
+ *
+ * operator: The OperatorInterface to sets the DataGetter and bans functions by operator
+ * operatorScreenHandler: The handler to handle actions performed on the screen
  */
-
 // TODO Tray Icon P8, Get text by click enter P9 9:50. jTable for timetable at P10 8:50
 public class OperatorScreen extends AbstractScreen{
-    OperatorInterface operator;
     JLabel title = new JLabel("Setting", JLabel.CENTER);
     JLabel datasource = new JLabel("Data source");
     JPanel centerPanel = new JPanel(null);
@@ -24,9 +35,13 @@ public class OperatorScreen extends AbstractScreen{
     JButton applyBtn = new JButton("Apply");
     JComboBox<String> dataBox = new JComboBox<>();
 
-
+    OperatorInterface operator;
     OperatorScreenHandler operatorScreenHandler;
 
+    /**
+     * Constructor to set the screen
+     * @param screen The window viewed by the user
+     */
     public OperatorScreen(TimeTableScreen screen) {
         super("Settings", screen);
         //this.operator = operator;
@@ -78,6 +93,9 @@ public class OperatorScreen extends AbstractScreen{
 
     }
 
+    /**
+     * Sets the frame of the window for display.
+     */
     protected void setFrame() {
         // Window's icon
         URL resource = OperatorScreen.class.getClassLoader().getResource("pic2.jpg");
@@ -95,14 +113,26 @@ public class OperatorScreen extends AbstractScreen{
         setResizable(false);
     }
 
+    /**
+     * Gets the OperatorInterface currently in use
+     * @return the OperatorInterface
+     */
     public OperatorInterface getOperator() {
         return operator;
     }
 
+    /**
+     * Sets the OperatorInterface to sets the DataGetter and bans functions by operator
+     * @param operator the OperatorInterface
+     */
     public void setOperator(OperatorInterface operator) {
         this.operator = operator;
     }
 
+    /**
+     * Gets the string representation of the selected data source user chooses
+     * @return the string representation of the selected data source
+     */
     public String getDatasource(){
         return Objects.requireNonNull(dataBox.getSelectedItem()).toString();
     }
