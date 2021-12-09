@@ -188,7 +188,6 @@ public class DatabaseController {
         if (theCommand instanceof ExitProgramCommand) {
             return false;
         }
-
         // Execute the command. Throws InvalidInputException if the command is
         // invalid
         executeCommand(theCommand);

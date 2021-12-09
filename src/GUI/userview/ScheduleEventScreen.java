@@ -158,9 +158,8 @@ public class ScheduleEventScreen extends AbstractScreen{
         centerPanel.add(description);
         centerPanel.add(descriptionTxt);
 
-
-        southPanel.add(backBtn);
         southPanel.add(applyBtn);
+        southPanel.add(backBtn);
 
 
         contentPane.add(centerPanel);
