@@ -154,18 +154,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    /**
-     * TODO Why is main in the middle of the file? It's like if I put if
-     * TODO "__name__" == __main__ in th middle of a python file.
-     *
-     * The main method of the ScheduleCourseScreen.
-     */
-    public static void main(String[] args) {
-        DatabaseController controller = new DatabaseController("gui");
-        TimeTableScreen screen = new TimeTableScreen();
-        new ScheduleCourseScreen(controller, screen);
 
-    }
 
     // ============================ Helper Methods =================================
     /**
@@ -192,6 +181,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
     public void clearBoxes(){
         tutBox.removeAllItems();
         lectureBox.removeAllItems();
+        pracBox.removeAllItems();
     }
 
     /**
@@ -354,5 +344,15 @@ public class ScheduleCourseScreen extends AbstractScreen{
      */
     public Course getPrac() {
         return this.prac;
+    }
+
+    /**
+     *
+     * The main method of the ScheduleCourseScreen.
+     */
+    public static void main(String[] args) {
+        DatabaseController controller = new DatabaseController("gui");
+        TimeTableScreen screen = new TimeTableScreen();
+        new ScheduleCourseScreen(controller, screen);
     }
 }
