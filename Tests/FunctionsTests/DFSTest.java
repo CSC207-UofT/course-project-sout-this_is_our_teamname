@@ -13,14 +13,14 @@ import java.util.*;
 
 public class DFSTest {
     /**
-     * TODO This needs to be named better. I was short on time! - MATT
+     * A method to get all courses from a hashmap
      */
-    private ArrayList<ArrayList<Course>> something(HashMap<String, HashMap<String, ArrayList<Course>>> courses){
-        ArrayList<ArrayList<Course>> something = new ArrayList<>();
+    private ArrayList<ArrayList<Course>> hashMapToArrayList(HashMap<String, HashMap<String, ArrayList<Course>>> courses){
+        ArrayList<ArrayList<Course>> theList = new ArrayList<>();
         for (HashMap<String, ArrayList<Course>> cor : courses.values()){
-            something.addAll(cor.values());
+            theList.addAll(cor.values());
         }
-        return something;
+        return theList;
     }
 
     @Test
@@ -152,7 +152,7 @@ public class DFSTest {
         TimeTableManager manager = new TimeTableManager();
 
         TimeTablePuzzle puzzle = new TimeTablePuzzle(courses, manager,
-                something(courses), new ArrayList<>());
+                hashMapToArrayList(courses), new ArrayList<>());
 
         DfsSearch solver = new DfsSearch();
 
