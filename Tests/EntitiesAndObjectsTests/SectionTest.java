@@ -38,8 +38,4 @@ public class SectionTest {
                 lecture0.toString());
         assertEquals("MAT137: LEC 0101 of Arts and Science with Professor.A by Online session at SS101", lecture1.toString());
     }
-
-    @Test
-    public void getCode() {
-    }
 }

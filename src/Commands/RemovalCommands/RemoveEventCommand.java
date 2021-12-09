@@ -66,13 +66,36 @@ public class RemoveEventCommand implements Command {
                 System.out.println("Event removed!");
             }
             if (!success) {
-                String[] tryAgain = {"There was no Event from that start time to that end time. " +
-                        "Would you like to try again?"};
-                String response2 = InputChecker.getQuestionsAnswers(tryAgain)[0];
-                if (!Boolean.parseBoolean(response2)) {
+                InputChecker tryAgain = new InputChecker("There was no Event from that start time to " +
+                        "that end time. Would you like to try again? (true/false)",
+                        new RemoveEventCommand.isValidBoolean());
+                String correctTryAgain = tryAgain.checkCorrectness();
+                if (correctTryAgain.equals("false")) {
                     success = true;
                 }
             }
+        }
+    }
+
+    // ======================== Predicates Classes =============================
+    /**
+     * A predicate to check if User wants to try again
+     */
+    private static class isValidBoolean extends Predicate {
+
+        /**
+         * Constructor.
+         */
+        private isValidBoolean(){ }
+
+        /**
+         * Runs the predicate
+         *
+         * @param prompt the prompt to ask the user
+         */
+        @Override
+        public boolean run(String prompt) {
+            return prompt.equals("true") || prompt.equals("false");
         }
     }
 
