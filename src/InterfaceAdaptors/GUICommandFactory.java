@@ -58,8 +58,6 @@ public class GUICommandFactory extends CommandFactory {
                 return new GUIMakeEventCommand((ScheduleEventScreen) screen);
             case Constants.REMOVE_EVENT:
                 return new RemoveEventCommand(courseManager);
-            case Constants.GET_ALL_TIMETABLE:
-                return new GUIGetAllTimeTablesCommand(screen, courseManager);
             case Constants.SOLVE_TIMETABLE:
                 return new SolverCommand(courseManager, dataSource);
             case Constants.ADD_TIMETABLE:
