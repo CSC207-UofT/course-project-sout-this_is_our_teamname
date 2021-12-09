@@ -144,8 +144,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
         centerPanel.add(tutBox);
         centerPanel.add(practical);
         centerPanel.add(pracBox);
-        southPanel.add(backBtn);
         southPanel.add(applyBtn);
+        southPanel.add(backBtn);
         contentPane.add(centerPanel);
         contentPane.add(southPanel, BorderLayout.SOUTH);
         setFrame();

@@ -68,7 +68,7 @@ public class DownloadDataCommand implements Command {
 
         for (String term : this.manager.getTerms()) {
             if (term.equals(theTerm)){
-                datalist.put(term.split(" ")[0], TimetableToList(this.manager.getTimetable(term)));
+                datalist.put(term, TimetableToList(this.manager.getTimetable(term)));
             }
         }
         return datalist;
