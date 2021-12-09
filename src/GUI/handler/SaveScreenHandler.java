@@ -49,12 +49,8 @@ public class SaveScreenHandler implements ActionListener{
                 // Catching exceptions
             }
             //refresh timetables
-            // TODO WHY? It's like saying "hey! I'll go to Bahan from
-            //  Myhal by going through UTM!!!" SEE? IT DOESN"T MAKE
-            //  ANY SENSE!!! I would urge you to put the manager call
-            //  from GUICommandFactory and call it that way. Use
-            //  Aliasing!!!
-            saveScreen.getScreen().refreshTimetableTabs(saveScreen.getController().getFactory().getCourseManager());
+            saveScreen.getScreen().refreshTimetableTabs(
+                    saveScreen.getController().getFactory().getCourseManager());
             saveScreen.dispose();
         }
     }

@@ -117,6 +117,34 @@ public class TimeTable {
         return true;
     }
 
+    /**
+     * Makes a copy of the TimeTable without alias
+     * @return a copy of the TimeTable
+     */
+    public TimeTable make_copy(){
+        TimeTable copy = new TimeTable();
+
+        LinkedHashMap<String, Events[]> copy_calender =
+                new LinkedHashMap<>();
+        for (String calendar_key : this.calendar.keySet()){
+            copy_calender.put(calendar_key,
+                    this.calendar.get(calendar_key).clone());
+        }
+
+        copy.setCalendar(copy_calender);
+
+        LinkedHashMap<String, ArrayList<Task>> copy_task_calender =
+                new LinkedHashMap<>();
+        for (String calendar_key : this.taskCalendar.keySet()){
+            copy_task_calender.put(calendar_key,
+                    new ArrayList<>(this.taskCalendar.get(calendar_key)));
+        }
+
+        copy.setTaskCalendar(copy_task_calender);
+
+        return copy;
+    }
+
     // ================================ toString ===============================
 
     /**
@@ -207,34 +235,6 @@ public class TimeTable {
      */
     public void setTaskCalendar(LinkedHashMap<String, ArrayList<Task>> taskCalendar) {
         this.taskCalendar = taskCalendar;
-    }
-
-    /**
-     * Makes a copy of the TimeTable without alias
-     * @return a copy of the TimeTable
-     */
-    public TimeTable make_copy(){
-        TimeTable copy = new TimeTable();
-
-        LinkedHashMap<String, Events[]> copy_calender =
-                new LinkedHashMap<>();
-        for (String calendar_key : this.calendar.keySet()){
-            copy_calender.put(calendar_key,
-                    this.calendar.get(calendar_key).clone());
-        }
-
-        copy.setCalendar(copy_calender);
-
-        LinkedHashMap<String, ArrayList<Task>> copy_task_calender =
-                new LinkedHashMap<>();
-        for (String calendar_key : this.taskCalendar.keySet()){
-            copy_task_calender.put(calendar_key,
-                    new ArrayList<>(this.taskCalendar.get(calendar_key)));
-        }
-
-        copy.setTaskCalendar(copy_task_calender);
-
-        return copy;
     }
 }
 

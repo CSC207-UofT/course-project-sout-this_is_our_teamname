@@ -1,10 +1,11 @@
 package TimeTableStuffTests;
 
 import Helpers.Constants;
-import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Activity;
 import TimeTableObjects.EventObjects.CourseSection;
+import TimeTableObjects.EventObjects.Task;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
@@ -74,6 +75,17 @@ class TimeTableManagerTest {
     }
 
     @Test
+    void testScheduleTask() {
+        LocalTime start =  LocalTime.of(0,0,0);
+        LocalTime end =  LocalTime.of(0,0,0);
+        TimeTableManager manager = new TimeTableManager();
+        // With current implementation, the timetable manager will automatically create the timetable
+        // if it doesn't exist.
+        Task task = new Task(start, end, Constants.TUESDAY, "Fall 2021");
+        assertTrue(manager.schedule(task));
+    }
+
+    @Test
     void getAllTimeTables() {
         TimeTableManager manager = new TimeTableManager();
         manager.addTimeTable("Winter 2021");
@@ -97,11 +109,33 @@ class TimeTableManagerTest {
                 (Constants.FALL + " 2021"), "LEC 0201");
         String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
                 + " session" + " at " + "SS101";
+        lecture2.setDescription(description2);
 
         TimeTableManager manager = new TimeTableManager();
         manager.addTimeTable(Constants.FALL + " 2021");
         manager.addTimeTable(Constants.WINTER + " 2021");
         manager.schedule(lecture1);
         assertFalse(manager.hasConflicts(lecture2));
+    }
+
+    @Test
+    public void testGetCourses() {
+        LocalTime time9 = LocalTime.of(9, 0, 0);
+        LocalTime time10 = LocalTime.of(10, 0, 0);
+
+        CourseSection lecture1 = new CourseSection("MAT257", time9, time10, Constants.MONDAY,
+                (Constants.FALL + " 2021"), "LEC 0101");
+
+        CourseSection lecture2 = new CourseSection("MAT157", time9, time10, Constants.TUESDAY,
+                (Constants.FALL + " 2021"), "LEC 0201");
+
+        ArrayList<CourseSection> courses = new ArrayList<>(Arrays.asList(lecture1, lecture2));
+
+        TimeTableManager manager = new TimeTableManager();
+        manager.schedule(lecture1);
+        manager.schedule(lecture2);
+
+        assertEquals(manager.getCourses(), courses);
+
     }
 }

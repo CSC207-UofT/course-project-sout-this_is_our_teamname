@@ -2,7 +2,6 @@ package TimeTableObjects.EventObjects;
 
 import TimeTableObjects.Events;
 import TimeTableObjects.Interfaces.Reconstructable;
-
 import java.time.LocalTime;
 import java.util.ArrayList;
 
