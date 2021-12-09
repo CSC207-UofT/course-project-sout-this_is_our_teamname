@@ -28,10 +28,9 @@ public class Constants {
     public static final String TRUE = "true";
     public static final String FALSE = "false";
     public static final String[] TIME =
-            {"00:00AM","01:00AM","02:00AM","03:00AM","04:00AM","05:00AM","06:00AM",
-            "07:00AM", "08:00AM","09:00AM","10:00AM","11:00AM","12:00PM","01:00PM","02:00PM",
-            "03:00PM","04:00PM","05:00PM","06:00PM","07:00PM", "08:00PM","09:00PM","10:00PM",
-            "11:00PM"};
+            {"00:00AM","01:00AM","02:00AM","03:00AM","04:00AM","05:00AM","06:00AM","07:00AM",
+             "08:00AM","09:00AM","10:00AM","11:00AM","12:00PM","01:00PM","02:00PM","03:00PM",
+             "04:00PM","05:00PM","06:00PM","07:00PM","08:00PM","09:00PM","10:00PM","11:00PM"};
     public static final String SCHEDULE_COURSE = "Schedule Course";
     public static final String SCHEDULE_EVENT = "Schedule Event";
     public static final String REMOVE_EVENT = "Remove Event";
@@ -43,6 +42,8 @@ public class Constants {
     public static final String LOAD_DATA = "Load Data";
     public static final String DOWNLOAD_TIMETABLE = "Download Timetable";
     public static final String EXIT = "Log Out";
+    public static final String SAVE = "Save";
+    public static final String LOAD = "Load";
     public static final Font FONT20 = new Font("Times New Roman", Font.PLAIN,
             20);
     public static final Font FONT15 = new Font("Times New Roman", Font.PLAIN,

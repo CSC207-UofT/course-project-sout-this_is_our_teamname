@@ -44,8 +44,6 @@ public class LoadScreen extends AbstractScreen{
     private final static JTextField yearTxt = new JTextField(4);
     private final static JTextField termTxt = new JTextField(6);
 
-    // TODO Controller can be inherited. See class AbstractScreen
-    DatabaseController controller;
     LoadScreenHandler loadScreenHandler;
 
     /**
@@ -54,8 +52,7 @@ public class LoadScreen extends AbstractScreen{
      * @param screen The window viewed by the user
      */
     public LoadScreen(DatabaseController controller, TimeTableScreen screen) {
-        // TODO Use Constants
-        super("Load", controller, screen);
+        super(Constants.LOAD, controller, screen);
 
         loadScreenHandler = new LoadScreenHandler(this);
 

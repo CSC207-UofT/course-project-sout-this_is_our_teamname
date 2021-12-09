@@ -61,11 +61,11 @@ public class TimeTableManager {
     }
 
     /**
-     * Get an task from the user interface and schedule it to the corresponding timetable(s).
+     * Get a task from the user interface and schedule it to the corresponding timetable(s).
      *
      * Precondition: The task to be scheduled will not result in conflicts.
      *
-     * @param task an Events passed from user interface
+     * @param task a Task passed from user interface
      */
     public boolean schedule(Task task) {
         // Some Constants

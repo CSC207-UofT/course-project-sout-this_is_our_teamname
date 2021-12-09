@@ -68,30 +68,7 @@ public class Task implements Reconstructable {
         }
     }
 
-    // ============================ Setters and Getters ========================
-    /**
-     * Get the name of the object
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Returns the date of the object
-     * @return the date of the task object
-     */
-    public String getDate() {
-        return date;
-    }
-
-    /**
-     * Returns the term of the task
-     * @return the term of the task
-     */
-    public String getTerm() {
-        return term;
-    }
+    // ===================== Setters and Getters ===============================
 
     /**
      * Set the name for the event.
@@ -101,4 +78,32 @@ public class Task implements Reconstructable {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * Get the name of the task
+     *
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Get the date of the task
+     *
+     * @return the date
+     */
+    public String getDate() {
+        return date;
+    }
+
+    /**
+     * Get the term of the task
+     *
+     * @return the term
+     */
+    public String getTerm() {
+        return term;
+    }
+
 }
