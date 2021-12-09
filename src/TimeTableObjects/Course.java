@@ -1,7 +1,6 @@
 package TimeTableObjects;
 
 import TimeTableObjects.EventObjects.CourseSection;
-import TimeTableObjects.Interfaces.Splittable;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ import java.util.HashMap;
  * timeLocation: The time and corresponding location for this course
  * courseName: The course code
  */
-public class Course implements Splittable<CourseSection> {
+public class Course {
     private final String sectionName;
     private final String professor;
     private final String faculty;
@@ -72,7 +71,6 @@ public class Course implements Splittable<CourseSection> {
      *
      * @return A list of section objects
      */
-    @Override
     public ArrayList<CourseSection> split(){
         ArrayList<CourseSection> courseSectionList = new ArrayList<>();
 

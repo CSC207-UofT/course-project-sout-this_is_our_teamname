@@ -44,31 +44,6 @@ public class Task implements Reconstructable {
     }
 
     /**
-     * Set the name for the event.
-     *
-     * @param name is going to be the name of the Events object
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Get the name of the object
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getTerm() {
-        return term;
-    }
-
-    /**
      * reconstruct takes an Events object and returns an Arraylist based on the non-time/date attributes.
      */
     @Override
@@ -91,5 +66,39 @@ public class Task implements Reconstructable {
         else {
             return this.getName();
         }
+    }
+
+    // ============================ Setters and Getters ========================
+    /**
+     * Get the name of the object
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Returns the date of the object
+     * @return the date of the task object
+     */
+    public String getDate() {
+        return date;
+    }
+
+    /**
+     * Returns the term of the task
+     * @return the term of the task
+     */
+    public String getTerm() {
+        return term;
+    }
+
+    /**
+     * Set the name for the event.
+     *
+     * @param name is going to be the name of the Events object
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }
