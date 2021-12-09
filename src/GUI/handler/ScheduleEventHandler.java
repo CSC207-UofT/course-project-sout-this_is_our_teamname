@@ -55,9 +55,7 @@ public class ScheduleEventHandler implements ActionListener {
                     //  from GUICommandFactory and call it that way. Use
                     //  Aliasing!!!
                     scheduleEventScreen.getController().getFactory().getCourseManager());
-
             scheduleEventScreen.dispose();
-
         }
     }
 }

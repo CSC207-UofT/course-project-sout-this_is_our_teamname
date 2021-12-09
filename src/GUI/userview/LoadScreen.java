@@ -52,7 +52,7 @@ public class LoadScreen extends AbstractScreen{
      * @param screen The window viewed by the user
      */
     public LoadScreen(DatabaseController controller, TimeTableScreen screen) {
-        super(Constants.LOAD, controller, screen);
+        super(Constants.LOAD, screen);
 
         loadScreenHandler = new LoadScreenHandler(this);
 

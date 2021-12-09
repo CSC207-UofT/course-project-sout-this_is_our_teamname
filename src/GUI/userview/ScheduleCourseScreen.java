@@ -72,7 +72,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
      */
     public ScheduleCourseScreen(DatabaseController controller, TimeTableScreen screen) {
         
-        super(Constants.SCHEDULE_COURSE, controller, screen);
+        super(Constants.SCHEDULE_COURSE, screen);
 
 
         scheduleCourseHandler = new ScheduleCourseHandler(this);

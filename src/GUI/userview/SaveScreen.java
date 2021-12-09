@@ -50,7 +50,7 @@ public class SaveScreen extends AbstractScreen{
      * @param screen The window viewed by the user
      */
     public SaveScreen(DatabaseController controller, TimeTableScreen screen) {
-        super(Constants.SAVE, controller, screen);
+        super(Constants.SAVE, screen);
 
         saveScreenHandler = new SaveScreenHandler(this);
 
