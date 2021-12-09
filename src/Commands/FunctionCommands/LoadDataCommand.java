@@ -37,9 +37,8 @@ public class LoadDataCommand implements Command {
      */
     @Override
     public void execute() {
-        String[] prompts = {"Enter the Filename (Example: My_TimeTable for My_TimeTable for My_TimeTable_2021_WINTER)",
-                "Enter the year (Example: 2021 for My_TimeTable for " +
-                        "My_TimeTable_2021_WINTER)", "Enter the term"};
+        String[] prompts = {"Enter the Filename (Example: TimeTable for TimeTable for TimeTable_2021_WINTER)",
+                "Enter the year (Example: 2021)", "Enter the term (either Fall or Winter)"};
         String[] responses = InputChecker.getQuestionsAnswers(prompts);
 
         LinkedHashMap<String, Object> data;

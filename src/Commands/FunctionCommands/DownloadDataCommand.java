@@ -35,15 +35,15 @@ public class DownloadDataCommand implements Command {
         boolean running = true;
         while (running){
             Scanner ask2 = new Scanner(System.in);
-            System.out.println("Enter the name for the timetables to save with (Example: My_TimeTable 2021)");
+            System.out.println("Enter the name for the timetables to save with (Capitalize first letter)");
             String chosen = ask2.nextLine();
 
             Scanner ask = new Scanner(System.in);
-            System.out.println("Enter the year for the timetables to save: ");
+            System.out.println("Enter the year for the timetables to save(Year must be a number):  ");
             String year = ask.nextLine();
 
             Scanner ask3 = new Scanner(System.in);
-            System.out.println("Enter the term: ");
+            System.out.println("Enter the term(Term must be either Fall or Winter): ");
             String term = ask3.nextLine();
 
             HashMap<String, List<List<String>>> dataMap =

@@ -44,7 +44,7 @@ public class LoadScreen extends AbstractScreen{
     private final static JLabel nameGuide = new JLabel("Name must be no longer than 20 " +
             "characters with Capitalized first letter.");
     private final static JLabel yearGuide = new JLabel("Year must be a number.");
-    private final static JLabel termGuide = new JLabel(" Term must be either Fall or Winter");
+    private final static JLabel termGuide = new JLabel("Term must be either Fall or Winter");
     private final static JButton loadBtn = new JButton("Load");
     private final static JButton backBtn = new JButton("Back");
     private final static JTextField nameTxt = new JTextField(20);

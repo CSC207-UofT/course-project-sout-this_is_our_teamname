@@ -42,7 +42,7 @@ public class SaveScreen extends AbstractScreen{
     private final static JLabel nameGuide = new JLabel("Name must be no longer than 20 " +
             "characters with Capitalized first letter.");
     private final static JLabel yearGuide = new JLabel("Year must be a number.");
-    private final static JLabel termGuide = new JLabel(" Term must be either Fall or Winter");
+    private final static JLabel termGuide = new JLabel("Term must be either Fall or Winter");
     private static final JButton saveBtn = new JButton("Save");
     private static final JButton backBtn = new JButton("Back");
     private static final JTextField nameTxt = new JTextField(20);

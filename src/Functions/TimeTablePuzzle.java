@@ -25,7 +25,6 @@ public class TimeTablePuzzle {
     private final TimeTableManager manager;
     private final ArrayList<Course> scheduled;
     private final ArrayList<ArrayList<Course>> unscheduled;
-    private Course extendedCourse;
 
     /**
      * Construct a TimeTablePuzzle
@@ -43,7 +42,6 @@ public class TimeTablePuzzle {
         this.manager = manager;
         this.scheduled = scheduled;
         this.unscheduled = unscheduled;
-        this.extendedCourse = null;
     }
 
     /**
@@ -71,25 +69,6 @@ public class TimeTablePuzzle {
      */
     public ArrayList<Course> getScheduled() {
         return scheduled;
-    }
-
-    /**
-     * Get the course that this puzzle is extending, after the extensions method has been called.
-     *
-     * @return the course this puzzle is extending if this puzzle is a product of the extensions
-     * method, null otherwise.
-     */
-    public Course getExtendedCourse() {
-        return extendedCourse;
-    }
-
-    /**
-     * Add the extended course to this TimeTablePuzzle
-     *
-     * @param course the extended course
-     */
-    public void addExtendedCourse(Course course) {
-        extendedCourse = course;
     }
 
     /**
