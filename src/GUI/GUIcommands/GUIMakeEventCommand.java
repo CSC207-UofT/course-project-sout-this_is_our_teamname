@@ -48,6 +48,10 @@ public class GUIMakeEventCommand implements Command {
         this.scheduleEventScreen = scheduleEventScreen;
     }
 
+    public TimeTableManager getManager(){
+        return scheduleEventScreen.getController().getFactory().getCourseManager();
+    }
+
     /**
      * Prompts the user to create a timetableObject
      */

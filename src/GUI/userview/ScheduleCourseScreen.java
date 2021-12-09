@@ -58,17 +58,11 @@ public class ScheduleCourseScreen extends AbstractScreen{
     private final static JButton applyBtn = new JButton("Schedule");
 
     ScheduleCourseHandler scheduleCourseHandler;
-
-    // TODO What are these? Constants need to be static and caps. Instance
-    //  Variables need to be declared private or public
+    
     private Course lec;
     private Course tut;
     private Course prac;
-
-    // TODO Controller can be inherited. See class AbstractScreen
-    DatabaseController controller;
-
-
+    
     /**
      * Constructor of ScheduleCourseScreen.
      * Sets label,textbox, and buttons.
@@ -77,61 +71,59 @@ public class ScheduleCourseScreen extends AbstractScreen{
      * @param screen A TimeTableScreen object that stores course.
      */
     public ScheduleCourseScreen(DatabaseController controller, TimeTableScreen screen) {
-        // TODO Use Constants
-        super("Schedule Course", screen);
+        
+        super(Constants.SCHEDULE_COURSE, controller, screen);
 
-        this.controller = controller;
 
         scheduleCourseHandler = new ScheduleCourseHandler(this);
         Container contentPane = getContentPane();
 
-        //TODO use constants, FONT20 FONT15 example below
         courseName.setFont(Constants.FONT20);
         courseName.setBounds(200, 40, 120, 40);
         nameTxt.setFont(Constants.FONT15);
         nameTxt.setBounds(320, 40, 220, 40);
         nameTxt.setToolTipText("Please insert the full code, case sensitive. eg: CSC207H1");
 
-        year.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        year.setFont(Constants.FONT20);
         year.setBounds(200, 100, 120, 40);
 
-        yearBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        yearBox.setFont(Constants.FONT20);
         yearBox.setBounds(320, 100, 120, 40);
 
-        term.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        term.setFont(Constants.FONT20);
         term.setBounds(200, 160, 120, 40);
 
-        termBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        termBox.setFont(Constants.FONT20);
         termBox.setBounds(320, 160, 120, 40);
 
-        searchBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        searchBtn.setFont(Constants.FONT20);
         searchBtn.addActionListener(scheduleCourseHandler);
         searchBtn.setBounds(320, 220, 120, 40);
 
-        lecture.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        lecture.setFont(Constants.FONT20);
         lecture.setBounds(40, 280, 120, 40);
 
-        lectureBox.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        lectureBox.setFont(Constants.FONT15);
         lectureBox.setBounds(120, 280, 600, 40);
 
-        tutorial.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        tutorial.setFont(Constants.FONT20);
         tutorial.setBounds(40, 340, 120, 40);
 
-        tutBox.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        tutBox.setFont(Constants.FONT15);
         tutBox.setBounds(120, 340, 600, 40);
 
-        practical.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        practical.setFont(Constants.FONT20);
         practical.setBounds(40, 400, 120, 40);
 
-        pracBox.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        pracBox.setFont(Constants.FONT15);
         pracBox.setBounds(120, 400, 600, 40);
 
         // Back button
-        backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        backBtn.setFont(Constants.FONT20);
         backBtn.addActionListener(scheduleCourseHandler);
 
         // Apply button
-        applyBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        applyBtn.setFont(Constants.FONT20);
         applyBtn.addActionListener(scheduleCourseHandler);
 
         // set the year Box and term Box
@@ -162,18 +154,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    /**
-     * TODO Why is main in the middle of the file? It's like if I put if
-     * TODO "__name__" == __main__ in th middle of a python file.
-     *
-     * The main method of the ScheduleCourseScreen.
-     */
-    public static void main(String[] args) {
-        DatabaseController controller = new DatabaseController("gui");
-        TimeTableScreen screen = new TimeTableScreen();
-        new ScheduleCourseScreen(controller, screen);
 
-    }
 
     // ============================ Helper Methods =================================
     /**
@@ -200,6 +181,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
     public void clearBoxes(){
         tutBox.removeAllItems();
         lectureBox.removeAllItems();
+        pracBox.removeAllItems();
     }
 
     /**
@@ -207,6 +189,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
      *
      */
     private void addTerm(){
+        termBox.removeAllItems();
         termBox.addItem("Fall");
         termBox.addItem("Winter");
     }
@@ -216,6 +199,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
      *
      */
     private void addYear(){
+        yearBox.removeAllItems();
         yearBox.addItem("2021");
         yearBox.addItem("2022");
     }
@@ -317,17 +301,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
     }
 
     /**
-     * TODO WHY??? THIS IS INHERITED!!!
-     *
-     * A helper method to get the controller.
-     *
-     * @return the controller of the screen.
-     */
-    public DatabaseController getController() {
-        return controller;
-    }
-
-    /**
      * A helper method to set the lecture.
      */
     public void setLecture(Course lec) {
@@ -371,5 +344,15 @@ public class ScheduleCourseScreen extends AbstractScreen{
      */
     public Course getPrac() {
         return this.prac;
+    }
+
+    /**
+     *
+     * The main method of the ScheduleCourseScreen.
+     */
+    public static void main(String[] args) {
+        DatabaseController controller = new DatabaseController("gui");
+        TimeTableScreen screen = new TimeTableScreen();
+        new ScheduleCourseScreen(controller, screen);
     }
 }

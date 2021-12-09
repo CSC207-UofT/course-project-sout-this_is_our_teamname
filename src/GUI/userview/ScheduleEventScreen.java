@@ -37,7 +37,6 @@ import java.util.Objects;
  *
  * controller: The DatabaseController for the GUI
  * scheduleEventHandler: The handler to handle actions performed on the screen
- * conflict: Whether there is conflict for selected course. True if there is, false otherwise.
  */
 public class ScheduleEventScreen extends AbstractScreen{
     private static final JPanel centerPanel = new JPanel(null);
@@ -64,11 +63,7 @@ public class ScheduleEventScreen extends AbstractScreen{
     private static final JButton backBtn = new JButton("Back");
     private static final JButton applyBtn = new JButton("Schedule");
 
-    // TODO Controller can be inherited. See class AbstractScreen
-    DatabaseController controller;
     ScheduleEventHandler scheduleEventHandler;
-    //TODO remove conflict everywhere, check correct use of dialog
-    Boolean conflict;
 
     /**
      * Constructor to set the screen
@@ -76,69 +71,64 @@ public class ScheduleEventScreen extends AbstractScreen{
      * @param screen The window viewed by the user
      */
     public ScheduleEventScreen(DatabaseController controller, TimeTableScreen screen) {
-        // TODO USE CONsTANTS HERE!
-        super("Schedule NonCourse", screen);
+        super("Schedule NonCourse", controller, screen);
         scheduleEventHandler = new ScheduleEventHandler(this);
-        this.controller = controller;
         Container contentPane = getContentPane();
 
-        conflict = false;
-
-        //TODO use constants, FONT20 FONT15 example below
         eventName.setFont(Constants.FONT20);
         eventName.setBounds(200, 40, 120, 40);
         nameTxt.setFont(Constants.FONT15);
         nameTxt.setBounds(320, 40, 220, 40);
 
-        startTime.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        startTime.setFont(Constants.FONT20);
         startTime.setBounds(200, 100, 120, 40);
-        startTimeBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        startTimeBox.setFont(Constants.FONT20);
         startTimeBox.setBounds(320, 100, 120, 40);
 
-        endTime.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        endTime.setFont(Constants.FONT20);
         endTime.setBounds(200, 160, 120, 40);
-        endTimeBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        endTimeBox.setFont(Constants.FONT20);
         endTimeBox.setBounds(320, 160, 120, 40);
 
-        location.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        location.setFont(Constants.FONT20);
         location.setBounds(200, 220, 120, 40);
-        locationTxt.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        locationTxt.setFont(Constants.FONT15);
         locationTxt.setPreferredSize(new Dimension(100, 30));
         locationTxt.setBounds(320, 220, 120, 40);
 
-        day.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        day.setFont(Constants.FONT20);
         day.setBounds(200, 280, 120, 40);
-        dayBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        dayBox.setFont(Constants.FONT20);
         dayBox.setBounds(320, 280, 120, 40);
 
-        term.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        term.setFont(Constants.FONT20);
         term.setBounds(200, 340, 120, 40);
-        termBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        termBox.setFont(Constants.FONT20);
         termBox.setBounds(320, 340, 120, 40);
 
-        year.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        year.setFont(Constants.FONT20);
         year.setBounds(200, 400, 120, 40);
-        yearTxt.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        yearTxt.setFont(Constants.FONT20);
         yearTxt.setBounds(320, 400, 120, 40);
 
-        type.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        type.setFont(Constants.FONT20);
         type.setBounds(200, 460, 120, 40);
-        typeBox.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        typeBox.setFont(Constants.FONT20);
         typeBox.setBounds(320, 460, 120, 40);
         typeBox.setToolTipText("Activity is an event with start time and end time, " +
                 "reminder is not since it is a whole day event.");
 
-        description.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        description.setFont(Constants.FONT20);
         description.setBounds(200, 520, 120, 40);
-        descriptionTxt.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        descriptionTxt.setFont(Constants.FONT15);
         descriptionTxt.setBounds(320, 520, 400, 40);
 
         // Back button
-        backBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        backBtn.setFont(Constants.FONT20);
         backBtn.addActionListener(scheduleEventHandler);
 
         // Apply button
-        applyBtn.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        applyBtn.setFont(Constants.FONT20);
         applyBtn.addActionListener(scheduleEventHandler);
 
         // Dropdown menu
@@ -179,6 +169,16 @@ public class ScheduleEventScreen extends AbstractScreen{
 
         // Terminate program
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    /**
+     * A helper method to clear the textBox.
+     */
+    public void clearBoxes(){
+        nameTxt.removeAll();
+        locationTxt.removeAll();
+        yearTxt.removeAll();
+        description.removeAll();
     }
 
     /**
@@ -231,16 +231,6 @@ public class ScheduleEventScreen extends AbstractScreen{
     private void addType(){
         typeBox.addItem("Activity");
         typeBox.addItem("Reminder");
-    }
-
-    /**
-     * TODO WHY??? THIS IS INHERITED!!!
-     *
-     * Gets the DatabaseController for the GUI
-     * @return the DatabaseController for the GUI
-     */
-    public DatabaseController getController() {
-        return controller;
     }
 
     /**

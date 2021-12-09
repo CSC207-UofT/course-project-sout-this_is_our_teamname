@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-
 /**
  * This is the entry of the GUI
  */

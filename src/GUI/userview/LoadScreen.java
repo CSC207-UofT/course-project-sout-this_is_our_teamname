@@ -1,6 +1,7 @@
 package GUI.userview;
 
 import Helpers.Constants;
+import InterfaceAdaptors.DatabaseController;
 import GUI.handler.LoadScreenHandler;
 
 import javax.swing.*;
@@ -43,14 +44,18 @@ public class LoadScreen extends AbstractScreen{
     private final static JTextField yearTxt = new JTextField(4);
     private final static JTextField termTxt = new JTextField(6);
 
+    // TODO Controller can be inherited. See class AbstractScreen
+    DatabaseController controller;
     LoadScreenHandler loadScreenHandler;
 
     /**
      * Constructor to set the screen
+     * @param controller The DatabaseController for the GUI
      * @param screen The window viewed by the user
      */
-    public LoadScreen(TimeTableScreen screen) {
-        super(Constants.Load, screen);
+    public LoadScreen(DatabaseController controller, TimeTableScreen screen) {
+        // TODO Use Constants
+        super("Load", controller, screen);
 
         loadScreenHandler = new LoadScreenHandler(this);
 
@@ -146,7 +151,8 @@ public class LoadScreen extends AbstractScreen{
     }
 
     public static void main(String[] args) {
+        DatabaseController controller = new DatabaseController("gui");
         TimeTableScreen screen = new TimeTableScreen();
-        new LoadScreen(screen);
+        new LoadScreen(controller, screen);
     }
 }

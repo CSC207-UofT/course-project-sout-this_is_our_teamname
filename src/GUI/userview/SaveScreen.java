@@ -1,6 +1,7 @@
 package GUI.userview;
 
 import Helpers.Constants;
+import InterfaceAdaptors.DatabaseController;
 import GUI.handler.SaveScreenHandler;
 
 import javax.swing.*;
@@ -45,10 +46,12 @@ public class SaveScreen extends AbstractScreen{
 
     /**
      * Constructor to set the screen
+     * @param controller The DatabaseController for the GUI
      * @param screen The window viewed by the user
      */
-    public SaveScreen(TimeTableScreen screen) {
-        super(Constants.SAVE, screen);
+    public SaveScreen(DatabaseController controller, TimeTableScreen screen) {
+        // TODO Use Constants here
+        super("Save", controller, screen);
 
         saveScreenHandler = new SaveScreenHandler(this);
 
@@ -146,7 +149,9 @@ public class SaveScreen extends AbstractScreen{
 
 
     public static void main(String[] args) {
+        DatabaseController controller = new DatabaseController("gui");
         TimeTableScreen screen = new TimeTableScreen();
-        new SaveScreen(screen);
+        new SaveScreen(controller, screen);
+
     }
 }

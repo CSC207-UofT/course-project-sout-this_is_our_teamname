@@ -89,11 +89,11 @@ public class TimeTableScreen extends JFrame {
             table.setFillsViewportHeight(true);
 
             Dimension size = new Dimension(144,20);
-            //add reminder laber
+            //add reminder label
             JLabel reminderLabel = new JLabel("Reminder: ");
             reminderLabel.setPreferredSize(new Dimension(133, 20));
             panel.add(reminderLabel);
-            //add comboxBox
+            //add comboBox
             for (int i=0; i <=6; i++){
                 JComboBox<String> comboBox = new JComboBox<>();
                 // TODO Move this into the GUIGetAllTimetableCommand.
@@ -127,12 +127,16 @@ public class TimeTableScreen extends JFrame {
     private JTable fillTimeTable(TimeTable table) {
             JTable jtable = new JTable(25, 8){
 
-                // Implement table cell tool tips.
-                //Citation: https://stackoverflow.com/questions/9467093/how-to-add-a-tooltip-to-a-cell-in-a-jtable
-                // TODO Javadoc
-                public String getToolTipText(MouseEvent e) {
+                /**
+                 * Shows the string content of the Jtable cell that the mouse is on
+                 * @param mouseEvent is the current activity of the mouse
+                 * @return the string content of the Jtable cell that the mouse is on
+                 *
+                 * Citation: https://stackoverflow.com/questions/9467093/how-to-add-a-tooltip-to-a-cell-in-a-jtable
+                 */
+                public String getToolTipText(MouseEvent mouseEvent) {
                     String tip = null;
-                    java.awt.Point p = e.getPoint();
+                    java.awt.Point p = mouseEvent.getPoint();
                     int rowIndex = rowAtPoint(p);
                     int colIndex = columnAtPoint(p);
 
@@ -141,9 +145,8 @@ public class TimeTableScreen extends JFrame {
                     } catch (RuntimeException e1) {
                         //catch null pointer exception if mouse is over an empty line
                     }
-
                     return tip;
-                }//Citation ends
+                }
             };
             //set times
             for (int i = 0; i <= 23; i++) {

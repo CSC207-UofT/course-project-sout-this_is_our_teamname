@@ -5,6 +5,8 @@ import DataGetting.CourseGetter;
 import DataGetting.WebScraper;
 import Functions.DfsSearch;
 import Functions.TimeTablePuzzle;
+import Helpers.InputCheckers.InputChecker;
+import Helpers.InputCheckers.Predicate;
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.Course;
 
@@ -45,16 +47,20 @@ public class SolverCommand extends NeedsCoursesCommand {
             dataSource.clearData();
             LinkedHashMap<String, ArrayList<Course>>indivCourse = userInputs(dataSource);
 
-            // Get course code
+            // Get course code. Also useful to prevent courses aren't
+            // scheduled twice!
             ArrayList<String> keyList = new ArrayList<>(indivCourse.keySet());
             Course course = indivCourse.get(keyList.get(0)).get(0);
             String courseCode = course.getCourseName();
             courses.put(courseCode, indivCourse);
 
             // Ask if user wants to schedule another course
-            Scanner userCourse = new Scanner(System.in);
-            System.out.println("Would you like to schedule another? (true/false)");
-            if (!Boolean.parseBoolean(userCourse.nextLine())) {
+            InputChecker checker = new InputChecker(
+                    "Would you like to schedule another? (true/false)",
+                    new isBoolean());
+            String userChoice = checker.checkCorrectness();
+
+            if (!Boolean.parseBoolean(userChoice)) {
                 courseCounter = false;
             }
 
@@ -67,7 +73,11 @@ public class SolverCommand extends NeedsCoursesCommand {
         Set<String> seen = new HashSet<>();
         ArrayList<TimeTablePuzzle> solved = solver.solve(puzzle, seen);
 
-        scheduleSolved(puzzle, solved.get(solved.size() - 1));
+        if (solved.size() == 0){
+            System.out.println("No possible combinations found!");
+        } else {
+            scheduleSolved(puzzle, solved.get(solved.size() - 1));
+        }
     }
 
     /**
@@ -91,13 +101,13 @@ public class SolverCommand extends NeedsCoursesCommand {
      */
     public void scheduleSolved(TimeTablePuzzle puzzle,
                                TimeTablePuzzle solved) {
-
-        Scanner userTimeTableChoice = new Scanner(System.in);
-
         // Return Timetables to User
         String timeTables = solved.getManager().toString();
-        System.out.println(timeTables + " Do you like this schedule? (true/false)");
-        if (Boolean.parseBoolean(userTimeTableChoice.nextLine())) {
+
+        InputChecker checker = new InputChecker(timeTables
+                + " Do you like this schedule? (true/false)", new isBoolean());
+        String userTimeTableChoice = checker.checkCorrectness();
+        if (Boolean.parseBoolean(userTimeTableChoice)) {
             puzzle.schedulePuzzle(solved);
         }
     }
@@ -118,5 +128,12 @@ public class SolverCommand extends NeedsCoursesCommand {
     public static void main(String[] args) {
         SolverCommand cmd = new SolverCommand(new TimeTableManager(), new WebScraper());
         cmd.execute();
+    }
+
+    private static class isBoolean extends Predicate{
+        @Override
+        public boolean run(String prompt) {
+            return prompt.equals("true") || prompt.equals("false");
+        }
     }
 }
