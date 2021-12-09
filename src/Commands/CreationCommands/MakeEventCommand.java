@@ -234,33 +234,4 @@ public class MakeEventCommand implements Command {
                     prompt.equals(Constants.WINTER);
         }
     }
-
-    /**
-     * A predicate to check if an input is a boolean
-     */
-    private static class isBoolean extends Predicate{
-
-        @Override
-        public boolean run(String prompt) {
-            return prompt.equals("true") || prompt.equals("false");
-        }
-    }
-
-    /**
-     * A predicate to check if an input is a year
-     */
-    private static class isYear extends Predicate{
-        @Override
-        public boolean run(String prompt) {
-            if (prompt.length() != 4){
-                return false;
-            }
-            for (char ch : prompt.toCharArray()){
-                if (!Character.isDigit(ch)){
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
 }

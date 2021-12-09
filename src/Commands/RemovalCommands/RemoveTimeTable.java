@@ -2,9 +2,9 @@ package Commands.RemovalCommands;
 
 import Commands.Command;
 import Helpers.InputCheckers.InputChecker;
+import Helpers.InputCheckers.Predicate;
 import TimeTableContainers.TimeTableManager;
 
-import java.util.Set;
 
 /**
  *
@@ -30,30 +30,15 @@ public class RemoveTimeTable implements Command {
      */
     @Override
     public void execute() {
-        boolean validTimeTable = true;
-        while (validTimeTable) {
-            // Get the TimeTable term from User
-            String[] question = {"Which TimeTable would you like to remove? Enter the term name." +
-                    " (eg Fall/Winter)"};
-            String response = InputChecker.getQuestionsAnswers(question)[0];
+        // Get the TimeTable term from User
+        InputChecker response = new InputChecker("Which TimeTable would you like to remove? " +
+                "Enter the term name. (eg Fall 2021/Winter 2021)",
+                new isValidTerm(manager));
+        String selected = response.checkCorrectness();
 
-            Set<String> terms = manager.getTerms();
-            if (terms.contains(response)) {
-                manager.removeTimeTable(response);
-                String[] anotherTimeTable = {"Success! Would you like to remove another TimeTable? (true/false)"};
-                String anotherResponse = InputChecker.getQuestionsAnswers(anotherTimeTable)[0];
-                if (!Boolean.parseBoolean(anotherResponse)) {
-                    validTimeTable = false;
-                }
-            } else {
-                String[] incorrectTerm = {"There is no TimeTable with that term. Would you like to try again? " +
-                        "(true/false)"};
-                String incorrectTermResponse = InputChecker.getQuestionsAnswers(incorrectTerm)[0];
-                if (!Boolean.parseBoolean(incorrectTermResponse)) {
-                    validTimeTable = false;
-                }
-            }
-        }
+        // Remove the TimeTable with given term
+        manager.removeTimeTable(selected);
+        System.out.println("Success!");
     }
 
     /**
@@ -64,5 +49,36 @@ public class RemoveTimeTable implements Command {
     public String toString() {
         return "Removed a TimeTable";
     }
-}
 
+    // ======================== Predicates Classes =============================
+    /**
+     * A predicate to check if the TimeTable term is correct
+     *
+     * === Attributes ===
+     * term: The term of the TimeTable
+     * manager: The TimeTableManager holding all the TimeTables
+     */
+    private static class isValidTerm extends Predicate {
+        private final TimeTableManager manager;
+
+        /**
+         * Constructor.
+         *
+         * @param manager The manager to check terms in.
+         */
+        private isValidTerm(TimeTableManager manager){
+            this.manager = manager;
+        }
+
+        /**
+         * Runs the predicate
+         *
+         * @param prompt the prompt to ask the user
+         * @return true iff this term exists in the TimeTableManager.
+         */
+        @Override
+        public boolean run(String prompt) {
+            return manager.getTerms().contains(prompt);
+        }
+    }
+}
