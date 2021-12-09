@@ -89,11 +89,11 @@ public class TimeTableScreen extends JFrame {
             table.setFillsViewportHeight(true);
 
             Dimension size = new Dimension(144,20);
-            //add reminder laber
+            //add reminder label
             JLabel reminderLabel = new JLabel("Reminder: ");
             reminderLabel.setPreferredSize(new Dimension(133, 20));
             panel.add(reminderLabel);
-            //add comboxBox
+            //add comboBox
             for (int i=0; i <=6; i++){
                 JComboBox<String> comboBox = new JComboBox<>();
                 // TODO Move this into the GUIGetAllTimetableCommand.

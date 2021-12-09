@@ -1,9 +1,13 @@
 package GUI.GUIcommands;
 
 import Commands.Command;
+import GUI.userview.TimeTableScreen;
 import TimeTableContainers.TimeTable;
 import GUI.userview.AbstractScreen;
 import TimeTableContainers.TimeTableManager;
+
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  *
@@ -33,6 +37,16 @@ public class GUIGetAllTimeTablesCommand implements Command {
      */
     @Override
     public void execute() {
+//        HashMap<String, TimeTable> timetables = new HashMap<>();
+//        Set<String> terms = manager.getTerms();
+//
+//        for (String term : terms) {
+//            timetables.put(term, manager.getTimetable(term));
+//        }
+
+
+
+
         TimeTable[] output = manager.getAllTimeTables();
         for (TimeTable table : output) {
             // create a tab for the timetable
