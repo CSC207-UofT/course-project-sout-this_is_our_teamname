@@ -53,7 +53,7 @@ public class GUIDownloadDataCommand implements Command {
             HashMap<String, List<List<String>>> dataMap =
                     getData(term + " " + year);
             try {
-                this.loader.download(dataMap, filename, year);
+                this.loader.download(dataMap, filename);
                 running = false;
             } catch (IOException e){
                 System.out.println("Cannot find timetable. Try again!");

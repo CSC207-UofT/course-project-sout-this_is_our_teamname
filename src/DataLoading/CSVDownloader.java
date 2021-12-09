@@ -18,13 +18,11 @@ public class CSVDownloader{
      *
      * @param data the timetable manager that needs to be downloaded
      * @param filename the name that users want to save the file as
-     * @param year the year of the timetables that users input
      */
-    public void download(HashMap<String, List<List<String>>> data, String filename,
-                         String year) throws IOException {
+    public void download(HashMap<String, List<List<String>>> data, String filename) throws IOException {
         for (String term : data.keySet()) {
             FileWriter csvWriter = new FileWriter("src\\OutputFiles\\"
-                    + filename + "_" + year + "_"  + term + ".csv");
+                    + filename + "_" + term + ".csv");
 
             StringBuilder heading = new StringBuilder();
             String[] headingString = {"Date", "Time", "Event Type",
