@@ -29,7 +29,7 @@ public class CSVUploader extends DataGetter<Object> {
     @Override
     public void CalibrateData(String filename, String term,
                               String year) throws FileNotFoundException {
-        String filepath = "src\\OutputFiles\\" + filename + "_" + year + "_"  + term + ".csv";
+        String filepath = "src\\OutputFiles\\" + filename + "_" + term + " " + year + ".csv";
         ArrayList<String[]> data;
         try {
             data = ReadThroughFile(filepath);

@@ -49,7 +49,7 @@ public class DownloadDataCommand implements Command {
             HashMap<String, List<List<String>>> dataMap =
                     getData(term + " " + year);
             try {
-                this.loader.download(dataMap, chosen, year);
+                this.loader.download(dataMap, chosen);
                 running = false;
             } catch (IOException e){
                 System.out.println("Cannot find timetable. Try again!");
