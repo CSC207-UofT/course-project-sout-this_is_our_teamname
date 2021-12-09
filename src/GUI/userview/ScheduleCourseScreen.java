@@ -32,7 +32,6 @@ import java.util.Objects;
  * solverBtn: THe button to solve for a timetable for all selected courses when clicked
  *
  * scheduleCourseHandler: The handler to handle actions performed on the screen
- * conflict: Whether there is conflict for selected course. True if there is, false otherwise.
  * lec: Stores all the lecture sections for selected course
  * tut: Stores all the tutorial sections for selected course
  * controller: The DatabaseController for the GUI
@@ -65,10 +64,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
     private Course tut;
     private Course prac;
 
-    // TODO Controller can be inherited. See class AbstractScreen
-    DatabaseController controller;
-
-
     /**
      * Constructor of ScheduleCourseScreen.
      * Sets label,textbox, and buttons.
@@ -77,7 +72,6 @@ public class ScheduleCourseScreen extends AbstractScreen{
      * @param screen A TimeTableScreen object that stores course.
      */
     public ScheduleCourseScreen(DatabaseController controller, TimeTableScreen screen) {
-        // TODO Use Constants
         super("Schedule Course", controller, screen);
 
 
