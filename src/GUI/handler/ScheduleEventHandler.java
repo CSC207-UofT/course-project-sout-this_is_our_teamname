@@ -43,6 +43,7 @@ public class ScheduleEventHandler implements ActionListener {
                 GUICommandFactory factory = (GUICommandFactory) scheduleEventScreen.getController().getFactory();
                 factory.setScreen(scheduleEventScreen);
                 scheduleEventScreen.getController().runCommand(Constants.SCHEDULE_EVENT);
+                scheduleEventScreen.clearBoxes();
             } catch (Exception ignore){
                 // catches nothing
             }
@@ -60,4 +61,3 @@ public class ScheduleEventHandler implements ActionListener {
         }
     }
 }
-

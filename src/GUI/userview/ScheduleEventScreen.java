@@ -180,6 +180,16 @@ public class ScheduleEventScreen extends AbstractScreen{
     }
 
     /**
+     * A helper method to clear the textBox.
+     */
+    public void clearBoxes(){
+        nameTxt.removeAll();
+        locationTxt.removeAll();
+        yearTxt.removeAll();
+        description.removeAll();
+    }
+
+    /**
      * Sets the frame of the window for display.
      */
     protected void setFrame() {
