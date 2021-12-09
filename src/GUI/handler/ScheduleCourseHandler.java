@@ -127,6 +127,7 @@ public class ScheduleCourseHandler implements ActionListener {
                     GUICommandFactory factory = ((GUICommandFactory) scheduleCourseScreen.getController().getFactory());
                     factory.setScreen(scheduleCourseScreen);
                     scheduleCourseScreen.getController().runCommand(Constants.SCHEDULE_COURSE);
+                    scheduleCourseScreen.clearBoxes();
                 } catch (FileNotFoundException | InvalidInputException ex) {
                     ex.printStackTrace();
                 }
