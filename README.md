@@ -3,14 +3,21 @@
 Welcome to our Team Repo! In this repo, please find our course project for 
 CSC207H1 F, Fall 2021 at the University of Toronto St.George.
 
+**Created by:**
+* Sonny Chen
+* Matthew Du
+* Liyu (Eric) Feng
+* Jennie Fang
+* Caules Ge
+* Hubert Gu
+* Aiden Lin
+
 ## Table Of Contents
 ### Requirements
 * [Instructions](External_Libraries.md)
 
 ### Phase 2
-* [Design Document](phase2/design_document.md)
-* [Progress Report](phase2/progress_report.md)
-* [Accessibilty Statement](phase2/accessibility.md)
+* [Design Document](https://docs.google.com/document/d/13BYwfP8t8f_B4aIfISImdfwH9vRlAT-_pxDyhCWsEWA/edit?usp=sharing)
 * [Final Program](phase2/Phase_2_README.md)
 
 ### Phase 1
