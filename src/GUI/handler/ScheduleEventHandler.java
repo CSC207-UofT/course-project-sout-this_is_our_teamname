@@ -49,15 +49,8 @@ public class ScheduleEventHandler implements ActionListener {
             }
             //refresh timetables
             scheduleEventScreen.getScreen().refreshTimetableTabs(
-                    // TODO WHY? It's like saying "hey! I'll go to Bahan from
-                    //  Myhal by going through UTM!!!" SEE? IT DOESN"T MAKE
-                    //  ANY SENSE!!! I would urge you to put the manager call
-                    //  from GUICommandFactory and call it that way. Use
-                    //  Aliasing!!!
                     scheduleEventScreen.getController().getFactory().getCourseManager());
-
             scheduleEventScreen.dispose();
-
         }
     }
 }

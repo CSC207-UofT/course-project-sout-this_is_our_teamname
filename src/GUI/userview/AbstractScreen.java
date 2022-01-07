@@ -20,10 +20,10 @@ public abstract class AbstractScreen extends JFrame {
      * @param str The name of the screen
      * @param screen The window viewed by the user
      */
-    public AbstractScreen(String str, DatabaseController controller, TimeTableScreen screen){
+    public AbstractScreen(String str, TimeTableScreen screen){
         super(str);
         this.screen = screen;
-        this.controller = controller;
+        this.controller = screen.timeTableScreenHandler.getController();
     }
 
     /**

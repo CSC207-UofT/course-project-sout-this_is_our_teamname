@@ -14,23 +14,18 @@ import java.util.ArrayList;
   * description: contains all the other info about the activity
   */
 public class Activity extends Events implements Reconstructable {
-    private final String description;
-
     /**
      * Construct an activity with time and a description.
      * @param theStartTime is the start time of the activity.
      * @param theEndTime is the end time of the activity.
      * @param theDate is the weekday of the activity.
      * @param term is the term of the activity.
-     * @param description is the description of the activity.
      */
     public Activity(LocalTime theStartTime,
                     LocalTime theEndTime,
                     String theDate,
-                    String term,
-                    String description) {
-        super(theStartTime, theEndTime, theDate, term);
-        this.description = description;
+                    String term) {
+        super("", theStartTime, theEndTime, theDate, term, "");
     }
 
      /**

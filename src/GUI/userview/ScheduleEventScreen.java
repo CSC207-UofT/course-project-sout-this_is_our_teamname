@@ -71,7 +71,7 @@ public class ScheduleEventScreen extends AbstractScreen{
      * @param screen The window viewed by the user
      */
     public ScheduleEventScreen(DatabaseController controller, TimeTableScreen screen) {
-        super("Schedule NonCourse", controller, screen);
+        super("Schedule NonCourse", screen);
         scheduleEventHandler = new ScheduleEventHandler(this);
         Container contentPane = getContentPane();
 
@@ -158,9 +158,8 @@ public class ScheduleEventScreen extends AbstractScreen{
         centerPanel.add(description);
         centerPanel.add(descriptionTxt);
 
-
-        southPanel.add(backBtn);
         southPanel.add(applyBtn);
+        southPanel.add(backBtn);
 
 
         contentPane.add(centerPanel);

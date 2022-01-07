@@ -268,20 +268,23 @@ public class TimeTablePuzzleTest {
         LocalTime time10 = LocalTime.of(10, 0,0);
         LocalTime time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture1 = new CourseSection("MAT257", time9, time10, Constants.MONDAY, Constants.YEAR,
-                "LEC 0101");
+        CourseSection lecture1 = new CourseSection(time9, time10, Constants.MONDAY, Constants.YEAR);
+        lecture1.setName("MAT257");
+        lecture1.setSectionCode("LEC 0101");
         String description = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
                 + " session " + " at " + "SS100";
         lecture1.setDescription(description);
 
-        CourseSection lecture2 = new CourseSection("MAT157", time9,time11,Constants.MONDAY,Constants.FALL,
-                "LEC 0101");
+        CourseSection lecture2 = new CourseSection(time9,time11,Constants.MONDAY,Constants.FALL);
+        lecture2.setName("MAT157");
+        lecture2.setSectionCode("LEC 0101");
         String description2 = "LEC 0202" + " of " + "Arts and Science" + " with " + "Professor.B" + " by " + "in-person"
                 + " session " + " at " + "SS101";
         lecture2.setDescription(description2);
 
-        CourseSection lecture3 = new CourseSection("MAT137", time10,time11,Constants.MONDAY,Constants.FALL,
-                "LEC 0101");
+        CourseSection lecture3 = new CourseSection(time10,time11,Constants.MONDAY,Constants.FALL);
+        lecture3.setName("MAT137");
+        lecture3.setSectionCode("LEC 0101");
         String description3 = "LEC 0303" + " of " + "Arts and Science" + " with " + "Professor.C" + " by " + "in-person"
                 + " session " + " at " + "SS102";
         lecture3.setDescription(description3);

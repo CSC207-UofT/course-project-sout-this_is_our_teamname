@@ -72,7 +72,7 @@ public class ScheduleCourseScreen extends AbstractScreen{
      */
     public ScheduleCourseScreen(DatabaseController controller, TimeTableScreen screen) {
         
-        super(Constants.SCHEDULE_COURSE, controller, screen);
+        super(Constants.SCHEDULE_COURSE, screen);
 
 
         scheduleCourseHandler = new ScheduleCourseHandler(this);
@@ -144,8 +144,8 @@ public class ScheduleCourseScreen extends AbstractScreen{
         centerPanel.add(tutBox);
         centerPanel.add(practical);
         centerPanel.add(pracBox);
-        southPanel.add(backBtn);
         southPanel.add(applyBtn);
+        southPanel.add(backBtn);
         contentPane.add(centerPanel);
         contentPane.add(southPanel, BorderLayout.SOUTH);
         setFrame();

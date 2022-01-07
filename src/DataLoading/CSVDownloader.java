@@ -17,12 +17,14 @@ public class CSVDownloader{
      * that is reloadable but is less easy to read
      *
      * @param data the timetable manager that needs to be downloaded
-     * @param filename the name that users want to save the file as
+     * @param calendarName the name that users want to save the file as
      */
-    public void download(HashMap<String, List<List<String>>> data, String filename) throws IOException {
+    public void download(HashMap<String, List<List<String>>> data,
+                         String calendarName) throws IOException {
         for (String term : data.keySet()) {
-            FileWriter csvWriter = new FileWriter("src\\OutputFiles\\"
-                    + filename + "_" + term + ".csv");
+            String fileName = "src\\OutputFiles\\" + calendarName + "_" + term +
+                    ".csv";
+            FileWriter csvWriter = new FileWriter(fileName);
 
             StringBuilder heading = new StringBuilder();
             String[] headingString = {"Date", "Time", "Event Type",

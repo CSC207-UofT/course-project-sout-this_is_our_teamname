@@ -17,6 +17,9 @@ import java.awt.*;
  * name: The label for nameTxt
  * year: The label for yearTxt
  * term: The label for termTxt
+ * nameGuide: The guide label for name input guidelines
+ * yearGuide: The guide label for year input guidelines
+ * termGuide: The guide label for term input guidelines
  * saveBtn: The button to save the data when clicked
  * backBtn: The button to close the screen when clicked
  * nameTxt: The textField for the user to enter the name of timetable to be saved
@@ -36,6 +39,10 @@ public class SaveScreen extends AbstractScreen{
     private static final JLabel name = new JLabel("Name");
     private static final JLabel year = new JLabel("Year");
     private static final JLabel term = new JLabel("Term");
+    private final static JLabel nameGuide = new JLabel("Name must be no longer than 20 " +
+            "characters with Capitalized first letter.");
+    private final static JLabel yearGuide = new JLabel("Year must be a number.");
+    private final static JLabel termGuide = new JLabel("Term must be either Fall or Winter");
     private static final JButton saveBtn = new JButton("Save");
     private static final JButton backBtn = new JButton("Back");
     private static final JTextField nameTxt = new JTextField(20);
@@ -50,7 +57,7 @@ public class SaveScreen extends AbstractScreen{
      * @param screen The window viewed by the user
      */
     public SaveScreen(DatabaseController controller, TimeTableScreen screen) {
-        super(Constants.SAVE, controller, screen);
+        super(Constants.SAVE, screen);
 
         saveScreenHandler = new SaveScreenHandler(this);
 
@@ -69,17 +76,26 @@ public class SaveScreen extends AbstractScreen{
         nameTxt.setFont(Constants.FONT20);
         nameTxt.setBounds(320, 40, 120, 40);
 
+        nameGuide.setFont(Constants.FONT15);
+        nameGuide.setBounds(200, 85, 600, 40);
+
         year.setFont(Constants.FONT20);
-        year.setBounds(200, 100, 120, 40);
+        year.setBounds(200, 160, 120, 40);
 
         yearTxt.setFont(Constants.FONT20);
-        yearTxt.setBounds(320, 100, 120, 40);
+        yearTxt.setBounds(320, 160, 120, 40);
+
+        yearGuide.setFont(Constants.FONT15);
+        yearGuide.setBounds(200, 205, 600, 40);
 
         term.setFont(Constants.FONT20);
-        term.setBounds(200, 160, 120, 40);
+        term.setBounds(200, 280, 120, 40);
 
         termTxt.setFont(Constants.FONT20);
-        termTxt.setBounds(320, 160, 120, 40);
+        termTxt.setBounds(320, 280, 120, 40);
+
+        termGuide.setFont(Constants.FONT15);
+        termGuide.setBounds(200, 325, 600, 40);
 
         // Back button
         backBtn.setFont(Constants.FONT20);
@@ -92,6 +108,9 @@ public class SaveScreen extends AbstractScreen{
         centerPanel.add(yearTxt);
         centerPanel.add(term);
         centerPanel.add(termTxt);
+        centerPanel.add(nameGuide);
+        centerPanel.add(yearGuide);
+        centerPanel.add(termGuide);
 
         southPanel.add(saveBtn);
         southPanel.add(backBtn);

@@ -1,12 +1,12 @@
 package DataGetting;
 
-import TimeTableObjects.EventObjects.Activity;
-import TimeTableObjects.EventObjects.CourseSection;
+import TimeTableObjects.EventBuilder;
 import TimeTableObjects.EventObjects.Task;
 
 import java.io.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 /**
@@ -15,6 +15,11 @@ import java.util.LinkedHashMap;
  * csv file to a timetable manager object
  */
 public class CSVUploader extends DataGetter<Object> {
+    private final EventBuilder builder;
+
+    public CSVUploader(){
+        this.builder = new EventBuilder();
+    }
 
     /**
      * Constructor of the CSVUploader. Reads and filters the data correctly
@@ -29,20 +34,24 @@ public class CSVUploader extends DataGetter<Object> {
     @Override
     public void CalibrateData(String filename, String term,
                               String year) throws FileNotFoundException {
+        // Get the data from the filepath
         String filepath = "src\\OutputFiles\\" + filename + "_" + term + " " + year + ".csv";
         ArrayList<String[]> data;
         try {
-            data = ReadThroughFile(filepath);
+            data = readThroughFile(filepath);
         } catch (IOException e){
             throw new FileNotFoundException();
         }
+
+        // Remove header
         data.remove(0);
+
+        // Place the line into the correct object
         for (String[] line : data) {
-            if (!line[1].equals("Tasks")) {
-                CalendarObjectHelper(line, term, year);
-            }
-            else {
-                TaskCalendarObjectHelper(line, term);
+            if (line[1].equals("Tasks")) {
+                taskCalendarObjectHelper(line, term, year);
+            } else {
+                calendarObjectHelper(line, term, year);
             }
         }
     }
@@ -62,36 +71,35 @@ public class CSVUploader extends DataGetter<Object> {
         return super.getData();
     }
 
-    /**
-     * Read and return the data contained in a csv file at specific location as
-     * an array of arrays of strings
-     *
-     * @param filepath the path of the csv file that needs to be read
-     */
-    private ArrayList<String[]> ReadThroughFile(String filepath) throws IOException {
-        ArrayList<String[]> AllDataLines = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new FileReader(filepath));
-        String fileline;
-        while ((fileline = reader.readLine()) != null) {
-            String[] OneDataLine = fileline.split(",");
-            AllDataLines.add(OneDataLine);
-        }
-        reader.close();
-        return AllDataLines;
-    }
-
+    // ============================= Adding to Data ============================
     /**
      * A helper method for processing lines of calendar objects.
      *
      * @param line the line of data
      * @param theTerm the term of the object
-     * @param theYear the year of the object
      */
-    private void CalendarObjectHelper(String[] line, String theTerm, String theYear) {
+    private void calendarObjectHelper(String[] line, String theTerm,
+                                      String theYear) {
+        String theDate = line[0];
+        String TimeString = line[1];
+        String theName = line[3];
+        String sectionCode = line[4];
+        String theDescription = line[5];
+
+        String[] times = TimeString.split("-");
+        int startHour = Integer.parseInt(times[0].substring(0, 2));
+        int endHour = Integer.parseInt(times[1].substring(0, 2));
+        LocalTime startTime = LocalTime.of(startHour, 0, 0);
+        LocalTime endTime = LocalTime.of(endHour, 0, 0);
+
+        this.builder.calibrate(theName, theDescription, startTime, endTime,
+                theDate, theTerm + " " + theYear);
         if (line[2].equals("Activity")) {
-            AddActivityToData(line[1], line[0], theTerm, line[5], line[3]);
+            this.placeToData(theDate + " " + TimeString,
+                    this.builder.getActivity());
         } else if (line[2].equals("CourseSection")){
-            AddCourseSectionToData(line[3], line[1], line[0], theTerm, theYear, line[4], line[5]);
+            this.placeToData(theDate + " " + TimeString,
+                    this.builder.getCourseSection(sectionCode));
         }
     }
 
@@ -101,91 +109,41 @@ public class CSVUploader extends DataGetter<Object> {
      * @param line the line of data
      * @param theTerm the term of the object
      */
-    private void TaskCalendarObjectHelper(String[] line, String theTerm) {
-        String[] FirstTwoRemoved = RemoveFirstTwo(line);
-        for (String taskString : FirstTwoRemoved) {
-            AddTaskToData(line[0], theTerm, taskString);
+    private void taskCalendarObjectHelper(String[] line, String theTerm,
+                                          String theYear) {
+        ArrayList<String> lines = (ArrayList<String>) Arrays.asList(line);
+        lines.remove(0);
+        lines.remove(0);
+
+        for (String taskString : lines) {
+            String theDate = line[0];
+
+            Task task = new Task(taskString, theDate, theTerm + " " + theYear);
+            placeToData(taskString, task);
         }
     }
 
+    // ================================ Helpers ================================
     /**
-     * Process an array of strings to one which contains only meaningful data
+     * Read and return the data contained in a csv file at specific location as
+     * an array of arrays of strings
      *
-     * @param data the array needs to be processed
+     * @param filepath the path of the csv file that needs to be read
      */
-    private String[] RemoveFirstTwo(String[] data) {
-        String[] FirstTwoRemoved = new String[data.length - 2];
-        for (int i = 0; i + 2 < data.length; i++) {
-            FirstTwoRemoved[i] = data[i + 2];
+    private ArrayList<String[]> readThroughFile(String filepath) throws IOException {
+        // Get the data
+        ArrayList<String[]> allDataLines = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new FileReader(filepath));
+
+        // Read the data
+        String fileline = reader.readLine();
+        while (fileline != null) {
+            String[] oneDataLine = fileline.split(",");
+            allDataLines.add(oneDataLine);
+            fileline = reader.readLine();
         }
-        return FirstTwoRemoved;
-    }
+        reader.close();
 
-
-    /**
-     * Create and add an Activity to data
-     *
-     * @param TimeString the string of the period of the time of the activity
-     * @param theDate the date of the activity
-     * @param theTerm the term of the activity
-     * @param theDescription the description of the activity
-     * @param theName the name of the activity
-     */
-    private void AddActivityToData(String TimeString, String theDate, String theTerm,
-                               String theDescription, String theName) {
-        String[] times = TimeString.split("-");
-        Activity event =
-                new Activity(
-                        LocalTime.of(Integer.parseInt(times[0].substring(0, 2)), 0, 0),
-                        LocalTime.of(Integer.parseInt(times[1].substring(0, 2)), 0, 0),
-                        theDate,
-                        theTerm,
-                        theDescription);
-        event.setName(theName);
-        placeToData(theDate + " " + TimeString, event);
-    }
-
-    /**
-     * Create and add a CourseSection to data
-     *
-     * @param CourseName the course name of the course section
-     * @param TimeString the string of the period of the time of the course section
-     * @param theDate the date of the course section
-     * @param theTerm the term of the course section
-     * @param theYear the year of the course section
-     * @param SectionCode the section code of the course section
-     * @param theDescription the description of the activity
-     */
-    private void AddCourseSectionToData(String CourseName, String TimeString, String theDate, String theTerm,
-                                       String theYear, String SectionCode, String theDescription) {
-        String[] times = TimeString.split("-");
-        CourseSection event =
-                new CourseSection(
-                        CourseName,
-                        LocalTime.of(Integer.parseInt(times[0].substring(0, 2)), 0, 0),
-                        LocalTime.of(Integer.parseInt(times[1].substring(0, 2)), 0, 0),
-                        theDate,
-                        theTerm + " " + theYear,
-                        SectionCode);
-        event.setName(CourseName);
-        event.setDescription(theDescription);
-        placeToData(theDate + " " + TimeString, event);
-    }
-
-    /**
-     * Create and add a Task to data
-     *
-     * @param theDate the date of the course section
-     * @param theTerm the term of the course section
-     * @param theName the name of the activity
-     */
-    private void AddTaskToData(String theDate, String theTerm, String theName) {
-        Task task = new Task(
-                LocalTime.of(0, 0, 0),
-                LocalTime.of(23, 59, 59),
-                theDate,
-                theTerm);
-        task.setName(theName);
-        placeToData(theName, task);
+        return allDataLines;
     }
 }

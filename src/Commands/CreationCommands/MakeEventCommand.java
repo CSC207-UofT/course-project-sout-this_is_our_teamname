@@ -1,7 +1,7 @@
 package Commands.CreationCommands;
 
 import Commands.Command;
-import TimeTableObjects.EventObjects.Activity;
+import TimeTableObjects.EventBuilder;
 import TimeTableObjects.Events;
 import TimeTableObjects.EventObjects.Task;
 import Helpers.Constants;
@@ -38,6 +38,7 @@ public class MakeEventCommand implements Command {
 
     private final TimeTableManager manager;
     private Object scheduledObject;
+    private final EventBuilder factory;
 
     /**
      * A constructor to set the command
@@ -46,6 +47,7 @@ public class MakeEventCommand implements Command {
     public MakeEventCommand(TimeTableManager theManager){
         this.manager = theManager;
         this.scheduledObject = null;
+        this.factory = new EventBuilder();
     }
 
     /**
@@ -157,14 +159,14 @@ public class MakeEventCommand implements Command {
      * @param type the type of object
      * @return event "cast" to the correct type.
      */
-    public static Object getCorrectTimeTableObject(String name,
-                                                   LocalTime startTime,
-                                                   LocalTime endTime,
-                                                   String theLocation,
-                                                   String theDate,
-                                                   String term,
-                                                   String year,
-                                                   String type) {
+    public Object getCorrectTimeTableObject(String name,
+                                            LocalTime startTime,
+                                            LocalTime endTime,
+                                            String theLocation,
+                                            String theDate,
+                                            String term,
+                                            String year,
+                                            String type) {
         // Creates the Activity
         switch (type){
             case Constants.ACTIVITY:
@@ -172,13 +174,11 @@ public class MakeEventCommand implements Command {
                 System.out.println("Enter Description: ");
                 String description = descriptionScanner.nextLine();
 
-                Activity activity = new Activity(startTime, endTime, theDate,
-                        term + " " + year, description);
-                activity.setName(name);
-                return activity;
+                this.factory.calibrate(name, description, startTime, endTime,
+                        theDate, term + " " + year);
+                return this.factory.getActivity();
             case Constants.TASK:
-                Task task = new Task(startTime, endTime, theDate,
-                        term + " " + year);
+                Task task = new Task(name, theDate, term + " " + year);
                 task.setName(name);
                 task.addToName(" at " + theLocation);
                 return task;

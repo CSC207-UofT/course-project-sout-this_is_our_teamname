@@ -1,10 +1,9 @@
 package GUI.handler;
 
-// TODO THE FOLLOWING IMPORT STATEMENTS SHOULD NOT EXIST IN THIS FILE
 import DataGetting.WebScraper;
 import Helpers.InvalidInputException;
 import java.io.FileNotFoundException;
-// =============================================================================
+
 import Helpers.Constants;
 import InterfaceAdaptors.GUICommandFactory;
 import TimeTableObjects.Course;

@@ -2,8 +2,6 @@ package GUI.userview;
 
 import Helpers.Constants;
 import TimeTableContainers.TimeTable;
-// TODO The following classes should NOT be referenced in this class. See GUI
-//  UML Diagram
 import TimeTableContainers.TimeTableManager;
 import TimeTableObjects.EventObjects.Task;
 import TimeTableObjects.Events;

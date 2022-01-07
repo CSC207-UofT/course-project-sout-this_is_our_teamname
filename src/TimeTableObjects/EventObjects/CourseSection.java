@@ -5,6 +5,7 @@ import TimeTableObjects.Interfaces.Reconstructable;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+
 /**
  *
  * This is a specific time interval of a specific section for a course.
@@ -15,31 +16,22 @@ import java.util.ArrayList;
  * description: Contains all the other info of the course section
  */
 public class CourseSection extends Events  implements Reconstructable {
-    private final String courseName;
-    private final String sectionCode;
-    private String description;
+    private String sectionCode;
 
     /**
      * Construct a TimeTable section for the given time, location, section, professor,
      * faculty and delivery method
-     *
-     * @param CourseName The CourseName
      * @param startTime The start time of this section.
      * @param endTime The end time of the section
      * @param theDate The date of the section
      * @param term The term and year for this course e.g. Fall 2021
-     * @param sectionCode The code for this course
      */
-    public CourseSection(String CourseName,
-                         LocalTime startTime,
+    public CourseSection(LocalTime startTime,
                          LocalTime endTime,
                          String theDate,
-                         String term,
-                         String sectionCode) {
-        super(startTime, endTime, theDate, term);
-        this.courseName = CourseName;
-        this.sectionCode = sectionCode;
-        this.description = "";
+                         String term) {
+        super("", startTime, endTime, theDate, term, "");
+        this.sectionCode = null;
     }
 
     /**
@@ -50,19 +42,10 @@ public class CourseSection extends Events  implements Reconstructable {
         ArrayList<String> list = new ArrayList<>(4);
         // index 0: class name, index 1: CourseSection name, index 2: section code, index 3: description
         list.add(0, this.getClass().getSimpleName());
-        list.add(1, this.courseName);
+        list.add(1, this.name);
         list.add(2, this.sectionCode);
         list.add(3, this.description);
         return list;
-    }
-
-    /**
-     * Set the description of the CourseSection object
-     *
-     * @param info is the description to be added to the CourseSection object
-     */
-    public void setDescription(String info) {
-        this.description = info;
     }
 
     /**
@@ -71,6 +54,10 @@ public class CourseSection extends Events  implements Reconstructable {
      */
     @Override
     public String toString() {
-        return this.courseName + ": " + this.description;
+        return this.name + ": " + this.description;
+    }
+
+    public void setSectionCode(String sectionCode) {
+        this.sectionCode = sectionCode;
     }
 }
