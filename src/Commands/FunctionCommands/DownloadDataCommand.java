@@ -2,14 +2,9 @@ package Commands.FunctionCommands;
 
 import DataLoading.CSVDownloader;
 import Commands.Command;
-import Helpers.Constants;
-import TimeTableContainers.TimeTable;
 import TimeTableContainers.TimeTableManager;
-import TimeTableObjects.EventObjects.Task;
-import TimeTableObjects.Events;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -34,22 +29,22 @@ public class DownloadDataCommand implements Command {
     public void execute() {
         boolean running = true;
         while (running){
-            Scanner ask2 = new Scanner(System.in);
+            Scanner nameOfTimetableScanner = new Scanner(System.in);
             System.out.println("Enter the name for the timetables to save with (Capitalize first letter)");
-            String chosen = ask2.nextLine();
+            String nameOfTimetable = nameOfTimetableScanner.nextLine();
 
-            Scanner ask = new Scanner(System.in);
-            System.out.println("Enter the year for the timetables to save(Year must be a number):  ");
-            String year = ask.nextLine();
+            Scanner yearScanner = new Scanner(System.in);
+            System.out.println("Enter the year for the timetables to save " +
+                    "(Year must be a number):  ");
+            String year = yearScanner.nextLine();
 
-            Scanner ask3 = new Scanner(System.in);
+            Scanner termScanner = new Scanner(System.in);
             System.out.println("Enter the term(Term must be either Fall or Winter): ");
-            String term = ask3.nextLine();
+            String term = termScanner.nextLine();
 
-            HashMap<String, List<List<String>>> dataMap =
-                    getData(term + " " + year);
+            HashMap<String, List<List<String>>> dataMap = getData(term + " " + year);
             try {
-                this.loader.download(dataMap, chosen);
+                this.loader.download(dataMap, nameOfTimetable);
                 running = false;
             } catch (IOException e){
                 System.out.println("Cannot find timetable. Try again!");
@@ -68,71 +63,9 @@ public class DownloadDataCommand implements Command {
 
         for (String term : this.manager.getTerms()) {
             if (term.equals(theTerm)){
-                datalist.put(term, TimetableToList(this.manager.getTimetable(term)));
+                datalist.put(term, this.manager.getTimetable(term).toList());
             }
         }
         return datalist;
-    }
-
-    /**
-     * Convert a timetable to a list of lists of strings that contains the data
-     *
-     * @param timetable the timetable that needs to be converted
-     */
-    private List<List<String>> TimetableToList(TimeTable timetable) {
-        List<List<String>> eventLists = new ArrayList<>();
-
-        // Search all days in a week and get data from both the calendar and the task calendar
-        for (String day : Constants.DAYS_OF_THE_WEEK) {
-            // Search every hour period in a day and get data from the calendar
-            for (int n = 0; n <= 23; n ++) {
-                // If there are non-empty data during this hour
-                if (timetable.getCalendar().get(day)[n] != null) {
-                    CalendarHelper(eventLists, day, timetable.getCalendar().get(day)[n]);
-                }
-            }
-            // If there are non-empty data in the task calendar
-            if (!(timetable.getTaskCalendar().get(day).isEmpty())) {
-                TaskCalendarHelper(eventLists, day, timetable.getTaskCalendar().get(day));
-            }
-        }
-        return eventLists;
-    }
-
-    /**
-     * Append one more list of data to the list of lists of strings
-     *
-     * @param eventLists the list of lists of strings that needs to be enlarged
-     * @param day the day information of the new list of data
-     * @param item the event information of the new list of data
-     */
-    private void CalendarHelper(List<List<String>> eventLists, String day, Events item) {
-        // Format one line
-        List<String> eventList = new ArrayList<>();
-        eventList.add(0, day);
-        eventList.add(1, item.getStartTime().toString() +
-                "-" + item.getEndTime().toString());
-        eventList.addAll(item.reconstruct());
-        // Append the line
-        eventLists.add(eventList);
-    }
-
-    /**
-     * Append one more list of data to the list of lists of strings
-     *
-     * @param eventLists the list of lists of strings that needs to be enlarged
-     * @param day the day information of the new list of data
-     * @param tasks the event information of the new list of data
-     */
-    private void TaskCalendarHelper(List<List<String>> eventLists, String day, ArrayList<Task> tasks) {
-        // Format one line
-        List<String> taskList = new ArrayList<>();
-        taskList.add(day);
-        taskList.add("Tasks");
-        for (Task task : tasks) {
-            taskList.addAll(task.reconstruct());
-        }
-        // Append the line
-        eventLists.add(taskList);
     }
 }

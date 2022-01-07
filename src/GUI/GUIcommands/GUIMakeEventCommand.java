@@ -159,12 +159,13 @@ public class GUIMakeEventCommand implements Command {
         switch (type){
             case Constants.ACTIVITY:
                 String activityTerm = term + " " + year;
-                Activity activity = new Activity(startTime, endTime, theDate, activityTerm, description);
+                Activity activity = new Activity(startTime, endTime, theDate, activityTerm);
+                activity.setDescription(description);
                 activity.setName(name);
                 return activity;
             case "Reminder":
                 String taskTerm = term + " " + year;
-                Task task = new Task(startTime, endTime, theDate, taskTerm);
+                Task task = new Task(name, theDate, taskTerm);
                 task.setName(name);
                 return task;
             // ...

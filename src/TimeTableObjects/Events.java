@@ -16,12 +16,12 @@ import java.util.ArrayList;
  * name: The name or a short description of the Event
  */
 public abstract class Events implements Reconstructable {
-    private final LocalTime startTime;
-    private final LocalTime endTime;
-    private final String date;
-    private final String term;
-    private String name;
-
+    protected final LocalTime startTime;
+    protected final LocalTime endTime;
+    protected final String date;
+    protected final String term;
+    protected String name;
+    protected String description;
 
     /**
      * Construct an event with time and a description.
@@ -31,15 +31,18 @@ public abstract class Events implements Reconstructable {
      * @param theDate   is the weekday of the event.
      * @param term      is the term of the event.
      */
-    public Events(LocalTime startTime,
+    public Events(String name,
+                  LocalTime startTime,
                   LocalTime endTime,
                   String theDate,
-                  String term) {
+                  String term,
+                  String description) {
+        this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.date = theDate;
         this.term = term;
-        this.name = "";
+        this.description = description;
     }
 
     /**
@@ -62,6 +65,10 @@ public abstract class Events implements Reconstructable {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**

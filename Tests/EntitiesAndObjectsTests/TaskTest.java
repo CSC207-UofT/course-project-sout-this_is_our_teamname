@@ -21,9 +21,9 @@ public class TaskTest {
         LocalTime Time9 = LocalTime.of(9,0,0);
         LocalTime Time10 = LocalTime.of(10, 0,0);
 
-        Task breakfast = new Task(Time8, Time9, Constants.MONDAY, Constants.YEAR);
+        Task breakfast = new Task("", Constants.MONDAY, Constants.YEAR);
         breakfast.addToName("McDonald's");
-        Task shower = new Task(Time9, Time10, Constants.MONDAY, Constants.YEAR);
+        Task shower = new Task("", Constants.MONDAY, Constants.YEAR);
         assertEquals("McDonald's", breakfast.getName());
         assertEquals("", shower.getName());
     }
@@ -34,9 +34,9 @@ public class TaskTest {
         LocalTime Time9 = LocalTime.of(9,0,0);
         LocalTime Time10 = LocalTime.of(10, 0,0);
 
-        Task breakfast = new Task(Time8, Time9, Constants.MONDAY, Constants.YEAR);
+        Task breakfast = new Task("", Constants.MONDAY, Constants.YEAR);
         breakfast.addToName("McDonald's");
-        Task shower = new Task(Time9, Time10, Constants.MONDAY, Constants.YEAR);
+        Task shower = new Task("", Constants.MONDAY, Constants.YEAR);
         shower.addToName("home");
         assertEquals("McDonald's", breakfast.toString());
         assertEquals("home", shower.toString());

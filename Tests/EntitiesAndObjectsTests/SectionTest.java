@@ -21,14 +21,16 @@ public class SectionTest {
         LocalTime Time10 = LocalTime.of(10, 0,0);
         LocalTime Time11 = LocalTime.of(11,0,0);
 
-        CourseSection lecture0 = new CourseSection("MAT257", Time9,Time10, Constants.MONDAY,Constants.YEAR,
-                "LEC 0101");
+        CourseSection lecture0 = new CourseSection(Time9,Time10, Constants.MONDAY,Constants.YEAR);
+        lecture0.setName("MAT257");
+        lecture0.setSectionCode("LEC 0101");
         String description0 = "LEC 0100" + " of " + "Arts and Science" + " with " + "Professor.0" + " by " + "Online"
                 + " session" + " at " + "SS100";
         lecture0.setDescription(description0);
 
-        CourseSection lecture1 = new CourseSection("MAT137", Time10,Time11,Constants.MONDAY,Constants.FALL,
-                "LEC 0101");
+        CourseSection lecture1 = new CourseSection(Time10,Time11,Constants.MONDAY,Constants.FALL);
+        lecture1.setName("MAT137");
+        lecture1.setSectionCode("LEC 0101");
         String description1 = "LEC 0101" + " of " + "Arts and Science" + " with " + "Professor.A" + " by " + "Online"
                 + " session" + " at " + "SS101";
         lecture1.setDescription(description1);

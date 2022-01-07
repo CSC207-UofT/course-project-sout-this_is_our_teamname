@@ -84,8 +84,9 @@ public class Course {
                             "by " + deliveryMethod + " session" + " at "
                             + this.timeLocation.get(time);
 
-            CourseSection section = new CourseSection(this.courseName, start, end, date, this.term,
-                    this.sectionName);
+            CourseSection section = new CourseSection(start, end, date, this.term);
+            section.setName(this.courseName);
+            section.setSectionCode(this.sectionName);
             section.setDescription(description);
             section.setName(courseName);
 
@@ -137,7 +138,9 @@ public class Course {
      *
      * @return the section
      */
-    public String getSectionName() {return this.sectionName; }
+    public String getSectionName() {
+        return this.sectionName;
+    }
 
     /**
      * Get the term for this course

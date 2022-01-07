@@ -21,10 +21,10 @@ public class ActivityTest {
         LocalTime Time9 = LocalTime.of(9,0,0);
         LocalTime Time10 = LocalTime.of(10, 0,0);
 
-        Activity breakfast = new Activity(Time8, Time9, Constants.MONDAY, Constants.YEAR,
-                "buy coffee");
-        Activity shower = new Activity(Time9, Time10, Constants.MONDAY, Constants.YEAR,
-                "remember to wash clothes");
+        Activity breakfast = new Activity(Time8, Time9, Constants.MONDAY, Constants.YEAR);
+        breakfast.setDescription("buy coffee");
+        Activity shower = new Activity(Time9, Time10, Constants.MONDAY, Constants.YEAR);
+        shower.setDescription("remember to wash clothes");
 
         assertEquals("buy coffee", breakfast.toString());
         assertEquals("remember to wash clothes", shower.toString());

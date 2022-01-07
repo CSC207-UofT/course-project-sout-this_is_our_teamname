@@ -21,17 +21,13 @@ public class Task implements Reconstructable {
 
     /**
      * Construct a task with time, location and a description.
-     * @param theStartTime is the start time of the task.
-     * @param theEndTime is the end time of the task.
      * @param theDate is the weekday of the task.
      * @param term is the term of the task
      */
-    public Task(LocalTime theStartTime,
-                LocalTime theEndTime,
-                String theDate,
-                String term) {
+    public Task(String name, String theDate, String term) {
         this.date = theDate;
         this.term = term;
+        this.name = name;
     }
 
     /**
